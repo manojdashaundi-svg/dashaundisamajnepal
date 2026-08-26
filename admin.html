@@ -12,7 +12,7 @@
             --accent-color: #008000;
             --danger-color: #e53e3e;
             --edit-color: #3182ce;
-            --print-color: #006400; /* गाढा हरियो (Dark Green) */
+            --print-color: #006400;
             --bg-color: #edf2f7;
             --card-bg: #ffffff;
             --text-color: #2d3748;
@@ -266,22 +266,45 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* प्रिन्ट गर्ने बेला लुकाउने चिजहरू */
+        /* प्रिन्ट हेडेलिङ्ग र ढाँचा */
+        .print-header {
+            display: none;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .print-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 5px;
+        }
+        .print-title-1 { font-size: 22px; font-weight: bold; color: #1a365d; margin: 2px 0; }
+        .print-title-2 { font-size: 17px; font-weight: bold; color: #333; margin: 2px 0; }
+        .print-title-3 { font-size: 14px; font-weight: bold; color: #555; margin: 2px 0; }
+        .print-date { position: absolute; top: 0; right: 0; font-size: 12px; font-weight: bold; color: #333; }
+        .print-section-title { font-size: 18px; font-weight: bold; text-align: center; margin: 15px 0; color: #1a365d; text-decoration: underline; }
+
+        /* प्रिन्ट गर्ने बेला सेटिङ */
         @media print {
-            .top-header, .section-header button, hr, #loginSection, form, .btn-action, footer {
+            body * {
+                visibility: hidden;
+            }
+            .printable-section, .printable-section * {
+                visibility: visible;
+            }
+            .printable-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                display: block !important;
+            }
+            .no-print, .btn-action, .top-header, .section-header {
                 display: none !important;
             }
-            body {
-                background: white;
-                padding: 0;
-            }
-            .admin-container {
-                box-shadow: none;
-                padding: 0;
-                margin: 0;
-                max-width: 100%;
-            }
-            .collapsible-content {
+            .print-header {
                 display: block !important;
             }
         }
@@ -321,7 +344,7 @@
             <div class="section-header">
                 <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('aboutContent')">प्रिन्ट / PDF</button>
+                    <button class="print-btn" onclick="printSection('aboutContent', 'संस्थाको मुख्य विवरण')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -366,7 +389,7 @@
 
             <hr>
 
-            <!-- संस्थापक समिति सेक्सन (यहाँ प्रिन्ट बटन हटाइएको छ) -->
+            <!-- संस्थापक समिति सेक्सन (प्रिन्ट बटन हटाइएको) -->
             <div class="section-header">
                 <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group">
@@ -405,7 +428,7 @@
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('tableContent')">प्रिन्ट / PDF</button>
+                    <button class="print-btn" onclick="printSection('tableContent', 'संस्थापक सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -432,7 +455,7 @@
 
             <hr>
 
-            <!-- केन्द्रीय समिति सेक्सन (यहाँ प्रिन्ट बटन हटाइएको छ) -->
+            <!-- केन्द्रीय समिति सेक्सन (प्रिन्ट बटन हटाइएको) -->
             <div class="section-header">
                 <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group">
@@ -471,7 +494,7 @@
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('centralTableContent')">प्रिन्ट / PDF</button>
+                    <button class="print-btn" onclick="printSection('centralTableContent', 'केन्द्रीय सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -525,8 +548,8 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट वा PDF डाउनलोड गर्ने फंक्सन
-        function printSection(sectionId) {
+        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (सुन्दर हेडरसहित)
+        function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
             
@@ -534,7 +557,31 @@
                 sectionContent.style.display = 'block';
             }
 
+            sectionContent.classList.add('printable-section');
+
+            // प्रिन्ट हेडर सिर्जना गर्ने
+            let headerDiv = document.getElementById('dynamicPrintHeader');
+            if (!headerDiv) {
+                headerDiv = document.createElement('div');
+                headerDiv.id = 'dynamicPrintHeader';
+                headerDiv.className = 'print-header';
+                sectionContent.prepend(headerDiv);
+            }
+
+            const today = new Date().toLocaleDateString('ne-NP');
+            headerDiv.innerHTML = `
+                <div class="print-date">मिति: ${today}</div>
+                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="print-logo" alt="लोगो">
+                <div class="print-title-1">दशौँदी समाज नेपाल</div>
+                <div class="print-title-2">Dashaundi Samaj Nepal</div>
+                <div class="print-title-3">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</div>
+                <div class="print-section-title">${sectionTitle}</div>
+            `;
+
             window.print();
+
+            headerDiv.remove();
+            sectionContent.classList.remove('printable-section');
 
             if (!wasOpen) {
                 sectionContent.style.display = 'none';
@@ -694,7 +741,7 @@
                         <td>${person.position}</td>
                         <td>${person.member_no || '-'}</td>
                         <td>${person.phone || '-'}</td>
-                        <td>
+                        <td class="no-print">
                             <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">मेटाउनुहोस्</button>
                         </td>
@@ -795,7 +842,7 @@
                         <td>${person.position}</td>
                         <td>${person.member_no || '-'}</td>
                         <td>${person.phone || '-'}</td>
-                        <td>
+                        <td class="no-print">
                             <button class="btn-action btn-edit" onclick="editCentralMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteCentralMember('${person.id}')">मेटाउनुहोस्</button>
                         </td>
