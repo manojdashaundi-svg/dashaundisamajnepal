@@ -266,27 +266,27 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* प्रिन्ट हेडेलिङ्ग र ढाँचा */
+        /* प्रिन्ट हेडेलिङ्ग र ठूला, डार्क अक्षरहरू */
         .print-header {
             display: none;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
         }
         .print-logo {
-            width: 70px;
-            height: 70px;
+            width: 95px;
+            height: 95px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
-        .print-title-1 { font-size: 22px; font-weight: bold; color: #1a365d; margin: 2px 0; }
-        .print-title-2 { font-size: 17px; font-weight: bold; color: #333; margin: 2px 0; }
-        .print-title-3 { font-size: 14px; font-weight: bold; color: #555; margin: 2px 0; }
-        .print-date { position: absolute; top: 0; right: 0; font-size: 12px; font-weight: bold; color: #333; }
-        .print-section-title { font-size: 18px; font-weight: bold; text-align: center; margin: 15px 0; color: #1a365d; text-decoration: underline; }
+        .print-title-1 { font-size: 26px; font-weight: 900; color: #000; margin: 3px 0; }
+        .print-title-2 { font-size: 20px; font-weight: 800; color: #111; margin: 3px 0; }
+        .print-title-3 { font-size: 16px; font-weight: 700; color: #222; margin: 3px 0; }
+        .print-date { position: absolute; top: 0; right: 0; font-size: 13px; font-weight: bold; color: #000; }
+        .print-section-title { font-size: 20px; font-weight: 800; text-align: center; margin: 18px 0; color: #1a365d; text-decoration: underline; }
 
-        /* प्रिन्ट गर्ने बेला सेटिङ */
+        /* प्रिन्ट हुँदा टेबल र अक्षरहरूलाई डार्क र स्पष्ट बनाउने स्टायल */
         @media print {
             body * {
                 visibility: hidden;
@@ -306,6 +306,20 @@
             }
             .print-header {
                 display: block !important;
+            }
+            /* टेबल लाइनहरू र अक्षरहरू गाढा र डार्क पार्ने */
+            table {
+                border: 2px solid #000 !important;
+            }
+            th, td {
+                border: 1.5px solid #000 !important;
+                color: #000 !important;
+                font-weight: 600 !important;
+            }
+            th {
+                background-color: #e2e8f0 !important;
+                color: #000 !important;
+                font-weight: 800 !important;
             }
         }
     </style>
@@ -389,7 +403,7 @@
 
             <hr>
 
-            <!-- संस्थापक समिति सेक्सन (प्रिन्ट बटन हटाइएको) -->
+            <!-- संस्थापक समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group">
@@ -455,7 +469,7 @@
 
             <hr>
 
-            <!-- केन्द्रीय समिति सेक्सन (प्रिन्ट बटन हटाइएको) -->
+            <!-- केन्द्रीय समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group">
@@ -548,7 +562,7 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (सुन्दर हेडरसहित)
+        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन
         function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
@@ -559,7 +573,6 @@
 
             sectionContent.classList.add('printable-section');
 
-            // प्रिन्ट हेडर सिर्जना गर्ने
             let headerDiv = document.getElementById('dynamicPrintHeader');
             if (!headerDiv) {
                 headerDiv = document.createElement('div');
