@@ -88,7 +88,7 @@
             <div class="card">
                 <div class="about-header">
                     <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="about-logo">
-                    <h2 class="about-title-ne" id="db_title_ne">লোড हुँदैछ...</h2>
+                    <h2 class="about-title-ne" id="db_title_ne">लोड हुँदैछ...</h2>
                     <h3 class="about-title-en" id="db_title_en"></h3>
                     <div class="about-meta"><strong id="db_address"></strong></div>
                     <div class="about-meta"><strong id="db_reg_date"></strong></div>
@@ -138,7 +138,6 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Supabase बाट डेटा तान्ने र वेबसाइटमा देखाउने फंक्सन
         async function fetchAboutData() {
             const { data, error } = await supabaseClient
                 .from('about_us')
@@ -157,7 +156,6 @@
             }
         }
 
-        // पेज लोड हुँदा डेटा तानेर राख्ने
         fetchAboutData();
 
         function switchPage(pageId, element) {
