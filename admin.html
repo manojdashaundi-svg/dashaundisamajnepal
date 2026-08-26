@@ -35,7 +35,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* मुख्य आकर्षक हेडलाइन बक्स */
         .main-header-box {
             background: linear-gradient(135deg, #1a365d, #2b6cb0);
             color: white;
@@ -51,21 +50,50 @@
             font-size: 28px;
             letter-spacing: 0.5px;
             color: white;
-            border: none;
-            padding: 0;
         }
 
-        h3 {
-            color: var(--primary-color);
+        /* हेडलाइन र दाяे पट्टिको बटन मिलाउने स्टाइल */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f7fafc;
+            padding: 10px 15px;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
             margin-top: 35px;
             margin-bottom: 15px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--primary-color);
             font-size: 20px;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 12px;
-            background-color: #f7fafc;
-            padding-top: 6px;
-            padding-bottom: 6px;
-            border-radius: 0 6px 6px 0;
+            border: none;
+            padding: 0;
+            background: none;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .toggle-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        /* लुकाउने वा देखाउने सेक्सन */
+        .collapsible-content {
+            display: none;
+            margin-top: 15px;
         }
 
         .form-group {
@@ -90,7 +118,6 @@
             font-size: 15px;
             box-sizing: border-box;
             background-color: #fff;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input[type="text"]:focus,
@@ -106,7 +133,7 @@
             resize: vertical;
         }
 
-        button {
+        button[type="submit"] {
             background-color: var(--accent-color);
             color: white;
             padding: 12px 20px;
@@ -116,15 +143,10 @@
             cursor: pointer;
             width: 100%;
             font-weight: bold;
-            transition: background-color 0.2s, transform 0.1s;
         }
 
-        button:hover {
+        button[type="submit"]:hover {
             background-color: #006600;
-        }
-
-        button:active {
-            transform: scale(0.99);
         }
 
         .btn-danger {
@@ -133,6 +155,9 @@
             font-size: 13px;
             width: auto;
             border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-danger:hover {
@@ -157,9 +182,13 @@
 
         .logout-btn {
             background: #4a5568;
+            color: white;
+            border: none;
             width: auto;
             padding: 8px 16px;
             font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         .logout-btn:hover {
@@ -215,7 +244,6 @@
 <body>
 
     <div class="admin-container">
-        <!-- आकर्षक ग्रिड र ग्रेडियन्टसहितको मुख्य हेडलाइन -->
         <div class="main-header-box">
             <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
@@ -243,71 +271,85 @@
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
-            <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
-            <form id="aboutForm">
-                <div class="form-group">
-                    <label>लोगोको लिङ्क (Logo URL):</label>
-                    <input type="text" id="logo_url" required>
-                </div>
-                <div class="form-group">
-                    <label>संस्थाको नाम (नेपालीमा):</label>
-                    <input type="text" id="title_ne" required>
-                </div>
-                <div class="form-group">
-                    <label>संस्थाको नाम (अंग्रेजीमा):</label>
-                    <input type="text" id="title_en" required>
-                </div>
-                <div class="form-group">
-                    <label>ठेगाना:</label>
-                    <input type="text" id="address" required>
-                </div>
-                <div class="form-group">
-                    <label>स्थापना / दर्ता मिति:</label>
-                    <input type="text" id="reg_date" required>
-                </div>
-                <div class="form-group">
-                    <label>कम्पनी दर्ता नं. र पान नम्बर:</label>
-                    <input type="text" id="reg_no" required>
-                </div>
-                <div class="form-group">
-                    <label>संस्थाको परिचय:</label>
-                    <textarea id="introduction" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>कामको व्याख्या तथा उद्देश्यहरू:</label>
-                    <textarea id="description" required></textarea>
-                </div>
-                <button type="submit">मुख्य विवरण सेभ गर्नुहोस्</button>
-            </form>
+            <!-- संस्थाको मुख्य विवरण - टोگل सेक्सन -->
+            <div class="section-header">
+                <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
+                <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
+            </div>
+
+            <div id="aboutContent" class="collapsible-content">
+                <form id="aboutForm">
+                    <div class="form-group">
+                        <label>लोगोको लिङ्क (Logo URL):</label>
+                        <input type="text" id="logo_url" required>
+                    </div>
+                    <div class="form-group">
+                        <label>संस्थाको नाम (नेपालीमा):</label>
+                        <input type="text" id="title_ne" required>
+                    </div>
+                    <div class="form-group">
+                        <label>संस्थाको नाम (अंग्रेजीमा):</label>
+                        <input type="text" id="title_en" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ठेगाना:</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>स्थापना / दर्ता मिति:</label>
+                        <input type="text" id="reg_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>कम्पनी दर्ता नं. र पान नम्बर:</label>
+                        <input type="text" id="reg_no" required>
+                    </div>
+                    <div class="form-group">
+                        <label>संस्थाको परिचय:</label>
+                        <textarea id="introduction" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>कामको व्याख्या तथा उद्देश्यहरू:</label>
+                        <textarea id="description" required></textarea>
+                    </div>
+                    <button type="submit">मुख्य विवरण सेभ गर्नुहोस्</button>
+                </form>
+            </div>
 
             <hr>
 
-            <h3>संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
-            <form id="committeeForm">
-                <div class="form-group">
-                    <label>पूरा नाम:</label>
-                    <input type="text" id="c_name" placeholder="सदस्यको नाम" required>
-                </div>
-                <div class="form-group">
-                    <label>पद (जस्तै: संयोजक):</label>
-                    <input type="text" id="c_position" placeholder="पद" required>
-                </div>
-                <div class="form-group">
-                    <label>सदस्य नम्बर:</label>
-                    <input type="text" id="c_member_no" placeholder="सदस्य नं.">
-                </div>
-                <div class="form-group">
-                    <label>सम्पर्क नम्बर:</label>
-                    <input type="text" id="c_phone" placeholder="फोन नम्बर">
-                </div>
-                <div class="form-group">
-                    <label>फोटोको लिङ्क (Photo URL):</label>
-                    <input type="text" id="c_photo" placeholder="फोटोको लिङ्क">
-                </div>
-                <button type="submit">सदस्य थप्नुहोस्</button>
-            </form>
+            <!-- संस्थापक समिति सेक्सन -->
+            <div class="section-header">
+                <h3>संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
+                <button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button>
+            </div>
 
-            <h3>संस्थापक सदस्यहरूको सूची</h3>
+            <div id="committeeContent" class="collapsible-content">
+                <form id="committeeForm">
+                    <div class="form-group">
+                        <label>पूरा नाम:</label>
+                        <input type="text" id="c_name" placeholder="सदस्यको नाम" required>
+                    </div>
+                    <div class="form-group">
+                        <label>पद (जस्तै: संयोजक):</label>
+                        <input type="text" id="c_position" placeholder="पद" required>
+                    </div>
+                    <div class="form-group">
+                        <label>सदस्य नम्बर:</label>
+                        <input type="text" id="c_member_no" placeholder="सदस्य नं.">
+                    </div>
+                    <div class="form-group">
+                        <label>सम्पर्क नम्बर:</label>
+                        <input type="text" id="c_phone" placeholder="फोन नम्बर">
+                    </div>
+                    <div class="form-group">
+                        <label>फोटोको लिङ्क (Photo URL):</label>
+                        <input type="text" id="c_photo" placeholder="फोटोको लिङ्क">
+                    </div>
+                    <button type="submit">सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <h3 style="margin-top: 35px; color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
             <div class="table-responsive">
                 <table>
                     <thead>
@@ -336,6 +378,18 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const messageDiv = document.getElementById('message');
+
+        // विवरण खोल्ने र बन्द गर्ने फंक्सन
+        function toggleSection(contentId, btn) {
+            const content = document.getElementById(contentId);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                btn.innerText = 'खोल्नुहोस् ▾';
+            } else {
+                content.style.display = 'block';
+                btn.innerText = 'बन्द गर्नुहोस् ▴';
+            }
+        }
 
         window.onload = function() {
             if (localStorage.getItem('isAdminLoggedIn') === 'true') {
@@ -407,7 +461,7 @@
 
             const { error } = await supabaseClient.from('about_us').upsert(updatedData);
             if (error) {
-                message_div.style.color = 'red';
+                messageDiv.style.color = 'red';
                 messageDiv.innerText = 'त्रुटि: ' + error.message;
             } else {
                 messageDiv.style.color = 'green';
