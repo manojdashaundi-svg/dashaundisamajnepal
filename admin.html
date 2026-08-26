@@ -577,6 +577,20 @@
             }
         });
 
+        // स्मार्ट पद क्रम पत्ता लगाउने फंक्सन
+        function getRoleRank(positionName) {
+            if (!positionName) return 99;
+            const pos = positionName.trim();
+            if (pos.includes('अध्यक्ष') && pos.includes('वरिष्ठ')) return 2;
+            if (pos.includes('अध्यक्ष')) return 1;
+            if (pos.includes('उपाध्यक्ष')) return 3;
+            if (pos.includes('सह सचिव') || pos.includes('सहसचिव')) return 5;
+            if (pos.includes('सचिव')) return 4;
+            if (pos.includes('कोषाध्यक्ष')) return 6;
+            if (pos.includes('सदस्य')) return 7;
+            return 99;
+        }
+
         async function loadCommitteeData() {
             const { data } = await supabaseClient.from('founder_committee').select('*');
             const tbody = document.getElementById('committeeTableBody');
@@ -587,17 +601,7 @@
                 return;
             }
 
-            const roleOrder = {
-                'अध्यक्ष': 1,
-                'वरिष्ठ उपाध्यक्ष': 2,
-                'उपाध्यक्ष': 3,
-                'सचिव': 4,
-                'सह सचिव': 5,
-                'कोषाध्यक्ष': 6,
-                'सदस्य': 7
-            };
-
-            data.sort((a, b) => (roleOrder[a.position] || 99) - (roleOrder[b.position] || 99));
+            data.sort((a, b) => getRoleRank(a.position) - getRoleRank(b.position));
 
             data.forEach(person => {
                 const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
@@ -689,17 +693,7 @@
                 return;
             }
 
-            const roleOrder = {
-                'अध्यक्ष': 1,
-                'वरिष्ठ उपाध्यक्ष': 2,
-                'उपाध्यक्ष': 3,
-                'सचिव': 4,
-                'सह सचिव': 5,
-                'कोषाध्यक्ष': 6,
-                'सदस्य': 7
-            };
-
-            data.sort((a, b) => (roleOrder[a.position] || 99) - (roleOrder[b.position] || 99));
+            data.sort((a, b) => getRoleRank(a.position) - getRoleRank(b.position));
 
             data.forEach(person => {
                 const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
