@@ -216,6 +216,23 @@
                 return;
             }
 
+            // पद अनुसार मिलाउने क्रम (Hierarchy Sorting)
+            const roleOrder = {
+                'अध्यक्ष': 1,
+                'वरिष्ठ उपाध्यक्ष': 2,
+                'उपाध्यक्ष': 3,
+                'सचिव': 4,
+                'सह सचिव': 5,
+                'कोषाध्यक्ष': 6,
+                'सदस्य': 7
+            };
+
+            data.sort((a, b) => {
+                let rankA = roleOrder[a.position] || 99;
+                let rankB = roleOrder[b.position] || 99;
+                return rankA - rankB;
+            });
+
             let html = '';
             data.forEach(person => {
                 const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
