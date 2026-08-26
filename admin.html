@@ -3,187 +3,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>दशाैँदी समाज नेपाल</title>
+    <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
-        .top-bar { background-color: #1a365d; color: white; padding: 8px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-        .header-split { display: flex; width: 100%; }
-        .header-green { background-color: #008000; color: white; flex: 1; padding: 20px; display: flex; align-items: center; gap: 20px; }
-        .header-red { background-color: #e60000; color: white; flex: 1; padding: 20px; }
-        .logo-box { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-        .logo { width: 100%; height: 100%; object-fit: cover; }
-        .header-green h1 { margin: 0; font-size: 24px; color: white; }
-        .header-green p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
-        .nav { background-color: #1a365d; display: flex; padding: 0 20px; position: relative; }
-        .nav > a, .dropdown > a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; }
-        .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 220px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 10; top: 100%; left: 0; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-weight: normal; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .dropdown-content a:hover { background-color: #3b5998; }
-        .dropdown:hover .dropdown-content { display: block; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .page-section { display: none; }
-        .page-section.active-page { display: block; }
-        .about-header { text-align: center; margin-bottom: 30px; }
-        .about-logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .about-title-ne { font-size: 28px; color: #1a365d; margin: 0 0 5px 0; font-weight: bold; }
-        .about-title-en { font-size: 20px; color: #555; margin: 0 0 15px 0; font-weight: bold; }
-        .about-meta { font-size: 16px; color: #333; margin: 8px 0; }
-        .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 16px; }
-        .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 25px; }
-        
-        /* कमिटी ग्रिड र कार्ड स्टायल */
-        .committee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
-        .committee-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .committee-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; margin-bottom: 12px; }
-        .committee-card h3 { color: #1a365d; margin: 8px 0 4px 0; font-size: 18px; }
-        .committee-card p { color: #555; margin: 4px 0; font-size: 14px; }
-        
-        footer { background-color: #1a365d; color: white; text-align: center; padding: 15px; margin-top: 40px; font-size: 14px; }
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #008000;
+            --danger-color: #e53e3e;
+            --edit-color: #3182ce;
+            --bg-color: #edf2f7;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #cbd5e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            background: var(--card-bg);
+            padding: 40px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header-box {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(26, 54, 93, 0.2);
+        }
+
+        .main-header-box h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f7fafc;
+            padding: 10px 15px;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .toggle-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        .collapsible-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+        }
+
+        textarea {
+            height: 110px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #006600;
+        }
+
+        .btn-action {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .btn-edit { background-color: var(--edit-color); }
+        .btn-edit:hover { background-color: #2b6cb0; }
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-danger:hover { background-color: #c53030; }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-text {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .logout-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #2d3748;
+        }
+
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .table-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: 0;
+            border-top: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <div>महत्त्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
-        <div>वि.सं. २०८३ भदौ १० | नेपाल संवत ११४६</div>
+    <div class="admin-container">
+        <div class="main-header-box">
+            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
+        </div>
+
+        <!-- १. लगइन सेक्सन -->
+        <div id="loginSection">
+            <h3 style="text-align: center; border-left: none; padding-left: 0;">प्रशासन लगइन</h3>
+            <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
+                <div class="form-group">
+                    <label>युजरनेम (Username):</label>
+                    <input type="text" id="username" placeholder="युजरनेम हाल्नुहोस्" required>
+                </div>
+                <div class="form-group">
+                    <label>पासवर्ड (Password):</label>
+                    <input type="password" id="password" placeholder="पासवर्ड हाल्नुहोस्" required>
+                </div>
+                <button type="submit">लगइन गर्नुहोस्</button>
+            </form>
+        </div>
+
+        <!-- २. मुख्य ड्यासबोर्ड -->
+        <div id="dashboardSection" class="hidden">
+            <div class="top-header">
+                <span class="welcome-text">✔ स्वागत छ, एडमिन!</span>
+                <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
+            </div>
+
+            <!-- संस्थाको मुख्य विवरण -->
+            <div class="section-header">
+                <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
+                <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
+            </div>
+
+            <div id="aboutContent" class="collapsible-content">
+                <form id="aboutForm">
+                    <div class="form-group">
+                        <label>लोगोको लिङ्क (Logo URL):</label>
+                        <input type="text" id="logo_url" required>
+                    </div>
+                    <div class="form-group">
+                        <label>संस्थाको नाम (नेपालीमा):</label>
+                        <input type="text" id="title_ne" required>
+                    </div>
+                    <div class="form-group">
+                        <label>संस्थाको नाम (अंग्रेजीमा):</label>
+                        <input type="text" id="title_en" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ठेगाना:</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>स्थापना / दर्ता मिति:</label>
+                        <input type="text" id="reg_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>कम्पनी दर्ता नं. र पान नम्बर:</label>
+                        <input type="text" id="reg_no" required>
+                    </div>
+                    <div class="form-group">
+                        <label>संस्थाको परिचय:</label>
+                        <textarea id="introduction" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>कामको व्याख्या तथा उद्देश्यहरू:</label>
+                        <textarea id="description" required></textarea>
+                    </div>
+                    <button type="submit">मुख्य विवरण सेभ गर्नुहोस्</button>
+                </form>
+            </div>
+
+            <hr>
+
+            <!-- संस्थापक समिति सेक्सन -->
+            <div class="section-header">
+                <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
+                <button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button>
+            </div>
+
+            <div id="committeeContent" class="collapsible-content">
+                <form id="committeeForm">
+                    <input type="hidden" id="edit_id">
+                    <div class="form-group">
+                        <label>पूरा नाम:</label>
+                        <input type="text" id="c_name" placeholder="सदस्यको नाम" required>
+                    </div>
+                    <div class="form-group">
+                        <label>पद (जस्तै: संयोजक):</label>
+                        <input type="text" id="c_position" placeholder="पद" required>
+                    </div>
+                    <div class="form-group">
+                        <label>सदस्य नम्बर:</label>
+                        <input type="text" id="c_member_no" placeholder="सदस्य नं.">
+                    </div>
+                    <div class="form-group">
+                        <label>सम्पर्क नम्बर:</label>
+                        <input type="text" id="c_phone" placeholder="फोन नम्बर">
+                    </div>
+                    <div class="form-group">
+                        <label>फोटोको लिङ्क (Photo URL):</label>
+                        <input type="text" id="c_photo" placeholder="फोटोको लिङ्क">
+                    </div>
+                    <button type="submit" id="submitBtn">सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <!-- संस्थापक सदस्यहरूको सूची -->
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
+                <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+            </div>
+
+            <div id="tableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th>नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="committeeTableBody">
+                            <!-- जाभास्क्रिप्टबाट लोड हुने -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- केन्द्रीय समिति सेक्सन -->
+            <div class="section-header">
+                <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
+                <button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button>
+            </div>
+
+            <div id="centralContent" class="collapsible-content">
+                <form id="centralCommitteeForm">
+                    <input type="hidden" id="central_edit_id">
+                    <div class="form-group">
+                        <label>पूरा नाम:</label>
+                        <input type="text" id="cc_name" placeholder="सदस्यको नाम" required>
+                    </div>
+                    <div class="form-group">
+                        <label>पद (जस्तै: अध्यक्ष):</label>
+                        <input type="text" id="cc_position" placeholder="पद" required>
+                    </div>
+                    <div class="form-group">
+                        <label>सदस्य नम्बर:</label>
+                        <input type="text" id="cc_member_no" placeholder="सदस्य नं.">
+                    </div>
+                    <div class="form-group">
+                        <label>सम्पर्क नम्बर:</label>
+                        <input type="text" id="cc_phone" placeholder="फोन नम्बर">
+                    </div>
+                    <div class="form-group">
+                        <label>फोटोको लिङ्क (Photo URL):</label>
+                        <input type="text" id="cc_photo" placeholder="फोटोको लिङ्क">
+                    </div>
+                    <button type="submit" id="centralSubmitBtn">केन्द्रीय सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <!-- केन्द्रीय सदस्यहरूको सूची -->
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
+                <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+            </div>
+
+            <div id="centralTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th>नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="centralTableBody">
+                            <!-- जाभास्क्रिप्टबाट लोड हुने -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="message"></div>
     </div>
-
-    <div class="header-split">
-        <div class="header-green">
-            <div class="logo-box">
-                <img id="top_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="logo">
-            </div>
-            <div>
-                <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
-                <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
-            </div>
-        </div>
-        <div class="header-red"></div>
-    </div>
-
-    <div class="nav">
-        <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
-        <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
-        
-        <div class="dropdown">
-            <a href="#">समिति ▾</a>
-            <div class="dropdown-content">
-                <a onclick="switchPage('founder-committee', this)">संस्थापक समिति</a>
-                <a onclick="switchPage('central-committee', this)">केन्द्रीय समिति</a>
-                <a onclick="switchPage('advisory-committee', this)">केन्द्रीय सल्लाहकार समिति</a>
-                <a onclick="switchPage('province-committee', this)">प्रदेश समिति</a>
-                <a onclick="switchPage('district-committee', this)">जिल्ला समिति</a>
-                <a onclick="switchPage('local-committee', this)">स्थानिय समिति</a>
-            </div>
-        </div>
-
-        <a onclick="switchPage('notice', this)">सुचना तथा प्रेस विज्ञप्ति</a>
-        <a onclick="switchPage('contact', this)">सम्पर्क</a>
-        
-        <div class="dropdown">
-            <a href="#">सदस्यता ▾</a>
-            <div class="dropdown-content">
-                <a onclick="switchPage('new-membership', this)">नयाँ सदस्यता</a>
-                <a onclick="switchPage('renewal', this)">नवीकरण</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        
-        <div id="home" class="page-section active-page">
-            <div class="card">
-                <h2>स्वागत तथा परिचयात्मक मन्तव्य</h2>
-                <p>यस दशाैँदी समाज नेपालको आधिकारिक वेबसाइटमा हार्दिक स्वागत छ। समाजका गतिविधिहरू, सूचनाहरू र विभिन्न अपडेटहरू अब यसै पोर्टल मार्फत प्राप्त गर्न सक्नुहुनेछ।</p>
-            </div>
-        </div>
-
-        <!-- हाम्रो बारेमा -->
-        <div id="about" class="page-section">
-            <div class="card">
-                <div class="about-header">
-                    <img id="db_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="about-logo">
-                    <h2 class="about-title-ne" id="db_title_ne">लोड हुँदैछ...</h2>
-                    <h3 class="about-title-en" id="db_title_en"></h3>
-                    <div class="about-meta" id="db_address"></div>
-                    <div class="about-meta" id="db_reg_date"></div>
-                    <div class="about-meta" id="db_reg_no"></div>
-                </div>
-
-                <div class="about-section">
-                    <h3>संस्थाको परिचय</h3>
-                    <p id="db_introduction"></p>
-                </div>
-
-                <div class="about-section">
-                    <h3>कामको व्याख्या तथा उद्देश्यहरू</h3>
-                    <p id="db_description"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- संस्थापक समिति -->
-        <div id="founder-committee" class="page-section">
-            <div class="card">
-                <h2>संस्थापक समिति</h2>
-                <div id="founder_container" class="committee-grid">
-                    <p>लोड हुँदैछ...</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- केन्द्रीय समिति -->
-        <div id="central-committee" class="page-section">
-            <div class="card">
-                <h2>केन्द्रीय समिति</h2>
-                <div id="central_container" class="committee-grid">
-                    <p>लोड हुँदैछ...</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="advisory-committee" class="page-section">
-            <div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>यहाँ केन्द्रीय सल्लाहकार समितिका सदस्यहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="province-committee" class="page-section">
-            <div class="card"><h2>प्रदेश समिति</h2><p>यहाँ विभिन्न प्रदेश अन्तर्गतका समितिहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="district-committee" class="page-section">
-            <div class="card"><h2>जिल्ला समिति</h2><p>यहाँ जिल्ला कार्यसमितिहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="local-committee" class="page-section">
-            <div class="card"><h2>स्थानिय समिति</h2><p>यहाँ स्थानीय तह तथा वडा समितिहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="notice" class="page-section">
-            <div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>हाल प्रकाशित कुनै पनि सूचना तथा प्रेस विज्ञप्तिहरू उपलब्ध छैनन्।</p></div>
-        </div>
-
-        <div id="contact" class="page-section">
-            <div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div>
-        </div>
-
-        <div id="new-membership" class="page-section">
-            <div class="card"><h2>नयाँ सदस्यता फारम</h2><p>नयाँ सदस्यता लिने प्रक्रिया र फारम यहाँ उपलब्ध हुनेछ।</p></div>
-        </div>
-
-        <div id="renewal" class="page-section">
-            <div class="card"><h2>सदस्यता नवीकरण</h2><p>सदस्यता नवीकरण गर्ने विवरण यहाँ राखिनेछ।</p></div>
-        </div>
-
-    </div>
-
-    <footer>
-        <p>&copy; २०२६ दशाैँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
-    </footer>
 
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
@@ -192,27 +453,135 @@
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        async function fetchAboutData() {
-            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
-            if (data) {
-                if(data.logo_url) {
-                    document.getElementById('db_logo').src = data.logo_url;
-                    document.getElementById('top_logo').src = data.logo_url;
+        const messageDiv = document.getElementById('message');
+
+        function toggleSection(contentId, btn) {
+            const content = document.getElementById(contentId);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                if(contentId.includes('Table')) {
+                    btn.innerText = 'सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾';
+                } else {
+                    btn.innerText = 'खोल्नुहोस् ▾';
                 }
-                if(data.title_ne) {
-                    document.getElementById('db_title_ne').innerText = data.title_ne;
-                    document.getElementById('top_title').innerText = data.title_ne;
+            } else {
+                content.style.display = 'block';
+                if(contentId.includes('Table')) {
+                    btn.innerText = 'बन्द गर्नुहोस् ▴';
+                } else {
+                    btn.innerText = 'बन्द गर्नुहोस् ▴';
                 }
-                document.getElementById('db_title_en').innerText = data.title_en || '';
-                document.getElementById('db_address').innerText = "ठेगाना: " + (data.address || '');
-                document.getElementById('top_address').innerText = data.address || '';
-                document.getElementById('db_reg_date').innerText = "स्थापना / दर्ता मिति: " + (data.reg_date || '');
-                document.getElementById('db_reg_no').innerText = data.reg_no || '';
-                document.getElementById('db_introduction').innerText = data.introduction || '';
-                document.getElementById('db_description').innerText = data.description || '';
             }
         }
 
+        window.onload = function() {
+            if (localStorage.getItem('isAdminLoggedIn') === 'true') {
+                showDashboard();
+            }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+
+            if (user === 'admin' && pass === 'nepal123') {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'गलत युजरनेम वा पासवर्ड!';
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            messageDiv.innerText = '';
+            loadAboutData();
+            loadCommitteeData();
+            loadCentralCommitteeData();
+        }
+
+        function logout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            location.reload();
+        }
+
+        async function loadAboutData() {
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            if (data) {
+                document.getElementById('logo_url').value = data.logo_url || '';
+                document.getElementById('title_ne').value = data.title_ne || '';
+                document.getElementById('title_en').value = data.title_en || '';
+                document.getElementById('address').value = data.address || '';
+                document.getElementById('reg_date').value = data.reg_date || '';
+                document.getElementById('reg_no').value = data.reg_no || '';
+                document.getElementById('introduction').value = data.introduction || '';
+                document.getElementById('description').value = data.description || '';
+            }
+        }
+
+        document.getElementById('aboutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const updatedData = {
+                id: 1,
+                logo_url: document.getElementById('logo_url').value,
+                title_ne: document.getElementById('title_ne').value,
+                title_en: document.getElementById('title_en').value,
+                address: document.getElementById('address').value,
+                reg_date: document.getElementById('reg_date').value,
+                reg_no: document.getElementById('reg_no').value,
+                introduction: document.getElementById('introduction').value,
+                description: document.getElementById('description').value
+            };
+
+            const { error } = await supabaseClient.from('about_us').upsert(updatedData);
+            if (error) {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'त्रुटि: ' + error.message;
+            } else {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = 'सफलतापूर्वक सेभ भयो!';
+            }
+        });
+
+        // संस्थापक समिति थप्ने वा अपडेट गर्ने
+        document.getElementById('committeeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('c_name').value,
+                position: document.getElementById('c_position').value,
+                member_no: document.getElementById('c_member_no').value,
+                phone: document.getElementById('c_phone').value,
+                photo_url: document.getElementById('c_photo').value
+            };
+
+            let error;
+            if (editId) {
+                const res = await supabaseClient.from('founder_committee').update(memberData).eq('id', editId);
+                error = res.error;
+            } else {
+                const res = await supabaseClient.from('founder_committee').insert([memberData]);
+                error = res.error;
+            }
+
+            if (error) {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'त्रुटि: ' + error.message;
+            } else {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = editId ? 'सफलतापूर्वक अपडेट भयो!' : 'नयाँ सदस्य सफलतापूर्वक थपियो!';
+                document.getElementById('committeeForm').reset();
+                document.getElementById('edit_id').value = '';
+                document.getElementById('submitBtn').innerText = 'सदस्य थप्नुहोस्';
+                document.getElementById('formTitle').innerText = 'संस्थापक समितिमा नयाँ सदस्य थप्ने';
+                loadCommitteeData();
+            }
+        });
+
+        // स्मार्ट पद क्रम पत्ता लगाउने फंक्सन
         function getRoleRank(positionName) {
             if (!positionName) return 99;
             const pos = positionName.trim();
@@ -226,12 +595,13 @@
             return 99;
         }
 
-        async function fetchCommitteeData(tableName, containerId) {
-            const { data, error } = await supabaseClient.from(tableName).select('*');
-            const container = document.getElementById(containerId);
-            
-            if (error || !data || data.length === 0) {
-                container.innerHTML = '<p>हाल विवरण उपलब्ध छैन।</p>';
+        async function loadCommitteeData() {
+            const { data } = await supabaseClient.from('founder_committee').select('*');
+            const tbody = document.getElementById('committeeTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">कुनै विवरण छैन</td></tr>';
                 return;
             }
 
@@ -246,38 +616,151 @@
                 return numA - numB;
             });
 
-            let html = '';
             data.forEach(person => {
                 const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const photo = person.photo_url ? person.photo_url : defaultPhoto;
-                
-                html += `
-                    <div class="committee-card">
-                        <img src="${photo}" alt="${person.full_name}" class="committee-photo">
-                        <h3>${person.full_name}</h3>
-                        <p><strong>पद:</strong> ${person.position || 'सदस्य'}</p>
-                        ${person.phone ? `<p><strong>सम्पर्क:</strong> ${person.phone}</p>` : ''}
-                    </div>
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${photo}" class="table-avatar" alt="फोटो"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${person.member_no || '-'}</td>
+                        <td>${person.phone || '-'}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">मेटाउनुहोस्</button>
+                        </td>
+                    </tr>
                 `;
             });
-            container.innerHTML = html;
         }
 
-        fetchAboutData();
-        fetchCommitteeData('founder_committee', 'founder_container');
-        fetchCommitteeData('central_committee', 'central_container');
+        function editMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('edit_id').value = id;
+            document.getElementById('c_name').value = name;
+            document.getElementById('c_position').value = position;
+            document.getElementById('c_member_no').value = memberNo;
+            document.getElementById('c_phone').value = phone;
+            document.getElementById('c_photo').value = photoUrl;
 
-        function switchPage(pageId, element) {
-            const pages = document.querySelectorAll('.page-section');
-            pages.forEach(page => page.classList.remove('active-page'));
+            document.getElementById('submitBtn').innerText = 'अपडेट गर्नुहोस्';
+            document.getElementById('formTitle').innerText = 'सदस्यको विवरण सम्पादन गर्नुहोस्';
+            document.getElementById('committeeContent').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            document.getElementById(pageId).classList.add('active-page');
-            
-            const navLinks = document.querySelectorAll('.nav a');
-            navLinks.forEach(link => link.classList.remove('active'));
-            if(element) { element.classList.add('active'); }
+        async function deleteMember(id) {
+            if (confirm('के तपाईं यो सदस्यलाई मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('founder_committee').delete().eq('id', id);
+                if (!error) {
+                    loadCommitteeData();
+                    messageDiv.style.color = 'green';
+                    messageDiv.innerText = 'सफलतापूर्वक मेटाइयो!';
+                }
+            }
+        }
+
+        // केन्द्रीय समिति थप्ने वा अपडेट गर्ने
+        document.getElementById('centralCommitteeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('central_edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('cc_name').value,
+                position: document.getElementById('cc_position').value,
+                member_no: document.getElementById('cc_member_no').value,
+                phone: document.getElementById('cc_phone').value,
+                photo_url: document.getElementById('cc_photo').value
+            };
+
+            let error;
+            if (editId) {
+                const res = await supabaseClient.from('central_committee').update(memberData).eq('id', editId);
+                error = res.error;
+            } else {
+                const res = await supabaseClient.from('central_committee').insert([memberData]);
+                error = res.error;
+            }
+
+            if (error) {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'त्रुटि: ' + error.message;
+            } else {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = editId ? 'केन्द्रीय समिति सफलतापूर्वक अपडेट भयो!' : 'नयाँ केन्द्रीय सदस्य सफलतापूर्वक थपियो!';
+                document.getElementById('centralCommitteeForm').reset();
+                document.getElementById('central_edit_id').value = '';
+                document.getElementById('centralSubmitBtn').innerText = 'केन्द्रीय सदस्य थप्नुहोस्';
+                document.getElementById('centralFormTitle').innerText = 'केन्द्रीय समितिमा नयाँ सदस्य थप्ने';
+                loadCentralCommitteeData();
+            }
+        });
+
+        async function loadCentralCommitteeData() {
+            const { data } = await supabaseClient.from('central_committee').select('*');
+            const tbody = document.getElementById('centralTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">कुनै विवरण छैन</td></tr>';
+                return;
+            }
+
+            data.sort((a, b) => {
+                let rankA = getRoleRank(a.position);
+                let rankB = getRoleRank(b.position);
+                if (rankA !== rankB) {
+                    return rankA - rankB;
+                }
+                let numA = parseInt(a.member_no) || 999;
+                let numB = parseInt(b.member_no) || 999;
+                return numA - numB;
+            });
+
+            data.forEach(person => {
+                const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const photo = person.photo_url ? person.photo_url : defaultPhoto;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${photo}" class="table-avatar" alt="फोटो"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${person.member_no || '-'}</td>
+                        <td>${person.phone || '-'}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editCentralMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteCentralMember('${person.id}')">मेटाउनुहोस्</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editCentralMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('central_edit_id').value = id;
+            document.getElementById('cc_name').value = name;
+            document.getElementById('cc_position').value = position;
+            document.getElementById('cc_member_no').value = memberNo;
+            document.getElementById('cc_phone').value = phone;
+            document.getElementById('cc_photo').value = photoUrl;
+
+            document.getElementById('centralSubmitBtn').innerText = 'अपडेट गर्नुहोस्';
+            document.getElementById('centralFormTitle').innerText = 'केन्द्रीय सदस्यको विवरण सम्पादन गर्नुहोस्';
+            document.getElementById('centralContent').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deleteCentralMember(id) {
+            if (confirm('के तपाईं यो केन्द्रीय सदस्यलाई मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('central_committee').delete().eq('id', id);
+                if (!error) {
+                    loadCentralCommitteeData();
+                    messageDiv.style.color = 'green';
+                    messageDiv.innerText = 'सफलतापूर्वक मेटाइयो!';
+                }
+            }
         }
     </script>
-
 </body>
 </html>
