@@ -7,7 +7,10 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
         
-        /* Split Header Container (आधा हरियो र आधा रातो भाग) */
+        /* Top Bar */
+        .top-bar { background-color: #1a365d; color: white; padding: 8px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Split Header (बायाँ हरियो र दायाँ रातो) */
         .header-split {
             display: flex;
             width: 100%;
@@ -49,10 +52,14 @@
             font-weight: bold;
         }
 
-        /* Logo and Text Styles */
+        /* Logo Box */
         .logo-box {
             width: 90px;
             height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+            border: 2px solid white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -61,8 +68,7 @@
         .logo {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
+            object-fit: cover;
         }
 
         .header-green h1 { margin: 0; font-size: 24px; color: white; }
@@ -83,9 +89,15 @@
 </head>
 <body>
 
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div>महत्त्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
+        <div>वि.सं. २०८३ भदौ १० | नेपाल संवत ११४६</div>
+    </div>
+
     <!-- Split Header (बायाँ हरियो र दायाँ रातो) -->
     <div class="header-split">
-        <!-- हरियो भाग -->
+        <!-- हरियो भाग (Gmail र लोगो/नाम सहित) -->
         <div class="header-green">
             <div class="top-info-green">Gmail: dashaundisamajnepal@gmail.com</div>
             <div class="main-title-area">
@@ -99,9 +111,9 @@
             </div>
         </div>
 
-        <!-- रातो भाग -->
+        <!-- रातो भाग (दर्ता नम्बर सहित) -->
         <div class="header-red">
-            <div class="top-info-red">दर्ता नं. ३२१८१८/०८०/०८१</div>
+            <div class="top-info-red">दर्ता नं. ३२१८льник/०८०/०८१</div>
         </div>
     </div>
 
