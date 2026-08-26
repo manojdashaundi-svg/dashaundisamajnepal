@@ -137,8 +137,14 @@
             </div>
         </div>
 
+        <!-- केन्द्रीय समिति -->
         <div id="central-committee" class="page-section">
-            <div class="card"><h2>केन्द्रीय समिति</h2><p>यहाँ केन्द्रीय समितिका पदाधिकारी तथा सदस्यहरूको विवरण राखिनेछ।</p></div>
+            <div class="card">
+                <h2>केन्द्रीय समिति</h2>
+                <div id="central_container" class="committee-grid">
+                    <p>लोड हुँदैछ...</p>
+                </div>
+            </div>
         </div>
 
         <div id="advisory-committee" class="page-section">
@@ -207,30 +213,37 @@
             }
         }
 
-        async function fetchFounderCommittee() {
-            const { data, error } = await supabaseClient.from('founder_committee').select('*');
-            const container = document.getElementById('founder_container');
+        function getRoleRank(positionName) {
+            if (!positionName) return 99;
+            const pos = positionName.trim();
+            if (pos.includes('अध्यक्ष') && pos.includes('वरिष्ठ')) return 2;
+            if (pos.includes('अध्यक्ष')) return 1;
+            if (pos.includes('उपाध्यक्ष')) return 3;
+            if (pos.includes('सह सचिव') || pos.includes('सहसचिव')) return 5;
+            if (pos.includes('सचिव')) return 4;
+            if (pos.includes('कोषाध्यक्ष')) return 6;
+            if (pos.includes('सदस्य')) return 7;
+            return 99;
+        }
+
+        async function fetchCommitteeData(tableName, containerId) {
+            const { data, error } = await supabaseClient.from(tableName).select('*');
+            const container = document.getElementById(containerId);
             
             if (error || !data || data.length === 0) {
-                container.innerHTML = '<p>हाल संस्थापक समितिको विवरण उपलब्ध छैन।</p>';
+                container.innerHTML = '<p>हाल विवरण उपलब्ध छैन।</p>';
                 return;
             }
 
-            // पद अनुसार मिलाउने क्रम (Hierarchy Sorting)
-            const roleOrder = {
-                'अध्यक्ष': 1,
-                'वरिष्ठ उपाध्यक्ष': 2,
-                'उपाध्यक्ष': 3,
-                'सचिव': 4,
-                'सह सचिव': 5,
-                'कोषाध्यक्ष': 6,
-                'सदस्य': 7
-            };
-
             data.sort((a, b) => {
-                let rankA = roleOrder[a.position] || 99;
-                let rankB = roleOrder[b.position] || 99;
-                return rankA - rankB;
+                let rankA = getRoleRank(a.position);
+                let rankB = getRoleRank(b.position);
+                if (rankA !== rankB) {
+                    return rankA - rankB;
+                }
+                let numA = parseInt(a.member_no) || 999;
+                let numB = parseInt(b.member_no) || 999;
+                return numA - numB;
             });
 
             let html = '';
@@ -251,7 +264,8 @@
         }
 
         fetchAboutData();
-        fetchFounderCommittee();
+        fetchCommitteeData('founder_committee', 'founder_container');
+        fetchCommitteeData('central_committee', 'central_container');
 
         function switchPage(pageId, element) {
             const pages = document.querySelectorAll('.page-section');
