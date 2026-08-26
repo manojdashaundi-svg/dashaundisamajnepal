@@ -601,7 +601,16 @@
                 return;
             }
 
-            data.sort((a, b) => getRoleRank(a.position) - getRoleRank(b.position));
+            data.sort((a, b) => {
+                let rankA = getRoleRank(a.position);
+                let rankB = getRoleRank(b.position);
+                if (rankA !== rankB) {
+                    return rankA - rankB;
+                }
+                let numA = parseInt(a.member_no) || 999;
+                let numB = parseInt(b.member_no) || 999;
+                return numA - numB;
+            });
 
             data.forEach(person => {
                 const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
@@ -693,7 +702,16 @@
                 return;
             }
 
-            data.sort((a, b) => getRoleRank(a.position) - getRoleRank(b.position));
+            data.sort((a, b) => {
+                let rankA = getRoleRank(a.position);
+                let rankB = getRoleRank(b.position);
+                if (rankA !== rankB) {
+                    return rankA - rankB;
+                }
+                let numA = parseInt(a.member_no) || 999;
+                let numB = parseInt(b.member_no) || 999;
+                return numA - numB;
+            });
 
             data.forEach(person => {
                 const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
