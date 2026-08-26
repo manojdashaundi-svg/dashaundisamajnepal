@@ -17,11 +17,11 @@
         .header-green h1 { margin: 0; font-size: 24px; color: white; }
         .header-green p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
         .nav { background-color: #1a365d; display: flex; padding: 0 20px; position: relative; }
-        .nav a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; }
-        .nav a:hover, .nav a.active { background-color: #3b5998; }
+        .nav > a, .dropdown > a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; }
+        .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
         .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1; }
-        .dropdown-content a { padding: 10px 16px; font-weight: normal; }
+        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 220px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 10; top: 100%; left: 0; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; font-weight: normal; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .dropdown-content a:hover { background-color: #3b5998; }
         .dropdown:hover .dropdown-content { display: block; }
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
@@ -48,11 +48,11 @@
     <div class="header-split">
         <div class="header-green">
             <div class="logo-box">
-                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="logo">
+                <img id="top_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="logo">
             </div>
             <div>
-                <h1>दशाैँदी समाज नेपाल</h1>
-                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
+                <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
+                <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
             </div>
         </div>
         <div class="header-red"></div>
@@ -61,7 +61,20 @@
     <div class="nav">
         <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
         <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
-        <a onclick="switchPage('committee', this)">समिति</a>
+        
+        <!-- समिति ड्रपडाउन मेनु -->
+        <div class="dropdown">
+            <a href="#">समिति ▾</a>
+            <div class="dropdown-content">
+                <a onclick="switchPage('founder-committee', this)">संस्थापक समिति</a>
+                <a onclick="switchPage('central-committee', this)">केन्द्रीय समिति</a>
+                <a onclick="switchPage('advisory-committee', this)">केन्द्रीय सल्लाहकार समिति</a>
+                <a onclick="switchPage('province-committee', this)">प्रदेश समिति</a>
+                <a onclick="switchPage('district-committee', this)">जिल्ला समिति</a>
+                <a onclick="switchPage('local-committee', this)">स्थानिय समिति</a>
+            </div>
+        </div>
+
         <a onclick="switchPage('notice', this)">सुचना तथा प्रेस विज्ञप्ति</a>
         <a onclick="switchPage('contact', this)">सम्पर्क</a>
         
@@ -83,7 +96,7 @@
             </div>
         </div>
 
-        <!-- हाम्रो बारेमा (Supabase बाट स्वचालित डेटा लोड हुने ठाउँ) -->
+        <!-- हाम्रो बारेमा -->
         <div id="about" class="page-section">
             <div class="card">
                 <div class="about-header">
@@ -107,10 +120,32 @@
             </div>
         </div>
 
-        <div id="committee" class="page-section">
-            <div class="card"><h2>समिति विवरण</h2><p>यहाँ कार्यसमितिका पदाधिकारीहरूको विवरण राखिनेछ।</p></div>
+        <!-- समितिहरूका पेजहरू -->
+        <div id="founder-committee" class="page-section">
+            <div class="card"><h2>संस्थापक समिति</h2><p>यहाँ संस्थापक समितिमा रहनुहुने महानुभावहरूको विवरण राखिनेछ।</p></div>
         </div>
 
+        <div id="central-committee" class="page-section">
+            <div class="card"><h2>केन्द्रीय समिति</h2><p>यहाँ केन्द्रीय समितिका पदाधिकारी तथा सदस्यहरूको विवरण राखिनेछ।</p></div>
+        </div>
+
+        <div id="advisory-committee" class="page-section">
+            <div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>यहाँ केन्द्रीय सल्लाहकार समितिका सदस्यहरूको विवरण राखिनेछ।</p></div>
+        </div>
+
+        <div id="province-committee" class="page-section">
+            <div class="card"><h2>प्रदेश समिति</h2><p>यहाँ विभिन्न प्रदेश अन्तर्गतका समितिहरूको विवरण राखिनेछ।</p></div>
+        </div>
+
+        <div id="district-committee" class="page-section">
+            <div class="card"><h2>जिल्ला समिति</h2><p>यहाँ जिल्ला कार्यसमितिहरूको विवरण राखिनेछ।</p></div>
+        </div>
+
+        <div id="local-committee" class="page-section">
+            <div class="card"><h2>स्थानिय समिति</h2><p>यहाँ स्थानीय तह तथा वडा समितिहरूको विवरण राखिनेछ।</p></div>
+        </div>
+
+        <!-- अन्य पेजहरू -->
         <div id="notice" class="page-section">
             <div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>हाल प्रकाशित कुनै पनि सूचना तथा प्रेस विज्ञप्तिहरू उपलब्ध छैनन्।</p></div>
         </div>
@@ -148,16 +183,21 @@
                 .single();
 
             if (data) {
-                if(data.logo_url) document.getElementById('db_logo').src = data.logo_url;
-                document.getElementById('db_title_ne').innerText = data.title_ne || '';
+                if(data.logo_url) {
+                    document.getElementById('db_logo').src = data.logo_url;
+                    document.getElementById('top_logo').src = data.logo_url;
+                }
+                if(data.title_ne) {
+                    document.getElementById('db_title_ne').innerText = data.title_ne;
+                    document.getElementById('top_title').innerText = data.title_ne;
+                }
                 document.getElementById('db_title_en').innerText = data.title_en || '';
                 document.getElementById('db_address').innerText = "ठेगाना: " + (data.address || '');
+                document.getElementById('top_address').innerText = data.address || '';
                 document.getElementById('db_reg_date').innerText = "स्थापना / दर्ता मिति: " + (data.reg_date || '');
                 document.getElementById('db_reg_no').innerText = data.reg_no || '';
                 document.getElementById('db_introduction').innerText = data.introduction || '';
                 document.getElementById('db_description').innerText = data.description || '';
-            } else {
-                console.error("Data fetch error:", error);
             }
         }
 
@@ -167,10 +207,11 @@
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => page.classList.remove('active-page'));
 
-            const navLinks = document.querySelectorAll('.nav > a');
-            navLinks.forEach(link => link.classList.remove('active'));
-
             document.getElementById(pageId).classList.add('active-page');
+            
+            // मेनु एक्टिभ हाइलाइट मिलाउने
+            const navLinks = document.querySelectorAll('.nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
             if(element) { element.classList.add('active'); }
         }
     </script>
