@@ -7,76 +7,208 @@
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
-        .admin-container { max-width: 700px; background: white; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h2 { color: #1a365d; text-align: center; }
+        body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; margin: 0; }
+        .admin-container { max-width: 800px; background: white; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2, h3 { color: #1a365d; text-align: center; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
-        input[type="text"], textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
-        textarea { height: 100px; resize: vertical; }
+        input[type="text"], input[type="password"], textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
+        textarea { height: 80px; resize: vertical; }
         button { background-color: #008000; color: white; padding: 12px 20px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold; }
         button:hover { background-color: #006600; }
+        .btn-danger { background-color: #e60000; padding: 6px 12px; font-size: 12px; width: auto; }
+        .btn-danger:hover { background-color: #b30000; }
         #message { margin-top: 15px; text-align: center; font-weight: bold; }
+        .hidden { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 14px; }
+        th { background-color: #1a365d; color: white; }
+        hr { margin: 30px 0; border: 0; border-top: 1px solid #ccc; }
     </style>
 </head>
 <body>
 
     <div class="admin-container">
         <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
-        <form id="aboutForm">
-            <!-- लोगोको लिङ्क राख्ने बक्स -->
-            <div class="form-group">
-                <label>लोगोको लिङ्क (Logo URL):</label>
-                <input type="text" id="logo_url" value="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" required>
+
+        <!-- १. लगइन सेक्सन -->
+        <div id="loginSection">
+            <h3>एडमिन लगइन गर्नुहोस्</h3>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>युजरनेम (Username):</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label>पासवर्ड (Password):</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">लगइन गर्नुहोस्</button>
+            </form>
+        </div>
+
+        <!-- २. मुख्य ड्यासबोर्ड (लगइन भएपछि मात्र देखिने) -->
+        <div id="dashboardSection" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span style="color: green; font-weight: bold;">✔ स्वागत छ, एडमिन!</span>
+                <button onclick="logout()" style="width: auto; background: #666; padding: 6px 12px; font-size: 14px;">लगआउट</button>
             </div>
-            <div class="form-group">
-                <label>संस्थाको नाम (नेपालीमा):</label>
-                <input type="text" id="title_ne" value="श्री दशौँदी समाज नेपाल" required>
-            </div>
-            <div class="form-group">
-                <label>संस्थाको नाम (अंग्रेजीमा):</label>
-                <input type="text" id="title_en" value="Dashaundi Samaj Nepal" required>
-            </div>
-            <div class="form-group">
-                <label>ठेगाना:</label>
-                <input type="text" id="address" value="केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल" required>
-            </div>
-            <div class="form-group">
-                <label>स्थापना / दर्ता मिति:</label>
-                <input type="text" id="reg_date" value="वि.सं. २०८० आश्विन २५ गते (12 October 2023)" required>
-            </div>
-            <div class="form-group">
-                <label>कम्पनी दर्ता नं. र पान नम्बर:</label>
-                <input type="text" id="reg_no" value="कम्पनी दर्ता नं.: ३२१८१८/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ६१९७९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३" required>
-            </div>
-            <div class="form-group">
-                <label>संस्थाको परिचय:</label>
-                <textarea id="introduction" required>श्री दशौँदी समाज नेपाल नेपाल सरकार, उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय, कम्पनी रजिष्ट्रारको कार्यालयमा कम्पनी ऐन, २०६३ बमोजिम मुनाफा वितरण नगर्ने संस्थाको रूपमा दर्ता भई सञ्चालित एक सामाजिक संस्था हो। यस संस्थाले समाज कल्याण ऐन, २०४९ अन्तर्गत समाज कल्याण परिषद्, पुल्चोक, ललितपुरबाट समेत आबद्धता (आबद्धता नं. ५५९४३) प्राप्त गरेको छ।</textarea>
-            </div>
-            <div class="form-group">
-                <label>कामको व्याख्या तथा उद्देश्यहरू:</label>
-                <textarea id="description" required>यस संस्थाले मुनाफा वितरण नगर्ने कम्पनीको रूपमा सामाजिक हित, जनचेतना अभिवृद्धि, कल्याणकारी कार्यहरू तथा राष्ट्रिय विकासका विभिन्न रचनात्मक गतिविधिहरू सञ्चालन गर्ने लक्ष्य राखेको छ। समाजका विभिन्न क्षेत्रका नागरिकहरूलाई संगठित गर्दै सामाजिक न्याय, आपसी सहयोग, र समग्र सामुदायिक विकासका निम्ति संस्थाले आफ्ना आधिकारिक कार्ययोजनाहरू कार्यान्वयन गर्दै आएको छ।</textarea>
-            </div>
-            <button type="submit">सेभ (Update) गर्नुहोस्</button>
-        </form>
+
+            <!-- संस्थाको बारेमा अपडेट गर्ने फारम -->
+            <h3>संस्थाको विवरण अपडेट गर्ने</h3>
+            <form id="aboutForm">
+                <div class="form-group">
+                    <label>लोगोको लिङ्क (Logo URL):</label>
+                    <input type="text" id="logo_url" required>
+                </div>
+                <div class="form-group">
+                    <label>संस्थाको नाम (नेपालीमा):</label>
+                    <input type="text" id="title_ne" required>
+                </div>
+                <div class="form-group">
+                    <label>संस्थाको नाम (अंग्रेजीमा):</label>
+                    <input type="text" id="title_en" required>
+                </div>
+                <div class="form-group">
+                    <label>ठेगाना:</label>
+                    <input type="text" id="address" required>
+                </div>
+                <div class="form-group">
+                    <label>स्थापना / दर्ता मिति:</label>
+                    <input type="text" id="reg_date" required>
+                </div>
+                <div class="form-group">
+                    <label>कम्पनी दर्ता नं. र पान नम्बर:</label>
+                    <input type="text" id="reg_no" required>
+                </div>
+                <div class="form-group">
+                    <label>संस्थाको परिचय:</label>
+                    <textarea id="introduction" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>कामको व्याख्या तथा उद्देश्यहरू:</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <button type="submit">मुख्य विवरण सेभ गर्नुहोस्</button>
+            </form>
+
+            <hr>
+
+            <!-- समिति नियन्त्रण सेक्सन (संस्थापक समिति) -->
+            <h3>संस्थापक समितिमा सदस्य थप्ने</h3>
+            <form id="committeeForm">
+                <div class="form-group">
+                    <label>पूरा नाम:</label>
+                    <input type="text" id="c_name" required>
+                </div>
+                <div class="form-group">
+                    <label>पद (जस्तै: संयोजक):</label>
+                    <input type="text" id="c_position" required>
+                </div>
+                <div class="form-group">
+                    <label>सदस्य नम्बर:</label>
+                    <input type="text" id="c_member_no">
+                </div>
+                <div class="form-group">
+                    <label>सम्पर्क नम्बर:</label>
+                    <input type="text" id="c_phone">
+                </div>
+                <div class="form-group">
+                    <label>फोटोको लिङ्क (Photo URL):</label>
+                    <input type="text" id="c_photo">
+                </div>
+                <button type="submit">सदस्य थप्नुहोस्</button>
+            </form>
+
+            <h3 style="margin-top: 30px;">अवस्थित संस्थापक सदस्यहरूको सूची</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>नाम</th>
+                        <th>पद</th>
+                        <th>सम्पर्क</th>
+                        <th>नियन्रण</th>
+                    </tr>
+                </thead>
+                <tbody id="committeeTableBody">
+                    <!-- जाभास्क्रिप्टबाट लोड हुने -->
+                </tbody>
+            </table>
+        </div>
+
         <div id="message"></div>
     </div>
 
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
-
-        const messageDiv = document.getElementById('message');
+        
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const form = document.getElementById('aboutForm');
+        const messageDiv = document.getElementById('message');
 
-        form.addEventListener('submit', async (e) => {
+        // पेज खुल्दा लगइन छ कि छैन जाँच गर्ने
+        window.onload = function() {
+            if (localStorage.getItem('isAdminLoggedIn') === 'true') {
+                showDashboard();
+            }
+        };
+
+        // लगइन फर्म ह्यान्डलिङ
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            messageDiv.style.color = 'blue';
-            messageDiv.innerText = 'सेभ गर्दैछ... कृपया प्रतीक्षा गर्नुहोस्।';
-            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Supabase बाट एडमिन चेक गर्ने (admin_users टेबलमा username र password हुनुपर्छ)
+            const { data, error } = await supabaseClient
+                .from('admin_users')
+                .select('*')
+                .eq('username', user)
+                .eq('password', pass)
+                .single();
+
+            if (data) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'गलत युजरनेम वा पासवर्ड!';
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            messageDiv.innerText = '';
+            loadAboutData();
+            loadCommitteeData();
+        }
+
+        function logout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            location.reload();
+        }
+
+        // संस्थाको बारेमा डेटा लोड गर्ने
+        async function loadAboutData() {
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            if (data) {
+                document.getElementById('logo_url').value = data.logo_url || '';
+                document.getElementById('title_ne').value = data.title_ne || '';
+                document.getElementById('title_en').value = data.title_en || '';
+                document.getElementById('address').value = data.address || '';
+                document.getElementById('reg_date').value = data.reg_date || '';
+                document.getElementById('reg_no').value = data.reg_no || '';
+                document.getElementById('introduction').value = data.introduction || '';
+                document.getElementById('description').value = data.description || '';
+            }
+        }
+
+        // संस्थाको बारेमा सेभ गर्ने
+        document.getElementById('aboutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
             const updatedData = {
                 id: 1,
                 logo_url: document.getElementById('logo_url').value,
@@ -89,23 +221,73 @@
                 description: document.getElementById('description').value
             };
 
-            try {
-                const { error } = await supabaseClient
-                    .from('about_us')
-                    .upsert(updatedData);
-
-                if (error) {
-                    messageDiv.style.color = 'red';
-                    messageDiv.innerText = 'डाटाबेसमा समस्या: ' + error.message;
-                } else {
-                    messageDiv.style.color = 'green';
-                    messageDiv.innerText = 'सफलतापूर्वक सेभ भयो!';
-                }
-            } catch (err) {
+            const { error } = await supabaseClient.from('about_us').upsert(updatedData);
+            if (error) {
                 messageDiv.style.color = 'red';
-                messageDiv.innerText = 'नेटवर्क त्रुटि: ' + err.message;
+                messageDiv.innerText = 'त्रुटि: ' + error.message;
+            } else {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = 'सफलतापूर्वक सेभ भयो!';
             }
         });
+
+        // संस्थापक समितिमा सदस्य थप्ने
+        document.getElementById('committeeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newMember = {
+                full_name: document.getElementById('c_name').value,
+                position: document.getElementById('c_position').value,
+                member_no: document.getElementById('c_member_no').value,
+                phone: document.getElementById('c_phone').value,
+                photo_url: document.getElementById('c_photo').value
+            };
+
+            const { error } = await supabaseClient.from('founder_committee').insert([newMember]);
+            if (error) {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'समितिमा थप्न त्रुटि: ' + error.message;
+            } else {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = 'नयाँ सदस्य सफलतापूर्वक थपियो!';
+                document.getElementById('committeeForm').reset();
+                loadCommitteeData();
+            }
+        });
+
+        // एडमिन प्यानलमा सदस्यहरूको सूची देखाउने र मेटाउने बटन राख्ने
+        async function loadCommitteeData() {
+            const { data } = await supabaseClient.from('founder_committee').select('*');
+            const tbody = document.getElementById('committeeTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4">कुनै विवरण छैन</td></tr>';
+                return;
+            }
+
+            data.forEach(person => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${person.full_name}</td>
+                        <td>${person.position}</td>
+                        <td>${person.phone || '-'}</td>
+                        <td><button class="btn-danger" onclick="deleteMember('${person.id}')">मेटाउनुहोस्</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // सदस्य मेटाउने फंक्सन
+        async function deleteMember(id) {
+            if (confirm('के तपाईं यो सदस्यलाई मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('founder_committee').delete().eq('id', id);
+                if (!error) {
+                    loadCommitteeData();
+                    messageDiv.style.color = 'green';
+                    messageDiv.innerText = 'सफलतापूर्वक मेटाइयो!';
+                }
+            }
+        }
     </script>
 </body>
 </html>
