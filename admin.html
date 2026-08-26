@@ -279,12 +279,13 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 8px;
+            border: 2px solid #1a365d;
         }
-        .print-title-1 { font-size: 26px; font-weight: 900; color: #000; margin: 3px 0; }
-        .print-title-2 { font-size: 20px; font-weight: 800; color: #111; margin: 3px 0; }
-        .print-title-3 { font-size: 16px; font-weight: 700; color: #222; margin: 3px 0; }
+        .print-title-1 { font-size: 26px; font-weight: 900; color: #1a365d; margin: 3px 0; }
+        .print-title-2 { font-size: 20px; font-weight: 800; color: #444; margin: 3px 0; }
+        .print-meta { font-size: 14px; font-weight: 600; color: #333; margin: 3px 0; }
         .print-date { position: absolute; top: 0; right: 0; font-size: 13px; font-weight: bold; color: #000; }
-        .print-section-title { font-size: 20px; font-weight: 800; text-align: center; margin: 18px 0; color: #1a365d; text-decoration: underline; }
+        .print-section-title { font-size: 20px; font-weight: 800; text-align: center; margin: 20px 0; color: #1a365d; text-decoration: underline; }
 
         /* प्रिन्ट हुँदा टेबल र अक्षरहरूलाई डार्क र स्पष्ट बनाउने स्टायल */
         @media print {
@@ -307,7 +308,6 @@
             .print-header {
                 display: block !important;
             }
-            /* टेबल लाइनहरू र अक्षरहरू गाढा र डार्क पार्ने */
             table {
                 border: 2px solid #000 !important;
             }
@@ -562,8 +562,8 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन
-        function printSection(sectionId, sectionTitle) {
+        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (वेबसाइटको जस्तै पूर्ण हेटलाइनसहित)
+        async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
             
@@ -581,13 +581,22 @@
                 sectionContent.prepend(headerDiv);
             }
 
+            // Supabase बाट संस्थाको वास्तविक डाटा तानेर प्रिन्ट हेडरमा राख्ने
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            const logo = data && data.logo_url ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
+            const regDate = data && data.reg_date ? data.reg_date : 'वि.सं. २०८० आश्विन २५ गते (12 October 2023)';
+            const regNo = data && data.reg_no ? data.reg_no : 'कम्पनी दर्ता नं.: ३२१८१८/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ۶१९९९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३';
+
             const today = new Date().toLocaleDateString('ne-NP');
             headerDiv.innerHTML = `
                 <div class="print-date">मिति: ${today}</div>
-                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="print-logo" alt="लोगो">
+                <img src="${logo}" class="print-logo" alt="लोगो">
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-title-2">Dashaundi Samaj Nepal</div>
-                <div class="print-title-3">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</div>
+                <div class="print-meta">ठेगाना: ${address}</div>
+                <div class="print-meta">स्थापना / दर्ता मिति: ${regDate}</div>
+                <div class="print-meta">${regNo}</div>
                 <div class="print-section-title">${sectionTitle}</div>
             `;
 
