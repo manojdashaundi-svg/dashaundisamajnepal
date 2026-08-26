@@ -354,23 +354,30 @@
                 </form>
             </div>
 
-            <h3 style="margin-top: 35px; color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>फोटो</th>
-                            <th>नाम</th>
-                            <th>पद</th>
-                            <th>सदस्य नं.</th>
-                            <th>सम्पर्क</th>
-                            <th>नियन्त्रण</th>
-                        </tr>
-                    </thead>
-                    <tbody id="committeeTableBody">
-                        <!-- जाभास्क्रिप्टबाट लोड हुने -->
-                    </tbody>
-                </table>
+            <!-- संस्थापक सदस्यहरूको सूची र त्यसको दायाँपट्टि बटन -->
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
+                <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+            </div>
+
+            <div id="tableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th>नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="committeeTableBody">
+                            <!-- जाभास्क्रिप्टबाट लोड हुने -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -390,10 +397,18 @@
             const content = document.getElementById(contentId);
             if (content.style.display === 'block') {
                 content.style.display = 'none';
-                btn.innerText = 'खोल्नुहोस् ▾';
+                if(contentId === 'tableContent') {
+                    btn.innerText = 'सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾';
+                } else {
+                    btn.innerText = 'खोल्नुहोस् ▾';
+                }
             } else {
                 content.style.display = 'block';
-                btn.innerText = 'बन्द गर्नुहोस् ▴';
+                if(contentId === 'tableContent') {
+                    btn.innerText = 'बन्द गर्नुहोस् ▴';
+                } else {
+                    btn.innerText = 'बन्द गर्नुहोस् ▴';
+                }
             }
         }
 
@@ -403,7 +418,6 @@
             }
         };
 
-        // सोझै लगइन चेक गर्ने (Username: admin / Password: nepal123)
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const user = document.getElementById('username').value.trim();
