@@ -7,13 +7,13 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
         
-        /* Letterhead Style Split Top Bar (रातो र हरियो मिश्रित बार) */
+        /* Top Bar (रातो र हरियो बार) */
         .top-bar-container {
             display: flex;
             height: 38px;
         }
         .top-bar-green {
-            background-color: #008000; /* हरियो भाग */
+            background-color: #008000;
             color: white;
             flex: 1;
             display: flex;
@@ -23,7 +23,7 @@
             font-weight: bold;
         }
         .top-bar-red {
-            background-color: #e60000; /* रातो भाग */
+            background-color: #e60000;
             color: white;
             flex: 1;
             display: flex;
@@ -34,8 +34,16 @@
             font-weight: bold;
         }
 
-        /* Header */
-        .header { background-color: #2b4c7e; color: white; padding: 20px; display: flex; align-items: center; gap: 20px; }
+        /* Header (सेतो र ठ्याक्कै सेम रङ्ग भएको) */
+        .header { 
+            background-color: #ffffff; 
+            color: #1a365d; 
+            padding: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            border-bottom: 3px solid #e60000; /* लेटरप्याड जस्तै तल रातो घेरा */
+        }
         
         .logo-box {
             width: 90px;
@@ -49,11 +57,19 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 50%;
         }
 
-        .header h1 { margin: 0; font-size: 24px; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
+        .header h1 { 
+            margin: 0; 
+            font-size: 26px; 
+            color: #8b0000; /* लेटरप्याड जस्तै गाढा रातो/खैरो शीर्षक */
+        }
+        .header p { 
+            margin: 5px 0 0 0; 
+            font-size: 15px; 
+            color: #1a365d; 
+            font-weight: bold;
+        }
         
         /* Navigation */
         .nav { background-color: #1a365d; display: flex; padding: 0 20px; }
@@ -70,7 +86,7 @@
 </head>
 <body>
 
-    <!-- Letterhead Style Split Top Bar (रातो र हरियो बार) -->
+    <!-- Top Bar -->
     <div class="top-bar-container">
         <div class="top-bar-green">
             Gmail: dashaundisamajnepal@gmail.com
