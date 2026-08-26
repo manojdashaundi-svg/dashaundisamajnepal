@@ -11,10 +11,14 @@
         /* Header */
         .header { background-color: #2b4c7e; color: white; padding: 20px; display: flex; align-items: center; gap: 20px; }
         
-        /* Transparent Logo Style (सेतो घेरा पूर्ण रूपमा हटाइएको) */
+        /* Logo Box */
         .logo-box {
             width: 90px;
             height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+            border: 2px solid white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,8 +27,7 @@
         .logo {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
+            object-fit: cover;
         }
 
         .header h1 { margin: 0; font-size: 24px; }
@@ -69,7 +72,7 @@
         <a href="#">सम्पर्क</a>
     </div>
 
-    -- Main Container -->
+    <!-- Main Container -->
     <div class="container">
         <div class="card">
             <h2>स्वागत तथा परिचयात्मक मन्तव्य</h2>
