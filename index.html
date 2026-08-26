@@ -9,10 +9,30 @@
         /* Top Bar */
         .top-bar { background-color: #1a365d; color: white; padding: 8px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
         /* Header */
-        .header { background-color: #2b4c7e; color: white; padding: 20px; display: flex; align-items: center; gap: 25px; }
-        .logo { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; background: white; padding: 0px; border: 3px solid white; margin-left: -5px; }
-        .header h1 { margin: 0; font-size: 26px; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
+        .header { background-color: #2b4c7e; color: white; padding: 25px 20px; display: flex; align-items: center; gap: 25px; }
+        
+        /* Logo Container to crop extra white space and make it large */
+        .logo-box {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+            border: 3px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .logo {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .header h1 { margin: 0; font-size: 28px; }
+        .header p { margin: 8px 0 0 0; font-size: 15px; color: #e2e8f0; }
+        
         /* Navigation */
         .nav { background-color: #1a365d; display: flex; padding: 0 20px; }
         .nav a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-weight: bold; }
@@ -34,7 +54,9 @@
 
     <!-- Header -->
     <div class="header">
-        <img src="https://i.postimg.cc/yNmdjzLh/last-l-2ogo-jpg.jpg" alt="दशाैँदी समाज नेपाल लोगो" class="logo">
+        <div class="logo-box">
+            <img src="https://i.postimg.cc/yNmdjzLh/last-l-2ogo-jpg.jpg" alt="दशाैँदी समाज नेपाल लोगो" class="logo">
+        </div>
         <div>
             <h1>दशाैँदी समाज नेपाल</h1>
             <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
