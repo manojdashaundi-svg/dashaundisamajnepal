@@ -35,6 +35,14 @@
         .about-meta { font-size: 16px; color: #333; margin: 8px 0; }
         .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 16px; }
         .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 25px; }
+        
+        /* कमिटी ग्रिड र कार्ड स्टायल */
+        .committee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
+        .committee-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .committee-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; margin-bottom: 12px; }
+        .committee-card h3 { color: #1a365d; margin: 8px 0 4px 0; font-size: 18px; }
+        .committee-card p { color: #555; margin: 4px 0; font-size: 14px; }
+        
         footer { background-color: #1a365d; color: white; text-align: center; padding: 15px; margin-top: 40px; font-size: 14px; }
     </style>
 </head>
@@ -62,7 +70,6 @@
         <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
         <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
         
-        <!-- समिति ड्रपडाउन मेनु -->
         <div class="dropdown">
             <a href="#">समिति ▾</a>
             <div class="dropdown-content">
@@ -120,9 +127,14 @@
             </div>
         </div>
 
-        <!-- समितिहरूका पेजहरू -->
+        <!-- संस्थापक समिति -->
         <div id="founder-committee" class="page-section">
-            <div class="card"><h2>संस्थापक समिति</h2><p>यहाँ संस्थापक समितिमा रहनुहुने महानुभावहरूको विवरण राखिनेछ।</p></div>
+            <div class="card">
+                <h2>संस्थापक समिति</h2>
+                <div id="founder_container" class="committee-grid">
+                    <p>लोड हुँदैछ...</p>
+                </div>
+            </div>
         </div>
 
         <div id="central-committee" class="page-section">
@@ -145,7 +157,6 @@
             <div class="card"><h2>स्थानिय समिति</h2><p>यहाँ स्थानीय तह तथा वडा समितिहरूको विवरण राखिनेछ।</p></div>
         </div>
 
-        <!-- अन्य पेजहरू -->
         <div id="notice" class="page-section">
             <div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>हाल प्रकाशित कुनै पनि सूचना तथा प्रेस विज्ञप्तिहरू उपलब्ध छैनन्।</p></div>
         </div>
@@ -176,12 +187,7 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function fetchAboutData() {
-            const { data, error } = await supabaseClient
-                .from('about_us')
-                .select('*')
-                .eq('id', 1)
-                .single();
-
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
             if (data) {
                 if(data.logo_url) {
                     document.getElementById('db_logo').src = data.logo_url;
@@ -201,7 +207,35 @@
             }
         }
 
+        async function fetchFounderCommittee() {
+            const { data, error } = await supabaseClient.from('founder_committee').select('*');
+            const container = document.getElementById('founder_container');
+            
+            if (error || !data || data.length === 0) {
+                container.innerHTML = '<p>हाल संस्थापक समितिको विवरण उपलब्ध छैन।</p>';
+                return;
+            }
+
+            let html = '';
+            data.forEach(person => {
+                const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const photo = person.photo_url ? person.photo_url : defaultPhoto;
+                
+                html += `
+                    <div class="committee-card">
+                        <img src="${photo}" alt="${person.full_name}" class="committee-photo">
+                        <h3>${person.full_name}</h3>
+                        <p><strong>पद:</strong> ${person.position || 'सदस्य'}</p>
+                        ${person.member_no ? `<p><strong>सदस्य नं.:</strong> ${person.member_no}</p>` : ''}
+                        ${person.phone ? `<p><strong>सम्पर्क:</strong> ${person.phone}</p>` : ''}
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
         fetchAboutData();
+        fetchFounderCommittee();
 
         function switchPage(pageId, element) {
             const pages = document.querySelectorAll('.page-section');
@@ -209,7 +243,6 @@
 
             document.getElementById(pageId).classList.add('active-page');
             
-            // मेनु एक्टिभ हाइलाइट मिलाउने
             const navLinks = document.querySelectorAll('.nav a');
             navLinks.forEach(link => link.classList.remove('active'));
             if(element) { element.classList.add('active'); }
