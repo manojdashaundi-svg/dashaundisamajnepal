@@ -403,19 +403,13 @@
             }
         };
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        // सोझै लगइन चेक गर्ने (Username: admin / Password: nepal123)
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
-            const { data } = await supabaseClient
-                .from('admin_users')
-                .select('*')
-                .eq('username', user)
-                .eq('password', pass)
-                .single();
-
-            if (data) {
+            if (user === 'admin' && pass === 'nepal123') {
                 localStorage.setItem('isAdminLoggedIn', 'true');
                 showDashboard();
             } else {
@@ -551,7 +545,7 @@
                         <td>${person.member_no || '-'}</td>
                         <td>${person.phone || '-'}</td>
                         <td>
-                            <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone \vert{}\vert{} ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">मेटाउनुहोस्</button>
                         </td>
                     </tr>
