@@ -466,7 +466,11 @@
                 }
             } else {
                 content.style.display = 'block';
-                btn.innerText = 'बन्द गर्नुहोस् ▴';
+                if(contentId.includes('Table')) {
+                    btn.innerText = 'बन्द गर्नुहोस् ▴';
+                } else {
+                    btn.innerText = 'बन्द गर्नुहोस् ▴';
+                }
             }
         }
 
