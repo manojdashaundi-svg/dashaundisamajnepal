@@ -12,6 +12,7 @@
             --accent-color: #008000;
             --danger-color: #e53e3e;
             --edit-color: #3182ce;
+            --print-color: #d69e2e;
             --bg-color: #edf2f7;
             --card-bg: #ffffff;
             --text-color: #2d3748;
@@ -71,6 +72,11 @@
             font-size: 20px;
         }
 
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
         .toggle-btn {
             background-color: var(--primary-color);
             color: white;
@@ -85,6 +91,22 @@
 
         .toggle-btn:hover {
             background-color: #2b6cb0;
+        }
+
+        .print-btn {
+            background-color: var(--print-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .print-btn:hover {
+            background-color: #b7791f;
         }
 
         .collapsible-content {
@@ -243,6 +265,26 @@
             border: 0;
             border-top: 1px solid var(--border-color);
         }
+
+        /* प्रिन्ट गर्ने बेला लुकाउने चिजहरू */
+        @media print {
+            .top-header, .section-header button, hr, #loginSection, form, .btn-action, footer {
+                display: none !important;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+            .admin-container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            .collapsible-content {
+                display: block !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -278,7 +320,10 @@
             <!-- संस्थाको मुख्य विवरण -->
             <div class="section-header">
                 <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
-                <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('aboutContent')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
+                </div>
             </div>
 
             <div id="aboutContent" class="collapsible-content">
@@ -324,7 +369,10 @@
             <!-- संस्थापक समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
-                <button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('committeeContent')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
             </div>
 
             <div id="committeeContent" class="collapsible-content">
@@ -357,7 +405,10 @@
             <!-- संस्थापक सदस्यहरूको सूची -->
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
-                <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('tableContent')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+                </div>
             </div>
 
             <div id="tableContent" class="collapsible-content">
@@ -370,7 +421,7 @@
                                 <th>पद</th>
                                 <th>सदस्य नं.</th>
                                 <th>सम्पर्क</th>
-                                <th>नियन्त्रण</th>
+                                <th class="no-print">नियन्त्रण</th>
                             </tr>
                         </thead>
                         <tbody id="committeeTableBody">
@@ -385,7 +436,10 @@
             <!-- केन्द्रीय समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
-                <button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('centralContent')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button>
+                </div>
             </div>
 
             <div id="centralContent" class="collapsible-content">
@@ -418,7 +472,10 @@
             <!-- केन्द्रीय सदस्यहरूको सूची -->
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
-                <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('centralTableContent')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+                </div>
             </div>
 
             <div id="centralTableContent" class="collapsible-content">
@@ -431,7 +488,7 @@
                                 <th>पद</th>
                                 <th>सदस्य नं.</th>
                                 <th>सम्पर्क</th>
-                                <th>नियन्त्रण</th>
+                                <th class="no-print">नियन्त्रण</th>
                             </tr>
                         </thead>
                         <tbody id="centralTableBody">
@@ -466,11 +523,24 @@
                 }
             } else {
                 content.style.display = 'block';
-                if(contentId.includes('Table')) {
-                    btn.innerText = 'बन्द गर्नुहोस् ▴';
-                } else {
-                    btn.innerText = 'बन्द गर्नुहोस् ▴';
-                }
+                btn.innerText = 'बन्द गर्नुहोस् ▴';
+            }
+        }
+
+        // तोकिएको सेक्सन मात्र प्रिन्ट वा PDF डाउनलोड गर्ने फंक्सन
+        function printSection(sectionId) {
+            const sectionContent = document.getElementById(sectionId);
+            const wasOpen = sectionContent.style.display === 'block';
+            
+            // यदि बन्द छ भने प्रिन्ट गर्न अस्थायी रूपमा खोल्ने
+            if (!wasOpen) {
+                sectionContent.style.display = 'block';
+            }
+
+            window.print();
+
+            if (!wasOpen) {
+                sectionContent.style.display = 'none';
             }
         }
 
