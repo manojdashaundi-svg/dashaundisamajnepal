@@ -562,7 +562,7 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (वेबसाइटको जस्तै पूर्ण हेटलाइनसहित)
+        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (नेपाली मितिसहित)
         async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
@@ -586,11 +586,13 @@
             const logo = data && data.logo_url ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
             const regDate = data && data.reg_date ? data.reg_date : 'वि.सं. २०८० आश्विन २५ गते (12 October 2023)';
-            const regNo = data && data.reg_no ? data.reg_no : 'कम्पनी दर्ता नं.: ३२१८१८/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ۶१९९९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३';
+            const regNo = data && data.reg_no ? data.reg_no : 'कम्पनी दर्ता नं.: ३२१८льник/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ६१९९९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३';
 
-            const today = new Date().toLocaleDateString('ne-NP');
+            // नेपाली मिति
+            const todayNe = "२०८३ भदौ १०";
+
             headerDiv.innerHTML = `
-                <div class="print-date">मिति: ${today}</div>
+                <div class="print-date">मिति: ${todayNe}</div>
                 <img src="${logo}" class="print-logo" alt="लोगो">
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-title-2">Dashaundi Samaj Nepal</div>
