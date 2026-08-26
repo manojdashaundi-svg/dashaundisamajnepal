@@ -24,6 +24,11 @@
     <div class="admin-container">
         <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         <form id="aboutForm">
+            <!-- लोगोको लिङ्क राख्ने बक्स -->
+            <div class="form-group">
+                <label>लोगोको लिङ्क (Logo URL):</label>
+                <input type="text" id="logo_url" value="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" required>
+            </div>
             <div class="form-group">
                 <label>संस्थाको नाम (नेपालीमा):</label>
                 <input type="text" id="title_ne" value="श्री दशौँदी समाज नेपाल" required>
@@ -62,8 +67,6 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
 
         const messageDiv = document.getElementById('message');
-
-        // Initialize Supabase correctly using window.supabase
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -76,6 +79,7 @@
             
             const updatedData = {
                 id: 1,
+                logo_url: document.getElementById('logo_url').value,
                 title_ne: document.getElementById('title_ne').value,
                 title_en: document.getElementById('title_en').value,
                 address: document.getElementById('address').value,
@@ -86,7 +90,7 @@
             };
 
             try {
-                const { data, error } = await supabaseClient
+                const { error } = await supabaseClient
                     .from('about_us')
                     .upsert(updatedData);
 
