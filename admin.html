@@ -58,9 +58,8 @@
     </div>
 
     <script>
-        // यहाँ आफ्नो Supabase को URL र Key राख्नुहोला
-        const SUPABASE_URL = 'तपाईंको_Supabase_URL_यहाँ_राख्नुहोस्';
-        const SUPABASE_ANON_KEY = 'तपाईंको_Supabase_Anon_Key_यहाँ_राख्नुहोस्';
+        const SUPABASE_URL = 'https://yjfxqlohfyulzwkakclu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -80,7 +79,6 @@
                 description: document.getElementById('description').value
             };
 
-            // Supabase मा डेटा पठाउने वा अपडेट गर्ने (ID = 1 लाई मान्दै)
             const { error } = await supabaseClient
                 .from('about_us')
                 .upsert({ id: 1, ...updatedData });
