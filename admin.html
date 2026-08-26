@@ -9,12 +9,12 @@
     <style>
         :root {
             --primary-color: #1a365d;
-            --secondary-color: #008000;
+            --accent-color: #008000;
             --danger-color: #e53e3e;
-            --bg-color: #f7fafc;
+            --bg-color: #edf2f7;
             --card-bg: #ffffff;
             --text-color: #2d3748;
-            --border-color: #e2e8f0;
+            --border-color: #cbd5e0;
         }
 
         body {
@@ -32,25 +32,40 @@
             padding: 40px;
             margin: 20px auto;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
-            color: var(--primary-color);
+        /* मुख्य आकर्षक हेडलाइन बक्स */
+        .main-header-box {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
             text-align: center;
             margin-bottom: 30px;
-            font-size: 26px;
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(26, 54, 93, 0.2);
+        }
+
+        .main-header-box h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+            color: white;
+            border: none;
+            padding: 0;
         }
 
         h3 {
             color: var(--primary-color);
-            margin-top: 30px;
+            margin-top: 35px;
             margin-bottom: 15px;
             font-size: 20px;
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 12px;
+            background-color: #f7fafc;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border-radius: 0 6px 6px 0;
         }
 
         .form-group {
@@ -83,7 +98,7 @@
         textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
         }
 
         textarea {
@@ -92,7 +107,7 @@
         }
 
         button {
-            background-color: var(--secondary-color);
+            background-color: var(--accent-color);
             color: white;
             padding: 12px 20px;
             border: none;
@@ -135,7 +150,7 @@
         }
 
         .welcome-text {
-            color: var(--secondary-color);
+            color: var(--accent-color);
             font-weight: bold;
             font-size: 15px;
         }
@@ -162,7 +177,6 @@
             display: none;
         }
 
-        /* टेबल डिजाइन */
         .table-responsive {
             overflow-x: auto;
         }
@@ -201,7 +215,10 @@
 <body>
 
     <div class="admin-container">
-        <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
+        <!-- आकर्षक ग्रिड र ग्रेडियन्टसहितको मुख्य हेडलाइन -->
+        <div class="main-header-box">
+            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
+        </div>
 
         <!-- १. लगइन सेक्सन -->
         <div id="loginSection">
@@ -219,14 +236,13 @@
             </form>
         </div>
 
-        <!-- २. मुख्य ड्यासबोर्ड (लगइन भएपछि देखिने) -->
+        <!-- २. मुख्य ड्यासबोर्ड -->
         <div id="dashboardSection" class="hidden">
             <div class="top-header">
                 <span class="welcome-text">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
-            <!-- संस्थाको बारेमा अपडेट गर्ने फारम -->
             <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
             <form id="aboutForm">
                 <div class="form-group">
@@ -266,7 +282,6 @@
 
             <hr>
 
-            <!-- समिति नियन्त्रण सेक्सन (संस्थापक समिति) -->
             <h3>संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
             <form id="committeeForm">
                 <div class="form-group">
@@ -292,7 +307,7 @@
                 <button type="submit">सदस्य थप्नुहोस्</button>
             </form>
 
-            <h3 style="margin-top: 35px;">संस्थापक सदस्यहरूको सूची</h3>
+            <h3>संस्थापक सदस्यहरूको सूची</h3>
             <div class="table-responsive">
                 <table>
                     <thead>
@@ -392,7 +407,7 @@
 
             const { error } = await supabaseClient.from('about_us').upsert(updatedData);
             if (error) {
-                messageDiv.style.color = 'red';
+                message_div.style.color = 'red';
                 messageDiv.innerText = 'त्रुटि: ' + error.message;
             } else {
                 messageDiv.style.color = 'green';
