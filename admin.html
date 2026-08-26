@@ -12,7 +12,7 @@
             --accent-color: #008000;
             --danger-color: #e53e3e;
             --edit-color: #3182ce;
-            --print-color: #d69e2e;
+            --print-color: #006400; /* गाढा हरियो (Dark Green) */
             --bg-color: #edf2f7;
             --card-bg: #ffffff;
             --text-color: #2d3748;
@@ -106,7 +106,7 @@
         }
 
         .print-btn:hover {
-            background-color: #b7791f;
+            background-color: #004d00;
         }
 
         .collapsible-content {
@@ -366,11 +366,10 @@
 
             <hr>
 
-            <!-- संस्थापक समिति सेक्सन -->
+            <!-- संस्थापक समिति सेक्सन (यहाँ प्रिन्ट बटन हटाइएको छ) -->
             <div class="section-header">
                 <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('committeeContent')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -433,11 +432,10 @@
 
             <hr>
 
-            <!-- केन्द्रीय समिति सेक्सन -->
+            <!-- केन्द्रीय समिति सेक्सन (यहाँ प्रिन्ट बटन हटाइएको छ) -->
             <div class="section-header">
                 <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('centralContent')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -532,7 +530,6 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
             
-            // यदि बन्द छ भने प्रिन्ट गर्न अस्थायी रूपमा खोल्ने
             if (!wasOpen) {
                 sectionContent.style.display = 'block';
             }
