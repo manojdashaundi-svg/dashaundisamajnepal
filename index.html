@@ -57,10 +57,34 @@
         .header-green h1 { margin: 0; font-size: 24px; color: white; }
         .header-green p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
         
-        /* Navigation */
-        .nav { background-color: #1a365d; display: flex; padding: 0 20px; }
+        /* Navigation & Dropdown */
+        .nav { background-color: #1a365d; display: flex; padding: 0 20px; position: relative; }
         .nav a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-weight: bold; }
         .nav a:hover { background-color: #3b5998; }
+
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #1a365d;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            padding: 10px 16px;
+            font-weight: normal;
+        }
+        .dropdown-content a:hover {
+            background-color: #3b5998;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
         
         /* Main Content */
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
@@ -78,9 +102,8 @@
         <div>वि.सं. २०८३ भदौ १० | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- Split Header (बायाँ हरियो र दायाँ रातो - बिना Gmail र दर्ता नं) -->
+    <!-- Split Header -->
     <div class="header-split">
-        <!-- हरियो भाग (लोगो र संस्थाको नाम सहित) -->
         <div class="header-green">
             <div class="logo-box">
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="logo">
@@ -90,20 +113,25 @@
                 <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
             </div>
         </div>
-
-        <!-- रातो भाग -->
-        <div class="header-red">
-            <!-- खाली रातो भाग -->
-        </div>
+        <div class="header-red"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation with Membership Dropdown -->
     <div class="nav">
         <a href="#">गृहपृष्ठ</a>
         <a href="#">हाम्रो बारेमा</a>
         <a href="#">समिति</a>
         <a href="#">सुचना तथा प्रेस विज्ञप्ति</a>
         <a href="#">सम्पर्क</a>
+        
+        <!-- सदस्यता Dropdown Menu -->
+        <div class="dropdown">
+            <a href="#">सदस्यता ▾</a>
+            <div class="dropdown-content">
+                <a href="#">नयाँ सदस्यता</a>
+                <a href="#">नवीकरण</a>
+            </div>
+        </div>
     </div>
 
     <!-- Main Container -->
