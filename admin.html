@@ -11,6 +11,7 @@
             --primary-color: #1a365d;
             --accent-color: #008000;
             --danger-color: #e53e3e;
+            --edit-color: #3182ce;
             --bg-color: #edf2f7;
             --card-bg: #ffffff;
             --text-color: #2d3748;
@@ -27,7 +28,7 @@
         }
 
         .admin-container {
-            max-width: 900px;
+            max-width: 1000px;
             background: var(--card-bg);
             padding: 40px;
             margin: 20px auto;
@@ -52,7 +53,6 @@
             color: white;
         }
 
-        /* हेडलाइन र दाяे पट्टिको बटन मिलाउने स्टाइल */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -69,9 +69,6 @@
             margin: 0;
             color: var(--primary-color);
             font-size: 20px;
-            border: none;
-            padding: 0;
-            background: none;
         }
 
         .toggle-btn {
@@ -90,7 +87,6 @@
             background-color: #2b6cb0;
         }
 
-        /* लुकाउने वा देखाउने सेक्सन */
         .collapsible-content {
             display: none;
             margin-top: 15px;
@@ -149,20 +145,19 @@
             background-color: #006600;
         }
 
-        .btn-danger {
-            background-color: var(--danger-color);
-            padding: 6px 12px;
-            font-size: 13px;
-            width: auto;
+        .btn-action {
+            padding: 6px 10px;
+            font-size: 12px;
             border-radius: 4px;
             color: white;
             border: none;
             cursor: pointer;
+            margin: 2px;
         }
-
-        .btn-danger:hover {
-            background-color: #c53030;
-        }
+        .btn-edit { background-color: var(--edit-color); }
+        .btn-edit:hover { background-color: #2b6cb0; }
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-danger:hover { background-color: #c53030; }
 
         .top-header {
             display: flex;
@@ -219,9 +214,10 @@
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             font-size: 14px;
+            vertical-align: middle;
         }
 
         th {
@@ -232,6 +228,14 @@
 
         tr:nth-child(even) {
             background-color: #f8fafc;
+        }
+
+        .table-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ccc;
         }
 
         hr {
@@ -271,7 +275,7 @@
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
-            <!-- संस्थाको मुख्य विवरण - टोگل सेक्सन -->
+            <!-- संस्थाको मुख्य विवरण -->
             <div class="section-header">
                 <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
                 <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
@@ -319,12 +323,13 @@
 
             <!-- संस्थापक समिति सेक्सन -->
             <div class="section-header">
-                <h3>संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
+                <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
                 <button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button>
             </div>
 
             <div id="committeeContent" class="collapsible-content">
                 <form id="committeeForm">
+                    <input type="hidden" id="edit_id">
                     <div class="form-group">
                         <label>पूरा नाम:</label>
                         <input type="text" id="c_name" placeholder="सदस्यको नाम" required>
@@ -345,7 +350,7 @@
                         <label>फोटोको लिङ्क (Photo URL):</label>
                         <input type="text" id="c_photo" placeholder="फोटोको लिङ्क">
                     </div>
-                    <button type="submit">सदस्य थप्नुहोस्</button>
+                    <button type="submit" id="submitBtn">सदस्य थप्नुहोस्</button>
                 </form>
             </div>
 
@@ -354,8 +359,10 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>फोटो</th>
                             <th>नाम</th>
                             <th>पद</th>
+                            <th>सदस्य नं.</th>
                             <th>सम्पर्क</th>
                             <th>नियन्त्रण</th>
                         </tr>
@@ -379,7 +386,6 @@
 
         const messageDiv = document.getElementById('message');
 
-        // विवरण खोल्ने र बन्द गर्ने फंक्सन
         function toggleSection(contentId, btn) {
             const content = document.getElementById(contentId);
             if (content.style.display === 'block') {
@@ -469,9 +475,11 @@
             }
         });
 
+        // सदस्य थप्ने वा अपडेट गर्ने
         document.getElementById('committeeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const newMember = {
+            const editId = document.getElementById('edit_id').value;
+            const memberData = {
                 full_name: document.getElementById('c_name').value,
                 position: document.getElementById('c_position').value,
                 member_no: document.getElementById('c_member_no').value,
@@ -479,14 +487,27 @@
                 photo_url: document.getElementById('c_photo').value
             };
 
-            const { error } = await supabaseClient.from('founder_committee').insert([newMember]);
+            let error;
+            if (editId) {
+                // अपडेट गर्ने
+                const res = await supabaseClient.from('founder_committee').update(memberData).eq('id', editId);
+                error = res.error;
+            } else {
+                // नयाँ थप्ने
+                const res = await supabaseClient.from('founder_committee').insert([memberData]);
+                error = res.error;
+            }
+
             if (error) {
                 messageDiv.style.color = 'red';
-                messageDiv.innerText = 'समितिमा थप्न त्रुटि: ' + error.message;
+                messageDiv.innerText = 'त्रुटि: ' + error.message;
             } else {
                 messageDiv.style.color = 'green';
-                messageDiv.innerText = 'नयाँ सदस्य सफलतापूर्वक थपियो!';
+                messageDiv.innerText = editId ? 'सफलतापूर्वक अपडेट भयो!' : 'नयाँ सदस्य सफलतापूर्वक थपियो!';
                 document.getElementById('committeeForm').reset();
+                document.getElementById('edit_id').value = '';
+                document.getElementById('submitBtn').innerText = 'सदस्य थप्नुहोस्';
+                document.getElementById('formTitle').innerText = 'संस्थापक समितिमा नयाँ सदस्य थप्ने';
                 loadCommitteeData();
             }
         });
@@ -497,20 +518,45 @@
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4">कुनै विवरण छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6">कुनै विवरण छैन</td></tr>';
                 return;
             }
 
             data.forEach(person => {
+                const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const photo = person.photo_url ? person.photo_url : defaultPhoto;
+
                 tbody.innerHTML += `
                     <tr>
-                        <td>${person.full_name}</td>
+                        <td><img src="${photo}" class="table-avatar" alt="फोटो"></td>
+                        <td><strong>${person.full_name}</strong></td>
                         <td>${person.position}</td>
+                        <td>${person.member_no || '-'}</td>
                         <td>${person.phone || '-'}</td>
-                        <td><button class="btn-danger" onclick="deleteMember('${person.id}')">मेटाउनुहोस्</button></td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">मेटाउनुहोस्</button>
+                        </td>
                     </tr>
                 `;
             });
+        }
+
+        // इडिट गर्न फारममा डाटा भर्ने
+        function editMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('edit_id').value = id;
+            document.getElementById('c_name').value = name;
+            document.getElementById('c_position').value = position;
+            document.getElementById('c_member_no').value = memberNo;
+            document.getElementById('c_phone').value = phone;
+            document.getElementById('c_photo').value = photoUrl;
+
+            document.getElementById('submitBtn').innerText = 'अपडेट गर्नुहोस्';
+            document.getElementById('formTitle').innerText = 'सदस्यको विवरण सम्पादन गर्नुहोस्';
+            
+            // फारम बन्द छ भने खोल्ने
+            document.getElementById('committeeContent').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         async function deleteMember(id) {
