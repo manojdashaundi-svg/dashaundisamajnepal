@@ -4,121 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>दशाैँदी समाज नेपाल</title>
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
-        
-        /* Top Bar */
         .top-bar { background-color: #1a365d; color: white; padding: 8px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* Split Header (बायाँ हरियो र दायाँ रातो) */
-        .header-split {
-            display: flex;
-            width: 100%;
-        }
-        .header-green {
-            background-color: #008000;
-            color: white;
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .header-red {
-            background-color: #e60000;
-            color: white;
-            flex: 1;
-            padding: 20px;
-        }
-
-        /* Logo Box */
-        .logo-box {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: white;
-            border: 2px solid white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        .logo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        .header-split { display: flex; width: 100%; }
+        .header-green { background-color: #008000; color: white; flex: 1; padding: 20px; display: flex; align-items: center; gap: 20px; }
+        .header-red { background-color: #e60000; color: white; flex: 1; padding: 20px; }
+        .logo-box { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .logo { width: 100%; height: 100%; object-fit: cover; }
         .header-green h1 { margin: 0; font-size: 24px; color: white; }
         .header-green p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
-        
-        /* Navigation & Dropdown */
         .nav { background-color: #1a365d; display: flex; padding: 0 20px; position: relative; }
         .nav a { color: white; padding: 12px 20px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; }
         .nav a:hover, .nav a.active { background-color: #3b5998; }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #1a365d;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            padding: 10px 16px;
-            font-weight: normal;
-        }
-        .dropdown-content a:hover {
-            background-color: #3b5998;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        
-        /* Main Content Sections */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1; }
+        .dropdown-content a { padding: 10px 16px; font-weight: normal; }
+        .dropdown-content a:hover { background-color: #3b5998; }
+        .dropdown:hover .dropdown-content { display: block; }
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
         .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        
-        /* Hidden sections by default */
         .page-section { display: none; }
         .page-section.active-page { display: block; }
-
-        /* About Us Specific Styles */
         .about-header { text-align: center; margin-bottom: 30px; }
-        .about-logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #1a365d;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+        .about-logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .about-title-ne { font-size: 28px; color: #1a365d; margin: 0 0 5px 0; font-weight: bold; }
         .about-title-en { font-size: 20px; color: #555; margin: 0 0 15px 0; font-weight: bold; }
         .about-meta { font-size: 16px; color: #333; margin: 8px 0; }
         .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 16px; }
         .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 25px; }
-
-        /* Footer */
         footer { background-color: #1a365d; color: white; text-align: center; padding: 15px; margin-top: 40px; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <!-- Top Bar -->
     <div class="top-bar">
         <div>महत्त्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
         <div>वि.सं. २०८३ भदौ १० | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- Split Header -->
     <div class="header-split">
         <div class="header-green">
             <div class="logo-box">
@@ -132,9 +58,8 @@
         <div class="header-red"></div>
     </div>
 
-    <!-- Navigation Menu -->
     <div class="nav">
-        <a onclick="switchPage('home', this)" id="default-tab" class="active">गृहपृष्ठ</a>
+        <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
         <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
         <a onclick="switchPage('committee', this)">समिति</a>
         <a onclick="switchPage('notice', this)">सुचना तथा प्रेस विज्ञप्ति</a>
@@ -149,10 +74,8 @@
         </div>
     </div>
 
-    <!-- Main Container -->
     <div class="container">
         
-        <!-- १. गृहपृष्ठ (Home Page - साइट खोल्दा सुरुमा देखिने) -->
         <div id="home" class="page-section active-page">
             <div class="card">
                 <h2>स्वागत तथा परिचयात्मक मन्तव्य</h2>
@@ -160,102 +83,92 @@
             </div>
         </div>
 
-        <!-- २. हाम्रो बारेमा (About Us Page - क्लिक गरेपछि मात्र देखिने) -->
+        <!-- हाम्रो बारेमा (Supabase बाट स्वचालित डेटा लोड हुने ठाउँ) -->
         <div id="about" class="page-section">
             <div class="card">
                 <div class="about-header">
                     <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="about-logo">
-                    <h2 class="about-title-ne">दशौँदी समाज नेपाल</h2>
-                    <h3 class="about-title-en">Dashaundi Samaj Nepal</h3>
-                    <div class="about-meta"><strong>ठेगाना:</strong> केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</div>
-                    <div class="about-meta"><strong>स्थापना / दर्ता मिति:</strong> वि.सं. २०८० आश्विन २५ गते (12 October 2023)</div>
-                    <div class="about-meta"><strong>कम्पनी दर्ता नं.:</strong> ३२१८१८/०८०/०८१ | <strong>स्थायी लेखा नम्बर (PAN):</strong> ६१९७९३१२४</div>
-                    <div class="about-meta"><strong>समाज कल्याण परिषद् आबद्धता नं.:</strong> ५५९४३</div>
+                    <h2 class="about-title-ne" id="db_title_ne">লোড हुँदैछ...</h2>
+                    <h3 class="about-title-en" id="db_title_en"></h3>
+                    <div class="about-meta"><strong id="db_address"></strong></div>
+                    <div class="about-meta"><strong id="db_reg_date"></strong></div>
+                    <div class="about-meta"><strong id="db_reg_no"></strong></div>
                 </div>
 
                 <div class="about-section">
                     <h3>संस्थाको परिचय</h3>
-                    <p>दशौँदी समाज नेपाल नेपाल सरकार, उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय, कम्पनी रजिष्ट्रारको कार्यालयमा कम्पनी ऐन, २०६३ बमोजिम मुनाफा वितरण नगर्ने संस्थाको रूपमा दर्ता भई सञ्चालित एक सामाजिक संस्था हो। यस संस्थाले समाज कल्याण ऐन, २०४९ अन्तर्गत समाज कल्याण परिषद्, पुल्चोक, ललितपुरबाट समेत आबद्धता प्राप्त गरेको छ।</p>
+                    <p id="db_introduction"></p>
                 </div>
 
                 <div class="about-section">
                     <h3>कामको व्याख्या तथा उद्देश्यहरू</h3>
-                    <p>यस संस्थाले मुनाफा वितरण नगर्ने कम्पनीका रूपमा सामाजिक हित, जनचेतना अभिवृद्धि, कल्याणकारी कार्य तथा राष्ट्रिय विकासका विभिन्न रचनात्मक गतिविधिहरू सञ्चालन गर्ने लक्ष्य राखेको छ।
-
-देशभर रहेका दशौंदी क्षेत्री परिवारहरूलाई संगठित गर्दै आपसी भाइचाराको सम्बन्ध निर्माण गर्नुका साथै दशौंदी क्षेत्री समुदायको पहिचान, संरक्षण तथा प्रचार–प्रसार गर्ने संस्थाको प्रमुख उद्देश्य रहेको छ। साथै, दशौंदी क्षेत्री समुदायका धर्म, संस्कृति, परम्परा, रीतिरिवाज तथा मौलिक पहिचानको संरक्षण र प्रवर्द्धन गर्दै इतिहासको खोज, अध्ययन तथा दस्तावेजीकरणमा समेत संस्थाले विशेष पहल गर्दै आएको छ।
-
-सामाजिक न्याय, आपसी सहयोग, एकता तथा समग्र सामुदायिक विकासलाई प्राथमिकतामा राख्दै संस्थाले समुदायको हित र राष्ट्रिय विकासमा योगदान पुर्‍याउने उद्देश्यले आफ्ना आधिकारिक कार्ययोजनाहरू कार्यान्वयन गर्दै आएको छ।
-</p>
+                    <p id="db_description"></p>
                 </div>
             </div>
         </div>
 
-        <!-- ३. समिति पेज -->
         <div id="committee" class="page-section">
-            <div class="card">
-                <h2>समिति विवरण</h2>
-                <p>यहाँ कार्यसमितिका पदाधिकारीहरूको विवरण राखिनेछ।</p>
-            </div>
+            <div class="card"><h2>समिति विवरण</h2><p>यहाँ कार्यसमितिका पदाधिकारीहरूको विवरण राखिनेछ।</p></div>
         </div>
 
-        <!-- ४. सूचना तथा प्रेस विज्ञप्ति पेज -->
         <div id="notice" class="page-section">
-            <div class="card">
-                <h2>सुचना तथा प्रेस विज्ञप्ति</h2>
-                <p>हाल प्रकाशित कुनै पनि सूचना तथा प्रेस विज्ञप्तिहरू उपलब्ध छैनन्।</p>
-            </div>
+            <div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>हाल प्रकाशित कुनै पनि सूचना तथा प्रेस विज्ञप्तिहरू उपलब्ध छैनन्।</p></div>
         </div>
 
-        <!-- ५. सम्पर्क पेज -->
         <div id="contact" class="page-section">
-            <div class="card">
-                <h2>सम्पर्क विवरण</h2>
-                <p><strong>इमेल:</strong> dashaundisamajnepal@gmail.com</p>
-                <p><strong>ठेगाना:</strong> केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p>
-            </div>
+            <div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div>
         </div>
 
-        <!-- ६. नयाँ सदस्यता पेज -->
         <div id="new-membership" class="page-section">
-            <div class="card">
-                <h2>नयाँ सदस्यता फारम</h2>
-                <p>नयाँ सदस्यता लिने प्रक्रिया र फारम यहाँ उपलब्ध हुनेछ।</p>
-            </div>
+            <div class="card"><h2>नयाँ सदस्यता फारम</h2><p>नयाँ सदस्यता लिने प्रक्रिया र फारम यहाँ उपलब्ध हुनेछ।</p></div>
         </div>
 
-        <!-- ७. नवीकरण पेज -->
         <div id="renewal" class="page-section">
-            <div class="card">
-                <h2>सदस्यता नवीकरण</h2>
-                <p>सदस्यता नवीकरण गर्ने विवरण यहाँ राखिनेछ।</p>
-            </div>
+            <div class="card"><h2>सदस्यता नवीकरण</h2><p>सदस्यता नवीकरण गर्ने विवरण यहाँ राखिनेछ।</p></div>
         </div>
 
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; २०२६ दशाैँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
     </footer>
 
-    <!-- JavaScript to Handle Page Switching -->
     <script>
+        const SUPABASE_URL = 'https://yjfxqlohfyulzwkakclu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Supabase बाट डेटा तान्ने र वेबसाइटमा देखाउने फंक्सन
+        async function fetchAboutData() {
+            const { data, error } = await supabaseClient
+                .from('about_us')
+                .select('*')
+                .eq('id', 1)
+                .single();
+
+            if (data) {
+                document.getElementById('db_title_ne').innerText = data.title_ne;
+                document.getElementById('db_title_en').innerText = data.title_en;
+                document.getElementById('db_address').innerText = "ठेगाना: " + data.address;
+                document.getElementById('db_reg_date').innerText = "स्थापना / दर्ता मिति: " + data.reg_date;
+                document.getElementById('db_reg_no').innerText = data.reg_no;
+                document.getElementById('db_introduction').innerText = data.introduction;
+                document.getElementById('db_description').innerText = data.description;
+            }
+        }
+
+        // पेज लोड हुँदा डेटा तानेर राख्ने
+        fetchAboutData();
+
         function switchPage(pageId, element) {
-            // Hide all pages
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => page.classList.remove('active-page'));
 
-            // Remove active class from all nav links
             const navLinks = document.querySelectorAll('.nav > a');
             navLinks.forEach(link => link.classList.remove('active'));
 
-            // Show target page
             document.getElementById(pageId).classList.add('active-page');
-
-            // Add active class if it's a main nav link
-            if(element) {
-                element.classList.add('active');
-            }
+            if(element) { element.classList.add('active'); }
         }
     </script>
 
