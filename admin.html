@@ -63,13 +63,9 @@
 
         const messageDiv = document.getElementById('message');
 
-        // Check if Supabase library loaded successfully
-        if (typeof supabase === 'undefined') {
-            messageDiv.style.color = 'red';
-            messageDiv.innerText = 'त्रुटि: Supabase लाइब्रेरी लोड हुन सकेन। इन्टरनेटर कनेक्सन जाँच्नुहोला।';
-        }
-
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Initialize Supabase correctly using window.supabase
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const form = document.getElementById('aboutForm');
 
