@@ -87,12 +87,12 @@
         <div id="about" class="page-section">
             <div class="card">
                 <div class="about-header">
-                    <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="about-logo">
+                    <img id="db_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="about-logo">
                     <h2 class="about-title-ne" id="db_title_ne">लोड हुँदैछ...</h2>
                     <h3 class="about-title-en" id="db_title_en"></h3>
-                    <div class="about-meta"><strong id="db_address"></strong></div>
-                    <div class="about-meta"><strong id="db_reg_date"></strong></div>
-                    <div class="about-meta"><strong id="db_reg_no"></strong></div>
+                    <div class="about-meta" id="db_address"></div>
+                    <div class="about-meta" id="db_reg_date"></div>
+                    <div class="about-meta" id="db_reg_no"></div>
                 </div>
 
                 <div class="about-section">
@@ -134,9 +134,11 @@
     </footer>
 
     <script>
-        const SUPABASE_URL = 'https://yjfxqlohfyulzwkakclu.supabase.co';
+        const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function fetchAboutData() {
             const { data, error } = await supabaseClient
@@ -146,13 +148,16 @@
                 .single();
 
             if (data) {
-                document.getElementById('db_title_ne').innerText = data.title_ne;
-                document.getElementById('db_title_en').innerText = data.title_en;
-                document.getElementById('db_address').innerText = "ठेगाना: " + data.address;
-                document.getElementById('db_reg_date').innerText = "स्थापना / दर्ता मिति: " + data.reg_date;
-                document.getElementById('db_reg_no').innerText = data.reg_no;
-                document.getElementById('db_introduction').innerText = data.introduction;
-                document.getElementById('db_description').innerText = data.description;
+                if(data.logo_url) document.getElementById('db_logo').src = data.logo_url;
+                document.getElementById('db_title_ne').innerText = data.title_ne || '';
+                document.getElementById('db_title_en').innerText = data.title_en || '';
+                document.getElementById('db_address').innerText = "ठेगाना: " + (data.address || '');
+                document.getElementById('db_reg_date').innerText = "स्थापना / दर्ता मिति: " + (data.reg_date || '');
+                document.getElementById('db_reg_no').innerText = data.reg_no || '';
+                document.getElementById('db_introduction').innerText = data.introduction || '';
+                document.getElementById('db_description').innerText = data.description || '';
+            } else {
+                console.error("Data fetch error:", error);
             }
         }
 
