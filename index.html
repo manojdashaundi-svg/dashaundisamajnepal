@@ -7,36 +7,49 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
         
-        /* Letterhead Style Split Top Bar (रातो र हरियो मिश्रित बार) */
-        .top-bar-container {
+        /* Split Header Container (आधा हरियो र आधा रातो भाग) */
+        .header-split {
             display: flex;
-            height: 38px;
+            width: 100%;
         }
-        .top-bar-green {
-            background-color: #008000; /* हरियो भाग */
+        
+        /* हरियो भाग (बायाँपट्टि) */
+        .header-green {
+            background-color: #008000;
             color: white;
             flex: 1;
+            padding: 20px;
             display: flex;
-            align-items: center;
-            padding-left: 20px;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .top-info-green {
             font-size: 14px;
             font-weight: bold;
         }
-        .top-bar-red {
-            background-color: #e60000; /* रातो भाग */
-            color: white;
-            flex: 1;
+        .main-title-area {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            padding-right: 20px;
+            gap: 20px;
+        }
+        
+        /* रातो भाग (दायाँपट्टि) */
+        .header-red {
+            background-color: #e60000;
+            color: white;
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .top-info-red {
             font-size: 14px;
             font-weight: bold;
         }
 
-        /* Header */
-        .header { background-color: #2b4c7e; color: white; padding: 20px; display: flex; align-items: center; gap: 20px; }
-        
+        /* Logo and Text Styles */
         .logo-box {
             width: 90px;
             height: 90px;
@@ -52,8 +65,8 @@
             border-radius: 50%;
         }
 
-        .header h1 { margin: 0; font-size: 24px; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
+        .header-green h1 { margin: 0; font-size: 24px; color: white; }
+        .header-green p { margin: 5px 0 0 0; font-size: 14px; color: #e2e8f0; }
         
         /* Navigation */
         .nav { background-color: #1a365d; display: flex; padding: 0 20px; }
@@ -70,24 +83,25 @@
 </head>
 <body>
 
-    <!-- Letterhead Style Split Top Bar (रातो र हरियो बार) -->
-    <div class="top-bar-container">
-        <div class="top-bar-green">
-            Gmail: dashaundisamajnepal@gmail.com
+    <!-- Split Header (बायाँ हरियो र दायाँ रातो) -->
+    <div class="header-split">
+        <!-- हरियो भाग -->
+        <div class="header-green">
+            <div class="top-info-green">Gmail: dashaundisamajnepal@gmail.com</div>
+            <div class="main-title-area">
+                <div class="logo-box">
+                    <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="logo">
+                </div>
+                <div>
+                    <h1>दशाैँदी समाज नेपाल</h1>
+                    <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
+                </div>
+            </div>
         </div>
-        <div class="top-bar-red">
-            दर्ता नं. ३२१८१८/०८०/०८१
-        </div>
-    </div>
 
-    <!-- Header -->
-    <div class="header">
-        <div class="logo-box">
-            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशाैँदी समाज नेपाल लोगो" class="logo">
-        </div>
-        <div>
-            <h1>दशाैँदी समाज नेपाल</h1>
-            <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत नेपाल।</p>
+        <!-- रातो भाग -->
+        <div class="header-red">
+            <div class="top-info-red">दर्ता नं. ३२१८१८/०८०/०८१</div>
         </div>
     </div>
 
