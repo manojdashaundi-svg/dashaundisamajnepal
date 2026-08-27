@@ -242,13 +242,12 @@
             vertical-align: middle;
         }
 
-        /* कोलमहरूको चौडाइ (सिरियल नम्बर पहिलो कोलममा) */
-        th:nth-child(1), td:nth-child(1) { width: 8%; }  /* सिरियल नं. (१, २, ३...) */
-        th:nth-child(2), td:nth-child(2) { width: 14%; } /* फोटो */
-        th:nth-child(3), td:nth-child(3) { width: 32%; } /* नाम */
-        th:nth-child(4), td:nth-child(4) { width: 22%; } /* पद */
-        th:nth-child(5), td:nth-child(5) { width: 10%; } /* सदस्य नं. */
-        th:nth-child(6), td:nth-child(6) { width: 14%; } /* सम्पर्क */
+        th:nth-child(1), td:nth-child(1) { width: 8%; }  
+        th:nth-child(2), td:nth-child(2) { width: 14%; } 
+        th:nth-child(3), td:nth-child(3) { width: 32%; } 
+        th:nth-child(4), td:nth-child(4) { width: 22%; } 
+        th:nth-child(5), td:nth-child(5) { width: 10%; } 
+        th:nth-child(6), td:nth-child(6) { width: 14%; } 
 
         th {
             background-color: var(--primary-color);
@@ -571,7 +570,7 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन
+        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (इमेलसहित)
         async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
@@ -604,6 +603,7 @@
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-title-2">Dashaundi Samaj Nepal</div>
                 <div class="print-meta">ठेगाना: ${address}</div>
+                <div class="print-meta">इमेल: dashaundisamajnepal@gmail.com</div>
                 <div class="print-meta">स्थापना / दर्ता मिति: ${regDate}</div>
                 <div class="print-meta">${regNo}</div>
                 <div class="print-section-title">${sectionTitle}</div>
@@ -691,14 +691,12 @@
             }
         });
 
-        // संस्थापक समिति सदस्य थप्ने वा अपडेट गर्ने (स्वतः सिरियल/सदस्य नम्बरसहित)
         document.getElementById('committeeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('edit_id').value;
             
             let memberNoInput = document.getElementById('c_member_no').value.trim();
             if(!memberNoInput && !editId) {
-                // यदि सदस्य नम्बर खाली छ भने स्वतः अर्को सिरियल नम्बर राख्ने
                 const { count } = await supabaseClient.from('founder_committee').select('*', { count: 'exact', head: true });
                 memberNoInput = String((count || 0) + 1).padStart(2, '0');
             }
@@ -814,14 +812,12 @@
             }
         }
 
-        // केन्द्रीय समिति सदस्य थप्ने वा अपडेट गर्ने (स्वतः सिरियल/सदस्य नम्बरसहित)
         document.getElementById('centralCommitteeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('central_edit_id').value;
 
             let memberNoInput = document.getElementById('cc_member_no').value.trim();
             if(!memberNoInput && !editId) {
-                // यदि केन्द्रीय सदस्य नम्बर खाली छ भने स्वतः अर्को सिरियल नम्बर राख्ने
                 const { count } = await supabaseClient.from('central_committee').select('*', { count: 'exact', head: true });
                 memberNoInput = String((count || 0) + 1).padStart(2, '0');
             }
