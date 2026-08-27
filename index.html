@@ -688,10 +688,11 @@
             document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Supabase Storage मा फाइल अपलोड गरी Public URL लिने फंक्सन
         async function uploadFileToSupabase(file, folderName) {
             if (!file) return '';
             const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+            const fileName = `${Date.now()}_${Math.random().toString(36.substring(2, 7))}.${fileExt}`;
             const filePath = `${folderName}/${fileName}`;
 
             const { data, error } = await supabaseClient.storage.from('documents').upload(filePath, file);
@@ -714,7 +715,7 @@
                 return;
             }
 
-            alert('फाइलहरू अपलोड हुँदैछन्, कृपया केही सेकेन्ड पर्खनुहोस्...');
+            alert('फाइलहरू अपलोड हुँदैछन्, कृपया १० सेकेन्ड पर्खनुहोस्...');
 
             const citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizenship');
             const citBackUrl = await uploadFileToSupabase(citBackFile, 'citizenship');
