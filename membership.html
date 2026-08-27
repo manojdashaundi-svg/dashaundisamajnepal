@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // यहाँ आफ्नो EmailJS Public Key राख्नुहोला
+            emailjs.init("YOUR_PUBLIC_KEY"); // यहाँ आफ्नो वास्तविक EmailJS Public Key डबल कोटेशनभित्र राख्नुहोला
         })();
     </script>
     <style>
@@ -333,7 +333,6 @@
                 time: "१ मिनेट"
             };
 
-            // यहाँ 'service_v9c6kad' र '5dvd5o5' सेट गरिएको छ
             emailjs.send('service_v9c6kad', '5dvd5o5', templateParams)
                 .then(function(response) {
                     document.getElementById('emailStatusInfo').innerText = '✔ सफलतापूर्वक तपाईंको इमेलमा कोड पठाइयो!';
