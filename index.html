@@ -88,8 +88,8 @@
         <div class="dropdown">
             <a href="#">सदस्यता ▾</a>
             <div class="dropdown-content">
-                <a onclick="switchPage('new-membership', this)">नयाँ सदस्यता</a>
-                <a onclick="switchPage('renewal', this)">नवीकरण</a>
+                <a href="membership.html">नयाँ सदस्यता</a>
+                <a href="membership.html">नवीकरण</a>
             </div>
         </div>
     </div>
@@ -169,14 +169,6 @@
 
         <div id="contact" class="page-section">
             <div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div>
-        </div>
-
-        <div id="new-membership" class="page-section">
-            <div class="card"><h2>नयाँ सदस्यता फारम</h2><p>नयाँ सदस्यता लिने प्रक्रिया र फारम यहाँ उपलब्ध हुनेछ।</p></div>
-        </div>
-
-        <div id="renewal" class="page-section">
-            <div class="card"><h2>सदस्यता नवीकरण</h2><p>सदस्यता नवीकरण गर्ने विवरण यहाँ राखिनेछ।</p></div>
         </div>
 
     </div>
@@ -273,7 +265,7 @@
 
             document.getElementById(pageId).classList.add('active-page');
             
-            const navLinks = document.querySelectorAll('.nav a');
+            const navLinks = document.querySelectorAll('.nav > a');
             navLinks.forEach(link => link.classList.remove('active'));
             if(element) { element.classList.add('active'); }
         }
