@@ -293,7 +293,6 @@
             color: #4a5568;
         }
 
-        /* प्रोफाइल फोटोको स्टाइल */
         .profile-pic-container {
             display: flex;
             align-items: center;
@@ -308,6 +307,40 @@
             border: 3px solid #2b6cb0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             background: #edf2f7;
+        }
+
+        /* डिजिटल आइडी कार्डको स्टाइल */
+        .id-card-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .id-card-content {
+            background: #fff;
+            width: 380px;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 3px solid #1a365d;
+            position: relative;
+        }
+        .id-card-header {
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .id-card-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #38a169;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -457,7 +490,6 @@
                     <button type="button" onclick="toggleEditProfile()" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 15px; font-size: 13px; box-shadow: none;">✏ प्रोफाइल सम्पादन (Edit)</button>
                 </div>
 
-                <!-- प्रोफाइल हेर्ने सेक्सन (फोटोसहित) -->
                 <div id="profileViewMode">
                     <div class="profile-pic-container">
                         <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="प्रोफाइल फोटो" class="profile-avatar">
@@ -470,7 +502,6 @@
                     </div>
                 </div>
 
-                <!-- प्रोफाइल इडिट गर्ने फारम (फोटो फेर्ने सुविधासहित) -->
                 <div id="profileEditMode" style="display: none;">
                     <div class="form-group" style="text-align: center; margin-bottom: 20px;">
                         <img id="edit_preview_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="प्रिभ्यु" class="profile-avatar" style="margin: 0 auto 10px auto; display: block;">
@@ -497,15 +528,22 @@
                 </div>
             </div>
 
-            <div style="text-align: center; padding: 30px; background: #fff; border: 2px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+            <!-- थप गरिएका नयाँ सेवाहरू -->
+            <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
                 <h4 style="color: #1a365d; margin-top: 0; font-size: 20px;">सदस्यता सेवाहरू</h4>
-                <p style="color: #718096;">तपाईं नयाँ सदस्यता फारम यहाँबाट भर्न सक्नुहुन्छ:</p>
-                <button type="button" onclick="openOfficialForm()" style="width: auto; background: var(--primary-gradient); margin-top: 10px; padding: 12px 30px;">📝 नयाँ सदस्यता फारम भर्नुहोस्</button>
+                <p style="color: #718096; margin-bottom: 20px;">तपाईं तलका सेवाहरू यहाँबाट लिन सक्नुहुन्छ:</p>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button type="button" onclick="openOfficialForm()" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">📝 नयाँ सदस्यता फारम</button>
+                    <button type="button" onclick="openRenewalForm()" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 12px 25px;">🔄 सदस्यता नवीकरण</button>
+                    <button type="button" onclick="openMyCard()" style="width: auto; background: var(--accent-gradient); padding: 12px 25px;">🆔 मेरो कार्ड (Digital ID)</button>
+                </div>
             </div>
         </div>
 
-        <!-- आधिकारिक फारम -->
+        <!-- आधिकारिक फारम (नयाँ सदस्यता / नवीकरण दुवैको लागि प्रयोग हुने) -->
         <div id="officialFormBox" class="official-form" style="display: none; margin-top: 25px;">
+            <button type="button" onclick="showSection('dashboardStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← ड्यासबोर्डमा फर्कनुहोस्</button>
             <h4 style="text-align: right; margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
             <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
             <p style="text-align: center; font-weight: bold; font-size: 17px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
@@ -565,7 +603,8 @@
 
         <!-- स्टेप ३: कागजात र भुक्तानी -->
         <div id="step3" class="step-section" style="margin-top: 20px;">
-            <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र सदस्यता दस्तुर भुक्तानी</h3>
+            <button type="button" onclick="openOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारममा फर्कनुहोस्</button>
+            <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
             
             <div class="form-group">
                 <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo):</label>
@@ -577,7 +616,7 @@
             </div>
 
             <div class="qr-box">
-                <h4 style="margin-top: 0; color: #2b6cb0;">सदस्यता दस्तुर: रु. २००/-</h4>
+                <h4 style="margin-top: 0; color: #2b6cb0;">दस्तुर: रु. २००/-</h4>
                 <p style="margin: 5px 0 15px 0;">भुक्तानीको लागि तलको QR Code मा स्क्यान गर्नुहोस्:</p>
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="qr-img" alt="QR Code">
                 <p style="font-size: 13px; color: #718096; margin: 10px 0 0 0;">(सक्कल भौचर वा अनलाइन ट्रान्फर गरेको स्क्रीनसट तल अपलोड गर्नुहोस्)</p>
@@ -588,10 +627,33 @@
                 <input type="file" id="paymentSlip" accept="image/*" required>
             </div>
 
-            <button type="button" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी फारम सबमिट गर्नुहोस्</button>
+            <button type="button" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी सबमिट गर्नुहोस्</button>
         </div>
 
         <div id="message"></div>
+    </div>
+
+    <!-- डिजिटल आइडी कार्ड पपअप (Modal) -->
+    <div id="idCardModal" class="id-card-modal">
+        <div class="id-card-content">
+            <div class="id-card-header">
+                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" style="width: 45px; height: 45px; border-radius: 50%; vertical-align: middle; margin-right: 8px;">
+                <strong style="font-size: 16px; color: #1a365d;">दशौँदी समाज नेपाल</strong>
+                <p style="margin: 2px 0 0; font-size: 11px; color: #718096;">केन्द्रीय समिति, कर्णाली प्रदेश, सुर्खेत</p>
+            </div>
+            <img id="card_avatar" src="" class="id-card-avatar" alt="सदस्य फोटो">
+            <h3 id="card_name" style="margin: 5px 0; color: #2d3748; font-size: 18px;">-</h3>
+            <p style="color: #3182ce; font-weight: bold; margin: 0 0 10px 0; font-size: 13px;">आधिकारिक सदस्य</p>
+            <div style="text-align: left; background: #f7fafc; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
+                <p style="margin: 4px 0;"><strong>मोबाइल:</strong> <span id="card_phone">-</span></p>
+                <p style="margin: 4px 0;"><strong>इमेल:</strong> <span id="card_email">-</span></p>
+                <p style="margin: 4px 0;"><strong>जन्म मिति:</strong> <span id="card_dob">-</span></p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="window.print()" style="background: var(--primary-gradient); padding: 10px; font-size: 14px;">🖨 प्रिन्ट / डाउनलोड</button>
+                <button type="button" onclick="closeMyCard()" style="background: var(--danger-gradient); padding: 10px; font-size: 14px;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -605,6 +667,7 @@
         let currentGeneratedOtp = '';
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
         let resetOtpCodeVal = '';
+        let currentFormType = 'नयाँ सदस्यता';
 
         function showSection(sectionId) {
             document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
@@ -638,14 +701,13 @@
             }
         }
 
-        // फोटो छानेपछि प्रिभ्यु देखाउने फंक्सन
         function previewProfileImage(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('edit_preview_img').src = e.target.result;
-                    currentUserProfile.tempAvatar = e.target.result; // अस्थायी रूपमा राख्ने
+                    currentUserProfile.tempAvatar = e.target.result;
                 }
                 reader.readAsDataURL(file);
             }
@@ -883,9 +945,31 @@
         }
 
         function openOfficialForm() {
+            currentFormType = 'नयाँ सदस्यता';
             document.getElementById('officialFormBox').style.display = 'block';
             document.getElementById('formSubjectType').innerText = 'सदस्यता पाउँ';
             window.scrollTo({top: document.getElementById('officialFormBox').offsetTop, behavior: 'smooth'});
+        }
+
+        function openRenewalForm() {
+            currentFormType = 'सदस्यता नवीकरण';
+            document.getElementById('officialFormBox').style.display = 'block';
+            document.getElementById('formSubjectType').innerText = 'सदस्यता नवीकरण गरिपाउँ';
+            window.scrollTo({top: document.getElementById('officialFormBox').offsetTop, behavior: 'smooth'});
+        }
+
+        function openMyCard() {
+            document.getElementById('card_name').innerText = currentUserProfile.name || '-';
+            document.getElementById('card_phone').innerText = currentUserProfile.phone || '-';
+            document.getElementById('card_email').innerText = currentUserProfile.email || '-';
+            document.getElementById('card_dob').innerText = currentUserProfile.dob || '-';
+            document.getElementById('card_avatar').src = currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            
+            document.getElementById('idCardModal').style.display = 'flex';
+        }
+
+        function closeMyCard() {
+            document.getElementById('idCardModal').style.display = 'none';
         }
 
         function goToPaymentStep() {
@@ -894,6 +978,7 @@
                 alert('कृपया फारमका अनिवार्य विवरणहरू भर्नुहोस्!');
                 return;
             }
+            document.getElementById('officialFormBox').style.display = 'none';
             showSection('step3');
         }
 
@@ -909,7 +994,7 @@
 
             const formData = {
                 identifier: currentUserProfile.email || document.getElementById('login_email').value,
-                application_type: 'नयाँ सदस्यता',
+                application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
                 citizens_no: document.getElementById('f_citizenship').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
@@ -932,7 +1017,7 @@
                 messageDiv.innerText = 'त्रुटि: ' + error.message;
             } else {
                 messageDiv.style.color = 'green';
-                messageDiv.innerText = 'तपाईंको आवेदन सफलतापूर्वक सबमिट भयो! एडमिनले प्रमाणीकरण गरेपछि तपाईंलाई जानकारी गराइनेछ।';
+                messageDiv.innerText = 'तपाईंको ' + currentFormType + ' आवेदन सफलतापूर्वक सबमिट भयो!';
 
                 setTimeout(() => {
                     location.reload();
