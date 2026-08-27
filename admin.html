@@ -242,6 +242,13 @@
             vertical-align: middle;
         }
 
+        /* फोटो कोलमलाई ठूलो र अन्य कोलमहरूलाई सानो बनाउनको लागि चौडाइ (Width) सेट गरिएको */
+        th:nth-child(1), td:nth-child(1) { width: 14%; } /* फोटो कोलम ठूलो बनाइएको */
+        th:nth-child(2), td:nth-child(2) { width: 34%; } /* नाम */
+        th:nth-child(3), td:nth-child(3) { width: 24%; } /* पद */
+        th:nth-child(4), td:nth-child(4) { width: 10%; } /* सदस्य नं. */
+        th:nth-child(5), td:nth-child(5) { width: 18%; } /* सम्पर्क */
+
         th {
             background-color: var(--primary-color);
             color: white;
@@ -252,12 +259,13 @@
             background-color: #f8fafc;
         }
 
+        /* टेबल भित्रको फोटोको साइज अझ ठूलो (65px) बनाइएको */
         .table-avatar {
-            width: 45px;
-            height: 45px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid #ccc;
+            border: 2px solid #1a365d;
         }
 
         hr {
@@ -266,7 +274,7 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* प्रिन्ट हेडेलिङ्ग र ठूला, डार्क अक्षरहरू */
+        /* प्रिन्ट हेडर स्टायल */
         .print-header {
             display: none;
             text-align: center;
@@ -586,7 +594,7 @@
             const logo = data && data.logo_url ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
             const regDate = data && data.reg_date ? data.reg_date : 'वि.सं. २०८० आश्विन २५ गते (12 October 2023)';
-            const regNo = data && data.reg_no ? data.reg_no : 'कम्पनी दर्ता नं.: ३२१८льник/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ६१९९९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३';
+            const regNo = data && data.reg_no ? data.reg_no : 'कम्पनी दर्ता नं.: ३२१८१८/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ६१९९९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३';
 
             // नेपाली मिति
             const todayNe = "२०८३ भदौ १०";
