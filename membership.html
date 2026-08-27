@@ -309,7 +309,6 @@
             background: #edf2f7;
         }
 
-        /* डिजिटल आइडी कार्डको स्टाइल */
         .id-card-modal {
             display: none;
             position: fixed;
@@ -528,22 +527,22 @@
                 </div>
             </div>
 
-            <!-- थप गरिएका नयाँ सेवाहरू -->
+            <!-- सदस्यता सेवाहरूको बटनहरू (Toggle फिचरसहित) -->
             <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
                 <h4 style="color: #1a365d; margin-top: 0; font-size: 20px;">सदस्यता सेवाहरू</h4>
                 <p style="color: #718096; margin-bottom: 20px;">तपाईं तलका सेवाहरू यहाँबाट लिन सक्नुहुन्छ:</p>
                 
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <button type="button" onclick="openOfficialForm()" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">📝 नयाँ सदस्यता फारम</button>
-                    <button type="button" onclick="openRenewalForm()" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 12px 25px;">🔄 सदस्यता नवीकरण</button>
+                    <button type="button" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">📝 नयाँ सदस्यता फारम</button>
+                    <button type="button" onclick="toggleForm('सदस्यता नवीकरण')" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 12px 25px;">🔄 सदस्यता नवीकरण</button>
                     <button type="button" onclick="openMyCard()" style="width: auto; background: var(--accent-gradient); padding: 12px 25px;">🆔 मेरो कार्ड (Digital ID)</button>
                 </div>
             </div>
         </div>
 
-        <!-- आधिकारिक फारम (नयाँ सदस्यता / नवीकरण दुवैको लागि प्रयोग हुने) -->
+        <!-- आधिकारिक फारम (एक क्लिकमा खुल्ने र अर्को क्लिकमा लुक्ने) -->
         <div id="officialFormBox" class="official-form" style="display: none; margin-top: 25px;">
-            <button type="button" onclick="showSection('dashboardStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← ड्यासबोर्डमा फर्कनुहोस्</button>
+            <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस् (लुकाउनुहोस्)</button>
             <h4 style="text-align: right; margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
             <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
             <p style="text-align: center; font-weight: bold; font-size: 17px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
@@ -603,7 +602,7 @@
 
         <!-- स्टेप ३: कागजात र भुक्तानी -->
         <div id="step3" class="step-section" style="margin-top: 20px;">
-            <button type="button" onclick="openOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारममा फर्कनुहोस्</button>
+            <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
             <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
             
             <div class="form-group">
@@ -633,7 +632,7 @@
         <div id="message"></div>
     </div>
 
-    <!-- डिजिटल आइडी कार्ड पपअप (Modal) -->
+    <!-- डिजिटल आइडी कार्ड पपअप -->
     <div id="idCardModal" class="id-card-modal">
         <div class="id-card-content">
             <div class="id-card-header">
@@ -944,18 +943,27 @@
             loadDashboard();
         }
 
-        function openOfficialForm() {
-            currentFormType = 'नयाँ सदस्यता';
-            document.getElementById('officialFormBox').style.display = 'block';
-            document.getElementById('formSubjectType').innerText = 'सदस्यता पाउँ';
-            window.scrollTo({top: document.getElementById('officialFormBox').offsetTop, behavior: 'smooth'});
+        // एक क्लिकमा खुल्ने र अर्को क्लिकमा लुक्ने (Toggle) फंक्सन
+        function toggleForm(type) {
+            currentFormType = type;
+            const formBox = document.getElementById('officialFormBox');
+            const step3Box = document.getElementById('step3');
+
+            // यदि स्टेप ३ खुला छ भने त्यसलाई बन्द गर्ने
+            step3Box.style.display = 'none';
+
+            if (formBox.style.display === 'block') {
+                formBox.style.display = 'none'; // खुला छ भने लुकाउने
+            } else {
+                formBox.style.display = 'block'; // बन्द छ भने खोल्ने
+                document.getElementById('formSubjectType').innerText = (type === 'नयाँ सदस्यता') ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
+                window.scrollTo({top: formBox.offsetTop, behavior: 'smooth'});
+            }
         }
 
-        function openRenewalForm() {
-            currentFormType = 'सदस्यता नवीकरण';
-            document.getElementById('officialFormBox').style.display = 'block';
-            document.getElementById('formSubjectType').innerText = 'सदस्यता नवीकरण गरिपाउँ';
-            window.scrollTo({top: document.getElementById('officialFormBox').offsetTop, behavior: 'smooth'});
+        function hideOfficialForm() {
+            document.getElementById('officialFormBox').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
         }
 
         function openMyCard() {
@@ -979,7 +987,8 @@
                 return;
             }
             document.getElementById('officialFormBox').style.display = 'none';
-            showSection('step3');
+            document.getElementById('step3').style.display = 'block';
+            window.scrollTo({top: document.getElementById('step3').offsetTop, behavior: 'smooth'});
         }
 
         async function finalSubmit() {
