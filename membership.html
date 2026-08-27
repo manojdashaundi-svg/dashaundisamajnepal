@@ -527,7 +527,7 @@
                 </div>
             </div>
 
-            <!-- सदस्यता सेवाहरूको बटनहरू (Toggle फिचरसहित) -->
+            <!-- सदस्यता सेवाहरूको बटनहरू -->
             <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
                 <h4 style="color: #1a365d; margin-top: 0; font-size: 20px;">सदस्यता सेवाहरू</h4>
                 <p style="color: #718096; margin-bottom: 20px;">तपाईं तलका सेवाहरू यहाँबाट लिन सक्नुहुन्छ:</p>
@@ -540,7 +540,7 @@
             </div>
         </div>
 
-        <!-- आधिकारिक फारम (एक क्लिकमा खुल्ने र अर्को क्लिकमा लुक्ने) -->
+        <!-- आधिकारिक फारम -->
         <div id="officialFormBox" class="official-form" style="display: none; margin-top: 25px;">
             <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस् (लुकाउनुहोस्)</button>
             <h4 style="text-align: right; margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
@@ -706,7 +706,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('edit_preview_img').src = e.target.result;
-                    currentUserProfile.tempAvatar = e.target.result;
+                    currentUserProfile.avatar = e.target.result; // तुरुन्तै अपडेट गर्ने
                 }
                 reader.readAsDataURL(file);
             }
@@ -838,10 +838,6 @@
             currentUserProfile.name = document.getElementById('edit_name').value.trim();
             currentUserProfile.phone = document.getElementById('edit_phone').value.trim();
             currentUserProfile.dob = document.getElementById('edit_dob').value.trim();
-            
-            if (currentUserProfile.tempAvatar) {
-                currentUserProfile.avatar = currentUserProfile.tempAvatar;
-            }
 
             await supabaseClient
                 .from('users')
@@ -943,19 +939,17 @@
             loadDashboard();
         }
 
-        // एक क्लिकमा खुल्ने र अर्को क्लिकमा लुक्ने (Toggle) फंक्सन
         function toggleForm(type) {
             currentFormType = type;
             const formBox = document.getElementById('officialFormBox');
             const step3Box = document.getElementById('step3');
 
-            // यदि स्टेप ३ खुला छ भने त्यसलाई बन्द गर्ने
             step3Box.style.display = 'none';
 
             if (formBox.style.display === 'block') {
-                formBox.style.display = 'none'; // खुला छ भने लुकाउने
+                formBox.style.display = 'none';
             } else {
-                formBox.style.display = 'block'; // बन्द छ भने खोल्ने
+                formBox.style.display = 'block';
                 document.getElementById('formSubjectType').innerText = (type === 'नयाँ सदस्यता') ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
                 window.scrollTo({top: formBox.offsetTop, behavior: 'smooth'});
             }
