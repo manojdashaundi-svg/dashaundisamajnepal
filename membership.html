@@ -153,6 +153,29 @@
             color: #2b6cb0;
         }
 
+        /* OTP इनपुट र टिक/इन्टु आइकनको कन्टेनर */
+        .otp-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .otp-container input {
+            width: 100%;
+            padding-right: 45px;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+
+        .otp-status-icon {
+            position: absolute;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         button {
             background: var(--accent-gradient);
             color: white;
@@ -337,7 +360,10 @@
             <div id="otpSection" style="display: none; margin-top: 25px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label style="color: #2b6cb0;">इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
-                    <input type="text" id="otpCode" placeholder="६ अंकको कोड यहाँ लेख्नुहोस्" style="text-align: center; font-size: 20px; letter-spacing: 4px; font-weight: bold;">
+                    <div class="otp-container">
+                        <input type="text" id="otpCode" placeholder="______" maxlength="6" oninput="checkOtpMatch(this.value, currentGeneratedOtp, 'otpStatusIcon')">
+                        <span id="otpStatusIcon" class="otp-status-icon"></span>
+                    </div>
                     <small id="emailStatusInfo" style="color: #38a169; display: block; margin-top: 5px; font-weight: bold;"></small>
                 </div>
                 <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
@@ -384,7 +410,10 @@
             <div id="resetOtpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
                 <div class="form-group">
                     <label>६ अंकको OTP कोड:</label>
-                    <input type="text" id="resetOtpCode" placeholder="६ अंकको कोड हाल्नुहोस्" style="text-align: center; font-size: 18px; letter-spacing: 2px;">
+                    <div class="otp-container">
+                        <input type="text" id="resetOtpCode" placeholder="______" maxlength="6" oninput="checkOtpMatch(this.value, resetOtpCodeVal, 'resetOtpStatusIcon')">
+                        <span id="resetOtpStatusIcon" class="otp-status-icon"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>नयाँ पासवर्ड:</label>
@@ -562,10 +591,26 @@
             const passwordField = document.getElementById(fieldId);
             if (passwordField.type === "password") {
                 passwordField.type = "text";
-                btn.innerText = "🙈"; // बन्द भएको आँखा
+                btn.innerText = "🙈";
             } else {
                 passwordField.type = "password";
-                btn.innerText = "👁"; // खुला आँखा
+                btn.innerText = "👁";
+            }
+        }
+
+        // OTP कोड मिले नमिलेको जाँच्ने र टिक/इन्टु देखाउने फंक्सन
+        function checkOtpMatch(enteredVal, correctVal, iconId) {
+            const iconSpan = document.getElementById(iconId);
+            if (enteredVal.length === 6) {
+                if (enteredVal === correctVal) {
+                    iconSpan.innerHTML = "✔";
+                    iconSpan.style.color = "#38a169"; // हरियो रङ
+                } else {
+                    iconSpan.innerHTML = "✘";
+                    iconSpan.style.color = "#e53e3e"; // रातो रङ
+                }
+            } else {
+                iconSpan.innerHTML = "";
             }
         }
 
