@@ -272,7 +272,7 @@
                             <div class="form-col"><label>इमेल ठेगाना:</label><input type="email" id="identifier" placeholder="example@gmail.com" required></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col"><label>जन्म मिति:</label><input type="date" id="reg_dob" required></div>
+                            <div class="form-col"><label>जन्म मिति:</label><input type="text" id="reg_dob" placeholder="वि.सं. (उदा. २०४९-०९-१०)" required></div>
                             <div class="form-col"><label>पासवर्ड:</label>
                                 <div class="password-container">
                                     <input type="password" id="reg_password" placeholder="बलियो पासवर्ड" required>
@@ -371,6 +371,10 @@
                         <div class="form-row">
                             <div class="form-col" style="flex: 2;"><label>पूरा नाम थर:</label><input type="text" id="f_name" required></div>
                             <div class="form-col" style="flex: 1;"><label>फेम्लि कोड:</label><input type="text" id="f_family_code" placeholder="छैन"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col"><label>मोबाइल नम्बर:</label><input type="text" id="f_phone" required></div>
+                            <div class="form-col"><label>जन्म मिति:</label><input type="text" id="f_dob" placeholder="वि.सं. (उदा. २०४९-०९-१०)" required></div>
                         </div>
                         <div class="form-row">
                             <div class="form-col"><label>नागरिकता प्र.नं.:</label><input type="text" id="f_citizenship" required></div>
@@ -650,6 +654,8 @@
             if(currentApplication) {
                 document.getElementById('f_name').value = currentApplication.full_name || '';
                 document.getElementById('f_family_code').value = currentApplication.family_code || '';
+                document.getElementById('f_phone').value = currentApplication.phone || currentUserProfile.phone || '';
+                document.getElementById('f_dob').value = currentApplication.dob || currentUserProfile.dob || '';
                 document.getElementById('f_citizenship').value = currentApplication.citizenship_no || '';
                 document.getElementById('f_spouse').value = currentApplication.spouse_name || '';
                 document.getElementById('f_father').value = currentApplication.father_name || '';
@@ -657,8 +663,14 @@
                 document.getElementById('f_grandfather').value = currentApplication.grandfather_name || '';
                 document.getElementById('f_ward').value = currentApplication.ward || '';
                 document.getElementById('f_tole').value = currentApplication.tole || '';
+                if(currentApplication.photo_url) {
+                    document.getElementById('form_photo_preview').src = currentApplication.photo_url;
+                    currentUserProfile.avatar = currentApplication.photo_url;
+                }
             } else {
                 document.getElementById('f_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
+                document.getElementById('f_phone').value = currentUserProfile.phone || '';
+                document.getElementById('f_dob').value = currentUserProfile.dob || '';
             }
             formBox.scrollIntoView({ behavior: 'smooth' });
         }
@@ -680,15 +692,20 @@
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => { document.getElementById('form_photo_preview').src = e.target.result; }
+                reader.onload = (e) => { 
+                    document.getElementById('form_photo_preview').src = e.target.result; 
+                    currentUserProfile.avatar = e.target.result;
+                }
                 reader.readAsDataURL(file);
             }
         }
 
         function goToPaymentStep() {
             const name = document.getElementById('f_name').value.trim();
+            const phone = document.getElementById('f_phone').value.trim();
+            const dob = document.getElementById('f_dob').value.trim();
             const citizenship = document.getElementById('f_citizenship').value.trim();
-            if(!name || !citizenship) { alert('कृपया अनिवार्य विवरणहरू भर्नुहोस्!'); return; }
+            if(!name || !phone || !dob || !citizenship) { alert('कृपया अनिवार्य विवरणहरू (नाम, मोबाइल, जन्ममिति, नागरिकता) भर्नुहोस्!'); return; }
             document.getElementById('officialFormBox').style.display = 'none';
             document.getElementById('step3').style.display = 'block';
             document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
@@ -700,6 +717,8 @@
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
                 family_code: document.getElementById('f_family_code').value.trim(),
+                phone: document.getElementById('f_phone').value.trim(),
+                dob: document.getElementById('f_dob').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
                 spouse_name: document.getElementById('f_spouse').value.trim(),
                 father_name: document.getElementById('f_father').value.trim(),
@@ -710,6 +729,7 @@
                 municipality: document.getElementById('f_municipality').value,
                 ward: document.getElementById('f_ward').value.trim(),
                 tole: document.getElementById('f_tole').value.trim(),
+                photo_url: currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
                 status: 'Pending'
             };
 
@@ -739,11 +759,12 @@
                 `;
             } else if(currentApplication.status === 'Approved') {
                 bodyContent.innerHTML = `
-                    <img src="${currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="id-card-avatar" alt="सदस्य फोटो">
+                    <img src="${currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="id-card-avatar" alt="सदस्य फोटो">
                     <h3 style="margin: 5px 0; color: #2d3748; font-size: 18px;">${currentApplication.full_name}</h3>
                     <p style="color: #38a169; font-weight: bold; margin: 0 0 10px 0; font-size: 13px;">✅ आधिकारिक प्रमाणित सदस्य</p>
                     <div style="text-align: left; background: #f7fafc; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
-                        <p style="margin: 4px 0;"><strong>इमेल:</strong> ${currentUserProfile.email}</p>
+                        <p style="margin: 4px 0;"><strong>मोबाइल:</strong> ${currentApplication.phone || '-'}</p>
+                        <p style="margin: 4px 0;"><strong>जन्म मिति:</strong> ${currentApplication.dob || '-'}</p>
                         <p style="margin: 4px 0;"><strong>ठेगाना:</strong> ${currentApplication.municipality || '-'}, वडा नं ${currentApplication.ward || '-'}</p>
                         <p style="margin: 4px 0;"><strong>प्रदेश:</strong> ${currentApplication.province || '-'}</p>
                     </div>
