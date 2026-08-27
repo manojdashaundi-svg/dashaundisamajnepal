@@ -593,9 +593,15 @@
             <p style="text-align: center; font-weight: bold; font-size: 17px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
             
             <form id="membershipApplicationForm" style="margin-top: 20px;">
-                <div class="form-group">
-                    <label>पूरा नाम थर:</label>
-                    <input type="text" id="f_name" required>
+                <div class="form-row">
+                    <div class="form-col" style="flex: 2;">
+                        <label>पूरा नाम थर:</label>
+                        <input type="text" id="f_name" required>
+                    </div>
+                    <div class="form-col" style="flex: 1;">
+                        <label>फेम्लि कोड (Family Code):</label>
+                        <input type="text" id="f_family_code" placeholder="कोड राख्नुहोस्">
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
@@ -1128,6 +1134,7 @@
                 identifier: currentUserProfile.email || document.getElementById('login_email').value,
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
+                family_code: document.getElementById('f_family_code').value.trim(),
                 citizens_no: document.getElementById('f_citizenship').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
                 spouse_name: document.getElementById('f_spouse').value.trim(),
