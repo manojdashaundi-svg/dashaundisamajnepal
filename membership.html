@@ -72,7 +72,6 @@
             font-size: 14px;
         }
 
-        input[type="email"],
         input[type="text"],
         input[type="file"],
         select,
@@ -167,21 +166,22 @@
             <h3 style="margin-top: 15px; color: #333; text-decoration: underline;">सदस्यता आवेदन तथा नवीकरण फारम</h3>
         </div>
 
-        <!-- स्टेप १: इमेलमा वास्तविक OTP पठाउने सेक्सन -->
+        <!-- स्टेप १: फोन वा इमेलबाट OTP प्रमाणीकरण -->
         <div id="step1" class="step-section active">
-            <h3 style="color: var(--primary-color);">चरण १: इमेल प्रमाणीकरण (Email Verification)</h3>
+            <h3 style="color: var(--primary-color);">चरण १: खाता प्रमाणीकरण (Verification)</h3>
             <form id="authForm">
                 <div class="form-group">
-                    <label>तपाईंको इमेल ठेगाना प्रविष्ट गर्नुहोस्:</label>
-                    <input type="email" id="identifier" placeholder="example@gmail.com" required>
+                    <label>मोबाइल नम्बर वा इमेल ठेगाना प्रविष्ट गर्नुहोस्:</label>
+                    <input type="text" id="identifier" placeholder="मोबाइल नं. वा इमेल (जस्तै: 98xxxxxxxx वा info@gmail.com)" required>
                 </div>
-                <button type="submit" id="sendOtpBtn">इमेलमा OTP कोड पठाउनुहोस्</button>
+                <button type="submit" id="sendOtpBtn">OTP कोड पठाउनुहोस्</button>
             </form>
 
             <div id="otpSection" style="display: none; margin-top: 20px;">
                 <div class="form-group">
-                    <label>इमेलमा आएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
-                    <input type="text" id="otpCode" placeholder="OTP कोड">
+                    <label>प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
+                    <input type="text" id="otpCode" placeholder="६ अंकको कोड">
+                    <small id="debugOtpInfo" style="color: #666; display: block; margin-top: 5px;"></small>
                 </div>
                 <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
                 <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस्</button>
@@ -192,7 +192,7 @@
         <!-- स्टेप २: प्रोफाइल छनोट र आधिकारिक फारम -->
         <div id="step2" class="step-section">
             <div id="profileChoice" style="text-align: center; padding: 20px;">
-                <h3 id="welcomeMsg" style="color: var(--accent-color);">स्वागत छ! इमेल प्रमाणीकरण सफल भयो।</h3>
+                <h3 id="welcomeMsg" style="color: var(--accent-color);">स्वागत छ! प्रमाणीकरण सफल भयो।</h3>
                 <p>कृपया आफ्नो आवश्यकता अनुसार छान्नुहोस्:</p>
                 <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
                     <button type="button" onclick="openForm('new')" style="width: auto; background: #3182ce;">नयाँ सदस्यता फारम</button>
@@ -301,28 +301,37 @@
         let verifiedIdentifier = '';
         let selectedAppType = '';
 
-        // १. Supabase मार्फत इमेलमा सक्कली OTP पठाउने
-        async function sendRealOtp() {
-            const email = document.getElementById('identifier').value.trim();
-            if(!email) return;
+        // १. OTP जेनेरेट गरेर सेभ गर्ने फंक्सन (इमेल वा फोन दुवैको लागि)
+        async function generateAndSendOtp() {
+            const identifier = document.getElementById('identifier').value.trim();
+            if(!identifier) return;
 
-            verifiedIdentifier = email;
+            verifiedIdentifier = identifier;
+            const randomOtp = Math.floor(100000 + Math.random() * 900000).toString(); // ६ अंकको कोड
+            const expiresAt = new Date(new Date().getTime() + 60000).toISOString(); // १ मिनेट म्याद
 
-            const { error } = await supabaseClient.auth.signInWithOtp({
-                email: email,
-                options: {
-                    shouldCreateUser: true
-                }
-            });
+            // Supabase को otps टेबलमा सेभ गर्ने
+            const { error } = await supabaseClient.from('otps').insert([{ 
+                identifier: identifier, 
+                otp_code: randomOtp, 
+                expires_at: expiresAt 
+            }]);
 
-            if (error) {
-                alert('इमेल पठाउन असफल: ' + error.message);
+            if(error) {
+                alert('त्रुटि: ' + error.message);
                 return;
             }
 
             document.getElementById('otpSection').style.display = 'block';
-            document.getElementById('sendOtpBtn').innerText = 'इमेलमा कोड पठाइयो ✓';
+            document.getElementById('sendOtpBtn').innerText = 'कोड पठाइयो ✓';
             document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
+
+            // यदि इमेल हो भने इमेलमै जान्छ, यदि फोन नम्बर हो भने टेस्टिङको लागि वा सजिलोको लागि स्क्रिनमा पनि देखिनेछ
+            if(identifier.includes('@')) {
+                document.getElementById('debugOtpInfo').innerText = `[सूचना]: तपाईंको इमेलमा OTP कोड पठाइएको छ।`;
+            } else {
+                document.getElementById('debugOtpInfo').innerText = `[मोबाइल सूचना]: तपाईंको OTP कोड [ ${randomOtp} ] हो।`;
+            }
 
             document.getElementById('verifyBtn').style.display = 'block';
             document.getElementById('resendBtn').style.display = 'none';
@@ -330,7 +339,7 @@
             startTimer();
         }
 
-        // टाइमर सुरु गर्ने फंक्सन
+        // टाइमर सुरु गर्ने
         function startTimer() {
             let timeLeft = 60;
             const timerDisplay = document.getElementById('timerDisplay');
@@ -341,7 +350,7 @@
                     clearInterval(countdownTimer);
                     timerDisplay.innerText = 'समय समाप्त भयो!';
                     document.getElementById('verifyBtn').style.display = 'none';
-                    document.getElementById('resendBtn').style.display = 'block';
+                    document.getElementById('resendBtn').style.display = 'block'; // समय सकिएपछि पुनः पठाउने बटन खुल्ने
                 } else {
                     timerDisplay.innerText = `समय बाँकी: ${timeLeft} सेकेन्ड`;
                     timeLeft--;
@@ -351,30 +360,32 @@
 
         document.getElementById('authForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            sendRealOtp();
+            generateAndSendOtp();
         });
 
         function resendOtp() {
             document.getElementById('otpCode').value = '';
-            sendRealOtp();
+            generateAndSendOtp();
         }
 
-        // २. इमेलमा आएको OTP कोड प्रमाणित गर्ने
+        // २. OTP प्रमाणीकरण जाँच गर्ने
         async function verifyOtp() {
-            const token = document.getElementById('otpCode').value.trim();
-            if(!token) {
-                alert('कृपया इमेलमा आएको OTP कोड हाल्नुहोस्!');
+            const enteredCode = document.getElementById('otpCode').value.trim();
+            if(!enteredCode) {
+                alert('कृपया OTP कोड हाल्नुहोस्!');
                 return;
             }
 
-            const { data, error } = await supabaseClient.auth.verifyOtp({
-                email: verifiedIdentifier,
-                token: token,
-                type: 'email'
-            });
+            const { data, error } = await supabaseClient
+                .from('otps')
+                .select('*')
+                .eq('identifier', verifiedIdentifier)
+                .eq('otp_code', enteredCode)
+                .order('created_at', { ascending: false })
+                .limit(1);
 
-            if (error) {
-                alert('गलत वा म्याद समाप्त भएको कोड! कृपया सहि कोड राख्नुहोस्।');
+            if(error || !data || data.length === 0) {
+                alert('गलत OTP कोड! कृपया सहि कोड प्रविष्ट गर्नुहोस्।');
                 return;
             }
 
@@ -383,7 +394,7 @@
             document.getElementById('step2').classList.add('active');
         }
 
-        // ३. फारम खोल्ने
+        // ३. फारम खोल्ने (नयाँ वा नवीकरण)
         function openForm(type) {
             selectedAppType = type === 'new' ? 'नयाँ सदस्यता' : 'नवीकरण';
             document.getElementById('profileChoice').style.display = 'none';
@@ -391,6 +402,7 @@
             document.getElementById('formSubjectType').innerText = selectedAppType === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण';
         }
 
+        // ४. भुक्तानी चरणमा जाने
         function goToPaymentStep() {
             const name = document.getElementById('f_name').value.trim();
             if(!name) {
@@ -402,7 +414,7 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // ४. डाटाबेसमा फारम सेभ गर्ने
+        // ५. डेटाबेसमा फारम सेभ गर्ने र सबमिट पछि खाली हुने
         async function finalSubmit() {
             const front = document.getElementById('citizenshipFront').files[0];
             const back = document.getElementById('citizenshipBack').files[0];
