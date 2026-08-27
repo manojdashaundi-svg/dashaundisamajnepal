@@ -500,6 +500,57 @@
         }
         fetchAboutData();
 
+        async function fetchFounderCommittee() {
+            const { data } = await supabaseClient.from('founder_committee').select('*');
+            const container = document.getElementById('founder_container');
+            if(container) {
+                if(!data || data.length === 0) {
+                    container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
+                    return;
+                }
+                container.innerHTML = '';
+                data.forEach(item => {
+                    container.innerHTML += `
+                        <div style="background:#fff; border:1px solid #cbd5e0; padding:15px; border-radius:8px; margin-bottom:10px; display:flex; align-items:center; gap:15px;">
+                            <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" style="width:60px; height:60px; border-radius:50%; object-fit:cover;">
+                            <div>
+                                <h4 style="margin:0; color:#1a365d;">${item.full_name}</h4>
+                                <p style="margin:3px 0; font-size:14px; color:#4a5568;">पद: ${item.position}</p>
+                                <p style="margin:3px 0; font-size:13px; color:#718096;">सम्पर्क: ${item.phone || '-'}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        async function fetchCentralCommittee() {
+            const { data } = await supabaseClient.from('central_committee').select('*');
+            const container = document.getElementById('central_container');
+            if(container) {
+                if(!data || data.length === 0) {
+                    container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
+                    return;
+                }
+                container.innerHTML = '';
+                data.forEach(item => {
+                    container.innerHTML += `
+                        <div style="background:#fff; border:1px solid #cbd5e0; padding:15px; border-radius:8px; margin-bottom:10px; display:flex; align-items:center; gap:15px;">
+                            <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" style="width:60px; height:60px; border-radius:50%; object-fit:cover;">
+                            <div>
+                                <h4 style="margin:0; color:#1a365d;">${item.full_name}</h4>
+                                <p style="margin:3px 0; font-size:14px; color:#4a5568;">पद: ${item.position}</p>
+                                <p style="margin:3px 0; font-size:13px; color:#718096;">सम्पर्क: ${item.phone || '-'}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        fetchFounderCommittee();
+        fetchCentralCommittee();
+
         function switchPage(pageId, element) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
