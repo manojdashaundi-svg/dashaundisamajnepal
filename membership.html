@@ -309,6 +309,36 @@
             background: #edf2f7;
         }
 
+        /* पासपोर्ट साइज फोटो बक्स स्टाइल */
+        .passport-photo-box {
+            width: 120px;
+            height: 145px;
+            border: 2px dashed #2b6cb0;
+            background: #f7fafc;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: 0.2s;
+            margin-bottom: 20px;
+        }
+        .passport-photo-box:hover {
+            background: #edf2f7;
+            border-color: #1a365d;
+        }
+        .passport-photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+        }
+
         .id-card-modal {
             display: none;
             position: fixed;
@@ -543,8 +573,22 @@
         <!-- आधिकारिक फारम -->
         <div id="officialFormBox" class="official-form" style="display: none; margin-top: 25px;">
             <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस् (लुकाउनुहोस्)</button>
-            <h4 style="text-align: right; margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
-            <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                <div>
+                    <h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
+                </div>
+                <!-- पासपोर्ट साइज फोटो बक्स (आवेदन मितिको तल दायितर्फ) -->
+                <div>
+                    <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568;">पासपोर्ट फोटो</label>
+                    <div class="passport-photo-box" onclick="document.getElementById('form_passport_photo').click()" title="क्लिक गरेर फोटो छान्नुहोस् वा खिच्नुहोस्">
+                        <img id="form_photo_preview" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="पासपोर्ट फोटो">
+                        <div style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 3px 0;">📸 फोटो राख्नुहोस्</div>
+                    </div>
+                    <input type="file" id="form_passport_photo" accept="image/*" capture="environment" style="display: none;" onchange="previewFormPhoto(event)">
+                </div>
+            </div>
+
+            <p style="margin-top: 0;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
             <p style="text-align: center; font-weight: bold; font-size: 17px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
             
             <form id="membershipApplicationForm" style="margin-top: 20px;">
@@ -706,7 +750,19 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('edit_preview_img').src = e.target.result;
-                    currentUserProfile.avatar = e.target.result; // तुरुन्तै अपडेट गर्ने
+                    currentUserProfile.avatar = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // फारमभित्र पासपोर्ट फोटो प्रिभ्यु गर्ने फंक्सन
+        function previewFormPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('form_photo_preview').src = e.target.result;
                 }
                 reader.readAsDataURL(file);
             }
@@ -814,6 +870,7 @@
             const avatarUrl = currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('lbl_avatar_img').src = avatarUrl;
             document.getElementById('edit_preview_img').src = avatarUrl;
+            document.getElementById('form_photo_preview').src = avatarUrl;
 
             document.getElementById('edit_name').value = currentUserProfile.name;
             document.getElementById('edit_phone').value = currentUserProfile.phone;
