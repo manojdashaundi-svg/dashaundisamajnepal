@@ -123,6 +123,36 @@
             background-color: #fff;
         }
 
+        /* पासवर्ड र आँखाको आइकनको लागि कन्टेनर */
+        .password-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-container input {
+            width: 100%;
+            padding-right: 45px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #718096;
+            padding: 0;
+            width: auto;
+            box-shadow: none;
+        }
+        .toggle-password:hover {
+            transform: none;
+            box-shadow: none;
+            color: #2b6cb0;
+        }
+
         button {
             background: var(--accent-gradient);
             color: white;
@@ -295,7 +325,10 @@
                     </div>
                     <div class="form-col">
                         <label>पासवर्ड:</label>
-                        <input type="password" id="reg_password" placeholder="बलियो पासवर्ड राख्नुहोस्" required>
+                        <div class="password-container">
+                            <input type="password" id="reg_password" placeholder="बलियो पासवर्ड राख्नुहोस्" required>
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('reg_password', this)">👁</button>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" id="sendOtpBtn">🚀 सबमिट गरी OTP पर्खनुहोस्</button>
@@ -325,7 +358,10 @@
                 </div>
                 <div class="form-group">
                     <label>पासवर्ड:</label>
-                    <input type="password" id="login_password" placeholder="तपाईको पासवर्ड" required>
+                    <div class="password-container">
+                        <input type="password" id="login_password" placeholder="तपाईको पासवर्ड" required>
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('login_password', this)">👁</button>
+                    </div>
                 </div>
                 <button type="submit" style="background: var(--primary-gradient);">लगइन गर्नुहोस्</button>
             </form>
@@ -352,7 +388,10 @@
                 </div>
                 <div class="form-group">
                     <label>नयाँ पासवर्ड:</label>
-                    <input type="password" id="new_password" placeholder="नयाँ पासवर्ड राख्नुहोस्">
+                    <div class="password-container">
+                        <input type="password" id="new_password" placeholder="नयाँ पासवर्ड राख्नुहोस्">
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('new_password', this)">👁</button>
+                    </div>
                 </div>
                 <button type="button" onclick="verifyAndResetPassword()" style="background: var(--accent-gradient);">पासवर्ड सुरक्षित गर्नुहोस् (Done)</button>
             </div>
@@ -518,6 +557,18 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        // पासवर्ड हेर्ने र लुकाउने फंक्सन
+        function togglePasswordVisibility(fieldId, btn) {
+            const passwordField = document.getElementById(fieldId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                btn.innerText = "🙈"; // बन्द भएको आँखा
+            } else {
+                passwordField.type = "password";
+                btn.innerText = "👁"; // खुला आँखा
+            }
+        }
+
         async function generateAndSendOtp(e) {
             e.preventDefault();
             const email = document.getElementById('identifier').value.trim();
@@ -595,7 +646,6 @@
 
             clearInterval(countdownTimer);
 
-            // नयाँ खाताको विवरण Supabase मा सुरक्षित रूपमा सेभ गर्ने (पासवर्डसहित)
             await supabaseClient.from('membership_applications').insert([{
                 identifier: currentUserProfile.email,
                 full_name: currentUserProfile.name,
@@ -694,7 +744,6 @@
                 return;
             }
 
-            // Supabase मा पासवर्ड अपडेट गर्ने
             await supabaseClient
                 .from('membership_applications')
                 .update({ password: newPass })
@@ -709,7 +758,6 @@
             const email = document.getElementById('login_email').value.trim();
             const password = document.getElementById('login_password').value.trim();
 
-            // Supabase डेटाबेसबाट इमेल र पासवर्ड चेक गर्ने
             const { data, error } = await supabaseClient
                 .from('membership_applications')
                 .select('*')
@@ -721,7 +769,6 @@
                 return;
             }
 
-            // सहि भएमा युजरको प्रोफाइल लोड गर्ने
             const user = data[0];
             currentUserProfile = { 
                 name: user.full_name || "सदस्य", 
