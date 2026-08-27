@@ -1111,10 +1111,18 @@
 
         function goToPaymentStep() {
             const name = document.getElementById('f_name').value.trim();
-            if(!name) {
-                alert('कृपया फारमका अनिवार्य विवरणहरू भर्नुहोस्!');
+            const citizenship = document.getElementById('f_citizenship').value.trim();
+            const father = document.getElementById('f_father').value.trim();
+            const province = document.getElementById('f_province').value;
+            const district = document.getElementById('f_district').value;
+            const municipality = document.getElementById('f_municipality').value;
+            const ward = document.getElementById('f_ward').value.trim();
+
+            if(!name || !citizenship || !father || !province || !district || !municipality || !ward) {
+                alert('कृपया फारमका सबै अनिवार्य विवरणहरू (नाम, नागरिकता, बुबाको नाम, प्रदेश, जिल्ला, गाउँपालिका/नगरपालिका र वडा नं.) भर्नुहोस्!');
                 return;
             }
+
             document.getElementById('officialFormBox').style.display = 'none';
             document.getElementById('step3').style.display = 'block';
             window.scrollTo({top: document.getElementById('step3').offsetTop, behavior: 'smooth'});
