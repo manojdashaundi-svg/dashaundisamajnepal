@@ -60,14 +60,12 @@
         .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 16px; }
         .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 25px; }
         
-        /* कमिटी ग्रिड र कार्ड स्टायल */
         .committee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
         .committee-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .committee-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; margin-bottom: 12px; }
         .committee-card h3 { color: #1a365d; margin: 8px 0 4px 0; font-size: 18px; }
         .committee-card p { color: #555; margin: 4px 0; font-size: 14px; }
 
-        /* सदस्यता फारम र ड्यासबोर्ड स्टायलहरू */
         .form-group { margin-bottom: 22px; }
         label { display: block; font-weight: 600; margin-bottom: 8px; color: #4a5568; font-size: 14px; }
         input[type="text"], input[type="email"], input[type="date"], input[type="password"], input[type="file"], select, textarea {
@@ -98,12 +96,12 @@
         .passport-photo-box { width: 120px; height: 145px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 20px; }
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
         .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+        
         .id-card-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
         .id-card-content { background: #fff; width: 380px; padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 3px solid #1a365d; position: relative; }
         .id-card-header { border-bottom: 2px solid #2b6cb0; padding-bottom: 10px; margin-bottom: 15px; }
         .id-card-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #38a169; margin-bottom: 10px; }
 
-        /* अनुरोध अनुसार सेन्टर एलाइन गरिएको र क्रम मिलाइएको हेडर डिजाइन */
         .membership-brand-header {
             background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
             color: white;
@@ -128,16 +126,8 @@
             margin-bottom: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .membership-brand-info h2 {
-            margin: 0 0 8px 0;
-            font-size: 26px;
-            letter-spacing: 0.5px;
-        }
-        .membership-brand-info p {
-            margin: 4px 0;
-            font-size: 15px;
-            color: #edf2f7;
-        }
+        .membership-brand-info h2 { margin: 0 0 8px 0; font-size: 26px; letter-spacing: 0.5px; }
+        .membership-brand-info p { margin: 4px 0; font-size: 15px; color: #edf2f7; }
 
         footer { background-color: #1a365d; color: white; text-align: center; padding: 15px; margin-top: 40px; font-size: 14px; }
     </style>
@@ -198,7 +188,6 @@
             </div>
         </div>
 
-        <!-- हाम्रो बारेमा -->
         <div id="about" class="page-section">
             <div class="card">
                 <div class="about-header">
@@ -222,59 +211,35 @@
             </div>
         </div>
 
-        <!-- संस्थापक समिति -->
         <div id="founder-committee" class="page-section">
             <div class="card">
                 <h2>संस्थापक समिति</h2>
-                <div id="founder_container" class="committee-grid">
-                    <p>लोड हुँदैछ...</p>
-                </div>
+                <div id="founder_container" class="committee-grid"><p>लोड हुँदैछ...</p></div>
             </div>
         </div>
 
-        <!-- केन्द्रीय समिति -->
         <div id="central-committee" class="page-section">
             <div class="card">
                 <h2>केन्द्रीय समिति</h2>
-                <div id="central_container" class="committee-grid">
-                    <p>लोड हुँदैछ...</p>
-                </div>
+                <div id="central_container" class="committee-grid"><p>लोड हुँदैछ...</p></div>
             </div>
         </div>
 
-        <div id="advisory-committee" class="page-section">
-            <div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>यहाँ केन्द्रीय सल्लाहकार समितिका सदस्यहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="province-committee" class="page-section">
-            <div class="card"><h2>प्रदेश समिति</h2><p>यहाँ विभिन्न प्रदेश अन्तर्गतका समितिहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="district-committee" class="page-section">
-            <div class="card"><h2>जिल्ला समिति</h2><p>यहाँ जिल्ला कार्यसमितिहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="local-committee" class="page-section">
-            <div class="card"><h2>स्थानिय समिति</h2><p>यहाँ स्थानीय तह तथा वडा समितिहरूको विवरण राखिनेछ।</p></div>
-        </div>
-
-        <div id="notice" class="page-section">
-            <div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>हाल प्रकाशित कुनै पनि सूचना तथा प्रेस विज्ञप्तिहरू उपलब्ध छैनन्।</p></div>
-        </div>
-
-        <div id="contact" class="page-section">
-            <div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div>
-        </div>
+        <div id="advisory-committee" class="page-section"><div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>विवरण राखिनेछ।</p></div></div>
+        <div id="province-committee" class="page-section"><div class="card"><h2>प्रदेश समिति</h2><p>विवरण राखिनेछ।</p></div></div>
+        <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
+        <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
+        <div id="notice" class="page-section"><div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>सूचनाहरू छैनन्।</p></div></div>
+        <div id="contact" class="page-section"><div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
 
         <!-- सदस्यता तथा नवीकरण प्रणाली सेक्सन -->
         <div id="membershipMainStep" class="page-section">
-            <!-- अनुरोध अनुसार मिलाइएको संस्थाको विवरण सेक्सन -->
             <div class="membership-brand-header">
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="membership-brand-logo">
                 <div class="membership-brand-info">
                     <h2>दशाैँदी समाज नेपाल</h2>
                     <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
-                    <p>✉ dashaundisamajnepal@gmail.com</p>
+                    <p>dashaundisamajnepal@gmail.com</p>
                     <p>स्थापना : वि.सं. २०८० आश्विन २५ गते (12 October 2023)</p>
                 </div>
             </div>
@@ -286,7 +251,7 @@
                 <div id="mainChoiceStep" class="sub-section active">
                     <div class="choice-box">
                         <div class="card-box" style="text-align: left; max-width: 550px; margin: 0 auto 25px auto;">
-                            <strong>सुचना:</strong> नयाँ सदस्य बन्नको लागि <strong>'नयाँ खाता खोल्नुहोस्'</strong> मा क्लिक गरी आफ्नो विवरण भरेर OTP प्रमाणीकरण गर्नुहोला। पुरानो सदस्यहरूले सिधै लगइन गर्न सक्नुहुन्छ।
+                            <strong>सुचना:</strong> नयाँ सदस्य बन्नको लागि <strong>'नयाँ खाता खोल्नुहोस्'</strong> मा क्लिक गरी आफ्नो विवरण भरेर OTP प्रमाणीकरण गर्नुहोला।
                         </div>
                         <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                             <button type="button" onclick="showSubSection('registerStep')" style="width: auto; background: var(--primary-gradient); padding: 15px 35px;">✨ नयाँ खाता खोल्नुहोस्</button>
@@ -301,29 +266,16 @@
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ खाता दर्ता फारम</h3>
                     
                     <form id="registerForm">
-                        <div class="form-group">
-                            <label>पूरा नाम थर:</label>
-                            <input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required>
+                        <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required></div>
+                        <div class="form-row">
+                            <div class="form-col"><label>मोबाइल नम्बर:</label><input type="text" id="reg_phone" placeholder="98XXXXXXXX" required></div>
+                            <div class="form-col"><label>इमेल ठेगाना:</label><input type="email" id="identifier" placeholder="example@gmail.com" required></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col">
-                                <label>मोबाइल नम्बर (फोन नं.):</label>
-                                <input type="text" id="reg_phone" placeholder="98XXXXXXXX" required>
-                            </div>
-                            <div class="form-col">
-                                <label>इमेल ठेगाना:</label>
-                                <input type="email" id="identifier" placeholder="example@gmail.com" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col">
-                                <label>जन्म मिति:</label>
-                                <input type="date" id="reg_dob" required>
-                            </div>
-                            <div class="form-col">
-                                <label>पासवर्ड:</label>
+                            <div class="form-col"><label>जन्म मिति:</label><input type="date" id="reg_dob" required></div>
+                            <div class="form-col"><label>पासवर्ड:</label>
                                 <div class="password-container">
-                                    <input type="password" id="reg_password" placeholder="बलियो पासवर्ड राख्नुहोस्" required>
+                                    <input type="password" id="reg_password" placeholder="बलियो पासवर्ड" required>
                                     <button type="button" class="toggle-password" onclick="togglePasswordVisibility('reg_password', this)">👁</button>
                                 </div>
                             </div>
@@ -333,7 +285,7 @@
 
                     <div id="otpSection" style="display: none; margin-top: 25px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
                         <div class="form-group" style="margin-bottom: 15px;">
-                            <label style="color: #2b6cb0;">इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
+                            <label style="color: #2b6cb0;">इमेलमा प्राप्त ६ अंकको OTP कोड:</label>
                             <div class="otp-container">
                                 <input type="text" id="otpCode" placeholder="______" maxlength="6" oninput="checkOtpMatch(this.value, currentGeneratedOtp, 'otpStatusIcon')">
                                 <span id="otpStatusIcon" class="otp-status-icon"></span>
@@ -341,8 +293,7 @@
                             <small id="emailStatusInfo" style="color: #38a169; display: block; margin-top: 5px; font-weight: bold;"></small>
                         </div>
                         <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
-                        <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px; background: var(--accent-gradient);">✔ कोड प्रमाणित गर्नुहोस् र डन (Done) गर्नुहोस्</button>
-                        <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background: var(--primary-gradient);">पुनः कोड पठाउनुहोस्</button>
+                        <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px; background: var(--accent-gradient);">✔ कोड प्रमाणित गर्नुहोस्</button>
                     </div>
                 </div>
 
@@ -352,180 +303,86 @@
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पुरानो खाता लगइन</h3>
                     
                     <form id="loginForm" onsubmit="handleLogin(event)">
-                        <div class="form-group">
-                            <label>इमेल ठेगाना:</label>
-                            <input type="email" id="login_email" placeholder="तपाईको दर्ता भएको इमेल" required>
-                        </div>
-                        <div class="form-group">
-                            <label>पासवर्ड:</label>
+                        <div class="form-group"><label>इमेल ठेगाना:</label><input type="email" id="login_email" placeholder="तपाईको इमेल" required></div>
+                        <div class="form-group"><label>पासवर्ड:</label>
                             <div class="password-container">
-                                <input type="password" id="login_password" placeholder="तपाईको पासवर्ड" required>
+                                <input type="password" id="login_password" placeholder="पासवर्ड" required>
                                 <button type="button" class="toggle-password" onclick="togglePasswordVisibility('login_password', this)">👁</button>
                             </div>
                         </div>
                         <button type="submit" style="background: var(--primary-gradient);">लगइन गर्नुहोस्</button>
                     </form>
-                    <div style="margin-top: 20px; text-align: center;">
-                        <button type="button" class="link-btn" onclick="showSubSection('forgotStep')">पासवर्ड बिर्सनुभयो? (Reset Password)</button>
-                    </div>
-                </div>
-
-                <!-- पासवर्ड रिसेट फारम -->
-                <div id="forgotStep" class="sub-section" style="display: none;">
-                    <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 20px; padding: 8px 15px; font-size: 13px; box-shadow: none;">← लगइनमा फर्कनुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पासवर्ड रिसेट गर्नुहोस्</h3>
-                    
-                    <div class="form-group">
-                        <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
-                        <input type="email" id="reset_email" placeholder="example@gmail.com" required>
-                    </div>
-                    <button type="button" id="sendResetOtpBtn" onclick="sendResetOtp()" style="background: var(--warning-gradient); color: #1a202c;">रिसेट OTP कोड पठाउनुहोस्</button>
-
-                    <div id="resetOtpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
-                        <div class="form-group">
-                            <label>६ अंकको OTP कोड:</label>
-                            <div class="otp-container">
-                                <input type="text" id="resetOtpCode" placeholder="______" maxlength="6" oninput="checkOtpMatch(this.value, resetOtpCodeVal, 'resetOtpStatusIcon')">
-                                <span id="resetOtpStatusIcon" class="otp-status-icon"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>नयाँ पासवर्ड:</label>
-                            <div class="password-container">
-                                <input type="password" id="new_password" placeholder="नयाँ पासवर्ड राख्नुहोस्">
-                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('new_password', this)">👁</button>
-                            </div>
-                        </div>
-                        <button type="button" onclick="verifyAndResetPassword()" style="background: var(--accent-gradient);">पासवर्ड सुरक्षित गर्नुहोस् (Done)</button>
-                    </div>
                 </div>
 
                 <!-- ड्यासबोर्ड -->
                 <div id="dashboardStep" class="sub-section" style="display: none;">
-                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 20px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 20px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <h3 style="color: #234e52; margin: 0;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
-                            <p style="margin: 5px 0 0; color: #2c7a7b; font-size: 14px;">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा रहेको छ।</p>
+                            <p style="margin: 5px 0 0; color: #2c7a7b; font-size: 14px;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
                         </div>
                         <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 8px 18px; font-size: 14px; box-shadow: none;">लग आउट</button>
                     </div>
 
                     <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px;">
-                            <h4 style="color: #1a365d; margin: 0; font-size: 18px;">👤 मेरो प्रोफाइल विवरण</h4>
-                            <button type="button" onclick="toggleEditProfile()" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 15px; font-size: 13px; box-shadow: none;">✏ प्रोफाइल सम्पादन (Edit)</button>
-                        </div>
-
-                        <div id="profileViewMode">
-                            <div class="profile-pic-container">
-                                <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="प्रोफाइल फोटो" class="profile-avatar">
-                                <div>
-                                    <p style="margin: 0 0 5px 0;"><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
-                                    <p style="margin: 0 0 5px 0;"><strong>मोबाइल नम्बर:</strong> <span id="lbl_phone">-</span></p>
-                                    <p style="margin: 0 0 5px 0;"><strong>इमेल ठेगाना:</strong> <span id="lbl_email">-</span></p>
-                                    <p style="margin: 0;"><strong>जन्म मिति:</strong> <span id="lbl_dob">-</span></p>
-                                </div>
+                        <h4 style="color: #1a365d; margin: 0 0 15px 0; font-size: 18px;">👤 मेरो प्रोफाइल विवरण</h4>
+                        <div class="profile-pic-container">
+                            <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar">
+                            <div>
+                                <p style="margin: 0 0 5px 0;"><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
+                                <p style="margin: 0 0 5px 0;"><strong>मोबाइल:</strong> <span id="lbl_phone">-</span></p>
+                                <p style="margin: 0 0 5px 0;"><strong>इमेल:</strong> <span id="lbl_email">-</span></p>
+                                <p style="margin: 0;"><strong>जन्म मिति:</strong> <span id="lbl_dob">-</span></p>
                             </div>
-                        </div>
-
-                        <div id="profileEditMode" style="display: none;">
-                            <div class="form-group" style="text-align: center; margin-bottom: 20px;">
-                                <img id="edit_preview_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="प्रिभ्यु" class="profile-avatar" style="margin: 0 auto 10px auto; display: block;">
-                                <label style="display: inline-block; background: #e2e8f0; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 13px;">
-                                    📁 नयाँ फोटो छान्नुहोस्
-                                    <input type="file" id="edit_avatar_file" accept="image/*" style="display: none;" onchange="previewProfileImage(event)">
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>पूरा नाम थर:</label>
-                                <input type="text" id="edit_name">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-col">
-                                    <label>मोबाइल नम्बर:</label>
-                                    <input type="text" id="edit_phone">
-                                </div>
-                                <div class="form-col">
-                                    <label>जन्म मिति:</label>
-                                    <input type="date" id="edit_dob">
-                                </div>
-                            </div>
-                            <button type="button" onclick="saveProfileChanges()" style="background: var(--accent-gradient); width: auto; padding: 10px 25px;">परिवर्तन सुरक्षित गर्नुहोस्</button>
                         </div>
                     </div>
 
-                    <!-- सदस्यता सेवाहरूको बटनहरू -->
                     <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
                         <h4 style="color: #1a365d; margin-top: 0; font-size: 20px;">सदस्यता सेवाहरू</h4>
-                        <p style="color: #718096; margin-bottom: 20px;">तपाईं तलका सेवाहरू यहाँबाट लिन सक्नुहुन्छ:</p>
-                        
-                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                            <button type="button" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">📝 नयाँ सदस्यता फारम</button>
-                            <button type="button" onclick="toggleForm('सदस्यता नवीकरण')" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 12px 25px;">🔄 सदस्यता नवीकरण</button>
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px;">
+                            <button type="button" id="btnOpenForm" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">📝 नयाँ सदस्यता फारम</button>
                             <button type="button" onclick="openMyCard()" style="width: auto; background: var(--accent-gradient); padding: 12px 25px;">🆔 मेरो कार्ड (Digital ID)</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- आधिकारिक फारम -->
+                <!-- आधिकारिक फारम (Submited भएपछि Read-only बनाउने) -->
                 <div id="officialFormBox" class="official-form" style="display: none;">
-                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस् (लुकाउनुहोस्)</button>
+                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
+                    
+                    <div id="formNoticeBanner" style="padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; text-align: center; display: none;"></div>
+
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                        <div>
-                            <h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
-                        </div>
+                        <div><h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4></div>
                         <div>
                             <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568;">पासपोर्ट फोटो</label>
-                            <div class="passport-photo-box" onclick="document.getElementById('form_passport_photo').click()" title="क्लिक गरेर क्यामेरा वा ग्यालरीबाट छान्नुहोस्">
+                            <div class="passport-photo-box" id="passportBoxClick" onclick="triggerPhotoUpload()">
                                 <img id="form_photo_preview" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="पासपोर्ट फोटो">
-                                <div style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 3px 0;">📸 फोटो राख्नुहोस्</div>
+                                <div id="photoUploadText" style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 3px 0;">📸 फोटो राख्नुहोस्</div>
                             </div>
-                            <input type="file" id="form_passport_photo" accept="image/*" capture="environment" style="display: none;" onchange="previewFormPhoto(event)">
+                            <input type="file" id="form_passport_photo" accept="image/*" style="display: none;" onchange="previewFormPhoto(event)">
                         </div>
                     </div>
 
-                    <p style="margin-top: 0;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
+                    <p style="margin-top: 0;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
                     <p style="text-align: center; font-weight: bold; font-size: 17px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
                     
                     <form id="membershipApplicationForm" style="margin-top: 20px;">
                         <div class="form-row">
-                            <div class="form-col" style="flex: 2;">
-                                <label>पूरा नाम थर:</label>
-                                <input type="text" id="f_name" required>
-                            </div>
-                            <div class="form-col" style="flex: 1;">
-                                <label>फेम्लि कोड (नभए छैन लेख्नुहोला):</label>
-                                <input type="text" id="f_family_code" placeholder="छैन वा कोड राख्नुहोस्">
-                            </div>
+                            <div class="form-col" style="flex: 2;"><label>पूरा नाम थर:</label><input type="text" id="f_name" required></div>
+                            <div class="form-col" style="flex: 1;"><label>फेम्लि कोड:</label><input type="text" id="f_family_code" placeholder="छैन"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col">
-                                <label>नागरिकता प्र.नं.:</label>
-                                <input type="text" id="f_citizenship" required>
-                            </div>
-                            <div class="form-col">
-                                <label>पति/पत्नीको नाम (अविवाहितको हकमा अविवाहित लेख्नुहोला):</label>
-                                <input type="text" id="f_spouse" placeholder="अविवाहित भए 'अविवाहित' लेख्नुहोस्">
-                            </div>
+                            <div class="form-col"><label>नागरिकता प्र.नं.:</label><input type="text" id="f_citizenship" required></div>
+                            <div class="form-col"><label>पति/पत्नीको नाम:</label><input type="text" id="f_spouse" placeholder="अविवाहित भए 'अविवाहित'"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col">
-                                <label>बुबाको नाम:</label>
-                                <input type="text" id="f_father" required>
-                            </div>
-                            <div class="form-col">
-                                <label>आमाको नाम:</label>
-                                <input type="text" id="f_mother">
-                            </div>
+                            <div class="form-col"><label>बुबाको नाम:</label><input type="text" id="f_father" required></div>
+                            <div class="form-col"><label>आमाको नाम:</label><input type="text" id="f_mother"></div>
                         </div>
-                        <div class="form-group">
-                            <label>बाजेको नाम:</label>
-                            <input type="text" id="f_grandfather">
-                        </div>
-                        <!-- प्रदेश र जिल्ला ड्रपडाउन -->
+                        <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="f_grandfather"></div>
                         <div class="form-row">
-                            <div class="form-col">
-                                <label>प्रदेश:</label>
+                            <div class="form-col"><label>प्रदेश:</label>
                                 <select id="f_province" onchange="loadDistricts()" required>
                                     <option value="">-- प्रदेश छान्नुहोस् --</option>
                                     <option value="कोशी प्रदेश">कोशी प्रदेश</option>
@@ -537,31 +394,18 @@
                                     <option value="सुदूरपश्चिम प्रदेश">सुदूरपश्चिम प्रदेश</option>
                                 </select>
                             </div>
-                            <div class="form-col">
-                                <label>जिल्ला:</label>
-                                <select id="f_district" onchange="loadMunicipalities()" required>
-                                    <option value="">-- पहिले प्रदेश छान्नुहोस् --</option>
-                                </select>
+                            <div class="form-col"><label>जिल्ला:</label>
+                                <select id="f_district" onchange="loadMunicipalities()" required><option value="">-- पहिले प्रदेश छान्नुहोस् --</option></select>
                             </div>
                         </div>
-                        <!-- गाउँपालिका/नगरपालिका र वडा -->
                         <div class="form-row">
-                            <div class="form-col">
-                                <label>गाउँपालिका/नगरपालिका:</label>
-                                <select id="f_municipality" required>
-                                    <option value="">-- पहिले जिल्ला छान्नुहोस् --</option>
-                                </select>
+                            <div class="form-col"><label>गाउँपालिका/नगरपालिका:</label>
+                                <select id="f_municipality" required><option value="">-- पहिले जिल्ला छान्नुहोस् --</option></select>
                             </div>
-                            <div class="form-col">
-                                <label>वडा नं.:</label>
-                                <input type="text" id="f_ward" placeholder="जस्तै: १, २, ३..." required>
-                            </div>
+                            <div class="form-col"><label>वडा नं.:</label><input type="text" id="f_ward" required></div>
                         </div>
-                        <div class="form-group">
-                            <label>टोल:</label>
-                            <input type="text" id="f_tole" placeholder="टोलको नाम">
-                        </div>
-                        <button type="button" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 10px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
+                        <div class="form-group"><label>टोल:</label><input type="text" id="f_tole"></div>
+                        <button type="button" id="btnGoToPayment" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 10px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
                     </form>
                 </div>
 
@@ -570,62 +414,43 @@
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
                     
-                    <div class="form-group">
-                        <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo) [क्यामेरा वा ग्यालरी]:</label>
-                        <input type="file" id="citizenshipFront" accept="image/*" capture="environment" required>
-                    </div>
-                    <div class="form-group">
-                        <label>२. नागरिकताको पछाडिको भागको फोटो (Back Photo) [क्यामेरा वा ग्यालरी]:</label>
-                        <input type="file" id="citizenshipBack" accept="image/*" capture="environment" required>
-                    </div>
+                    <div class="form-group"><label>१. नागरिकता अगाडि:</label><input type="file" id="citizenshipFront" accept="image/*" required></div>
+                    <div class="form-group"><label>२. नागरिकता पछाडि:</label><input type="file" id="citizenshipBack" accept="image/*" required></div>
 
                     <div class="qr-box">
                         <h4 style="margin-top: 0; color: #2b6cb0;">सदस्यता शुल्क: रु. ५००/-</h4>
-                        <p style="margin: 5px 0 15px 0;">भुक्तानीको लागि तलको Fonepay QR Code मा स्क्यान गर्नुहोस्:</p>
-                        <img src="https://i.postimg.cc/j555F5qL/ka-ya-a-ra.jpg" class="qr-img" alt="Fonepay QR Code" onerror="this.src='https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'">
-                        <p style="font-size: 13px; color: #718096; margin: 10px 0 0 0;">(सक्कल भौचर वा अनलाइन ट्रान्फर गरेको स्क्रीनसट तल अपलोड गर्नुहोस्)</p>
+                        <img src="https://i.postimg.cc/j555F5qL/ka-ya-a-ra.jpg" class="qr-img" alt="QR">
                     </div>
 
-                    <div class="form-group">
-                        <label>३. भुक्तानी भौचर वा स्क्रीनसट अपलोड गर्नुहोस् (Payment Slip) [क्यामेरा वा ग्यालरी]:</label>
-                        <input type="file" id="paymentSlip" accept="image/*" capture="environment" required>
-                    </div>
-
-                    <button type="button" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी सबमिट गर्नुहोस्</button>
+                    <div class="form-group"><label>३. भुक्तानी भौचर/स्क्रीनसट:</label><input type="file" id="paymentSlip" accept="image/*" required></div>
+                    <button type="button" id="btnFinalSubmit" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी सबमिट गर्नुहोस्</button>
                 </div>
 
                 <div id="message"></div>
             </div>
         </div>
-
     </div>
 
-    <!-- डिजिटल आइडी कार्ड पपअप -->
+    <!-- डिजिटल आइडी कार्ड पपअप (Approved नभए खाली वा मेसेज देखाउने) -->
     <div id="idCardModal" class="id-card-modal">
         <div class="id-card-content">
             <div class="id-card-header">
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" style="width: 45px; height: 45px; border-radius: 50%; vertical-align: middle; margin-right: 8px;">
                 <strong style="font-size: 16px; color: #1a365d;">दशौँदी समाज नेपाल</strong>
-                <p style="margin: 2px 0 0; font-size: 11px; color: #718096;">केन्द्रीय समिति, कर्णाली प्रदेश, सुर्खेत</p>
+                <p style="margin: 2px 0 0; font-size: 11px; color: #718096;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
             </div>
-            <img id="card_avatar" src="" class="id-card-avatar" alt="सदस्य फोटो">
-            <h3 id="card_name" style="margin: 5px 0; color: #2d3748; font-size: 18px;">-</h3>
-            <p style="color: #3182ce; font-weight: bold; margin: 0 0 10px 0; font-size: 13px;">आधिकारिक सदस्य</p>
-            <div style="text-align: left; background: #f7fafc; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
-                <p style="margin: 4px 0;"><strong>मोबाइल:</strong> <span id="card_phone">-</span></p>
-                <p style="margin: 4px 0;"><strong>इमेल:</strong> <span id="card_email">-</span></p>
-                <p style="margin: 4px 0;"><strong>जन्म मिति:</strong> <span id="card_dob">-</span></p>
+            
+            <div id="idCardBodyContent">
+                <!-- Javascript ले यहाँ डेटा वा मेसेज भर्नेछ -->
             </div>
-            <div style="display: flex; gap: 10px;">
-                <button type="button" onclick="window.print()" style="background: var(--primary-gradient); padding: 10px; font-size: 14px;">🖨 प्रिन्ट / डाउनलोड</button>
-                <button type="button" onclick="closeMyCard()" style="background: var(--danger-gradient); padding: 10px; font-size: 14px;">बन्द गर्नुहोस्</button>
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;" id="idCardActionButtons">
+                <button type="button" onclick="closeMyCard()" style="background: var(--danger-gradient); padding: 10px; font-size: 14px; width: 100%;">बन्द गर्नुहोस्</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; २०२६ दशाैँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
-    </footer>
+    <footer><p>&copy; २०२६ दशाैँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p></footer>
 
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
@@ -653,58 +478,36 @@
             const provinceSelect = document.getElementById('f_province').value;
             const districtSelect = document.getElementById('f_district');
             districtSelect.innerHTML = '<option value="">-- जिल्ला छान्नुहोस् --</option>';
-            
             if (provinceSelect && districtData[provinceSelect]) {
                 districtData[provinceSelect].forEach(dist => {
-                    const opt = document.createElement('option');
-                    opt.value = dist;
-                    opt.textContent = dist;
-                    districtSelect.appendChild(opt);
+                    const opt = document.createElement('option'); opt.value = dist; opt.textContent = dist; districtSelect.appendChild(opt);
                 });
             }
-            document.getElementById('f_municipality').innerHTML = '<option value="">-- पहिले प्रदेश छान्नुहोस् --</option>';
         }
 
         function loadMunicipalities() {
             const districtSelect = document.getElementById('f_district').value;
             const muniSelect = document.getElementById('f_municipality');
             muniSelect.innerHTML = '<option value="">-- गाउँपालिका/नगरपालिका छान्नुहोस् --</option>';
-
             if (districtSelect && sampleMunicipalities[districtSelect]) {
                 sampleMunicipalities[districtSelect].forEach(muni => {
-                    const opt = document.createElement('option');
-                    opt.value = muni;
-                    opt.textContent = muni;
-                    muniSelect.appendChild(opt);
+                    const opt = document.createElement('option'); opt.value = muni; opt.textContent = muni; muniSelect.appendChild(opt);
                 });
             } else if (districtSelect) {
                 ['नगरपालिका', 'गाउँपालिका'].forEach(t => {
-                    const opt = document.createElement('option');
-                    opt.value = districtSelect + ' ' + t;
-                    opt.textContent = districtSelect + ' स्थानीय तह (' + t + ')';
-                    muniSelect.appendChild(opt);
+                    const opt = document.createElement('option'); opt.value = districtSelect + ' ' + t; opt.textContent = districtSelect + ' स्थानीय तह (' + t + ')'; muniSelect.appendChild(opt);
                 });
             }
         }
 
-        let countdownTimer;
-        let verifiedIdentifier = '';
-        let currentGeneratedOtp = '';
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
-        let resetOtpCodeVal = '';
-        let currentFormType = 'नयाँ सदस्यता';
+        let currentApplication = null; // प्रयोगकर्ताको आवेदन र स्टेटस स्टोर गर्न
 
         async function fetchAboutData() {
             const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
             if (data) {
-                if(data.logo_url) {
-                    document.getElementById('db_logo').src = data.logo_url;
-                    document.getElementById('top_logo').src = data.logo_url;
-                }
-                if(data.title_ne) {
-                    document.getElementById('db_title_ne').innerText = data.title_ne;
-                    document.getElementById('top_title').innerText = data.title_ne;
-                }
+                if(data.logo_url) { document.getElementById('db_logo').src = data.logo_url; document.getElementById('top_logo').src = data.logo_url; }
+                if(data.title_ne) { document.getElementById('db_title_ne').innerText = data.title_ne; document.getElementById('top_title').innerText = data.title_ne; }
                 document.getElementById('db_title_en').innerText = data.title_en || '';
                 document.getElementById('db_address').innerText = "ठेगाना: " + (data.address || '');
                 document.getElementById('top_address').innerText = data.address || '';
@@ -714,128 +517,36 @@
                 document.getElementById('db_description').innerText = data.description || '';
             }
         }
-
-        function getRoleRank(positionName) {
-            if (!positionName) return 99;
-            const pos = positionName.trim();
-            if (pos.includes('अध्यक्ष') && pos.includes('वरिष्ठ')) return 2;
-            if (pos.includes('अध्यक्ष')) return 1;
-            if (pos.includes('उपाध्यक्ष')) return 3;
-            if (pos.includes('सह सचिव') || pos.includes('सहसचिव')) return 5;
-            if (pos.includes('सचिव')) return 4;
-            if (pos.includes('कोषाध्यक्ष')) return 6;
-            if (pos.includes('सदस्य')) return 7;
-            return 99;
-        }
-
-        async function fetchCommitteeData(tableName, containerId) {
-            const { data, error } = await supabaseClient.from(tableName).select('*');
-            const container = document.getElementById(containerId);
-            
-            if (error || !data || data.length === 0) {
-                container.innerHTML = '<p>हाल विवरण उपलब्ध छैन।</p>';
-                return;
-            }
-
-            data.sort((a, b) => {
-                let rankA = getRoleRank(a.position);
-                let rankB = getRoleRank(b.position);
-                if (rankA !== rankB) {
-                    return rankA - rankB;
-                }
-                let numA = parseInt(a.member_no) || 999;
-                let numB = parseInt(b.member_no) || 999;
-                return numA - numB;
-            });
-
-            let html = '';
-            data.forEach(person => {
-                const defaultPhoto = 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-                const photo = person.photo_url ? person.photo_url : defaultPhoto;
-                
-                html += `
-                    <div class="committee-card">
-                        <img src="${photo}" alt="${person.full_name}" class="committee-photo">
-                        <h3>${person.full_name}</h3>
-                        <p><strong>पद:</strong> ${person.position || 'सदस्य'}</p>
-                        ${person.phone ? `<p><strong>सम्पर्क:</strong> ${person.phone}</p>` : ''}
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
         fetchAboutData();
-        fetchCommitteeData('founder_committee', 'founder_container');
-        fetchCommitteeData('central_committee', 'central_container');
 
         function switchPage(pageId, element) {
-            const pages = document.querySelectorAll('.page-section');
-            pages.forEach(page => page.classList.remove('active-page'));
-
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
-            
-            const navLinks = document.querySelectorAll('.nav > a');
-            navLinks.forEach(link => link.classList.remove('active'));
-            if(element) { element.classList.add('active'); }
+            document.querySelectorAll('.nav > a').forEach(l => l.classList.remove('active'));
+            if(element) element.classList.add('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function showSubSection(sectionId) {
-            const subs = document.querySelectorAll('.sub-section');
-            subs.forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.sub-section').forEach(el => el.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
         }
 
         function togglePasswordVisibility(fieldId, btn) {
-            const passwordField = document.getElementById(fieldId);
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                btn.innerText = "🙈";
-            } else {
-                passwordField.type = "password";
-                btn.innerText = "👁";
-            }
+            const f = document.getElementById(fieldId);
+            f.type = f.type === "password" ? "text" : "password";
+            btn.innerText = f.type === "password" ? "👁" : "🙈";
         }
 
-        function checkOtpMatch(enteredVal, correctVal, iconId) {
-            const iconSpan = document.getElementById(iconId);
-            if (enteredVal.length === 6) {
-                if (enteredVal === correctVal) {
-                    iconSpan.innerHTML = "✔";
-                    iconSpan.style.color = "#38a169";
-                } else {
-                    iconSpan.innerHTML = "✘";
-                    iconSpan.style.color = "#e53e3e";
-                }
-            } else {
-                iconSpan.innerHTML = "";
-            }
+        function checkOtpMatch(val, correct, iconId) {
+            const icon = document.getElementById(iconId);
+            if (val.length === 6) {
+                icon.innerHTML = val === correct ? "✔" : "✘";
+                icon.style.color = val === correct ? "#38a169" : "#e53e3e";
+            } else { icon.innerHTML = ""; }
         }
 
-        function previewProfileImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('edit_preview_img').src = e.target.result;
-                    currentUserProfile.avatar = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function previewFormPhoto(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('form_photo_preview').src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
+        let currentGeneratedOtp = '';
         async function generateAndSendOtp(e) {
             e.preventDefault();
             const email = document.getElementById('identifier').value.trim();
@@ -845,194 +556,25 @@
             const password = document.getElementById('reg_password').value.trim();
 
             if(!email || !name) return;
-
-            verifiedIdentifier = email;
             currentUserProfile = { name, phone, email, dob, password, avatar: 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png' };
             currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-            const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
 
-            await supabaseClient.from('otps').insert([{ 
-                identifier: email, 
-                otp_code: currentGeneratedOtp, 
-                expires_at: expiresAt 
-            }]);
+            await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentGeneratedOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
 
-            const templateParams = {
-                to_email: email,
-                otp_code: currentGeneratedOtp,
-                time: "१ मिनेट"
-            };
-
-            emailjs.send('service_v9c6kad', 'template_tkxmx5o', templateParams)
-                .then(function(response) {
-                    document.getElementById('emailStatusInfo').innerText = '✔ सफलतापूर्वक तपाईंको इमेलमा कोड पठाइयो!';
-                }, function(error) {
-                    alert('इमेल पठाउन असफल: ' + JSON.stringify(error));
-                });
+            emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentGeneratedOtp, time: "१ मिनेट" })
+                .then(() => { document.getElementById('emailStatusInfo').innerText = '✔ इमेलमा कोड पठाइयो!'; });
 
             document.getElementById('otpSection').style.display = 'block';
             document.getElementById('sendOtpBtn').innerText = 'इमेल पठाइयो ✓';
-            document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
-            document.getElementById('verifyBtn').style.display = 'block';
-            document.getElementById('resendBtn').style.display = 'none';
-
-            startTimer();
         }
-
-        function startTimer() {
-            let timeLeft = 60;
-            const timerDisplay = document.getElementById('timerDisplay');
-            clearInterval(countdownTimer);
-            
-            countdownTimer = setInterval(() => {
-                if(timeLeft <= 0) {
-                    clearInterval(countdownTimer);
-                    timerDisplay.innerText = 'समय समाप्त भयो!';
-                    document.getElementById('verifyBtn').style.display = 'none';
-                    document.getElementById('resendBtn').style.display = 'block';
-                } else {
-                    timerDisplay.innerText = `समय बाँकी: ${timeLeft} सेकेन्ड`;
-                    timeLeft--;
-                }
-            }, 1000);
-        }
-
         document.getElementById('registerForm').addEventListener('submit', generateAndSendOtp);
 
         async function verifyOtp() {
-            const enteredCode = document.getElementById('otpCode').value.trim();
-            if(!enteredCode) {
-                alert('कृपया OTP कोड हाल्नुहोस्!');
-                return;
-            }
-
-            if(enteredCode !== currentGeneratedOtp) {
-                alert('गलत OTP कोड! कृपया सही कोड प्रविष्ट गर्नुहोस्।');
-                return;
-            }
-
-            clearInterval(countdownTimer);
-
-            await supabaseClient.from('users').insert([{
-                email: currentUserProfile.email,
-                password: currentUserProfile.password,
-                full_name: currentUserProfile.name,
-                phone: currentUserProfile.phone,
-                dob: currentUserProfile.dob,
-                avatar: currentUserProfile.avatar
-            }]);
-
-            alert('खाता सफलतापूर्वक प्रमाणित र दर्ता भयो (Done)!');
+            const entered = document.getElementById('otpCode').value.trim();
+            if(entered !== currentGeneratedOtp) { alert('गलत OTP कोड!'); return; }
+            await supabaseClient.from('users').insert([currentUserProfile]);
+            alert('खाता सफलतापूर्वक दर्ता भयो!');
             loadDashboard();
-        }
-
-        function loadDashboard() {
-            showSubSection('dashboardStep');
-            document.getElementById('userDashboardName').innerText = currentUserProfile.name;
-            
-            document.getElementById('lbl_name').innerText = currentUserProfile.name || '-';
-            document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
-            document.getElementById('lbl_email').innerText = currentUserProfile.email || '-';
-            document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
-            
-            const avatarUrl = currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-            document.getElementById('lbl_avatar_img').src = avatarUrl;
-            document.getElementById('edit_preview_img').src = avatarUrl;
-            document.getElementById('form_photo_preview').src = avatarUrl;
-
-            document.getElementById('edit_name').value = currentUserProfile.name;
-            document.getElementById('edit_phone').value = currentUserProfile.phone;
-            document.getElementById('edit_dob').value = currentUserProfile.dob;
-
-            document.getElementById('f_name').value = currentUserProfile.name;
-        }
-
-        function toggleEditProfile() {
-            const viewMode = document.getElementById('profileViewMode');
-            const editMode = document.getElementById('profileEditMode');
-            if(editMode.style.display === 'none') {
-                editMode.style.display = 'block';
-                viewMode.style.display = 'none';
-            } else {
-                editMode.style.display = 'none';
-                viewMode.style.display = 'block';
-            }
-        }
-
-        async function saveProfileChanges() {
-            currentUserProfile.name = document.getElementById('edit_name').value.trim();
-            currentUserProfile.phone = document.getElementById('edit_phone').value.trim();
-            currentUserProfile.dob = document.getElementById('edit_dob').value.trim();
-
-            await supabaseClient
-                .from('users')
-                .update({ 
-                    full_name: currentUserProfile.name, 
-                    phone: currentUserProfile.phone, 
-                    dob: currentUserProfile.dob,
-                    avatar: currentUserProfile.avatar
-                })
-                .eq('email', currentUserProfile.email);
-
-            alert('✔ तपाईंको प्रोफाइल विवरण र फोटो सफलतापूर्वक अद्यावधिक (Update) भयो!');
-            loadDashboard();
-            toggleEditProfile();
-        }
-
-        async function sendResetOtp() {
-            const email = document.getElementById('reset_email').value.trim();
-            if(!email) {
-                alert('कृपया आफ्नो इमेल ठेगाना प्रविष्ट गर्नुहोस्!');
-                return;
-            }
-
-            resetOtpCodeVal = Math.floor(100000 + Math.random() * 900000).toString();
-            const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
-
-            await supabaseClient.from('otps').insert([{ 
-                identifier: email, 
-                otp_code: resetOtpCodeVal, 
-                expires_at: expiresAt 
-            }]);
-
-            const templateParams = {
-                to_email: email,
-                otp_code: resetOtpCodeVal,
-                time: "१ मिनेट"
-            };
-
-            emailjs.send('service_v9c6kad', 'template_tkxmx5o', templateParams)
-                .then(function(response) {
-                    alert('✔ पासवर्ड रिसेट गर्ने OTP कोड तपाईंको इमेलमा पठाइयो!');
-                    document.getElementById('resetOtpSection').style.display = 'block';
-                    document.getElementById('sendResetOtpBtn').innerText = 'कोड पठाइयो ✓';
-                }, function(error) {
-                    alert('इमेल पठाउन असफल: ' + JSON.stringify(error));
-                });
-        }
-
-        async function verifyAndResetPassword() {
-            const enteredCode = document.getElementById('resetOtpCode').value.trim();
-            const newPass = document.getElementById('new_password').value.trim();
-            const resetEmail = document.getElementById('reset_email').value.trim();
-
-            if(!enteredCode || !newPass) {
-                alert('कृपया OTP कोड र नयाँ पासवर्ड दुवै भर्नुहोस्!');
-                return;
-            }
-
-            if(enteredCode !== resetOtpCodeVal) {
-                alert('गलत OTP कोड! कृपया सही कोड राख्नुहोस्।');
-                return;
-            }
-
-            await supabaseClient
-                .from('users')
-                .update({ password: newPass })
-                .eq('email', resetEmail);
-
-            alert('तपाईंको पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डबाट लगइन गर्नुहोस्।');
-            showSubSection('loginStep');
         }
 
         async function handleLogin(e) {
@@ -1040,44 +582,90 @@
             const email = document.getElementById('login_email').value.trim();
             const password = document.getElementById('login_password').value.trim();
 
-            const { data, error } = await supabaseClient
-                .from('users')
-                .select('*')
-                .eq('email', email)
-                .eq('password', password);
+            const { data } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password);
+            if(!data || data.length === 0) { alert('गलत इमेल वा पासवर्ड!'); return; }
 
-            if(error || !data || data.length === 0) {
-                alert('गलत इमेल वा पासवर्ड! कृपया सही विवरण राख्नुहोस्।');
-                return;
-            }
-
-            const user = data[0];
-            currentUserProfile = { 
-                name: user.full_name || "सदस्य", 
-                phone: user.phone || "98XXXXXXXX", 
-                email: user.email, 
-                dob: user.dob || "2080-01-01",
-                avatar: user.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'
-            };
-
+            currentUserProfile = data[0];
             alert('लगइन सफल भयो!');
             loadDashboard();
         }
 
+        async function loadDashboard() {
+            showSubSection('dashboardStep');
+            document.getElementById('userDashboardName').innerText = currentUserProfile.full_name || currentUserProfile.name;
+            document.getElementById('lbl_name').innerText = currentUserProfile.full_name || currentUserProfile.name;
+            document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
+            document.getElementById('lbl_email').innerText = currentUserProfile.email;
+            document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
+            if(currentUserProfile.avatar) document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
+
+            // प्रयोगकर्ताको आवेदनको स्थिति (Status) जाँच गर्ने
+            const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
+            
+            const alertBox = document.getElementById('applicationStatusAlert');
+            const noticeBanner = document.getElementById('formNoticeBanner');
+            
+            if(data && data.length > 0) {
+                currentApplication = data[0];
+                if(currentApplication.status === 'Approved') {
+                    alertBox.innerHTML = "✅ तपाईंको सदस्यता आवेदन स्वीकृत (Approved) भइसकेको छ।";
+                    alertBox.style.color = "#276749";
+                } else if(currentApplication.status === 'Rejected') {
+                    alertBox.innerHTML = "❌ तपाईंको आवेदन अस्वीकृत भयो। कृपया विवरण संशोधन गरेर पठाउनुहोस्।";
+                    alertBox.style.color = "#e53e3e";
+                    
+                    noticeBanner.style.display = 'block';
+                    noticeBanner.style.backgroundColor = '#fed7d7';
+                    noticeBanner.style.color = '#9b2c2c';
+                    noticeBanner.innerText = "❌ एडमिनबाट आवेदन रिजेक्ट (Reject) गरिएको छ। कृपया संशोधन गरेर पुनः पठाउनुहोस्।";
+                } else {
+                    alertBox.innerHTML = "⏳ तपाईंको आवेदन समीक्षाको क्रममा (Pending) रहेको छ।";
+                    alertBox.style.color = "#d69e2e";
+
+                    noticeBanner.style.display = 'block';
+                    noticeBanner.style.backgroundColor = '#feebc8';
+                    noticeBanner.style.color = '#744210';
+                    noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर चलाउन मिल्दैन।";
+                    
+                    // सबमिट भइसकेपछि फारमलाई Lock (Read-only) गर्ने
+                    lockFormFields();
+                }
+            } else {
+                alertBox.innerHTML = "तपाईंले अझै सदस्यता फारम भर्नु भएको छैन।";
+            }
+        }
+
+        function lockFormFields() {
+            const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
+            inputs.forEach(input => input.disabled = true);
+            document.getElementById('btnGoToPayment').style.display = 'none';
+            document.getElementById('passportBoxClick').removeAttribute('onclick');
+            document.getElementById('photoUploadText').style.display = 'none';
+        }
+
+        let currentFormType = 'नयाँ सदस्यता';
         function toggleForm(type) {
             currentFormType = type;
             const formBox = document.getElementById('officialFormBox');
-            const step3Box = document.getElementById('step3');
-
-            step3Box.style.display = 'none';
-
-            if (formBox.style.display === 'block') {
-                formBox.style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+            formBox.style.display = 'block';
+            document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
+            
+            // यदि पहिले नै आवेदन भरिसकेको छ भने डाटा भर्ने
+            if(currentApplication) {
+                document.getElementById('f_name').value = currentApplication.full_name || '';
+                document.getElementById('f_family_code').value = currentApplication.family_code || '';
+                document.getElementById('f_citizenship').value = currentApplication.citizenship_no || '';
+                document.getElementById('f_spouse').value = currentApplication.spouse_name || '';
+                document.getElementById('f_father').value = currentApplication.father_name || '';
+                document.getElementById('f_mother').value = currentApplication.mother_name || '';
+                document.getElementById('f_grandfather').value = currentApplication.grandfather_name || '';
+                document.getElementById('f_ward').value = currentApplication.ward || '';
+                document.getElementById('f_tole').value = currentApplication.tole || '';
             } else {
-                formBox.style.display = 'block';
-                document.getElementById('formSubjectType').innerText = (type === 'नयाँ सदस्यता') ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
-                formBox.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('f_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
             }
+            formBox.scrollIntoView({ behavior: 'smooth' });
         }
 
         function hideOfficialForm() {
@@ -1085,82 +673,94 @@
             document.getElementById('step3').style.display = 'none';
         }
 
-        function openMyCard() {
-            document.getElementById('card_name').innerText = currentUserProfile.name || '-';
-            document.getElementById('card_phone').innerText = currentUserProfile.phone || '-';
-            document.getElementById('card_email').innerText = currentUserProfile.email || '-';
-            document.getElementById('card_dob').innerText = currentUserProfile.dob || '-';
-            document.getElementById('card_avatar').src = currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-            
-            document.getElementById('idCardModal').style.display = 'flex';
+        function triggerPhotoUpload() {
+            if(currentApplication && currentApplication.status === 'Pending') {
+                alert('तपाईंको आवेदन समीक्षामा रहेकोले अहिले परिवर्तन गर्न मिल्दैन।');
+                return;
+            }
+            document.getElementById('form_passport_photo').click();
         }
 
-        function closeMyCard() {
-            document.getElementById('idCardModal').style.display = 'none';
+        function previewFormPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => { document.getElementById('form_photo_preview').src = e.target.result; }
+                reader.readAsDataURL(file);
+            }
         }
 
         function goToPaymentStep() {
             const name = document.getElementById('f_name').value.trim();
             const citizenship = document.getElementById('f_citizenship').value.trim();
-            const father = document.getElementById('f_father').value.trim();
-            const province = document.getElementById('f_province').value;
-            const district = document.getElementById('f_district').value;
-            const municipality = document.getElementById('f_municipality').value;
-            const ward = document.getElementById('f_ward').value.trim();
-
-            if(!name || !citizenship || !father || !province || !district || !municipality || !ward) {
-                alert('कृपया फारमका सबै अनिवार्य विवरणहरू (नाम, नागरिकता, बुबाको नाम, प्रदेश, जिल्ला, गाउँपालिका/नगरपालिका र वडा नं.) भर्नुहोस्!');
-                return;
-            }
-
+            if(!name || !citizenship) { alert('कृपया अनिवार्य विवरणहरू भर्नुहोस्!'); return; }
             document.getElementById('officialFormBox').style.display = 'none';
             document.getElementById('step3').style.display = 'block';
             document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function finalSubmit() {
-            const front = document.getElementById('citizenshipFront').files[0];
-            const back = document.getElementById('citizenshipBack').files[0];
-            const slip = document.getElementById('paymentSlip').files[0];
-
-            if(!front || !back || !slip) {
-                alert('कृपया नागरिकताका दुवै फोटो र भुक्तानी भौचर अनिवार्य अपलोड गर्नुहोस्!');
-                return;
-            }
-
             const formData = {
-                identifier: currentUserProfile.email || document.getElementById('login_email').value,
+                identifier: currentUserProfile.email,
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
                 family_code: document.getElementById('f_family_code').value.trim(),
-                citizens_no: document.getElementById('f_citizenship').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
                 spouse_name: document.getElementById('f_spouse').value.trim(),
                 father_name: document.getElementById('f_father').value.trim(),
                 mother_name: document.getElementById('f_mother').value.trim(),
                 grandfather_name: document.getElementById('f_grandfather').value.trim(),
-                province: document.getElementById('f_province').value.trim(),
-                district: document.getElementById('f_district').value.trim(),
-                municipality: document.getElementById('f_municipality').value.trim(),
+                province: document.getElementById('f_province').value,
+                district: document.getElementById('f_district').value,
+                municipality: document.getElementById('f_municipality').value,
                 ward: document.getElementById('f_ward').value.trim(),
                 tole: document.getElementById('f_tole').value.trim(),
                 status: 'Pending'
             };
 
             const { error } = await supabaseClient.from('membership_applications').insert([formData]);
-
-            const messageDiv = document.getElementById('message');
-            if(error) {
-                messageDiv.style.color = 'red';
-                messageDiv.innerText = 'त्रुटि: ' + error.message;
-            } else {
-                messageDiv.style.color = 'green';
-                messageDiv.innerText = 'तपाईंको ' + currentFormType + ' आवेदन सफलतापूर्वक सबमिट भयो!';
-
-                setTimeout(() => {
-                    location.reload();
-                }, 4000);
+            if(error) { alert('त्रुटि: ' + error.message); } 
+            else { 
+                alert('आवेदन सफलतापूर्वक सबमिट भयो!');
+                location.reload(); 
             }
+        }
+
+        // मेरो कार्ड (Digital ID) देखाउने पपअप लगिक
+        function openMyCard() {
+            const bodyContent = document.getElementById('idCardBodyContent');
+            
+            if(!currentApplication) {
+                bodyContent.innerHTML = `<p style="color: #e53e3e; font-weight: bold;">तपाईंले हालसम्म कुनै पनि सदस्यता फारम पेस गर्नुभएको छैन।</p>`;
+            } else if(currentApplication.status === 'Pending') {
+                bodyContent.innerHTML = `
+                    <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="id-card-avatar" alt="लोगो">
+                    <h3 style="color: #d69e2e; margin: 10px 0;">आवेदन समीक्षामा छ (Pending)</h3>
+                    <p style="font-size: 13px; color: #4a5568;">तपाईंको डिजिटल परिचयपत्र एडबाट स्वीकृत (Approved) भएपछि मात्र यहाँ देखिनेछ।</p>
+                `;
+            } else if(currentApplication.status === 'Rejected') {
+                bodyContent.innerHTML = `
+                    <h3 style="color: #e53e3e; margin: 10px 0;">आवेदन अस्वीकृत (Rejected)</h3>
+                    <p style="font-size: 13px; color: #4a5568;">कृपया आफ्नो फारम संशोधन गरेर पुनः पेस गर्नुहोस्।</p>
+                `;
+            } else if(currentApplication.status === 'Approved') {
+                // सुन्दर डिजाइन गरिएको डिजिटल कार्ड
+                bodyContent.innerHTML = `
+                    <img src="${currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="id-card-avatar" alt="सदस्य फोटो">
+                    <h3 style="margin: 5px 0; color: #2d3748; font-size: 18px;">${currentApplication.full_name}</h3>
+                    <p style="color: #38a169; font-weight: bold; margin: 0 0 10px 0; font-size: 13px;">✅ आधिकारिक प्रमाणित सदस्य</p>
+                    <div style="text-align: left; background: #f7fafc; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
+                        <p style="margin: 4px 0;"><strong>इमेल:</strong> ${currentUserProfile.email}</p>
+                        <p style="margin: 4px 0;"><strong>ठेगाना:</strong> ${currentApplication.municipality || '-'}, वडा नं ${currentApplication.ward || '-'}</p>
+                        <p style="margin: 4px 0;"><strong>प्रदेश:</strong> ${currentApplication.province || '-'}</p>
+                    </div>
+                `;
+            }
+            document.getElementById('idCardModal').style.display = 'flex';
+        }
+
+        function closeMyCard() {
+            document.getElementById('idCardModal').style.display = 'none';
         }
 
         function resetMembershipFlow() {
@@ -1169,6 +769,5 @@
             document.getElementById('step3').style.display = 'none';
         }
     </script>
-
 </body>
 </html>
