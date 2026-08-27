@@ -346,7 +346,7 @@
                     </div>
                 </div>
 
-                <!-- आधिकारिक फारम (Submited भएपछि Read-only बनाउने) -->
+                <!-- आधिकारिक फारम -->
                 <div id="officialFormBox" class="official-form" style="display: none;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
                     
@@ -431,7 +431,7 @@
         </div>
     </div>
 
-    <!-- डिजिटल आइडी कार्ड पपअप (Approved नभए खाली वा मेसेज देखाउने) -->
+    <!-- डिजिटल आइडी कार्ड पपअप -->
     <div id="idCardModal" class="id-card-modal">
         <div class="id-card-content">
             <div class="id-card-header">
@@ -440,9 +440,7 @@
                 <p style="margin: 2px 0 0; font-size: 11px; color: #718096;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
             </div>
             
-            <div id="idCardBodyContent">
-                <!-- Javascript ले यहाँ डेटा वा मेसेज भर्नेछ -->
-            </div>
+            <div id="idCardBodyContent"></div>
 
             <div style="display: flex; gap: 10px; margin-top: 15px;" id="idCardActionButtons">
                 <button type="button" onclick="closeMyCard()" style="background: var(--danger-gradient); padding: 10px; font-size: 14px; width: 100%;">बन्द गर्नुहोस्</button>
@@ -471,7 +469,7 @@
 
         const sampleMunicipalities = {
             "सुर्खेत": ["वीरेन्द्रनगर नगरपालिका", "भेरीगंगा नगरपालिका", "गंगामामाला गाउँपालिका", "चौकुने गाउँपालिका", "पञ्चपुरी नगरपालिका", "बराहताल गाउँपालिका", "चिनगार्ड गाउँपालिका", "सिम्ता गाउँपालिका", "लेकबेसी नगरपालिका"],
-            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "थाँतीकाँध गाउँपालिका", "नारायण गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
+            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "ठाँटीकाँध गाउँपालिका", "नारायण गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
         };
 
         function loadDistricts() {
@@ -501,7 +499,7 @@
         }
 
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
-        let currentApplication = null; // प्रयोगकर्ताको आवेदन र स्टेटस स्टोर गर्न
+        let currentApplication = null;
 
         async function fetchAboutData() {
             const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
@@ -599,7 +597,6 @@
             document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
             if(currentUserProfile.avatar) document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
 
-            // प्रयोगकर्ताको आवेदनको स्थिति (Status) जाँच गर्ने
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
             
             const alertBox = document.getElementById('applicationStatusAlert');
@@ -627,7 +624,6 @@
                     noticeBanner.style.color = '#744210';
                     noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर चलाउन मिल्दैन।";
                     
-                    // सबमिट भइसकेपछि फारमलाई Lock (Read-only) गर्ने
                     lockFormFields();
                 }
             } else {
@@ -651,7 +647,6 @@
             formBox.style.display = 'block';
             document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
             
-            // यदि पहिले नै आवेदन भरिसकेको छ भने डाटा भर्ने
             if(currentApplication) {
                 document.getElementById('f_name').value = currentApplication.full_name || '';
                 document.getElementById('f_family_code').value = currentApplication.family_code || '';
@@ -704,17 +699,9 @@
                 identifier: currentUserProfile.email,
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
-                family_code: document.getElementById('f_family_code').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
-                spouse_name: document.getElementById('f_spouse').value.trim(),
                 father_name: document.getElementById('f_father').value.trim(),
-                mother_name: document.getElementById('f_mother').value.trim(),
-                grandfather_name: document.getElementById('f_grandfather').value.trim(),
-                province: document.getElementById('f_province').value,
-                district: document.getElementById('f_district').value,
-                municipality: document.getElementById('f_municipality').value,
                 ward: document.getElementById('f_ward').value.trim(),
-                tole: document.getElementById('f_tole').value.trim(),
                 status: 'Pending'
             };
 
@@ -726,7 +713,6 @@
             }
         }
 
-        // मेरो कार्ड (Digital ID) देखाउने पपअप लगिक
         function openMyCard() {
             const bodyContent = document.getElementById('idCardBodyContent');
             
@@ -736,7 +722,7 @@
                 bodyContent.innerHTML = `
                     <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="id-card-avatar" alt="लोगो">
                     <h3 style="color: #d69e2e; margin: 10px 0;">आवेदन समीक्षामा छ (Pending)</h3>
-                    <p style="font-size: 13px; color: #4a5568;">तपाईंको डिजिटल परिचयपत्र एडबाट स्वीकृत (Approved) भएपछि मात्र यहाँ देखिनेछ।</p>
+                    <p style="font-size: 13px; color: #4a5568;">तपाईंको डिजिटल परिचयपत्र एडमिनबाट स्वीकृत (Approved) भएपछि मात्र यहाँ देखिनेछ।</p>
                 `;
             } else if(currentApplication.status === 'Rejected') {
                 bodyContent.innerHTML = `
@@ -744,15 +730,13 @@
                     <p style="font-size: 13px; color: #4a5568;">कृपया आफ्नो फारम संशोधन गरेर पुनः पेस गर्नुहोस्।</p>
                 `;
             } else if(currentApplication.status === 'Approved') {
-                // सुन्दर डिजाइन गरिएको डिजिटल कार्ड
                 bodyContent.innerHTML = `
                     <img src="${currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="id-card-avatar" alt="सदस्य फोटो">
                     <h3 style="margin: 5px 0; color: #2d3748; font-size: 18px;">${currentApplication.full_name}</h3>
                     <p style="color: #38a169; font-weight: bold; margin: 0 0 10px 0; font-size: 13px;">✅ आधिकारिक प्रमाणित सदस्य</p>
                     <div style="text-align: left; background: #f7fafc; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
                         <p style="margin: 4px 0;"><strong>इमेल:</strong> ${currentUserProfile.email}</p>
-                        <p style="margin: 4px 0;"><strong>ठेगाना:</strong> ${currentApplication.municipality || '-'}, वडा नं ${currentApplication.ward || '-'}</p>
-                        <p style="margin: 4px 0;"><strong>प्रदेश:</strong> ${currentApplication.province || '-'}</p>
+                        <p style="margin: 4px 0;"><strong>वडा नं:</strong> ${currentApplication.ward || '-'}</p>
                     </div>
                 `;
             }
