@@ -6,6 +6,13 @@
     <title>सदस्यता फारम तथा नवीकरण - दशौँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // यहाँ आफ्नो EmailJS Public Key राख्नुहोला
+        })();
+    </script>
     <style>
         :root {
             --primary-color: #1a365d;
@@ -73,6 +80,7 @@
         }
 
         input[type="text"],
+        input[type="email"],
         input[type="file"],
         select,
         textarea {
@@ -168,30 +176,25 @@
 
         <!-- स्टेप १: प्रमाणीकरण -->
         <div id="step1" class="step-section active">
-            <h3 style="color: var(--primary-color);">चरण १: खाता प्रमाणीकरण (Secure Verification)</h3>
+            <h3 style="color: var(--primary-color);">चरण १: खाता प्रमाणीकरण (Real Email OTP)</h3>
             <form id="authForm">
                 <div class="form-group">
-                    <label>मोबाइल नम्बर वा इमेल ठेगाना प्रविष्ट गर्नुहोस्:</label>
-                    <input type="text" id="identifier" placeholder="मोबाइल नं. वा इमेल ठेगाना" required>
-                    <small style="color: #666;">(सहि विवरण राखेर मात्र कोड जेनेरेट गर्नुहोला)</small>
+                    <label>इमेल ठेगाना प्रविष्ट गर्नुहोस्:</label>
+                    <input type="email" id="identifier" placeholder="example@gmail.com" required>
+                    <small style="color: #666;">(सहि इमेल राखेर मात्र कोड पठाउनुहोला)</small>
                 </div>
-                <button type="submit" id="sendOtpBtn">प्रमाणीकरण कोड (OTP) जेनेरेट गर्नुहोस्</button>
+                <button type="submit" id="sendOtpBtn">इमेलमा OTP कोड पठाउनुहोस्</button>
             </form>
 
             <div id="otpSection" style="display: none; margin-top: 20px;">
-                <div class="form-group" style="background: #e6fffa; padding: 15px; border-radius: 6px; border: 1px solid #319795; text-align: center;">
-                    <label style="color: #234e52; font-size: 15px; margin-bottom: 5px;">तपाईको सुरक्षित प्रमाणीकरण कोड (OTP):</label>
-                    <div id="displayOtpCode" style="font-size: 32px; font-weight: bold; color: #2b6cb0; letter-spacing: 6px; margin: 10px 0;">------</div>
-                    <small style="color: #2c7a7b; display: block;">(यही ६ अंकको कोड तलको बक्समा टाइप गर्नुहोस्)</small>
-                </div>
-
                 <div class="form-group" style="margin-top: 15px;">
-                    <label>प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
+                    <label>इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
                     <input type="text" id="otpCode" placeholder="६ अंकको कोड यहाँ लेख्नुहोस्">
+                    <small id="emailStatusInfo" style="color: green; display: block; margin-top: 5px; font-weight: bold;"></small>
                 </div>
                 <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
                 <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस्</button>
-                <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background-color: #3182ce;">पुनः कोड जेनेरेट गर्नुहोस्</button>
+                <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background-color: #3182ce;">पुनः कोड पठाउनुहोस्</button>
             </div>
         </div>
 
@@ -309,26 +312,38 @@
         let selectedAppType = '';
 
         async function generateAndSendOtp() {
-            const identifier = document.getElementById('identifier').value.trim();
-            if(!identifier) return;
+            const email = document.getElementById('identifier').value.trim();
+            if(!email) return;
 
-            verifiedIdentifier = identifier;
+            verifiedIdentifier = email;
             currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString(); // ६ अंकको कोड
             const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
 
-            // डेटाबेसमा सेभ गर्ने
+            // १. Supabase को otps टेबलमा सेभ गर्ने
             await supabaseClient.from('otps').insert([{ 
-                identifier: identifier, 
+                identifier: email, 
                 otp_code: currentGeneratedOtp, 
                 expires_at: expiresAt 
             }]);
 
-            document.getElementById('otpSection').style.display = 'block';
-            document.getElementById('sendOtpBtn').innerText = 'कोड जेनेरेट भयो ✓';
-            document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
+            // २. EmailJS मार्फत सिधै इमेल पठाउने
+            const templateParams = {
+                to_email: email,
+                otp_code: currentGeneratedOtp,
+                time: "१ मिनेट"
+            };
 
-            // कोड तुरुन्तै स्क्रिनमा स्पष्ट रूपमा देखाउने
-            document.getElementById('displayOtpCode').innerText = currentGeneratedOtp;
+            // यहाँ 'service_v9c6kad' र '5dvd5o5' सेट गरिएको छ
+            emailjs.send('service_v9c6kad', '5dvd5o5', templateParams)
+                .then(function(response) {
+                    document.getElementById('emailStatusInfo').innerText = '✔ सफलतापूर्वक तपाईंको इमेलमा कोड पठाइयो!';
+                }, function(error) {
+                    alert('इमेल पठाउन असफल: ' + JSON.stringify(error));
+                });
+
+            document.getElementById('otpSection').style.display = 'block';
+            document.getElementById('sendOtpBtn').innerText = 'इमेल पठाइयो ✓';
+            document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
 
             document.getElementById('verifyBtn').style.display = 'block';
             document.getElementById('resendBtn').style.display = 'none';
