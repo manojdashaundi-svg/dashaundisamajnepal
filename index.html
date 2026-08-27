@@ -469,7 +469,7 @@
 
         const sampleMunicipalities = {
             "सुर्खेत": ["वीरेन्द्रनगर नगरपालिका", "भेरीगंगा नगरपालिका", "गंगामामाला गाउँपालिका", "चौकुने गाउँपालिका", "पञ्चपुरी नगरपालिका", "बराहताल गाउँपालिका", "चिनगार्ड गाउँपालिका", "सिम्ता गाउँपालिका", "लेकबेसी नगरपालिका"],
-            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "ठाँटीकाँध गाउँपालिका", "नारायण गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
+            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "थाँतीकाँध गाउँपालिका", "नारायण गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
         };
 
         function loadDistricts() {
@@ -699,9 +699,17 @@
                 identifier: currentUserProfile.email,
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
+                family_code: document.getElementById('f_family_code').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
+                spouse_name: document.getElementById('f_spouse').value.trim(),
                 father_name: document.getElementById('f_father').value.trim(),
+                mother_name: document.getElementById('f_mother').value.trim(),
+                grandfather_name: document.getElementById('f_grandfather').value.trim(),
+                province: document.getElementById('f_province').value,
+                district: document.getElementById('f_district').value,
+                municipality: document.getElementById('f_municipality').value,
                 ward: document.getElementById('f_ward').value.trim(),
+                tole: document.getElementById('f_tole').value.trim(),
                 status: 'Pending'
             };
 
@@ -736,7 +744,8 @@
                     <p style="color: #38a169; font-weight: bold; margin: 0 0 10px 0; font-size: 13px;">✅ आधिकारिक प्रमाणित सदस्य</p>
                     <div style="text-align: left; background: #f7fafc; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
                         <p style="margin: 4px 0;"><strong>इमेल:</strong> ${currentUserProfile.email}</p>
-                        <p style="margin: 4px 0;"><strong>वडा नं:</strong> ${currentApplication.ward || '-'}</p>
+                        <p style="margin: 4px 0;"><strong>ठेगाना:</strong> ${currentApplication.municipality || '-'}, वडा नं ${currentApplication.ward || '-'}</p>
+                        <p style="margin: 4px 0;"><strong>प्रदेश:</strong> ${currentApplication.province || '-'}</p>
                     </div>
                 `;
             }
