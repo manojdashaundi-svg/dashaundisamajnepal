@@ -38,6 +38,20 @@
             text-align: center;
             color: #1a365d;
         }
+        .intro-text {
+            font-size: 15px;
+            color: #4a5568;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        .subject-text {
+            text-align: center;
+            font-weight: bold;
+            color: #1a365d;
+            margin: 25px 0;
+            font-size: 18px;
+            text-decoration: underline;
+        }
         .form-group {
             margin-bottom: 20px;
         }
@@ -57,7 +71,6 @@
             font-size: 14px;
         }
         input[type="text"],
-        input[type="date"],
         input[type="tel"],
         select {
             width: 100%;
@@ -103,7 +116,12 @@
         </div>
         
         <h2>दशौँदी समाज नेपाल</h2>
-        <h3>सदस्यता आवेदन फारम</h3>
+        <div class="intro-text">
+            श्री दशाैँदी समाज नेपाल,<br>
+            केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।
+        </div>
+
+        <div class="subject-text">विषय : सदस्यता पाऊँ बारे।</div>
 
         <form id="membershipForm">
             <div class="form-row">
@@ -131,7 +149,7 @@
             <div class="form-row">
                 <div class="form-col">
                     <label>जन्म मिति:</label>
-                    <input type="text" id="dob" placeholder="वि.सं. (לשd.२०४९-०९-१०)" required>
+                    <input type="text" id="dob" placeholder="वि.सं. (उदा. २०४९-०९-१०)" required>
                 </div>
                 <div class="form-col">
                     <label>रक्त समूह (Blood Group):</label>
