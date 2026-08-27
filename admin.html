@@ -37,6 +37,20 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
+        /* लगइन पेजको लोगो स्टाइल */
+        .login-logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .main-header-box {
             background: linear-gradient(135deg, #1a365d, #2b6cb0);
             color: white;
@@ -333,6 +347,11 @@
 <body>
 
     <div class="admin-container">
+        <!-- लोगो सेक्सन -->
+        <div class="login-logo-container">
+            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
+        </div>
+
         <div class="main-header-box">
             <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
@@ -539,7 +558,7 @@
 
             <hr>
 
-            <!-- एडमिन व्यवस्थापन सेक्सन (रोलसहित) -->
+            <!-- एडमिन व्यवस्थापन सेक्सन -->
             <div class="section-header">
                 <h3 id="adminFormTitle">नयाँ एडमिन थप्ने</h3>
                 <div class="button-group">
@@ -684,7 +703,6 @@
             }
         };
 
-        // एडमिन लगइन भेरिफिकेसन
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = document.getElementById('username').value.trim();
@@ -995,7 +1013,6 @@
             }
         }
 
-        // नयाँ एडमिन रोलसहित थप्ने वा अपडेट गर्ने
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('admin_edit_id').value;
