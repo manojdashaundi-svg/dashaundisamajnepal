@@ -131,16 +131,6 @@
             margin-bottom: 15px;
         }
 
-        .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .form-col {
-            flex: 1;
-        }
-
         label {
             display: block;
             font-weight: 600;
@@ -303,7 +293,7 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        /* अप्लिकेसन र युजर सम्पादन मोडल */
+        /* सम्पादन मोडल */
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
@@ -416,7 +406,7 @@
 
             <hr>
 
-            <!-- दर्ता भएका युजरहरूको सूची -->
+            <!-- दर्ता भएका युजरहरूको सूची (सम्पूर्ण विवरणसहित) -->
             <div class="section-header">
                 <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
                 <div class="button-group">
@@ -433,9 +423,20 @@
                                 <th>क्र.सं.</th>
                                 <th>फोटो</th>
                                 <th>नाम</th>
+                                <th>फेम्लि कोड</th>
                                 <th>मोबाइल</th>
-                                <th>इमेल</th>
+                                <th>इमेल / आइडी</th>
                                 <th>जन्म मिति</th>
+                                <th>नागरिकता नं.</th>
+                                <th>पति/पत्नी</th>
+                                <th>बुबा</th>
+                                <th>आमा</th>
+                                <th>बाजे</th>
+                                <th>प्रदेश</th>
+                                <th>जिल्ला</th>
+                                <th>पालिका</th>
+                                <th>वडा</th>
+                                <th>टोल</th>
                                 <th>पासवर्ड</th>
                                 <th class="no-print">कारवाही</th>
                             </tr>
@@ -652,12 +653,23 @@
     <!-- युजर सम्पादन मोडल (User Edit Modal) -->
     <div id="userEditModal" class="app-edit-modal">
         <div class="app-edit-content">
-            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">प्रयोगकर्ता विवरण सम्पादन</h3>
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
             <input type="hidden" id="edit_user_id">
-            <div class="form-group"><label>पूरा नाम:</label><input type="text" id="edit_user_name"></div>
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
+            <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_user_family_code"></div>
             <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
             <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
             <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_user_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_user_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_user_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_user_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_user_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
+            <div class="form-group"><label>पालिका:</label><input type="text" id="edit_user_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
             <div class="form-group"><label>पासवर्ड:</label><input type="text" id="edit_user_password"></div>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
@@ -904,12 +916,12 @@
             }
         }
 
-        // दर्ता भएका सदस्यहरूको सूची लोड गर्ने (फोटो, पासवर्ड र सम्पादन/रिमुभसहित)
+        // दर्ता भएका सदस्यहरूको सूची लोड गर्ने (आवेदन जस्तै सबै विवरण र कारवाहीमा केवल सम्पादन र रिमुभ)
         async function loadUsersData() {
             const { data } = await supabaseClient.from('users').select('*');
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="8">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="19">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
                 const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const userJson = encodeURIComponent(JSON.stringify(user));
@@ -919,9 +931,20 @@
                         <td><strong>${index + 1}</strong></td>
                         <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
                         <td><strong>${user.full_name || user.name || '-'}</strong></td>
+                        <td>${user.family_code || '-'}</td>
                         <td>${user.phone || '-'}</td>
                         <td>${user.email || '-'}</td>
                         <td>${user.dob || '-'}</td>
+                        <td>${user.citizenship_no || '-'}</td>
+                        <td>${user.spouse_name || '-'}</td>
+                        <td>${user.father_name || '-'}</td>
+                        <td>${user.mother_name || '-'}</td>
+                        <td>${user.grandfather_name || '-'}</td>
+                        <td>${user.province || '-'}</td>
+                        <td>${user.district || '-'}</td>
+                        <td>${user.municipality || '-'}</td>
+                        <td>${user.ward || '-'}</td>
+                        <td>${user.tole || '-'}</td>
                         <td>${user.password || '-'}</td>
                         <td class="no-print">
                             <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
@@ -936,9 +959,20 @@
             const user = JSON.parse(userDataStr);
             document.getElementById('edit_user_id').value = id;
             document.getElementById('edit_user_name').value = user.full_name || user.name || '';
+            document.getElementById('edit_user_family_code').value = user.family_code || '';
             document.getElementById('edit_user_phone').value = user.phone || '';
             document.getElementById('edit_user_email').value = user.email || '';
             document.getElementById('edit_user_dob').value = user.dob || '';
+            document.getElementById('edit_user_citizenship').value = user.citizenship_no || '';
+            document.getElementById('edit_user_spouse').value = user.spouse_name || '';
+            document.getElementById('edit_user_father').value = user.father_name || '';
+            document.getElementById('edit_user_mother').value = user.mother_name || '';
+            document.getElementById('edit_user_grandfather').value = user.grandfather_name || '';
+            document.getElementById('edit_user_province').value = user.province || '';
+            document.getElementById('edit_user_district').value = user.district || '';
+            document.getElementById('edit_user_municipality').value = user.municipality || '';
+            document.getElementById('edit_user_ward').value = user.ward || '';
+            document.getElementById('edit_user_tole').value = user.tole || '';
             document.getElementById('edit_user_password').value = user.password || '';
             document.getElementById('userEditModal').style.display = 'flex';
         }
@@ -951,15 +985,26 @@
             const id = document.getElementById('edit_user_id').value;
             const updatedData = {
                 full_name: document.getElementById('edit_user_name').value,
+                family_code: document.getElementById('edit_user_family_code').value,
                 phone: document.getElementById('edit_user_phone').value,
                 email: document.getElementById('edit_user_email').value,
                 dob: document.getElementById('edit_user_dob').value,
+                citizenship_no: document.getElementById('edit_user_citizenship').value,
+                spouse_name: document.getElementById('edit_user_spouse').value,
+                father_name: document.getElementById('edit_user_father').value,
+                mother_name: document.getElementById('edit_user_mother').value,
+                grandfather_name: document.getElementById('edit_user_grandfather').value,
+                province: document.getElementById('edit_user_province').value,
+                district: document.getElementById('edit_user_district').value,
+                municipality: document.getElementById('edit_user_municipality').value,
+                ward: document.getElementById('edit_user_ward').value,
+                tole: document.getElementById('edit_user_tole').value,
                 password: document.getElementById('edit_user_password').value
             };
 
             const { error } = await supabaseClient.from('users').update(updatedData).eq('id', id);
             if(!error) {
-                alert('युजर विवरण सफलतापूर्वक अपडेट भयो!');
+                alert('सदस्यको विवरण सफलतापूर्वक अपडेट भयो!');
                 closeUserEditModal();
                 loadUsersData();
             } else {
