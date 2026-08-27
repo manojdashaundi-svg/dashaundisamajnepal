@@ -303,6 +303,10 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
+        /* अप्लिकेसन सम्पादन मोडल (Application Edit Modal) */
+        .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
+        .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
+
         .print-header {
             display: none;
             text-align: center;
@@ -616,6 +620,32 @@
         </div>
     </div>
 
+    <!-- आवेदन सम्पादन मोडल (Application Edit Modal) -->
+    <div id="appEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
+            <input type="hidden" id="edit_app_id">
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name"></div>
+            <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_app_family_code"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_app_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
+            <div class="form-group"><label>पालिका:</label><input type="text" id="edit_app_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedApplication()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeAppEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
@@ -721,7 +751,7 @@
             location.reload();
         }
 
-        // नयाँ सदस्य आवेदनहरू लोड गर्ने (रक्त समूह हटाइएको र कागजात/पेमेन्ट थपिएको)
+        // नयाँ सदस्य आवेदनहरू लोड गर्ने (सम्पादन बटन थपिएको)
         async function loadApplicationsData() {
             const { data } = await supabaseClient.from('membership_applications').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('applicationsTableBody');
@@ -742,6 +772,9 @@
                 const citFront = app.citizenship_front || app.citizenship_front_url || '';
                 const citBack = app.citizenship_back || app.citizenship_back_url || '';
                 const paySlip = app.payment_slip || app.payment_slip_url || '';
+
+                // JSON वा string कै रूपमा डेटा pass गर्न escape गरेको
+                const appJson = encodeURIComponent(JSON.stringify(app));
 
                 tbody.innerHTML += `
                     <tr>
@@ -767,6 +800,7 @@
                         <td>${app.tole || '-'}</td>
                         <td>${statusBadge}</td>
                         <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="openAppEditModal('${app.id}', decodeURIComponent('${appJson}'))">सम्पादन</button>
                             <button class="btn-action btn-success" onclick="updateAppStatus('${app.id}', 'Approved')">Approve</button>
                             <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
                             <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
@@ -774,6 +808,59 @@
                     </tr>
                 `;
             });
+        }
+
+        function openAppEditModal(id, appDataStr) {
+            const app = JSON.parse(appDataStr);
+            document.getElementById('edit_app_id').value = id;
+            document.getElementById('edit_app_name').value = app.full_name || '';
+            document.getElementById('edit_app_family_code').value = app.family_code || '';
+            document.getElementById('edit_app_phone').value = app.phone || '';
+            document.getElementById('edit_app_dob').value = app.dob || '';
+            document.getElementById('edit_app_citizenship').value = app.citizenship_no || '';
+            document.getElementById('edit_app_spouse').value = app.spouse_name || '';
+            document.getElementById('edit_app_father').value = app.father_name || '';
+            document.getElementById('edit_app_mother').value = app.mother_name || '';
+            document.getElementById('edit_app_grandfather').value = app.grandfather_name || '';
+            document.getElementById('edit_app_province').value = app.province || '';
+            document.getElementById('edit_app_district').value = app.district || '';
+            document.getElementById('edit_app_municipality').value = app.municipality || '';
+            document.getElementById('edit_app_ward').value = app.ward || '';
+            document.getElementById('edit_app_tole').value = app.tole || '';
+            document.getElementById('appEditModal').style.display = 'flex';
+        }
+
+        function closeAppEditModal() {
+            document.getElementById('appEditModal').style.display = 'none';
+        }
+
+        async function saveEditedApplication() {
+            const id = document.getElementById('edit_app_id').value;
+            const updatedData = {
+                full_name: document.getElementById('edit_app_name').value,
+                family_code: document.getElementById('edit_app_family_code').value,
+                phone: document.getElementById('edit_app_phone').value,
+                dob: document.getElementById('edit_app_dob').value,
+                citizenship_no: document.getElementById('edit_app_citizenship').value,
+                spouse_name: document.getElementById('edit_app_spouse').value,
+                father_name: document.getElementById('edit_app_father').value,
+                mother_name: document.getElementById('edit_app_mother').value,
+                grandfather_name: document.getElementById('edit_app_grandfather').value,
+                province: document.getElementById('edit_app_province').value,
+                district: document.getElementById('edit_app_district').value,
+                municipality: document.getElementById('edit_app_municipality').value,
+                ward: document.getElementById('edit_app_ward').value,
+                tole: document.getElementById('edit_app_tole').value
+            };
+
+            const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
+            if(!error) {
+                alert('आवेदन सफलतापूर्वक अपडेट भयो!');
+                closeAppEditModal();
+                loadApplicationsData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
         }
 
         async function updateAppStatus(id, status) {
