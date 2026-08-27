@@ -228,12 +228,14 @@
             margin-bottom: 20px;
         }
         .qr-img {
-            width: 180px;
-            height: 180px;
+            width: 220px;
+            height: 260px;
             object-fit: contain;
             margin-bottom: 10px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: #fff;
+            padding: 5px;
         }
 
         #message {
@@ -579,7 +581,7 @@
                 <!-- पासपोर्ट साइज फोटो बक्स -->
                 <div>
                     <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568;">पासपोर्ट फोटो</label>
-                    <div class="passport-photo-box" onclick="document.getElementById('form_passport_photo').click()" title="क्लिक गरेर फोटो छान्नुहोस् वा खिच्नुहोस्">
+                    <div class="passport-photo-box" onclick="document.getElementById('form_passport_photo').click()" title="क्लिक गरेर क्यामेरा वा ग्यालरीबाट छान्नुहोस्">
                         <img id="form_photo_preview" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="पासपोर्ट फोटो">
                         <div style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 3px 0;">📸 फोटो राख्नुहोस्</div>
                     </div>
@@ -641,7 +643,7 @@
                         </select>
                     </div>
                 </div>
-                <!-- गाउँपालिका/नगरपालिका र वडा ड्रपडाउन/इनपुट -->
+                <!-- गाउँपालिका/नगरपालिका र वडा -->
                 <div class="form-row">
                     <div class="form-col">
                         <label>गाउँपालिका/नगरपालिका:</label>
@@ -656,7 +658,7 @@
                 </div>
                 <div class="form-group">
                     <label>टोल:</label>
-                    <input type="text" id="f_tole" placeholder="तोलको नाम">
+                    <input type="text" id="f_tole" placeholder="टोलको नाम">
                 </div>
                 <button type="button" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 10px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
             </form>
@@ -668,24 +670,24 @@
             <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
             
             <div class="form-group">
-                <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo):</label>
-                <input type="file" id="citizenshipFront" accept="image/*" required>
+                <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo) [क्यामेरा वा ग्यालरी]:</label>
+                <input type="file" id="citizenshipFront" accept="image/*" capture="environment" required>
             </div>
             <div class="form-group">
-                <label>२. नागरिकताको पछाडिको भागको फोटो (Back Photo):</label>
-                <input type="file" id="citizenshipBack" accept="image/*" required>
+                <label>२. नागरिकताको पछाडिको भागको फोटो (Back Photo) [क्यामेरा वा ग्यालरी]:</label>
+                <input type="file" id="citizenshipBack" accept="image/*" capture="environment" required>
             </div>
 
             <div class="qr-box">
-                <h4 style="margin-top: 0; color: #2b6cb0;">दस्तुर: रु. २००/-</h4>
-                <p style="margin: 5px 0 15px 0;">भुक्तानीको लागि तलको QR Code मा स्क्यान गर्नुहोस्:</p>
-                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="qr-img" alt="QR Code">
+                <h4 style="margin-top: 0; color: #2b6cb0;">सदस्यता शुल्क: रु. ५००/-</h4>
+                <p style="margin: 5px 0 15px 0;">भुक्तानीको लागि तलको Fonepay QR Code मा स्क्यान गर्नुहोस्:</p>
+                <img src="https://i.postimg.cc/9Q2x5g1W/qr.jpg" class="qr-img" alt="Fonepay QR Code" onerror="this.src='https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'">
                 <p style="font-size: 13px; color: #718096; margin: 10px 0 0 0;">(सक्कल भौचर वा अनलाइन ट्रान्फर गरेको स्क्रीनसट तल अपलोड गर्नुहोस्)</p>
             </div>
 
             <div class="form-group">
-                <label>३. भुक्तानी भौचर वा स्क्रीनसट अपलोड गर्नुहोस् (Payment Slip):</label>
-                <input type="file" id="paymentSlip" accept="image/*" required>
+                <label>३. भुक्तानी भौचर वा स्क्रीनसट अपलोड गर्नुहोस् (Payment Slip) [क्यामेरा वा ग्यालरी]:</label>
+                <input type="file" id="paymentSlip" accept="image/*" capture="environment" required>
             </div>
 
             <button type="button" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी सबमिट गर्नुहोस्</button>
@@ -723,7 +725,6 @@
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // नेपालका जिल्ला र स्थानीय तहको संरचना
         const districtData = {
             "कोशी प्रदेश": ["भोजपुर", "धनकुटा", "इलाम", "झापा", "खोटाङ", "मोरङ", "ओखलढुंगा", "पाँचथर", "संखुवासभा", "सोलुखुम्बु", "सुनसरी", "ताप्लेजुङ", "तेह्रथुम", "उदयपुर"],
             "मधेश प्रदेश": ["बारा", "धनुषा", "महोत्तरी", "पर्सा", "सप्तरी", "सर्लाही", "सिरहा", "रौतहट"],
@@ -735,8 +736,8 @@
         };
 
         const sampleMunicipalities = {
-            "सुर्खेत": ["वीरेन्द्रनगर नगरपालिका", "भेरीगंगा नगरपालिका", "गंगामामाला गाउँपालिका", "चौकुने गाउँपालिका", "पञ्चपुरी नगरपालिका", "बराहताल गाउँपालिका", "चिनगार्ड गाउँपालिका", "सिम्ता गाउँपालिका", "लेकबेसी नगरपालिका"],
-            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "ठाँटीकाँध गाउँपालिका", "नավা गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
+            "सुर्खेत": ["वीरेन्द्रनगर नगरपालिका", "भेरीगंगा नगरपालिका", "गंगामाला गाउँपालिका", "चौकुने गाउँपालिका", "पञ्चपुरी नगरपालिका", "बराहताल गाउँपालिका", "चिनगार्ड गाउँपालिका", "सिम्ता गाउँपालिका", "लेकबेसी नगरपालिका"],
+            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "थाँतीकाँध गाउँपालिका", "नारायण गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
         };
 
         function loadDistricts() {
@@ -768,7 +769,6 @@
                     muniSelect.appendChild(opt);
                 });
             } else if (districtSelect) {
-                // यदि स्पेसिफिक डेटा छैन भने जेनेरिक विकल्प वा इनपुट दिन सकिन्छ
                 ['नगरपालिका', 'गाउँपालिका'].forEach(t => {
                     const opt = document.createElement('option');
                     opt.value = districtSelect + ' ' + t;
