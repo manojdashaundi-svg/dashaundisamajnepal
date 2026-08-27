@@ -29,7 +29,7 @@
         }
 
         .admin-container {
-            max-width: 1100px;
+            max-width: 1200px;
             background: var(--card-bg);
             padding: 40px;
             margin: 20px auto;
@@ -128,15 +128,25 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-col {
+            flex: 1;
         }
 
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #4a5568;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         input[type="text"],
@@ -144,10 +154,10 @@
         select,
         textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 14px;
             box-sizing: border-box;
             background-color: #fff;
         }
@@ -162,7 +172,7 @@
         }
 
         textarea {
-            height: 110px;
+            height: 90px;
             resize: vertical;
         }
 
@@ -183,8 +193,8 @@
         }
 
         .btn-action {
-            padding: 6px 10px;
-            font-size: 12px;
+            padding: 5px 8px;
+            font-size: 11px;
             border-radius: 4px;
             color: white;
             border: none;
@@ -254,9 +264,9 @@
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 8px;
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             vertical-align: middle;
         }
 
@@ -271,8 +281,8 @@
         }
 
         .table-avatar {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #1a365d;
@@ -299,51 +309,25 @@
             border: 2px solid #1a365d;
         }
         .print-title-1 { font-size: 26px; font-weight: 900; color: #1a365d; margin: 3px 0; }
-        .print-title-2 { font-size: 20px; font-weight: 800; color: #444; margin: 3px 0; }
         .print-meta { font-size: 14px; font-weight: 600; color: #333; margin: 3px 0; }
         .print-date { position: absolute; top: 0; right: 0; font-size: 13px; font-weight: bold; color: #000; }
         .print-section-title { font-size: 20px; font-weight: 800; text-align: center; margin: 20px 0; color: #1a365d; text-decoration: underline; }
 
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            .printable-section, .printable-section * {
-                visibility: visible;
-            }
-            .printable-section {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                display: block !important;
-            }
-            .no-print, .btn-action, .top-header, .section-header {
-                display: none !important;
-            }
-            .print-header {
-                display: block !important;
-            }
-            table {
-                border: 2px solid #000 !important;
-            }
-            th, td {
-                border: 1.5px solid #000 !important;
-                color: #000 !important;
-                font-weight: 600 !important;
-            }
-            th {
-                background-color: #e2e8f0 !important;
-                color: #000 !important;
-                font-weight: 800 !important;
-            }
+            body * { visibility: hidden; }
+            .printable-section, .printable-section * { visibility: visible; }
+            .printable-section { position: absolute; left: 0; top: 0; width: 100%; display: block !important; }
+            .no-print, .btn-action, .top-header, .section-header { display: none !important; }
+            .print-header { display: block !important; }
+            table { border: 2px solid #000 !important; }
+            th, td { border: 1.5px solid #000 !important; color: #000 !important; font-weight: 600 !important; }
+            th { background-color: #e2e8f0 !important; color: #000 !important; font-weight: 800 !important; }
         }
     </style>
 </head>
 <body>
 
     <div class="admin-container">
-        <!-- लोगो सेक्सन -->
         <div class="login-logo-container">
             <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
         </div>
@@ -352,7 +336,7 @@
             <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
 
-        <!-- १. लगइन सेक्सन -->
+        <!-- लगइन सेक्सन -->
         <div id="loginSection">
             <h3 style="text-align: center; border-left: none; padding-left: 0;">प्रशासन लगइन</h3>
             <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
@@ -368,23 +352,43 @@
             </form>
         </div>
 
-        <!-- २. मुख्य ड्यासबोर्ड -->
+        <!-- मुख्य ड्यासबोर्ड -->
         <div id="dashboardSection" class="hidden">
             <div class="top-header">
                 <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
-            <!-- आवेदन इडिट गर्ने फारम (लुकेको, सम्पादन गर्दा खुल्ने) -->
+            <!-- सम्पूर्ण विवरण इडिट गर्ने प्यानल -->
             <div id="editApplicationBox" style="display: none; background: #f7fafc; padding: 25px; border-radius: 8px; border: 2px solid #3182ce; margin-bottom: 30px;">
-                <h3 id="editAppTitle" style="color: #1a365d; margin-top: 0;">सदस्य आवेदन सम्पादन फारम</h3>
+                <h3 style="color: #1a365d; margin-top: 0;">सदस्य आवेदनको सम्पूर्ण विवरण सम्पादन गर्नुहोस्</h3>
                 <form id="appEditForm" onsubmit="saveApplicationEdit(event)">
                     <input type="hidden" id="edit_app_id">
-                    <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name" required></div>
-                    <div class="form-group"><label>नागरिकता प्र.नं.:</label><input type="text" id="edit_app_citizenship" required></div>
-                    <div class="form-group"><label>गाउँपालिका/नगरपालिका:</label><input type="text" id="edit_app_municipality" required></div>
-                    <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward" required></div>
-                    <div style="display: flex; gap: 10px;">
+                    
+                    <div class="form-row">
+                        <div class="form-col"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name" required></div>
+                        <div class="form-col"><label>फेम्लि कोड:</label><input type="text" id="edit_app_family_code"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col"><label>नागरिकता प्र.नं.:</label><input type="text" id="edit_app_citizenship" required></div>
+                        <div class="form-col"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
+                        <div class="form-col"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
+                    </div>
+                    <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
+                    <div class="form-row">
+                        <div class="form-col"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
+                        <div class="form-col"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col"><label>गाउँपालिका/नगरपालिका:</label><input type="text" id="edit_app_municipality"></div>
+                        <div class="form-col"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
+                    </div>
+                    <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
                         <button type="submit" style="background: var(--edit-color);">अपडेट गर्नुहोस्</button>
                         <button type="button" onclick="cancelEditApp()" style="background: #718096; color: white; border: none; border-radius: 6px; padding: 12px; font-weight: bold; cursor: pointer; width: 100%;">रद्द गर्नुहोस्</button>
                     </div>
@@ -393,7 +397,7 @@
 
             <!-- नयाँ सदस्यहरूको एप्लिकेसन सेक्सन -->
             <div class="section-header">
-                <h3>नयाँ सदस्यहरूको आवेदन (Membership Applications)</h3>
+                <h3>नयाँ सदस्यहरूको आवेदन (Membership Applications) - सम्पूर्ण विवरण</h3>
                 <div class="button-group">
                     <button class="toggle-btn" onclick="toggleSection('applicationsContent', this)">खोल्नुहोस् ▾</button>
                 </div>
@@ -406,10 +410,15 @@
                             <tr>
                                 <th>क्र.सं.</th>
                                 <th>नाम</th>
+                                <th>फेम्लि कोड</th>
                                 <th>इमेल / आइडी</th>
                                 <th>नागरिकता नं.</th>
-                                <th>ठेगाना</th>
-                                <th>स्थिति (Status)</th>
+                                <th>पति/पत्नी</th>
+                                <th>बुबाको नाम</th>
+                                <th>आमाको नाम</th>
+                                <th>बाजेको नाम</th>
+                                <th>ठेगाना (प्रदेश, जिल्ला, पालिक, वडा, टोल)</th>
+                                <th>स्थिति</th>
                                 <th class="no-print">कारवाही</th>
                             </tr>
                         </thead>
@@ -710,14 +719,14 @@
             location.reload();
         }
 
-        // नयाँ सदस्य आवेदनहरू लोड गर्ने
+        // नयाँ सदस्य आवेदनहरूको सम्पूर्ण विवरण लोड गर्ने
         async function loadApplicationsData() {
             const { data } = await supabaseClient.from('membership_applications').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('applicationsTableBody');
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7">कुनै आवेदन आएको छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="12">कुनै आवेदन आएको छैन</td></tr>';
                 return;
             }
 
@@ -727,18 +736,25 @@
                 else if(app.status === 'Rejected') statusBadge = '<span style="color: #e53e3e; font-weight: bold;">Rejected</span>';
                 else statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
 
+                const fullAddress = `${app.province || '-'}, ${app.district || '-'}, ${app.municipality || '-'}, वडा नं ${app.ward || '-'}, टोल: ${app.tole || '-'}`;
+
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
                         <td><strong>${app.full_name || '-'}</strong></td>
+                        <td>${app.family_code || '-'}</td>
                         <td>${app.identifier || '-'}</td>
                         <td>${app.citizenship_no || '-'}</td>
-                        <td>${app.municipality || '-'}, वडा नं ${app.ward || '-'}</td>
+                        <td>${app.spouse_name || '-'}</td>
+                        <td>${app.father_name || '-'}</td>
+                        <td>${app.mother_name || '-'}</td>
+                        <td>${app.grandfather_name || '-'}</td>
+                        <td style="text-align: left; font-size: 11px;">${fullAddress}</td>
                         <td>${statusBadge}</td>
                         <td class="no-print">
                             <button class="btn-action btn-success" onclick="updateAppStatus('${app.id}', 'Approved')">Approve</button>
                             <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
-                            <button class="btn-action btn-edit" onclick="openEditApplication('${app.id}', '${app.full_name || ''}', '${app.citizenship_no || ''}', '${app.municipality || ''}', '${app.ward || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-edit" onclick="openEditApplication('${app.id}', '${app.full_name || ''}', '${app.family_code || ''}', '${app.citizenship_no || ''}', '${app.spouse_name || ''}', '${app.father_name || ''}', '${app.mother_name || ''}', '${app.grandfather_name || ''}', '${app.province || ''}', '${app.district || ''}', '${app.municipality || ''}', '${app.ward || ''}', '${app.tole || ''}')">सम्पादन</button>
                         </td>
                     </tr>
                 `;
@@ -755,12 +771,20 @@
             }
         }
 
-        function openEditApplication(id, name, citizenship, municipality, ward) {
+        function openEditApplication(id, name, familyCode, citizenship, spouse, father, mother, grandfather, province, district, municipality, ward, tole) {
             document.getElementById('edit_app_id').value = id;
             document.getElementById('edit_app_name').value = name;
+            document.getElementById('edit_app_family_code').value = familyCode;
             document.getElementById('edit_app_citizenship').value = citizenship;
+            document.getElementById('edit_app_spouse').value = spouse;
+            document.getElementById('edit_app_father').value = father;
+            document.getElementById('edit_app_mother').value = mother;
+            document.getElementById('edit_app_grandfather').value = grandfather;
+            document.getElementById('edit_app_province').value = province;
+            document.getElementById('edit_app_district').value = district;
             document.getElementById('edit_app_municipality').value = municipality;
             document.getElementById('edit_app_ward').value = ward;
+            document.getElementById('edit_app_tole').value = tole;
 
             document.getElementById('editApplicationBox').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -775,9 +799,17 @@
             const id = document.getElementById('edit_app_id').value;
             const updatedData = {
                 full_name: document.getElementById('edit_app_name').value.trim(),
+                family_code: document.getElementById('edit_app_family_code').value.trim(),
                 citizenship_no: document.getElementById('edit_app_citizenship').value.trim(),
+                spouse_name: document.getElementById('edit_app_spouse').value.trim(),
+                father_name: document.getElementById('edit_app_father').value.trim(),
+                mother_name: document.getElementById('edit_app_mother').value.trim(),
+                grandfather_name: document.getElementById('edit_app_grandfather').value.trim(),
+                province: document.getElementById('edit_app_province').value.trim(),
+                district: document.getElementById('edit_app_district').value.trim(),
                 municipality: document.getElementById('edit_app_municipality').value.trim(),
-                ward: document.getElementById('edit_app_ward').value.trim()
+                ward: document.getElementById('edit_app_ward').value.trim(),
+                tole: document.getElementById('edit_app_tole').value.trim()
             };
 
             const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
@@ -790,17 +822,11 @@
             }
         }
 
-        // दर्ता भएका युजरहरूको सूची लोड गर्ने
         async function loadUsersData() {
             const { data } = await supabaseClient.from('users').select('*');
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
-
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5">कुनै प्रयोगकर्ता छैनन्</td></tr>';
-                return;
-            }
-
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
                 tbody.innerHTML += `
                     <tr>
