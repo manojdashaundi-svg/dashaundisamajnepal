@@ -186,7 +186,10 @@
                     <small id="debugOtpInfo" style="color: #666; display: block; margin-top: 5px;"></small>
                 </div>
                 <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
-                <button type="button" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस्</button>
+                <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस्</button>
+                
+                <!-- समय सकिएपछि देखा पर्ने पुनः कोड पठाउने बटन -->
+                <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background-color: #3182ce;">पुनः कोड पठाउनुहोस्</button>
             </div>
         </div>
 
@@ -302,27 +305,33 @@
         let verifiedIdentifier = '';
         let selectedAppType = '';
 
-        // १. Supabase मा वास्तविक OTP जेनेरेट गरेर सेभ गर्ने
-        document.getElementById('authForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // १. OTP जेनेरेट गर्ने फंक्सन
+        async function generateAndSendOtp() {
             const identifier = document.getElementById('identifier').value.trim();
             if(!identifier) return;
 
             verifiedIdentifier = identifier;
             const randomOtp = Math.floor(100000 + Math.random() * 900000).toString(); // ६ अंकको कोड
-            const expiresAt = new Date(new Date().getTime + 60000); // १ मिनेट समय
 
             // Supabase मा OTP सेभ गर्ने
-            await supabaseClient.from('otps').insert([{ identifier: identifier, otp_code: randomOtp, expires_at: expiresAt }]);
+            await supabaseClient.from('otps').insert([{ identifier: identifier, otp_code: randomOtp }]);
 
             document.getElementById('otpSection').style.display = 'block';
             document.getElementById('sendOtpBtn').innerText = 'कोड पठाइयो ✓';
             document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
             
-            // परीक्षणको सुविधाको लागि स्क्रिनमै कोड देखाइदिने (वास्तविक SMS गेटवे नभएकोले)
-            document.getElementById('debugOtpInfo').innerText = `[प्रशासन सूचना]: तपाईंको OTP कोड [ ${randomOtp} ] हो।`;
+            // परीक्षणको लागि स्क्रिनमै कोड देखाइदिने
+            document.getElementById('debugOtpInfo').innerText = `[प्रशासन सूचना]: नयाँ OTP कोड [ ${randomOtp} ] हो।`;
 
-            // ६० सेकेन्डको टाइमर सुरु
+            // बटनहरूको अवस्था मिलाउने
+            document.getElementById('verifyBtn').style.display = 'block';
+            document.getElementById('resendBtn').style.display = 'none';
+
+            startTimer();
+        }
+
+        // टाइमर सुरु गर्ने फंक्सन
+        function startTimer() {
             let timeLeft = 60;
             const timerDisplay = document.getElementById('timerDisplay');
             clearInterval(countdownTimer);
@@ -330,15 +339,28 @@
             countdownTimer = setInterval(() => {
                 if(timeLeft <= 0) {
                     clearInterval(countdownTimer);
-                    timerDisplay.innerText = 'समय समाप्त भयो! पुन: प्रयास गर्नुहोस्।';
+                    timerDisplay.innerText = 'समय समाप्त भयो!';
+                    document.getElementById('verifyBtn').style.display = 'none';
+                    document.getElementById('resendBtn').style.display = 'block'; // समय सकिएपछि पुनः पठाउने बटन देखिने
                 } else {
                     timerDisplay.innerText = `समय बाँकी: ${timeLeft} सेकेन्ड`;
                     timeLeft--;
                 }
             }, 1000);
+        }
+
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            generateAndSendOtp();
         });
 
-        // २. Supabase बाट OTP जाँच गरी प्रमाणित गर्ने
+        // पुनः कोड पठाउने फंक्सन
+        function resendOtp() {
+            document.getElementById('otpCode').value = '';
+            generateAndSendOtp();
+        }
+
+        // २. OTP प्रमाणीकरण
         async function verifyOtp() {
             const enteredCode = document.getElementById('otpCode').value.trim();
             if(!enteredCode) {
