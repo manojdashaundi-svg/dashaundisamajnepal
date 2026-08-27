@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सदस्यता फारम तथा नवीकरण - दशौँदी समाज नेपाल</title>
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #008000;
+            --danger-color: #e53e3e;
+            --bg-color: #edf2f7;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #cbd5e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 850px;
+            background: var(--card-bg);
+            padding: 30px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-box {
+            text-align: center;
+            border-bottom: 3px double var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header-box h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 26px;
+        }
+        .header-box p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .step-section {
+            display: none;
+        }
+        .step-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #006600;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--danger-color);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .official-form {
+            border: 2px solid #333;
+            padding: 25px;
+            background: #fff;
+            position: relative;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-col {
+            flex: 1;
+        }
+
+        .qr-box {
+            text-align: center;
+            background: #f8fafc;
+            padding: 20px;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .qr-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← गृहपृष्ठमा फर्कनुहोस्</a>
+        
+        <div class="header-box">
+            <h2>दशौँदी समाज नेपाल</h2>
+            <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
+            <h3 style="margin-top: 15px; color: #333; text-decoration: underline;">सदस्यता आवेदन तथा नवीकरण फारम</h3>
+        </div>
+
+        <!-- स्टेप १: खाता खोल्ने / फोन/इमेल भेरिफिकेसन (OTP) -->
+        <div id="step1" class="step-section active">
+            <h3 style="color: var(--primary-color);">चरण १: खाता प्रमाणीकरण (Verification)</h3>
+            <form id="authForm">
+                <div class="form-group">
+                    <label>फोन नम्बर वा इमेल प्रविष्ट गर्नुहोस्:</label>
+                    <input type="text" id="identifier" placeholder="मोबाइल नं. वा इमेल" required>
+                </div>
+                <button type="submit" id="sendOtpBtn">भेरिफिकेसन कोड (OTP) पठाउनुहोस्</button>
+            </form>
+
+            <div id="otpSection" style="display: none; margin-top: 20px;">
+                <div class="form-group">
+                    <label>१ मिनेटभित्र प्राप्त भएको ६ अंकको कोड हाल्नुहोस्:</label>
+                    <input type="text" id="otpCode" placeholder="OTP कोड">
+                </div>
+                <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
+                <button type="button" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस्</button>
+            </div>
+        </div>
+
+        <!-- स्टेप २: प्रोफाइल छनोट (नयाँ वा नवीकरण) र आधिकारिक फारम -->
+        <div id="step2" class="step-section">
+            <div id="profileChoice" style="text-align: center; padding: 20px;">
+                <h3 id="welcomeMsg" style="color: var(--accent-color);">स्वागत छ!</h3>
+                <p>कृपया आफ्नो आवश्यकता अनुसार छान्नुहोस्:</p>
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+                    <button type="button" onclick="openForm('new')" style="width: auto; background: #3182ce;">नयाँ सदस्यता फारम</button>
+                    <button type="button" onclick="openForm('renew')" style="width: auto; background: #d69e2e;">सदस्यता नवीकरण</button>
+                </div>
+            </div>
+
+            <!-- हुबहु आधिकारिक फारम (Step 2.1) -->
+            <div id="officialFormBox" class="official-form" style="display: none;">
+                <h4 style="text-align: right; margin: 0;">आवेदन मिति: २०८३/०५/१०</h4>
+                <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
+                <p style="text-align: center; font-weight: bold;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
+                
+                <form id="membershipApplicationForm">
+                    <div class="form-group">
+                        <label>पूरा नाम थर:</label>
+                        <input type="text" id="f_name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>नागरिकता प्र.नं.:</label>
+                            <input type="text" id="f_citizenship" required>
+                        </div>
+                        <div class="form-col">
+                            <label>पति/पत्नीको नाम:</label>
+                            <input type="text" id="f_spouse">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>बुबाको नाम:</label>
+                            <input type="text" id="f_father" required>
+                        </div>
+                        <div class="form-col">
+                            <label>आमाको नाम:</label>
+                            <input type="text" id="f_mother">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>बाजेको नाम:</label>
+                        <input type="text" id="f_grandfather">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>प्रदेश/जिल्ला:</label>
+                            <input type="text" id="f_address" placeholder="जस्तै: कर्णाली प्रदेश, दैलेख" required>
+                        </div>
+                        <div class="form-col">
+                            <label>गाउँपालिका/नगरपालिका:</label>
+                            <input type="text" id="f_municipality" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>वडा नं.:</label>
+                            <input type="text" id="f_ward" required>
+                        </div>
+                        <div class="form-col">
+                            <label>टोल:</label>
+                            <input type="text" id="f_tole">
+                        </div>
+                    </div>
+                    <button type="button" onclick="goToPaymentStep()">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- स्टेप ३: नागरिकता फोटो, QR कोड र भौचर अपलोड -->
+        <div id="step3" class="step-section">
+            <h3 style="color: var(--primary-color);">चरण ३: कागजात र सदस्यता दस्तुर भुक्तानी</h3>
+            
+            <div class="form-group">
+                <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo):</label>
+                <input type="file" id="citizenshipFront" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label>२. नागरिकताको पछाडिको भागको फोटो (Back Photo):</label>
+                <input type="file" id="citizenshipBack" accept="image/*" required>
+            </div>
+
+            <div class="qr-box">
+                <h4>सदस्यता दस्तुर: रु. २००/-</h4>
+                <p>भुक्तानीको लागि तलको QR Code मा स्क्यान गर्नुहोस्:</p>
+                <!-- यहाँ आफ्नो बैंक वा ईसेवा/खल्तीको QR कोडको लिङ्क राख्नुहोला -->
+                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="qr-img" alt="QR Code">
+                <p style="font-size: 13px; color: #666;">(सक्कल भौचर वा अनलाइन ट्रान्फर गरेको स्क्रीनसट तल अपलोड गर्नुहोस्)</p>
+            </div>
+
+            <div class="form-group">
+                <label>३. भुक्तानी भौचर वा स्क्रीनसट अपलोड गर्नुहोस् (Payment Slip):</label>
+                <input type="file" id="paymentSlip" accept="image/*" required>
+            </div>
+
+            <button type="button" onclick="finalSubmit()">सबै प्रक्रिया पूरा गरी फारम सबमिट गर्नुहोस्</button>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let countdownTimer;
+
+        // १. OTP पठाउने सिमुलेसन
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const identifier = document.getElementById('identifier').value.trim();
+            if(!identifier) return;
+
+            document.getElementById('otpSection').style.display = 'block';
+            document.getElementById('sendOtpBtn').innerText = 'कोड पठाइयो ✓';
+            document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
+
+            // ६० सेकेन्डको टाइमर सुरु
+            let timeLeft = 60;
+            const timerDisplay = document.getElementById('timerDisplay');
+            clearInterval(countdownTimer);
+            
+            countdownTimer = setInterval(() => {
+                if(timeLeft <= 0) {
+                    clearInterval(countdownTimer);
+                    timerDisplay.innerText = 'समय समाप्त भयो! पुन: प्रयास गर्नुहोस्।';
+                } else {
+                    timerDisplay.innerText = `समय बाँकी: ${timeLeft} सेकेन्ड`;
+                    timeLeft--;
+                }
+            }, 1000);
+        });
+
+        // २. OTP प्रमाणीकरण
+        function verifyOtp() {
+            const code = document.getElementById('otpCode').value.trim();
+            if(code.length < 4) {
+                alert('कृपया सही कोड प्रविष्ट गर्नुहोस्!');
+                return;
+            }
+            clearInterval(countdownTimer);
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+        }
+
+        // ३. फारम खोल्ने (नयाँ वा नवीकरण)
+        function openForm(type) {
+            document.getElementById('profileChoice').style.display = 'none';
+            document.getElementById('officialFormBox').style.display = 'block';
+            if(type === 'new') {
+                document.getElementById('formSubjectType').innerText = 'सदस्यता पाउँ';
+            } else {
+                document.getElementById('formSubjectType').innerText = 'सदस्यता नवीकरण';
+            }
+        }
+
+        // ४. भुक्तानी चरणमा जाने
+        function goToPaymentStep() {
+            const name = document.getElementById('f_name').value.trim();
+            if(!name) {
+                alert('कृपया फारमका अनिवार्य विवरणहरू भर्नुहोस्!');
+                return;
+            }
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // ५. अन्तिम सबमिट
+        async function finalSubmit() {
+            const front = document.getElementById('citizenshipFront').files[0];
+            const back = document.getElementById('citizenshipBack').files[0];
+            const slip = document.getElementById('paymentSlip').files[0];
+
+            if(!front || !back || !slip) {
+                alert('कृपया नागरिकताका दुवै फोटो र भुक्तानी भौचर अनिवार्य अपलोड गर्नुहोस्!');
+                return;
+            }
+
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.color = 'green';
+            messageDiv.innerText = 'तपाईंको आवेदन सफलताપूर्वक सबमिट भयो! एडमिनले प्रमाणीकरण गरेपछि तपाईंलाई जानकारी गराइनेछ।';
+
+            setTimeout(() => {
+                location.reload();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
