@@ -242,12 +242,10 @@
             vertical-align: middle;
         }
 
-        th:nth-child(1), td:nth-child(1) { width: 8%; }  
-        th:nth-child(2), td:nth-child(2) { width: 14%; } 
-        th:nth-child(3), td:nth-child(3) { width: 32%; } 
-        th:nth-child(4), td:nth-child(4) { width: 22%; } 
-        th:nth-child(5), td:nth-child(5) { width: 10%; } 
-        th:nth-child(6), td:nth-child(6) { width: 14%; } 
+        th:nth-child(1), td:nth-child(1) { width: 10%; }  
+        th:nth-child(2), td:nth-child(2) { width: 30%; } 
+        th:nth-child(3), td:nth-child(3) { width: 40% !important; word-break: break-all; } 
+        th:nth-child(4), td:nth-child(4) { width: 20%; } 
 
         th {
             background-color: var(--primary-color);
@@ -273,7 +271,6 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* प्रिन्ट हेडर स्टायल */
         .print-header {
             display: none;
             text-align: center;
@@ -356,7 +353,7 @@
         <!-- २. मुख्य ड्यासबोर्ड -->
         <div id="dashboardSection" class="hidden">
             <div class="top-header">
-                <span class="welcome-text">✔ स्वागत छ, एडमिन!</span>
+                <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
@@ -467,9 +464,7 @@
                                 <th class="no-print">नियन्त्रण</th>
                             </tr>
                         </thead>
-                        <tbody id="committeeTableBody">
-                            <!-- जाभास्क्रिप्टबाट लोड हुने -->
-                        </tbody>
+                        <tbody id="committeeTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -534,9 +529,56 @@
                                 <th class="no-print">नियन्त्रण</th>
                             </tr>
                         </thead>
-                        <tbody id="centralTableBody">
-                            <!-- जाभास्क्रिप्टबाट लोड हुने -->
-                        </tbody>
+                        <tbody id="centralTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- एडमिन व्यवस्थापन सेक्सन -->
+            <div class="section-header">
+                <h3 id="adminFormTitle">नयाँ एडमिन थप्ने</h3>
+                <div class="button-group">
+                    <button class="toggle-btn" onclick="toggleSection('adminContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="adminContent" class="collapsible-content">
+                <form id="adminForm">
+                    <input type="hidden" id="admin_edit_id">
+                    <div class="form-group">
+                        <label>युजरनेम (Username):</label>
+                        <input type="text" id="new_admin_user" placeholder="नयाँ युजरनेम" required>
+                    </div>
+                    <div class="form-group">
+                        <label>पासवर्ड (Password):</label>
+                        <input type="text" id="new_admin_pass" placeholder="नयाँ पासवर्ड" required>
+                    </div>
+                    <button type="submit" id="adminSubmitBtn">एडमिन थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <!-- एडमिनहरूको सूची -->
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">एडमिनहरूको सूची</h3>
+                <div class="button-group">
+                    <button class="toggle-btn" onclick="toggleSection('adminTableContent', this)">सूची हेर्नुहोस् र सम्पादन गर्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="adminTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>युजरनेम</th>
+                                <th>पासवर्ड</th>
+                                <th>नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -570,7 +612,6 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (इमेलसहित)
         async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
@@ -625,13 +666,22 @@
             }
         };
 
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        // एडमिन लगइन भेरिफिकेसन (डेटाबेसको 'admins' टेबलबाट जाँच्ने)
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = document.getElementById('username').value.trim();
             const pass = document.getElementById('password').value.trim();
 
-            if (user === 'admin' && pass === 'nepal123') {
+            const { data, error } = await supabaseClient
+                .from('admins')
+                .select('*')
+                .eq('username', user)
+                .eq('password', pass)
+                .single();
+
+            if (data) {
                 localStorage.setItem('isAdminLoggedIn', 'true');
+                localStorage.setItem('currentAdmin', user);
                 showDashboard();
             } else {
                 messageDiv.style.color = 'red';
@@ -642,14 +692,18 @@
         function showDashboard() {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
+            const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
+            document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser}!`;
             messageDiv.innerText = '';
             loadAboutData();
             loadCommitteeData();
             loadCentralCommitteeData();
+            loadAdminData();
         }
 
         function logout() {
             localStorage.removeItem('isAdminLoggedIn');
+            localStorage.removeItem('currentAdmin');
             location.reload();
         }
 
@@ -691,6 +745,7 @@
             }
         });
 
+        // संस्थापक समिति सदस्य थप्ने / अपडेट गर्ने
         document.getElementById('committeeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('edit_id').value;
@@ -812,6 +867,7 @@
             }
         }
 
+        // केन्द्रीय समिति सदस्य थप्ने / अपडेट गर्ने
         document.getElementById('centralCommitteeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('central_edit_id').value;
@@ -916,6 +972,92 @@
                     loadCentralCommitteeData();
                     messageDiv.style.color = 'green';
                     messageDiv.innerText = 'सफलतापूर्वक मेटाइयो!';
+                }
+            }
+        }
+
+        // नयाँ एडमिन थप्ने वा अपडेट गर्ने
+        document.getElementById('adminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('admin_edit_id').value;
+            const adminData = {
+                username: document.getElementById('new_admin_user').value.trim(),
+                password: document.getElementById('new_admin_pass').value.trim()
+            };
+
+            let error;
+            if (editId) {
+                const res = await supabaseClient.from('admins').update(adminData).eq('id', editId);
+                error = res.error;
+            } else {
+                const res = await supabaseClient.from('admins').insert([adminData]);
+                error = res.error;
+            }
+
+            if (error) {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'त्रुटि: ' + error.message;
+            } else {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = editId ? 'एडमिन सफलतापूर्वक अपडेट भयो!' : 'नयाँ एडमिन सफलतापूर्वक थपियो!';
+                document.getElementById('adminForm').reset();
+                document.getElementById('admin_edit_id').value = '';
+                document.getElementById('adminSubmitBtn').innerText = 'एडमिन थप्नुहोस्';
+                document.getElementById('adminFormTitle').innerText = 'नयाँ एडमिन थप्ने';
+                loadAdminData();
+            }
+        });
+
+        async function loadAdminData() {
+            const { data } = await supabaseClient.from('admins').select('*');
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4">कुनै एडमिन छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((adm, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${adm.username}</strong></td>
+                        <td>${adm.password}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editAdmin('${adm.id}', '${adm.username}', '${adm.password}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteAdmin('${adm.id}')">मेटाउनुहोस्</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editAdmin(id, username, password) {
+            document.getElementById('admin_edit_id').value = id;
+            document.getElementById('new_admin_user').value = username;
+            document.getElementById('new_admin_pass').value = password;
+
+            document.getElementById('adminSubmitBtn').innerText = 'अपडेट गर्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'एडमिनको विवरण सम्पादन गर्नुहोस्';
+            document.getElementById('adminContent').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deleteAdmin(id) {
+            // अन्तिम बाँकी एडमिन मेटाउनबाट रोक्नको लागि जाँच
+            const { data } = await supabaseClient.from('admins').select('*');
+            if (data && data.length <= 1) {
+                alert('कमसेकम एउटा एडमिन रहनु अनिवार्य छ, सबै मेटाउन मिल्दैन!');
+                return;
+            }
+
+            if (confirm('के तपाईं यो एडमिनलाई मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('admins').delete().eq('id', id);
+                if (!error) {
+                    loadAdminData();
+                    messageDiv.style.color = 'green';
+                    messageDiv.innerText = 'एडमिन सफलतापूर्वक मेटाइयो!';
                 }
             }
         }
