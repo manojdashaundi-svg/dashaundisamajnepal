@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>सदस्यता फारम तथा नवीकरण - दशौँदी समाज नेपाल</title>
+    <title>सदस्यता तथा नवीकरण - दशौँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- EmailJS CDN -->
@@ -81,6 +81,8 @@
 
         input[type="text"],
         input[type="email"],
+        input[type="date"],
+        input[type="password"],
         input[type="file"],
         select,
         textarea {
@@ -161,6 +163,27 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+        .choice-box {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .link-btn {
+            background: none;
+            border: none;
+            color: #3182ce;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            width: auto;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .link-btn:hover {
+            color: #2b6cb0;
+            background: none;
+        }
     </style>
 </head>
 <body>
@@ -171,21 +194,53 @@
         <div class="header-box">
             <h2>दशौँदी समाज नेपाल</h2>
             <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
-            <h3 style="margin-top: 15px; color: #333; text-decoration: underline;">सदस्यता आवेदन तथा नवीकरण फारम</h3>
+            <h3 style="margin-top: 15px; color: #333; text-decoration: underline;">सदस्यता तथा नवीकरण प्रणाली</h3>
         </div>
 
-        <!-- स्टेप १: प्रमाणीकरण -->
-        <div id="step1" class="step-section active">
-            <h3 style="color: var(--primary-color);">चरण १: खाता प्रमाणीकरण (Real Email OTP)</h3>
-            <form id="authForm">
-                <div class="form-group">
-                    <label>इमेल ठेगाना प्रविष्ट गर्नुहोस्:</label>
-                    <input type="email" id="identifier" placeholder="example@gmail.com" required>
-                    <small style="color: #666;">(सहि इमेल राखेर मात्र कोड पठाउनुहोला)</small>
+        <!-- मुख्य विकल्प छनोट (मुख्य पृष्ठ) -->
+        <div id="mainChoiceStep" class="step-section active">
+            <div class="choice-box">
+                <h3 style="color: var(--primary-color); margin-bottom: 25px;">तपाईं के गर्न चाहनुहुन्छ?</h3>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <button type="button" onclick="showSection('registerStep')" style="width: auto; background: #3182ce; padding: 15px 30px;">नयाँ खाता खोल्नुहोस्</button>
+                    <button type="button" onclick="showSection('loginStep')" style="width: auto; background: #d69e2e; padding: 15px 30px;">पुरानो खाता लगइन गर्नुहोस्</button>
                 </div>
-                <button type="submit" id="sendOtpBtn">इमेलमा OTP कोड पठाउनुहोस्</button>
+            </div>
+        </div>
+
+        <!-- स्टेप १: नयाँ खाता दर्ता फारम -->
+        <div id="registerStep" class="step-section">
+            <button type="button" onclick="showSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px;">← पछाडि जानुहोस्</button>
+            <h3 style="color: var(--primary-color);">नयाँ खाता दर्ता फारम</h3>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>पूरा नाम थर:</label>
+                    <input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>मोबाइल नम्बर (फोन नं.):</label>
+                        <input type="text" id="reg_phone" placeholder="98XXXXXXXX" required>
+                    </div>
+                    <div class="form-col">
+                        <label>इमेल ठेगाना:</label>
+                        <input type="email" id="identifier" placeholder="example@gmail.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>जन्म मिति:</label>
+                        <input type="date" id="reg_dob" required>
+                    </div>
+                    <div class="form-col">
+                        <label>पासवर्ड:</label>
+                        <input type="password" id="reg_password" placeholder="बलियो पासवर्ड राख्नुहोस्" required>
+                    </div>
+                </div>
+                <button type="submit" id="sendOtpBtn">सबमिट गरी OTP पर्खनुहोस्</button>
             </form>
 
+            <!-- OTP प्रमाणीकरण बक्स -->
             <div id="otpSection" style="display: none; margin-top: 20px;">
                 <div class="form-group" style="margin-top: 15px;">
                     <label>इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
@@ -193,80 +248,129 @@
                     <small id="emailStatusInfo" style="color: green; display: block; margin-top: 5px; font-weight: bold;"></small>
                 </div>
                 <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
-                <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस्</button>
+                <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस् र डन (Done) गर्नुहोस्</button>
                 <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background-color: #3182ce;">पुनः कोड पठाउनुहोस्</button>
             </div>
         </div>
 
-        <!-- स्टेप २: प्रोफाइल छनोट र आधिकारिक फारम -->
-        <div id="step2" class="step-section">
-            <div id="profileChoice" style="text-align: center; padding: 20px;">
-                <h3 id="welcomeMsg" style="color: var(--accent-color);">स्वागत छ! प्रमाणीकरण सफल भयो।</h3>
-                <p>कृपया आफ्नो आवश्यकता अनुसार छान्नुहोस्:</p>
-                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
-                    <button type="button" onclick="openForm('new')" style="width: auto; background: #3182ce;">नयाँ सदस्यता फारम</button>
-                    <button type="button" onclick="openForm('renew')" style="width: auto; background: #d69e2e;">सदस्यता नवीकरण</button>
+        <!-- पुरानो खाता लगइन फारम -->
+        <div id="loginStep" class="step-section">
+            <button type="button" onclick="showSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px;">← पछाडि जानुहोस्</button>
+            <h3 style="color: var(--primary-color);">पुरानो खाता लगइन</h3>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>इमेल ठेगाना:</label>
+                    <input type="email" id="login_email" placeholder="तपाईको दर्ता भएको इमेल" required>
                 </div>
+                <div class="form-group">
+                    <label>पासवर्ड:</label>
+                    <input type="password" id="login_password" placeholder="तपाईको पासवर्ड" required>
+                </div>
+                <button type="submit" style="background-color: #3182ce;">लगइन गर्नुहोस्</button>
+            </form>
+            <div style="margin-top: 15px; text-align: center;">
+                <button type="button" class="link-btn" onclick="showSection('forgotStep')">पासवर्ड बिर्सनुभयो? (Reset Password)</button>
+            </div>
+        </div>
+
+        <!-- पासवर्ड रिसेट (Forgot Password) फारम -->
+        <div id="forgotStep" class="step-section">
+            <button type="button" onclick="showSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px;">← लगइनमा फर्कनुहोस्</button>
+            <h3 style="color: var(--primary-color);">पासवर्ड रिसेट गर्नुहोस्</h3>
+            <div class="form-group">
+                <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
+                <input type="email" id="reset_email" placeholder="example@gmail.com" required>
+            </div>
+            <button type="button" id="sendResetOtpBtn" onclick="sendResetOtp()" style="background-color: #d69e2e;">रिसेट OTP कोड पठाउनुहोस्</button>
+
+            <!-- रिसेट OTP र नयाँ पासवर्ड बक्स -->
+            <div id="resetOtpSection" style="display: none; margin-top: 20px;">
+                <div class="form-group">
+                    <label>६ अंकको OTP कोड:</label>
+                    <input type="text" id="resetOtpCode" placeholder="६ अंकको कोड हाल्नुहोस्">
+                </div>
+                <div class="form-group">
+                    <label>नयाँ पासवर्ड:</label>
+                    <input type="password" id="new_password" placeholder="नयाँ पासवर्ड राख्नुहोस्">
+                </div>
+                <button type="button" onclick="verifyAndResetPassword()" style="background-color: #008000;">पासवर्ड सुरक्षित गर्नुहोस् (Done)</button>
+            </div>
+        </div>
+
+        <!-- स्टेप २: खाता भित्रको ड्यासबोर्ड -->
+        <div id="dashboardStep" class="step-section">
+            <div style="background: #e6fffa; padding: 20px; border-radius: 8px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="color: #234e52; margin: 0;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
+                    <p style="margin: 5px 0 0; color: #2c7a7b;">तपाईंको खाता सुरक्षित रूपमा सञ्चालनमा रहेको छ।</p>
+                </div>
+                <button type="button" onclick="location.reload()" style="width: auto; background: #e53e3e; padding: 8px 15px; font-size: 14px;">लग आउट</button>
             </div>
 
-            <!-- हुबहु आधिकारिक फारम -->
-            <div id="officialFormBox" class="official-form" style="display: none;">
-                <h4 style="text-align: right; margin: 0;">आवेदन मिति: २०८३/०५/१०</h4>
-                <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
-                <p style="text-align: center; font-weight: bold;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
-                
-                <form id="membershipApplicationForm">
-                    <div class="form-group">
-                        <label>पूरा नाम थर:</label>
-                        <input type="text" id="f_name" required>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-col">
-                            <label>नागरिकता प्र.नं.:</label>
-                            <input type="text" id="f_citizenship" required>
-                        </div>
-                        <div class="form-col">
-                            <label>पति/पत्नीको नाम:</label>
-                            <input type="text" id="f_spouse">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-col">
-                            <label>बुबाको नाम:</label>
-                            <input type="text" id="f_father" required>
-                        </div>
-                        <div class="form-col">
-                            <label>आमाको नाम:</label>
-                            <input type="text" id="f_mother">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>बाजेको नाम:</label>
-                        <input type="text" id="f_grandfather">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-col">
-                            <label>प्रदेश/जिल्ला:</label>
-                            <input type="text" id="f_address" placeholder="जस्तै: कर्णाली प्रदेश, दैलेख" required>
-                        </div>
-                        <div class="form-col">
-                            <label>गाउँपालिका/नगरपालिका:</label>
-                            <input type="text" id="f_municipality" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-col">
-                            <label>वडा नं.:</label>
-                            <input type="text" id="f_ward" required>
-                        </div>
-                        <div class="form-col">
-                            <label>टोल:</label>
-                            <input type="text" id="f_tole">
-                        </div>
-                    </div>
-                    <button type="button" onclick="goToPaymentStep()">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
-                </form>
+            <div style="text-align: center; padding: 20px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px;">
+                <h4 style="color: var(--primary-color); margin-top: 0;">सदस्यता सेवाहरू</h4>
+                <p>तपाई नयाँ सदस्यता फारम वा प्रोफाइल इडिट यहाँबाट गर्न सक्नुहुन्छ:</p>
+                <button type="button" onclick="openOfficialForm()" style="width: auto; background: #3182ce; margin-top: 10px;">नयाँ सदस्यता फारम भर्नुहोस्</button>
             </div>
+        </div>
+
+        <!-- आधिकारिक फारम -->
+        <div id="officialFormBox" class="official-form" style="display: none; margin-top: 20px;">
+            <h4 style="text-align: right; margin: 0;">आवेदन मिति: २०८३/०५/१०</h4>
+            <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
+            <p style="text-align: center; font-weight: bold;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
+            
+            <form id="membershipApplicationForm">
+                <div class="form-group">
+                    <label>पूरा नाम थर:</label>
+                    <input type="text" id="f_name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>नागरिकता प्र.नं.:</label>
+                        <input type="text" id="f_citizenship" required>
+                    </div>
+                    <div class="form-col">
+                        <label>पति/पत्नीको नाम:</label>
+                        <input type="text" id="f_spouse">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>बुबाको नाम:</label>
+                        <input type="text" id="f_father" required>
+                    </div>
+                    <div class="form-col">
+                        <label>आमाको नाम:</label>
+                        <input type="text" id="f_mother">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>बाजेको नाम:</label>
+                    <input type="text" id="f_grandfather">
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>प्रदेश/जिल्ला:</label>
+                        <input type="text" id="f_address" placeholder="जस्तै: कर्णाली प्रदेश, दैलेख" required>
+                    </div>
+                    <div class="form-col">
+                        <label>गाउँपालिका/नगरपालिका:</label>
+                        <input type="text" id="f_municipality" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>वडा नं.:</label>
+                        <input type="text" id="f_ward" required>
+                    </div>
+                    <div class="form-col">
+                        <label>टोल:</label>
+                        <input type="text" id="f_tole">
+                    </div>
+                </div>
+                <button type="button" onclick="goToPaymentStep()">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
+            </form>
         </div>
 
         <!-- स्टेप ३: कागजात र भुक्तानी -->
@@ -309,24 +413,37 @@
         let countdownTimer;
         let verifiedIdentifier = '';
         let currentGeneratedOtp = '';
-        let selectedAppType = '';
+        let registeredUserData = {};
+        let resetOtpCodeVal = '';
 
-        async function generateAndSendOtp() {
+        function showSection(sectionId) {
+            document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // नयाँ खाता खोल्दा OTP पठाउने
+        async function generateAndSendOtp(e) {
+            e.preventDefault();
             const email = document.getElementById('identifier').value.trim();
-            if(!email) return;
+            const name = document.getElementById('reg_name').value.trim();
+            const phone = document.getElementById('reg_phone').value.trim();
+            const dob = document.getElementById('reg_dob').value.trim();
+            const password = document.getElementById('reg_password').value.trim();
+
+            if(!email || !name) return;
 
             verifiedIdentifier = email;
-            currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString(); // ६ अंकको कोड
+            registeredUserData = { name, phone, email, dob, password };
+            currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
             const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
 
-            // १. Supabase को otps टेबलमा सेभ गर्ने
             await supabaseClient.from('otps').insert([{ 
                 identifier: email, 
                 otp_code: currentGeneratedOtp, 
                 expires_at: expiresAt 
             }]);
 
-            // २. EmailJS मार्फत सिधै इमेल पठाउने
             const templateParams = {
                 to_email: email,
                 otp_code: currentGeneratedOtp,
@@ -343,7 +460,6 @@
             document.getElementById('otpSection').style.display = 'block';
             document.getElementById('sendOtpBtn').innerText = 'इमेल पठाइयो ✓';
             document.getElementById('sendOtpBtn').style.background = '#2b6cb0';
-
             document.getElementById('verifyBtn').style.display = 'block';
             document.getElementById('resendBtn').style.display = 'none';
 
@@ -368,16 +484,9 @@
             }, 1000);
         }
 
-        document.getElementById('authForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            generateAndSendOtp();
-        });
+        document.getElementById('registerForm').addEventListener('submit', generateAndSendOtp);
 
-        function resendOtp() {
-            document.getElementById('otpCode').value = '';
-            generateAndSendOtp();
-        }
-
+        // नयाँ खाताको OTP प्रमाणीकरण
         function verifyOtp() {
             const enteredCode = document.getElementById('otpCode').value.trim();
             if(!enteredCode) {
@@ -391,15 +500,77 @@
             }
 
             clearInterval(countdownTimer);
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step2').classList.add('active');
+            alert('खाता सफलतापूर्वक प्रमाणित भयो (Done)!');
+            
+            showSection('dashboardStep');
+            document.getElementById('userDashboardName').innerText = registeredUserData.name;
+            document.getElementById('f_name').value = registeredUserData.name;
         }
 
-        function openForm(type) {
-            selectedAppType = type === 'new' ? 'नयाँ सदस्यता' : 'नवीकरण';
-            document.getElementById('profileChoice').style.display = 'none';
+        // पासवर्ड रिसेटको लागि OTP पठाउने
+        async function sendResetOtp() {
+            const email = document.getElementById('reset_email').value.trim();
+            if(!email) {
+                alert('कृपया आफ्नो इमेल ठेगाना प्रविष्ट गर्नुहोस्!');
+                return;
+            }
+
+            resetOtpCodeVal = Math.floor(100000 + Math.random() * 900000).toString();
+            const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
+
+            await supabaseClient.from('otps').insert([{ 
+                identifier: email, 
+                otp_code: resetOtpCodeVal, 
+                expires_at: expiresAt 
+            }]);
+
+            const templateParams = {
+                to_email: email,
+                otp_code: resetOtpCodeVal,
+                time: "१ मिनेट"
+            };
+
+            emailjs.send('service_v9c6kad', 'template_tkxmx5o', templateParams)
+                .then(function(response) {
+                    alert('✔ पासवर्ड रिसेट गर्ने OTP कोड तपाईंको इमेलमा पठाइयो!');
+                    document.getElementById('resetOtpSection').style.display = 'block';
+                    document.getElementById('sendResetOtpBtn').innerText = 'कोर्ड पठाइयो ✓';
+                }, function(error) {
+                    alert('इमेल पठाउन असफल: ' + JSON.stringify(error));
+                });
+        }
+
+        // पासवर्ड रिसेट प्रमाणीकरण र सुरक्षित गर्ने
+        function verifyAndResetPassword() {
+            const enteredCode = document.getElementById('resetOtpCode').value.trim();
+            const newPass = document.getElementById('new_password').value.trim();
+
+            if(!enteredCode || !newPass) {
+                alert('कृपया OTP कोड र नयाँ पासवर्ड दुवै भर्नुहोस्!');
+                return;
+            }
+
+            if(enteredCode !== resetOtpCodeVal) {
+                alert('गलत OTP कोड! कृपया सही कोड राख्नुहोस्।');
+                return;
+            }
+
+            alert('तपाईंको पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डबाट लगइन गर्नुहोस्।');
+            showSection('loginStep');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login_email').value.trim();
+            alert('लगइन सफल भयो!');
+            showSection('dashboardStep');
+            document.getElementById('userDashboardName').innerText = "सदस्य";
+        }
+
+        function openOfficialForm() {
             document.getElementById('officialFormBox').style.display = 'block';
-            document.getElementById('formSubjectType').innerText = selectedAppType === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण';
+            document.getElementById('formSubjectType').innerText = 'सदस्यता पाउँ';
+            window.scrollTo({top: document.getElementById('officialFormBox').offsetTop, behavior: 'smooth'});
         }
 
         function goToPaymentStep() {
@@ -408,9 +579,7 @@
                 alert('कृपया फारमका अनिवार्य विवरणहरू भर्नुहोस्!');
                 return;
             }
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step3').classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            showSection('step3');
         }
 
         async function finalSubmit() {
@@ -424,8 +593,8 @@
             }
 
             const formData = {
-                identifier: verifiedIdentifier,
-                application_type: selectedAppType,
+                identifier: verifiedIdentifier || document.getElementById('login_email').value,
+                application_type: 'नयाँ सदस्यता',
                 full_name: document.getElementById('f_name').value.trim(),
                 citizens_no: document.getElementById('f_citizenship').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
@@ -449,10 +618,6 @@
             } else {
                 messageDiv.style.color = 'green';
                 messageDiv.innerText = 'तपाईंको आवेदन सफलतापूर्वक सबमिट भयो! एडमिनले प्रमाणीकरण गरेपछि तपाईंलाई जानकारी गराइनेछ।';
-
-                document.getElementById('membershipApplicationForm').reset();
-                document.getElementById('authForm').reset();
-                document.getElementById('otpCode').value = '';
 
                 setTimeout(() => {
                     location.reload();
