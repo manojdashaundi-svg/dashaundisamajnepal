@@ -29,9 +29,9 @@
         }
 
         .admin-container {
-            max-width: 1250px;
+            max-width: 1350px;
             background: var(--card-bg);
-            padding: 40px;
+            padding: 30px;
             margin: 20px auto;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -264,10 +264,11 @@
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 8px 6px;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             vertical-align: middle;
+            white-space: nowrap;
         }
 
         th {
@@ -281,8 +282,8 @@
         }
 
         .table-avatar {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #1a365d;
@@ -370,6 +371,14 @@
                         <div class="form-col"><label>फेम्लि कोड:</label><input type="text" id="edit_app_family_code"></div>
                     </div>
                     <div class="form-row">
+                        <div class="form-col"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
+                        <div class="form-col"><label>इमेल / आइडी:</label><input type="text" id="edit_app_identifier"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
+                        <div class="form-col"><label>रक्त समूह (Blood Group):</label><input type="text" id="edit_app_blood_group"></div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-col"><label>नागरिकता प्र.नं.:</label><input type="text" id="edit_app_citizenship" required></div>
                         <div class="form-col"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
                     </div>
@@ -415,13 +424,20 @@
                                 <th>फोटो</th>
                                 <th>नाम</th>
                                 <th>फेम्लि कोड</th>
+                                <th>मोबाइल</th>
                                 <th>इमेल / आइडी</th>
+                                <th>जन्म मिति</th>
+                                <th>रक्त समूह</th>
                                 <th>नागरिकता नं.</th>
                                 <th>पति/पत्नी</th>
-                                <th>बुबाको नाम</th>
-                                <th>आमाको नाम</th>
-                                <th>बाजेको नाम</th>
-                                <th>ठेगाना (प्रदेश, जिल्ला, पालिका, वडा, टोल)</th>
+                                <th>बुबा</th>
+                                <th>आमा</th>
+                                <th>बाजे</th>
+                                <th>प्रदेश</th>
+                                <th>जिल्ला</th>
+                                <th>पालिका</th>
+                                <th>वडा</th>
+                                <th>टोल</th>
                                 <th>स्थिति</th>
                                 <th class="no-print">कारवाही</th>
                             </tr>
@@ -706,7 +722,7 @@
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
             const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
-            const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
+            const currentRole = localStorage.getItem('currentAdminRole`') || 'पद';
             document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
             messageDiv.innerText = '';
             
@@ -730,7 +746,7 @@
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="13">कुनै आवेदन आएको छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="20">कुनै आवेदन आएको छैन</td></tr>';
                 return;
             }
 
@@ -740,7 +756,6 @@
                 else if(app.status === 'Rejected') statusBadge = '<span style="color: #e53e3e; font-weight: bold;">Rejected</span>';
                 else statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
 
-                const fullAddress = `${app.province || '-'}, ${app.district || '-'}, ${app.municipality || '-'}, वडा नं ${app.ward || '-'}, टोल: ${app.tole || '-'}`;
                 const photoSrc = app.photo_url || app.photo || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
 
                 tbody.innerHTML += `
@@ -749,18 +764,25 @@
                         <td><img src="${photoSrc}" class="table-avatar" alt="फोटो"></td>
                         <td><strong>${app.full_name || '-'}</strong></td>
                         <td>${app.family_code || '-'}</td>
+                        <td>${app.phone || '-'}</td>
                         <td>${app.identifier || '-'}</td>
+                        <td>${app.dob || '-'}</td>
+                        <td>${app.blood_group || '-'}</td>
                         <td>${app.citizenship_no || '-'}</td>
                         <td>${app.spouse_name || '-'}</td>
                         <td>${app.father_name || '-'}</td>
                         <td>${app.mother_name || '-'}</td>
                         <td>${app.grandfather_name || '-'}</td>
-                        <td style="text-align: left; font-size: 11px;">${fullAddress}</td>
+                        <td>${app.province || '-'}</td>
+                        <td>${app.district || '-'}</td>
+                        <td>${app.municipality || '-'}</td>
+                        <td>${app.ward || '-'}</td>
+                        <td>${app.tole || '-'}</td>
                         <td>${statusBadge}</td>
                         <td class="no-print">
                             <button class="btn-action btn-success" onclick="updateAppStatus('${app.id}', 'Approved')">Approve</button>
                             <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
-                            <button class="btn-action btn-edit" onclick="openEditApplication('${app.id}', '${app.full_name || ''}', '${app.family_code || ''}', '${app.citizenship_no || ''}', '${app.spouse_name || ''}', '${app.father_name || ''}', '${app.mother_name || ''}', '${app.grandfather_name || ''}', '${app.province || ''}', '${app.district || ''}', '${app.municipality || ''}', '${app.ward || ''}', '${app.tole || ''}', '${app.photo_url || app.photo || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-edit" onclick="openEditApplication('${app.id}', '${app.full_name || ''}', '${app.family_code || ''}', '${app.phone || ''}', '${app.identifier || ''}', '${app.dob || ''}', '${app.blood_group || ''}', '${app.citizenship_no || ''}', '${app.spouse_name || ''}', '${app.father_name || ''}', '${app.mother_name || ''}', '${app.grandfather_name || ''}', '${app.province || ''}', '${app.district || ''}', '${app.municipality || ''}', '${app.ward || ''}', '${app.tole || ''}', '${photoSrc}')">सम्पादन</button>
                         </td>
                     </tr>
                 `;
@@ -777,10 +799,14 @@
             }
         }
 
-        function openEditApplication(id, name, familyCode, citizenship, spouse, father, mother, grandfather, province, district, municipality, ward, tole, photoUrl) {
+        function openEditApplication(id, name, familyCode, phone, identifier, dob, bloodGroup, citizenship, spouse, father, mother, grandfather, province, district, municipality, ward, tole, photoUrl) {
             document.getElementById('edit_app_id').value = id;
             document.getElementById('edit_app_name').value = name;
             document.getElementById('edit_app_family_code').value = familyCode;
+            document.getElementById('edit_app_phone').value = phone;
+            document.getElementById('edit_app_identifier').value = identifier;
+            document.getElementById('edit_app_dob').value = dob;
+            document.getElementById('edit_app_blood_group').value = bloodGroup;
             document.getElementById('edit_app_citizenship').value = citizenship;
             document.getElementById('edit_app_spouse').value = spouse;
             document.getElementById('edit_app_father').value = father;
@@ -807,6 +833,10 @@
             const updatedData = {
                 full_name: document.getElementById('edit_app_name').value.trim(),
                 family_code: document.getElementById('edit_app_family_code').value.trim(),
+                phone: document.getElementById('edit_app_phone').value.trim(),
+                identifier: document.getElementById('edit_app_identifier').value.trim(),
+                dob: document.getElementById('edit_app_dob').value.trim(),
+                blood_group: document.getElementById('edit_app_blood_group').value.trim(),
                 citizenship_no: document.getElementById('edit_app_citizenship').value.trim(),
                 spouse_name: document.getElementById('edit_app_spouse').value.trim(),
                 father_name: document.getElementById('edit_app_father').value.trim(),
