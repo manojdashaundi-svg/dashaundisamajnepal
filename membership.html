@@ -619,11 +619,11 @@
                     <label>बाजेको नाम:</label>
                     <input type="text" id="f_grandfather">
                 </div>
-                <!-- प्रदेश र जिल्ला छुट्टाछुट्टै बक्समा -->
+                <!-- प्रदेश र जिल्ला ड्रपडाउन -->
                 <div class="form-row">
                     <div class="form-col">
                         <label>प्रदेश:</label>
-                        <select id="f_province" required>
+                        <select id="f_province" onchange="loadDistricts()" required>
                             <option value="">-- प्रदेश छान्नुहोस् --</option>
                             <option value="कोशी प्रदेश">कोशी प्रदेश</option>
                             <option value="मधेश प्रदेश">मधेश प्रदेश</option>
@@ -636,22 +636,27 @@
                     </div>
                     <div class="form-col">
                         <label>जिल्ला:</label>
-                        <input type="text" id="f_district" placeholder="जस्तै: सुर्खेत, दैलेख" required>
+                        <select id="f_district" onchange="loadMunicipalities()" required>
+                            <option value="">-- पहिले प्रदेश छान्नुहोस् --</option>
+                        </select>
                     </div>
                 </div>
+                <!-- गाउँपालिका/नगरपालिका र वडा ड्रपडाउन/इनपुट -->
                 <div class="form-row">
                     <div class="form-col">
                         <label>गाउँपालिका/नगरपालिका:</label>
-                        <input type="text" id="f_municipality" required>
+                        <select id="f_municipality" required>
+                            <option value="">-- पहिले जिल्ला छान्नुहोस् --</option>
+                        </select>
                     </div>
                     <div class="form-col">
                         <label>वडा नं.:</label>
-                        <input type="text" id="f_ward" required>
+                        <input type="text" id="f_ward" placeholder="जस्तै: १, २, ३..." required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>टोल:</label>
-                    <input type="text" id="f_tole">
+                    <input type="text" id="f_tole" placeholder="तोलको नाम">
                 </div>
                 <button type="button" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 10px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
             </form>
@@ -717,6 +722,61 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // नेपालका जिल्ला र स्थानीय तहको संरचना
+        const districtData = {
+            "कोशी प्रदेश": ["भोजपुर", "धनकुटा", "इलाम", "झापा", "खोटाङ", "मोरङ", "ओखलढुंगा", "पाँचथर", "संखुवासभा", "सोलुखुम्बु", "सुनसरी", "ताप्लेजुङ", "तेह्रथुम", "उदयपुर"],
+            "मधेश प्रदेश": ["बारा", "धनुषा", "महोत्तरी", "पर्सा", "सप्तरी", "सर्लाही", "सिरहा", "रौतहट"],
+            "बागमती प्रदेश": ["भक्तपुर", "चितवन", "धादिङ", "दोलखा", "काठमाडौं", "काभ्रेपलाञ्चोक", "ललितपुर", "मकवानपुर", "नुवाकोट", "रसुवा", "सिन्धुली", "सिन्धुपाल्चोक", "रामेछाप"],
+            "गण्डकी प्रदेश": ["बाग्लुङ", "गोर्खा", "कास्की", "लमजुङ", "मनाङ", "मुस्ताङ", "म्याग्दी", "नवलपुर", "पर्वत", "स्याङ्जा", "तनहुँ"],
+            "लुम्बिनी प्रदेश": ["अर्घाखाँची", "बाँके", "बर्दिया", "दाङ", "पूर्वी रुकुम", "गुल्मी", "कपिलवस्तु", "नवलपरासी पश्चिम", "पाल्पा", "प्युठान", "रोल्पा", "रूपन्देही"],
+            "कर्णाली प्रदेश": ["दैलेख", "डोल्पा", "हुम्ला", "जाजरकोट", "जुम्ला", "कालिकोट", "मुगु", "सल्यान", "सुर्खेत", "पश्चिम रुकुम"],
+            "सुदूरपश्चिम प्रदेश": ["अछाम", "बैतडी", "बझाङ", "बाजुरा", "डडेल्धुरा", "दार्चुला", "डोटी", "कैलाली", "कञ्चनपुर"]
+        };
+
+        const sampleMunicipalities = {
+            "सुर्खेत": ["वीरेन्द्रनगर नगरपालिका", "भेरीगंगा नगरपालिका", "गंगामामाला गाउँपालिका", "चौकुने गाउँपालिका", "पञ्चपुरी नगरपालिका", "बराहताल गाउँपालिका", "चिनगार्ड गाउँपालिका", "सिम्ता गाउँपालिका", "लेकबेसी नगरपालिका"],
+            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "थाँतीकाँध गाउँपालिका", "नավা गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
+        };
+
+        function loadDistricts() {
+            const provinceSelect = document.getElementById('f_province').value;
+            const districtSelect = document.getElementById('f_district');
+            districtSelect.innerHTML = '<option value="">-- जिल्ला छान्नुहोस् --</option>';
+            
+            if (provinceSelect && districtData[provinceSelect]) {
+                districtData[provinceSelect].forEach(dist => {
+                    const opt = document.createElement('option');
+                    opt.value = dist;
+                    opt.textContent = dist;
+                    districtSelect.appendChild(opt);
+                });
+            }
+            document.getElementById('f_municipality').innerHTML = '<option value="">-- पहिले जिल्ला छान्नुहोस् --</option>';
+        }
+
+        function loadMunicipalities() {
+            const districtSelect = document.getElementById('f_district').value;
+            const muniSelect = document.getElementById('f_municipality');
+            muniSelect.innerHTML = '<option value="">-- गाउँपालिका/नगरपालिका छान्नुहोस् --</option>';
+
+            if (districtSelect && sampleMunicipalities[districtSelect]) {
+                sampleMunicipalities[districtSelect].forEach(muni => {
+                    const opt = document.createElement('option');
+                    opt.value = muni;
+                    opt.textContent = muni;
+                    muniSelect.appendChild(opt);
+                });
+            } else if (districtSelect) {
+                // यदि स्पेसिफिक डेटा छैन भने जेनेरिक विकल्प वा इनपुट दिन सकिन्छ
+                ['नगरपालिका', 'गाउँपालिका'].forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = districtSelect + ' ' + t;
+                    opt.textContent = districtSelect + ' स्थानीय तह (' + t + ')';
+                    muniSelect.appendChild(opt);
+                });
+            }
+        }
 
         let countdownTimer;
         let verifiedIdentifier = '';
