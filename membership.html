@@ -509,7 +509,7 @@
         let countdownTimer;
         let verifiedIdentifier = '';
         let currentGeneratedOtp = '';
-        let currentUserProfile = { name: '', phone: '', email: '', dob: '' };
+        let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '' };
         let resetOtpCodeVal = '';
 
         function showSection(sectionId) {
@@ -529,7 +529,7 @@
             if(!email || !name) return;
 
             verifiedIdentifier = email;
-            currentUserProfile = { name, phone, email, dob };
+            currentUserProfile = { name, phone, email, dob, password };
             currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
             const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
 
@@ -581,7 +581,7 @@
 
         document.getElementById('registerForm').addEventListener('submit', generateAndSendOtp);
 
-        function verifyOtp() {
+        async function verifyOtp() {
             const enteredCode = document.getElementById('otpCode').value.trim();
             if(!enteredCode) {
                 alert('कृपया OTP कोड हाल्नुहोस्!');
@@ -594,8 +594,18 @@
             }
 
             clearInterval(countdownTimer);
-            alert('खाता सफलतापूर्वक प्रमाणित भयो (Done)!');
-            
+
+            // नयाँ खाताको विवरण Supabase मा सुरक्षित रूपमा सेभ गर्ने (पासवर्डसहित)
+            await supabaseClient.from('membership_applications').insert([{
+                identifier: currentUserProfile.email,
+                full_name: currentUserProfile.name,
+                phone: currentUserProfile.phone,
+                dob: currentUserProfile.dob,
+                password: currentUserProfile.password,
+                status: 'Registered'
+            }]);
+
+            alert('खाता सफलतापूर्वक प्रमाणित र दर्ता भयो (Done)!');
             loadDashboard();
         }
 
@@ -603,13 +613,11 @@
             showSection('dashboardStep');
             document.getElementById('userDashboardName').innerText = currentUserProfile.name;
             
-            // प्रोफाइल लेबलहरू अपडेट गर्ने
             document.getElementById('lbl_name').innerText = currentUserProfile.name || '-';
             document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
             document.getElementById('lbl_email').innerText = currentUserProfile.email || '-';
             document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
 
-            // इडिट इनपुटहरूमा भर्ने
             document.getElementById('edit_name').value = currentUserProfile.name;
             document.getElementById('edit_phone').value = currentUserProfile.phone;
             document.getElementById('edit_dob').value = currentUserProfile.dob;
@@ -671,9 +679,10 @@
                 });
         }
 
-        function verifyAndResetPassword() {
+        async function verifyAndResetPassword() {
             const enteredCode = document.getElementById('resetOtpCode').value.trim();
             const newPass = document.getElementById('new_password').value.trim();
+            const resetEmail = document.getElementById('reset_email').value.trim();
 
             if(!enteredCode || !newPass) {
                 alert('कृपया OTP कोड र नयाँ पासवर्ड दुवै भर्नुहोस्!');
@@ -685,14 +694,42 @@
                 return;
             }
 
+            // Supabase मा पासवर्ड अपडेट गर्ने
+            await supabaseClient
+                .from('membership_applications')
+                .update({ password: newPass })
+                .eq('identifier', resetEmail);
+
             alert('तपाईंको पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डबाट लगइन गर्नुहोस्।');
             showSection('loginStep');
         }
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('login_email').value.trim();
-            currentUserProfile = { name: "आदरणीय सदस्य", phone: "98XXXXXXXX", email: email, dob: "2080-01-01" };
+            const password = document.getElementById('login_password').value.trim();
+
+            // Supabase डेटाबेसबाट इमेल र पासवर्ड चेक गर्ने
+            const { data, error } = await supabaseClient
+                .from('membership_applications')
+                .select('*')
+                .eq('identifier', email)
+                .eq('password', password);
+
+            if(error || !data || data.length === 0) {
+                alert('गलत इमेल वा पासवर्ड! कृपया सही विवरण राख्नुहोस्।');
+                return;
+            }
+
+            // सहि भएमा युजरको प्रोफाइल लोड गर्ने
+            const user = data[0];
+            currentUserProfile = { 
+                name: user.full_name || "सदस्य", 
+                phone: user.phone || "98XXXXXXXX", 
+                email: user.identifier, 
+                dob: user.dob || "2080-01-01" 
+            };
+
             alert('लगइन सफल भयो!');
             loadDashboard();
         }
