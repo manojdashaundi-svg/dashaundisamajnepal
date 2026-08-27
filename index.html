@@ -59,12 +59,6 @@
         .about-meta { font-size: 16px; color: #333; margin: 8px 0; }
         .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 16px; }
         .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 25px; }
-        
-        .committee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
-        .committee-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .committee-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; margin-bottom: 12px; }
-        .committee-card h3 { color: #1a365d; margin: 8px 0 4px 0; font-size: 18px; }
-        .committee-card p { color: #555; margin: 4px 0; font-size: 14px; }
 
         .form-group { margin-bottom: 22px; }
         label { display: block; font-weight: 600; margin-bottom: 8px; color: #4a5568; font-size: 14px; }
@@ -88,11 +82,8 @@
         .qr-img { width: 220px; height: 260px; object-fit: contain; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); background: #fff; padding: 5px; }
         #message { margin-top: 20px; text-align: center; font-weight: bold; font-size: 15px; }
         .choice-box { text-align: center; padding: 20px; }
-        .link-btn { background: none; border: none; color: #3182ce; text-decoration: underline; cursor: pointer; padding: 0; width: auto; font-size: 14px; font-weight: 600; box-shadow: none; }
-        .link-btn:hover { color: #2b6cb0; background: none; transform: none; box-shadow: none; }
         .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 15px 20px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 14px; color: #4a5568; }
         .profile-pic-container { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
-        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: #edf2f7; }
         .passport-photo-box { width: 120px; height: 145px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 20px; }
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
         .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
@@ -211,20 +202,8 @@
             </div>
         </div>
 
-        <div id="founder-committee" class="page-section">
-            <div class="card">
-                <h2>संस्थापक समिति</h2>
-                <div id="founder_container" class="committee-grid"><p>लोड हुँदैछ...</p></div>
-            </div>
-        </div>
-
-        <div id="central-committee" class="page-section">
-            <div class="card">
-                <h2>केन्द्रीय समिति</h2>
-                <div id="central_container" class="committee-grid"><p>लोड हुँदैछ...</p></div>
-            </div>
-        </div>
-
+        <div id="founder-committee" class="page-section"><div class="card"><h2>संस्थापक समिति</h2><div id="founder_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
+        <div id="central-committee" class="page-section"><div class="card"><h2>केन्द्रीय समिति</h2><div id="central_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
         <div id="advisory-committee" class="page-section"><div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="province-committee" class="page-section"><div class="card"><h2>प्रदेश समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
@@ -327,7 +306,7 @@
                     <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
                         <h4 style="color: #1a365d; margin: 0 0 15px 0; font-size: 18px;">👤 मेरो प्रोफाइल विवरण</h4>
                         <div class="profile-pic-container">
-                            <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar">
+                            <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0;">
                             <div>
                                 <p style="margin: 0 0 5px 0;"><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
                                 <p style="margin: 0 0 5px 0;"><strong>मोबाइल:</strong> <span id="lbl_phone">-</span></p>
@@ -654,6 +633,8 @@
             if(currentApplication) {
                 document.getElementById('f_name').value = currentApplication.full_name || '';
                 document.getElementById('f_family_code').value = currentApplication.family_code || '';
+                document.getElementById('f_phone').value = currentApplication.phone || currentUserProfile.phone || '';
+                document.getElementById('f_dob').value = currentApplication.dob || currentUserProfile.dob || '';
                 document.getElementById('f_citizenship').value = currentApplication.citizenship_no || '';
                 document.getElementById('f_spouse').value = currentApplication.spouse_name || '';
                 document.getElementById('f_father').value = currentApplication.father_name || '';
@@ -667,6 +648,8 @@
                 }
             } else {
                 document.getElementById('f_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
+                document.getElementById('f_phone').value = currentUserProfile.phone || '';
+                document.getElementById('f_dob').value = currentUserProfile.dob || '';
             }
             formBox.scrollIntoView({ behavior: 'smooth' });
         }
@@ -705,12 +688,45 @@
             document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
         }
 
+        async function uploadFileToSupabase(file, folderName) {
+            if (!file) return '';
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+            const filePath = `${folderName}/${fileName}`;
+
+            const { data, error } = await supabaseClient.storage.from('documents').upload(filePath, file);
+            if (error) {
+                console.error('Upload Error:', error.message);
+                return '';
+            }
+
+            const { data: publicUrlData } = supabaseClient.storage.from('documents').getPublicUrl(filePath);
+            return publicUrlData ? publicUrlData.publicUrl : '';
+        }
+
         async function finalSubmit() {
+            const citFrontFile = document.getElementById('citizenshipFront').files[0];
+            const citBackFile = document.getElementById('citizenshipBack').files[0];
+            const paySlipFile = document.getElementById('paymentSlip').files[0];
+
+            if(!citFrontFile || !citBackFile || !paySlipFile) {
+                alert('कृपया सबै कागजातहरू र भुक्तानी भौचर अपलोड गर्नुहोस्!');
+                return;
+            }
+
+            alert('फाइलहरू अपलोड हुँदैछन्, कृपया केही सेकेन्ड पर्खनुहोस्...');
+
+            const citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizenship');
+            const citBackUrl = await uploadFileToSupabase(citBackFile, 'citizenship');
+            const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
+
             const formData = {
                 identifier: currentUserProfile.email,
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
                 family_code: document.getElementById('f_family_code').value.trim(),
+                phone: document.getElementById('f_phone').value.trim(),
+                dob: document.getElementById('f_dob').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
                 spouse_name: document.getElementById('f_spouse').value.trim(),
                 father_name: document.getElementById('f_father').value.trim(),
@@ -722,6 +738,9 @@
                 ward: document.getElementById('f_ward').value.trim(),
                 tole: document.getElementById('f_tole').value.trim(),
                 photo_url: currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
+                citizenship_front: citFrontUrl,
+                citizenship_back: citBackUrl,
+                payment_slip: paySlipUrl,
                 status: 'Pending'
             };
 
