@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>सदस्यता तथा नवीकरण - दशौँदी समाज नेपाल</title>
+    <title>सदस्यता तथा नवीकरण प्रणाली - दशौँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- EmailJS CDN -->
@@ -15,18 +15,19 @@
     </script>
     <style>
         :root {
-            --primary-color: #1a365d;
-            --accent-color: #008000;
-            --danger-color: #e53e3e;
-            --bg-color: #edf2f7;
+            --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+            --accent-gradient: linear-gradient(135deg, #276749 0%, #38a169 100%);
+            --warning-gradient: linear-gradient(135deg, #d69e2e 0%, #ecc94b 100%);
+            --danger-gradient: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
+            --bg-color: #f0f4f8;
             --card-bg: #ffffff;
             --text-color: #2d3748;
-            --border-color: #cbd5e0;
+            --border-color: #e2e8f0;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
@@ -36,28 +37,41 @@
         .container {
             max-width: 850px;
             background: var(--card-bg);
-            padding: 30px;
-            margin: 20px auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 30px auto;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #2b6cb0;
         }
 
         .header-box {
             text-align: center;
-            border-bottom: 3px double var(--primary-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 5px;
+            background: #fff;
         }
 
         .header-box h2 {
             margin: 0;
-            color: var(--primary-color);
-            font-size: 26px;
+            color: #1a365d;
+            font-size: 28px;
+            font-weight: 700;
         }
         .header-box p {
             margin: 5px 0 0;
             font-size: 14px;
-            color: #555;
+            color: #718096;
         }
 
         .step-section {
@@ -65,10 +79,16 @@
         }
         .step-section.active {
             display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         label {
@@ -87,41 +107,55 @@
         select,
         textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
             font-size: 15px;
             box-sizing: border-box;
+            background-color: #fcfdfd;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+            outline: none;
             background-color: #fff;
         }
 
         button {
-            background-color: var(--accent-color);
+            background: var(--accent-gradient);
             color: white;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+            transition: all 0.2s;
         }
 
         button:hover {
-            background-color: #006600;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 128, 0, 0.3);
         }
 
         .timer {
             font-weight: bold;
-            color: var(--danger-color);
+            color: #e53e3e;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-size: 15px;
         }
 
         .official-form {
-            border: 2px solid #333;
-            padding: 25px;
+            border: 2px solid #e2e8f0;
+            padding: 30px;
             background: #fff;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
             position: relative;
         }
 
@@ -136,10 +170,10 @@
 
         .qr-box {
             text-align: center;
-            background: #f8fafc;
-            padding: 20px;
-            border: 1px dashed var(--border-color);
-            border-radius: 8px;
+            background: #f7fafc;
+            padding: 25px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
             margin-bottom: 20px;
         }
         .qr-img {
@@ -147,6 +181,8 @@
             height: 180px;
             object-fit: contain;
             margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         #message {
@@ -159,14 +195,22 @@
         .back-link {
             display: inline-block;
             margin-bottom: 15px;
-            color: var(--primary-color);
+            color: #3182ce;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
+            background: #ebf8ff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            background: #bee3f8;
         }
 
         .choice-box {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
         }
         
         .link-btn {
@@ -178,11 +222,24 @@
             padding: 0;
             width: auto;
             font-size: 14px;
-            font-weight: normal;
+            font-weight: 600;
+            box-shadow: none;
         }
         .link-btn:hover {
             color: #2b6cb0;
             background: none;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .card-box {
+            background: linear-gradient(to right, #f7fafc, #edf2f7);
+            border-left: 4px solid #3182ce;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #4a5568;
         }
     </style>
 </head>
@@ -192,26 +249,31 @@
         <a href="index.html" class="back-link">← गृहपृष्ठमा फर्कनुहोस्</a>
         
         <div class="header-box">
+            <!-- समाजको लोगो -->
+            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशौँदी समाज नेपाल लोगो" class="logo-img">
             <h2>दशौँदी समाज नेपाल</h2>
             <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
-            <h3 style="margin-top: 15px; color: #333; text-decoration: underline;">सदस्यता तथा नवीकरण प्रणाली</h3>
+            <h4 style="margin-top: 10px; color: #2b6cb0; text-transform: uppercase; letter-spacing: 1px;">सदस्यता तथा नवीकरण प्रणाली</h4>
         </div>
 
         <!-- मुख्य विकल्प छनोट (मुख्य पृष्ठ) -->
         <div id="mainChoiceStep" class="step-section active">
             <div class="choice-box">
-                <h3 style="color: var(--primary-color); margin-bottom: 25px;">तपाईं के गर्न चाहनुहुन्छ?</h3>
+                <div class="card-box" style="text-align: left; max-width: 550px; margin: 0 auto 25px auto;">
+                    <strong>सुचना:</strong> नयाँ सदस्य बन्नको लागि <strong>'नयाँ खाता खोल्नुहोस्'</strong> मा क्लिक गरी आफ्नो विवरण भरेर OTP प्रमाणीकरण गर्नुहोला। पुरानो सदस्यहरूले सिधै लगइन गर्न सक्नुहुन्छ।
+                </div>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    <button type="button" onclick="showSection('registerStep')" style="width: auto; background: #3182ce; padding: 15px 30px;">नयाँ खाता खोल्नुहोस्</button>
-                    <button type="button" onclick="showSection('loginStep')" style="width: auto; background: #d69e2e; padding: 15px 30px;">पुरानो खाता लगइन गर्नुहोस्</button>
+                    <button type="button" onclick="showSection('registerStep')" style="width: auto; background: var(--primary-gradient); padding: 15px 35px;">✨ नयाँ खाता खोल्नुहोस्</button>
+                    <button type="button" onclick="showSection('loginStep')" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 15px 35px;">🔐 पुरानो खाता लगइन गर्नुहोस्</button>
                 </div>
             </div>
         </div>
 
         <!-- स्टेप १: नयाँ खाता दर्ता फारम -->
         <div id="registerStep" class="step-section">
-            <button type="button" onclick="showSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px;">← पछाडि जानुहोस्</button>
-            <h3 style="color: var(--primary-color);">नयाँ खाता दर्ता फारम</h3>
+            <button type="button" onclick="showSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 20px; padding: 8px 15px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
+            <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ खाता दर्ता फारम</h3>
+            
             <form id="registerForm">
                 <div class="form-group">
                     <label>पूरा नाम थर:</label>
@@ -237,26 +299,27 @@
                         <input type="password" id="reg_password" placeholder="बलियो पासवर्ड राख्नुहोस्" required>
                     </div>
                 </div>
-                <button type="submit" id="sendOtpBtn">सबमिट गरी OTP पर्खनुहोस्</button>
+                <button type="submit" id="sendOtpBtn">🚀 सबमिट गरी OTP पर्खनुहोस्</button>
             </form>
 
             <!-- OTP प्रमाणीकरण बक्स -->
-            <div id="otpSection" style="display: none; margin-top: 20px;">
-                <div class="form-group" style="margin-top: 15px;">
-                    <label>इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
-                    <input type="text" id="otpCode" placeholder="६ अंकको कोड यहाँ लेख्नुहोस्">
-                    <small id="emailStatusInfo" style="color: green; display: block; margin-top: 5px; font-weight: bold;"></small>
+            <div id="otpSection" style="display: none; margin-top: 25px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="color: #2b6cb0;">इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
+                    <input type="text" id="otpCode" placeholder="६ अंकको कोड यहाँ लेख्नुहोस्" style="text-align: center; font-size: 20px; letter-spacing: 4px; font-weight: bold;">
+                    <small id="emailStatusInfo" style="color: #38a169; display: block; margin-top: 5px; font-weight: bold;"></small>
                 </div>
                 <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
-                <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px;">कोड प्रमाणित गर्नुहोस् र डन (Done) गर्नुहोस्</button>
-                <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background-color: #3182ce;">पुनः कोड पठाउनुहोस्</button>
+                <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 10px; background: var(--accent-gradient);">✔ कोड प्रमाणित गर्नुहोस् र डन (Done) गर्नुहोस्</button>
+                <button type="button" id="resendBtn" onclick="resendOtp()" style="display: none; margin-top: 10px; background: var(--primary-gradient);">पुनः कोड पठाउनुहोस्</button>
             </div>
         </div>
 
         <!-- पुरानो खाता लगइन फारम -->
         <div id="loginStep" class="step-section">
-            <button type="button" onclick="showSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px;">← पछाडि जानुहोस्</button>
-            <h3 style="color: var(--primary-color);">पुरानो खाता लगइन</h3>
+            <button type="button" onclick="showSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 20px; padding: 8px 15px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
+            <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पुरानो खाता लगइन</h3>
+            
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>इमेल ठेगाना:</label>
@@ -266,61 +329,62 @@
                     <label>पासवर्ड:</label>
                     <input type="password" id="login_password" placeholder="तपाईको पासवर्ड" required>
                 </div>
-                <button type="submit" style="background-color: #3182ce;">लगइन गर्नुहोस्</button>
+                <button type="submit" style="background: var(--primary-gradient);">लगइन गर्नुहोस्</button>
             </form>
-            <div style="margin-top: 15px; text-align: center;">
+            <div style="margin-top: 20px; text-align: center;">
                 <button type="button" class="link-btn" onclick="showSection('forgotStep')">पासवर्ड बिर्सनुभयो? (Reset Password)</button>
             </div>
         </div>
 
         <!-- पासवर्ड रिसेट (Forgot Password) फारम -->
         <div id="forgotStep" class="step-section">
-            <button type="button" onclick="showSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px;">← लगइनमा फर्कनुहोस्</button>
-            <h3 style="color: var(--primary-color);">पासवर्ड रिसेट गर्नुहोस्</h3>
+            <button type="button" onclick="showSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 20px; padding: 8px 15px; font-size: 13px; box-shadow: none;">← लगइनमा फर्कनुहोस्</button>
+            <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पासवर्ड रिसेट गर्नुहोस्</h3>
+            
             <div class="form-group">
                 <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
                 <input type="email" id="reset_email" placeholder="example@gmail.com" required>
             </div>
-            <button type="button" id="sendResetOtpBtn" onclick="sendResetOtp()" style="background-color: #d69e2e;">रिसेट OTP कोड पठाउनुहोस्</button>
+            <button type="button" id="sendResetOtpBtn" onclick="sendResetOtp()" style="background: var(--warning-gradient); color: #1a202c;">रिसेट OTP कोड पठाउनुहोस्</button>
 
             <!-- रिसेट OTP र नयाँ पासवर्ड बक्स -->
-            <div id="resetOtpSection" style="display: none; margin-top: 20px;">
+            <div id="resetOtpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
                 <div class="form-group">
                     <label>६ अंकको OTP कोड:</label>
-                    <input type="text" id="resetOtpCode" placeholder="६ अंकको कोड हाल्नुहोस्">
+                    <input type="text" id="resetOtpCode" placeholder="६ अंकको कोड हाल्नुहोस्" style="text-align: center; font-size: 18px; letter-spacing: 2px;">
                 </div>
                 <div class="form-group">
                     <label>नयाँ पासवर्ड:</label>
                     <input type="password" id="new_password" placeholder="नयाँ पासवर्ड राख्नुहोस्">
                 </div>
-                <button type="button" onclick="verifyAndResetPassword()" style="background-color: #008000;">पासवर्ड सुरक्षित गर्नुहोस् (Done)</button>
+                <button type="button" onclick="verifyAndResetPassword()" style="background: var(--accent-gradient);">पासवर्ड सुरक्षित गर्नुहोस् (Done)</button>
             </div>
         </div>
 
         <!-- स्टेप २: खाता भित्रको ड्यासबोर्ड -->
         <div id="dashboardStep" class="step-section">
-            <div style="background: #e6fffa; padding: 20px; border-radius: 8px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 20px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
                 <div>
                     <h3 style="color: #234e52; margin: 0;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
-                    <p style="margin: 5px 0 0; color: #2c7a7b;">तपाईंको खाता सुरक्षित रूपमा सञ्चालनमा रहेको छ।</p>
+                    <p style="margin: 5px 0 0; color: #2c7a7b; font-size: 14px;">तपाईंको खाता सुरक्षित रूपमा सञ्चालनमा रहेको छ।</p>
                 </div>
-                <button type="button" onclick="location.reload()" style="width: auto; background: #e53e3e; padding: 8px 15px; font-size: 14px;">लग आउट</button>
+                <button type="button" onclick="location.reload()" style="width: auto; background: var(--danger-gradient); padding: 8px 18px; font-size: 14px; box-shadow: none;">लग आउट</button>
             </div>
 
-            <div style="text-align: center; padding: 20px; background: #fff; border: 1px solid var(--border-color); border-radius: 8px;">
-                <h4 style="color: var(--primary-color); margin-top: 0;">सदस्यता सेवाहरू</h4>
-                <p>तपाई नयाँ सदस्यता फारम वा प्रोफाइल इडिट यहाँबाट गर्न सक्नुहुन्छ:</p>
-                <button type="button" onclick="openOfficialForm()" style="width: auto; background: #3182ce; margin-top: 10px;">नयाँ सदस्यता फारम भर्नुहोस्</button>
+            <div style="text-align: center; padding: 30px; background: #fff; border: 2px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+                <h4 style="color: #1a365d; margin-top: 0; font-size: 20px;">सदस्यता सेवाहरू</h4>
+                <p style="color: #718096;">तपाईं नयाँ सदस्यता फारम यहाँबाट भर्न सक्नुहुन्छ:</p>
+                <button type="button" onclick="openOfficialForm()" style="width: auto; background: var(--primary-gradient); margin-top: 10px; padding: 12px 30px;">📝 नयाँ सदस्यता फारम भर्नुहोस्</button>
             </div>
         </div>
 
         <!-- आधिकारिक फारम -->
-        <div id="officialFormBox" class="official-form" style="display: none; margin-top: 20px;">
-            <h4 style="text-align: right; margin: 0;">आवेदन मिति: २०८३/०५/१०</h4>
+        <div id="officialFormBox" class="official-form" style="display: none; margin-top: 25px;">
+            <h4 style="text-align: right; margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
             <p>श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय समिति कर्णाली प्रदेश, सुर्खेत।</p>
-            <p style="text-align: center; font-weight: bold;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
+            <p style="text-align: center; font-weight: bold; font-size: 17px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
             
-            <form id="membershipApplicationForm">
+            <form id="membershipApplicationForm" style="margin-top: 20px;">
                 <div class="form-group">
                     <label>पूरा नाम थर:</label>
                     <input type="text" id="f_name" required>
@@ -369,13 +433,13 @@
                         <input type="text" id="f_tole">
                     </div>
                 </div>
-                <button type="button" onclick="goToPaymentStep()">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
+                <button type="button" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 10px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
             </form>
         </div>
 
         <!-- स्टेप ३: कागजात र भुक्तानी -->
-        <div id="step3" class="step-section">
-            <h3 style="color: var(--primary-color);">चरण ३: कागजात र सदस्यता दस्तुर भुक्तानी</h3>
+        <div id="step3" class="step-section" style="margin-top: 20px;">
+            <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र सदस्यता दस्तुर भुक्तानी</h3>
             
             <div class="form-group">
                 <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo):</label>
@@ -387,10 +451,10 @@
             </div>
 
             <div class="qr-box">
-                <h4>सदस्यता दस्तुर: रु. २००/-</h4>
-                <p>भुक्तानीको लागि तलको QR Code मा स्क्यान गर्नुहोस्:</p>
+                <h4 style="margin-top: 0; color: #2b6cb0;">सदस्यता दस्तुर: रु. २००/-</h4>
+                <p style="margin: 5px 0 15px 0;">भुक्तानीको लागि तलको QR Code मा स्क्यान गर्नुहोस्:</p>
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="qr-img" alt="QR Code">
-                <p style="font-size: 13px; color: #666;">(सक्कल भौचर वा अनलाइन ट्रान्फर गरेको स्क्रीनसट तल अपलोड गर्नुहोस्)</p>
+                <p style="font-size: 13px; color: #718096; margin: 10px 0 0 0;">(सक्कल भौचर वा अनलाइन ट्रान्फर गरेको स्क्रीनसट तल अपलोड गर्नुहोस्)</p>
             </div>
 
             <div class="form-group">
@@ -398,7 +462,7 @@
                 <input type="file" id="paymentSlip" accept="image/*" required>
             </div>
 
-            <button type="button" onclick="finalSubmit()">सबै प्रक्रिया पूरा गरी फारम सबमिट गर्नुहोस्</button>
+            <button type="button" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी फारम सबमिट गर्नुहोस्</button>
         </div>
 
         <div id="message"></div>
@@ -422,7 +486,6 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // नयाँ खाता खोल्दा OTP पठाउने
         async function generateAndSendOtp(e) {
             e.preventDefault();
             const email = document.getElementById('identifier').value.trim();
@@ -486,7 +549,6 @@
 
         document.getElementById('registerForm').addEventListener('submit', generateAndSendOtp);
 
-        // नयाँ खाताको OTP प्रमाणीकरण
         function verifyOtp() {
             const enteredCode = document.getElementById('otpCode').value.trim();
             if(!enteredCode) {
@@ -507,7 +569,6 @@
             document.getElementById('f_name').value = registeredUserData.name;
         }
 
-        // पासवर्ड रिसेटको लागि OTP पठाउने
         async function sendResetOtp() {
             const email = document.getElementById('reset_email').value.trim();
             if(!email) {
@@ -534,13 +595,12 @@
                 .then(function(response) {
                     alert('✔ पासवर्ड रिसेट गर्ने OTP कोड तपाईंको इमेलमा पठाइयो!');
                     document.getElementById('resetOtpSection').style.display = 'block';
-                    document.getElementById('sendResetOtpBtn').innerText = 'कोर्ड पठाइयो ✓';
+                    document.getElementById('sendResetOtpBtn').innerText = 'कोड पठाइयो ✓';
                 }, function(error) {
                     alert('इमेल पठाउन असफल: ' + JSON.stringify(error));
                 });
         }
 
-        // पासवर्ड रिसेट प्रमाणीकरण र सुरक्षित गर्ने
         function verifyAndResetPassword() {
             const enteredCode = document.getElementById('resetOtpCode').value.trim();
             const newPass = document.getElementById('new_password').value.trim();
