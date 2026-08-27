@@ -361,7 +361,7 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // ५. अन्तिम सबमिट
+        // ५. अन्तिम सबमिट र फारम खाली हुने
         async function finalSubmit() {
             const front = document.getElementById('citizenshipFront').files[0];
             const back = document.getElementById('citizenshipBack').files[0];
@@ -375,6 +375,11 @@
             const messageDiv = document.getElementById('message');
             messageDiv.style.color = 'green';
             messageDiv.innerText = 'तपाईंको आवेदन सफलताપूर्वक सबमिट भयो! एडमिनले प्रमाणीकरण गरेपछि तपाईंलाई जानकारी गराइनेछ।';
+
+            // सम्पूर्ण फारम तथा इन्पुटहरू खाली गर्ने
+            document.getElementById('membershipApplicationForm').reset();
+            document.getElementById('authForm').reset();
+            document.getElementById('otpCode').value = '';
 
             setTimeout(() => {
                 location.reload();
