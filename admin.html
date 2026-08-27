@@ -242,12 +242,11 @@
             vertical-align: middle;
         }
 
-        /* फोटो कोलमलाई ठूलो र अन्य कोलमहरूलाई सानो बनाउनको लागि चौडाइ (Width) सेट गरिएको */
-        th:nth-child(1), td:nth-child(1) { width: 14%; } /* फोटो कोलम ठूलो बनाइएको */
-        th:nth-child(2), td:nth-child(2) { width: 34%; } /* नाम */
-        th:nth-child(3), td:nth-child(3) { width: 24%; } /* पद */
-        th:nth-child(4), td:nth-child(4) { width: 10%; } /* सदस्य नं. */
-        th:nth-child(5), td:nth-child(5) { width: 18%; } /* सम्पर्क */
+        th:nth-child(1), td:nth-child(1) { width: 14%; }
+        th:nth-child(2), td:nth-child(2) { width: 34%; }
+        th:nth-child(3), td:nth-child(3) { width: 24%; }
+        th:nth-child(4), td:nth-child(4) { width: 10%; }
+        th:nth-child(5), td:nth-child(5) { width: 18%; }
 
         th {
             background-color: var(--primary-color);
@@ -259,7 +258,6 @@
             background-color: #f8fafc;
         }
 
-        /* टेबल भित्रको फोटोको साइज अझ ठूलो (65px) बनाइएको */
         .table-avatar {
             width: 65px;
             height: 65px;
@@ -295,7 +293,6 @@
         .print-date { position: absolute; top: 0; right: 0; font-size: 13px; font-weight: bold; color: #000; }
         .print-section-title { font-size: 20px; font-weight: 800; text-align: center; margin: 20px 0; color: #1a365d; text-decoration: underline; }
 
-        /* प्रिन्ट हुँदा टेबल र अक्षरहरूलाई डार्क र स्पष्ट बनाउने स्टायल */
         @media print {
             body * {
                 visibility: hidden;
@@ -570,7 +567,7 @@
             }
         }
 
-        // तोकिएको सेक्सन मात्र प्रिन्ट गर्ने फंक्सन (नेपाली मितिसहित)
+        // तोकिएको सेक्सन मात्र तुरुन्त प्रिन्ट गर्ने फंक्सन
         async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
@@ -589,9 +586,9 @@
                 sectionContent.prepend(headerDiv);
             }
 
-            // Supabase बाट संस्थाको वास्तविक डाटा तानेर प्रिन्ट हेडरमा राख्ने
+            // Supabase बाट डाटा तानेर प्रिन्ट हेडरमा राख्ने (लोगो तत्काल लोड हुन सुरक्षित लिङ्क वा ब्याकअप प्रयोग गरिएको)
             const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
-            const logo = data && data.logo_url ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const logo = (data && data.logo_url && data.logo_url.trim() !== '') ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
             const regDate = data && data.reg_date ? data.reg_date : 'वि.सं. २०८० आश्विन २५ गते (12 October 2023)';
             const regNo = data && data.reg_no ? data.reg_no : 'कम्पनी दर्ता नं.: ३२१८१८/०८०/०८१ | स्थायी लेखा नम्बर (PAN): ६१९९९३१२४ | समाज कल्याण परिषद् आबद्धता नं.: ५५९४३';
@@ -601,7 +598,7 @@
 
             headerDiv.innerHTML = `
                 <div class="print-date">मिति: ${todayNe}</div>
-                <img src="${logo}" class="print-logo" alt="लोगो">
+                <img src="${logo}" class="print-logo" alt="लोगो" crossorigin="anonymous">
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-title-2">Dashaundi Samaj Nepal</div>
                 <div class="print-meta">ठेगाना: ${address}</div>
