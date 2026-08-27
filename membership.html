@@ -249,7 +249,6 @@
         <a href="index.html" class="back-link">← गृहपृष्ठमा फर्कनुहोस्</a>
         
         <div class="header-box">
-            <!-- समाजको लोगो -->
             <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="दशौँदी समाज नेपाल लोगो" class="logo-img">
             <h2>दशौँदी समाज नेपाल</h2>
             <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
@@ -302,7 +301,6 @@
                 <button type="submit" id="sendOtpBtn">🚀 सबमिट गरी OTP पर्खनुहोस्</button>
             </form>
 
-            <!-- OTP प्रमाणीकरण बक्स -->
             <div id="otpSection" style="display: none; margin-top: 25px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label style="color: #2b6cb0;">इमेलमा प्राप्त भएको ६ अंकको OTP कोड यहाँ हाल्नुहोस्:</label>
@@ -347,7 +345,6 @@
             </div>
             <button type="button" id="sendResetOtpBtn" onclick="sendResetOtp()" style="background: var(--warning-gradient); color: #1a202c;">रिसेट OTP कोड पठाउनुहोस्</button>
 
-            <!-- रिसेट OTP र नयाँ पासवर्ड बक्स -->
             <div id="resetOtpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e0;">
                 <div class="form-group">
                     <label>६ अंकको OTP कोड:</label>
@@ -361,14 +358,49 @@
             </div>
         </div>
 
-        <!-- स्टेप २: खाता भित्रको ड्यासबोर्ड -->
+        <!-- स्टेप २: खाता भित्रको ड्यासबोर्ड र प्रोफाइल इडिटिङ -->
         <div id="dashboardStep" class="step-section">
             <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 20px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
                 <div>
                     <h3 style="color: #234e52; margin: 0;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
-                    <p style="margin: 5px 0 0; color: #2c7a7b; font-size: 14px;">तपाईंको खाता सुरक्षित रूपमा सञ्चालनमा रहेको छ।</p>
+                    <p style="margin: 5px 0 0; color: #2c7a7b; font-size: 14px;">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा रहेको छ।</p>
                 </div>
                 <button type="button" onclick="location.reload()" style="width: auto; background: var(--danger-gradient); padding: 8px 18px; font-size: 14px; box-shadow: none;">लग आउट</button>
+            </div>
+
+            <!-- प्रोफाइल विवरण कार्ड र इडिट बटन -->
+            <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 15px;">
+                    <h4 style="color: #1a365d; margin: 0; font-size: 18px;">👤 मेरो प्रोफाइल विवरण</h4>
+                    <button type="button" onclick="toggleEditProfile()" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 15px; font-size: 13px; box-shadow: none;">✏ प्रोफाइल सम्पादन (Edit)</button>
+                </div>
+
+                <!-- प्रोफाइल हेर्ने सेक्सन -->
+                <div id="profileViewMode">
+                    <p><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
+                    <p><strong>मोबाइल नम्बर:</strong> <span id="lbl_phone">-</span></p>
+                    <p><strong>इमेल ठेगाना:</strong> <span id="lbl_email">-</span></p>
+                    <p><strong>जन्म मिति:</strong> <span id="lbl_dob">-</span></p>
+                </div>
+
+                <!-- प्रोफाइल इडिट गर्ने फारम (सुरुमा बन्द हुने) -->
+                <div id="profileEditMode" style="display: none;">
+                    <div class="form-group">
+                        <label>पूरा नाम थर:</label>
+                        <input type="text" id="edit_name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>मोबाइल नम्बर:</label>
+                            <input type="text" id="edit_phone">
+                        </div>
+                        <div class="form-col">
+                            <label>जन्म मिति:</label>
+                            <input type="date" id="edit_dob">
+                        </div>
+                    </div>
+                    <button type="button" onclick="saveProfileChanges()" style="background: var(--accent-gradient); width: auto; padding: 10px 25px;">परिवर्तन सुरक्षित गर्नुहोस्</button>
+                </div>
             </div>
 
             <div style="text-align: center; padding: 30px; background: #fff; border: 2px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
@@ -477,7 +509,7 @@
         let countdownTimer;
         let verifiedIdentifier = '';
         let currentGeneratedOtp = '';
-        let registeredUserData = {};
+        let currentUserProfile = { name: '', phone: '', email: '', dob: '' };
         let resetOtpCodeVal = '';
 
         function showSection(sectionId) {
@@ -497,7 +529,7 @@
             if(!email || !name) return;
 
             verifiedIdentifier = email;
-            registeredUserData = { name, phone, email, dob, password };
+            currentUserProfile = { name, phone, email, dob };
             currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
             const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
 
@@ -564,9 +596,47 @@
             clearInterval(countdownTimer);
             alert('खाता सफलतापूर्वक प्रमाणित भयो (Done)!');
             
+            loadDashboard();
+        }
+
+        function loadDashboard() {
             showSection('dashboardStep');
-            document.getElementById('userDashboardName').innerText = registeredUserData.name;
-            document.getElementById('f_name').value = registeredUserData.name;
+            document.getElementById('userDashboardName').innerText = currentUserProfile.name;
+            
+            // प्रोफाइल लेबलहरू अपडेट गर्ने
+            document.getElementById('lbl_name').innerText = currentUserProfile.name || '-';
+            document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
+            document.getElementById('lbl_email').innerText = currentUserProfile.email || '-';
+            document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
+
+            // इडिट इनपुटहरूमा भर्ने
+            document.getElementById('edit_name').value = currentUserProfile.name;
+            document.getElementById('edit_phone').value = currentUserProfile.phone;
+            document.getElementById('edit_dob').value = currentUserProfile.dob;
+
+            document.getElementById('f_name').value = currentUserProfile.name;
+        }
+
+        function toggleEditProfile() {
+            const viewMode = document.getElementById('profileViewMode');
+            const editMode = document.getElementById('profileEditMode');
+            if(editMode.style.display === 'none') {
+                editMode.style.display = 'block';
+                viewMode.style.display = 'none';
+            } else {
+                editMode.style.display = 'none';
+                viewMode.style.display = 'block';
+            }
+        }
+
+        function saveProfileChanges() {
+            currentUserProfile.name = document.getElementById('edit_name').value.trim();
+            currentUserProfile.phone = document.getElementById('edit_phone').value.trim();
+            currentUserProfile.dob = document.getElementById('edit_dob').value.trim();
+
+            alert('✔ तपाईंको प्रोफाइल विवरण सफलतापूर्वक अद्यावधिक (Update) भयो!');
+            loadDashboard();
+            toggleEditProfile();
         }
 
         async function sendResetOtp() {
@@ -622,9 +692,9 @@
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('login_email').value.trim();
+            currentUserProfile = { name: "आदरणीय सदस्य", phone: "98XXXXXXXX", email: email, dob: "2080-01-01" };
             alert('लगइन सफल भयो!');
-            showSection('dashboardStep');
-            document.getElementById('userDashboardName').innerText = "सदस्य";
+            loadDashboard();
         }
 
         function openOfficialForm() {
