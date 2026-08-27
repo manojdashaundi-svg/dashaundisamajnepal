@@ -116,7 +116,7 @@
             transition: all 0.3s;
         }
 
-        input:focus {
+        input:focus, select:focus {
             border-color: #3182ce;
             box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
             outline: none;
@@ -309,7 +309,6 @@
             background: #edf2f7;
         }
 
-        /* पासपोर्ट साइज फोटो बक्स स्टाइल */
         .passport-photo-box {
             width: 120px;
             height: 145px;
@@ -577,7 +576,7 @@
                 <div>
                     <h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
                 </div>
-                <!-- पासपोर्ट साइज फोटो बक्स (आवेदन मितिको तल दायितर्फ) -->
+                <!-- पासपोर्ट साइज फोटो बक्स -->
                 <div>
                     <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568;">पासपोर्ट फोटो</label>
                     <div class="passport-photo-box" onclick="document.getElementById('form_passport_photo').click()" title="क्लिक गरेर फोटो छान्नुहोस् वा खिच्नुहोस्">
@@ -620,25 +619,39 @@
                     <label>बाजेको नाम:</label>
                     <input type="text" id="f_grandfather">
                 </div>
+                <!-- प्रदेश र जिल्ला छुट्टाछुट्टै बक्समा -->
                 <div class="form-row">
                     <div class="form-col">
-                        <label>प्रदेश/जिल्ला:</label>
-                        <input type="text" id="f_address" placeholder="जस्तै: कर्णाली प्रदेश, दैलेख" required>
+                        <label>प्रदेश:</label>
+                        <select id="f_province" required>
+                            <option value="">-- प्रदेश छान्नुहोस् --</option>
+                            <option value="कोशी प्रदेश">कोशी प्रदेश</option>
+                            <option value="मधेश प्रदेश">मधेश प्रदेश</option>
+                            <option value="बागमती प्रदेश">बागमती प्रदेश</option>
+                            <option value="गण्डकी प्रदेश">गण्डकी प्रदेश</option>
+                            <option value="लुम्बिनी प्रदेश">लुम्बिनी प्रदेश</option>
+                            <option value="कर्णाली प्रदेश">कर्णाली प्रदेश</option>
+                            <option value="सुदूरपश्चिम प्रदेश">सुदूरपश्चिम प्रदेश</option>
+                        </select>
                     </div>
                     <div class="form-col">
-                        <label>गाउँपालिका/नगरपालिका:</label>
-                        <input type="text" id="f_municipality" required>
+                        <label>जिल्ला:</label>
+                        <input type="text" id="f_district" placeholder="जस्तै: सुर्खेत, दैलेख" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
+                        <label>गाउँपालिका/नगरपालिका:</label>
+                        <input type="text" id="f_municipality" required>
+                    </div>
+                    <div class="form-col">
                         <label>वडा नं.:</label>
                         <input type="text" id="f_ward" required>
                     </div>
-                    <div class="form-col">
-                        <label>टोल:</label>
-                        <input type="text" id="f_tole">
-                    </div>
+                </div>
+                <div class="form-group">
+                    <label>टोल:</label>
+                    <input type="text" id="f_tole">
                 </div>
                 <button type="button" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 10px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
             </form>
@@ -756,7 +769,6 @@
             }
         }
 
-        // फारमभित्र पासपोर्ट फोटो प्रिभ्यु गर्ने फंक्सन
         function previewFormPhoto(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1062,7 +1074,8 @@
                 father_name: document.getElementById('f_father').value.trim(),
                 mother_name: document.getElementById('f_mother').value.trim(),
                 grandfather_name: document.getElementById('f_grandfather').value.trim(),
-                address: document.getElementById('f_address').value.trim(),
+                province: document.getElementById('f_province').value.trim(),
+                district: document.getElementById('f_district').value.trim(),
                 municipality: document.getElementById('f_municipality').value.trim(),
                 ward: document.getElementById('f_ward').value.trim(),
                 tole: document.getElementById('f_tole').value.trim(),
