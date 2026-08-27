@@ -101,7 +101,7 @@
         .id-card-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
         .id-card-content { background: #fff; width: 380px; padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 3px solid #1a365d; position: relative; }
         .id-card-header { border-bottom: 2px solid #2b6cb0; padding-bottom: 10px; margin-bottom: 15px; }
-        .id-card-avatar { width: 90px; height: 90px; border-radius: 50%; object-filter: cover; border: 3px solid #38a169; margin-bottom: 10px; }
+        .id-card-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #38a169; margin-bottom: 10px; }
 
         /* पूर्ण रूपले बिचमा (Center Aligned) गरिएको सुन्दर हेडर डिजाइन */
         .membership-brand-header {
@@ -268,11 +268,11 @@
 
         <!-- सदस्यता तथा नवीकरण प्रणाली सेक्सन -->
         <div id="membershipMainStep" class="page-section">
-            <!-- यहाँ संस्थाको लोगो, नाम, ठेगाना र इमेल ठीक बीचमा (Center) राखिएको छ -->
+            <!-- यहाँ 'केन्द्रीय समिति' को सट्टा 'केन्द्रीय कार्यालय' राखिएको छ -->
             <div class="membership-brand-header">
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="membership-brand-logo">
                 <div class="membership-brand-info">
-                    <h2>दशाैँदी समाज नेपाल, केन्द्रीय समिति</h2>
+                    <h2>दशाैँदी समाज नेपाल, केन्द्रीय कार्यालय</h2>
                     <p>📍 ठेगाना: केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
                     <p>✉ इमेल: info@dhashoundisamajnepal.com</p>
                 </div>
@@ -661,7 +661,7 @@
                     districtSelect.appendChild(opt);
                 });
             }
-            document.getElementById('f_municipality').innerHTML = '<option value="">-- पहिले जिल्ला छान्नुहोस् --</option>';
+            document.getElementById('f_municipality').innerHTML = '<option value="">-- पहिले प्रदेश छान्नुहोस् --</option>';
         }
 
         function loadMunicipalities() {
