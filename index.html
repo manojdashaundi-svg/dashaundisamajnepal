@@ -209,7 +209,7 @@
             </div>
         </div>
 
-        <a onclick="switchPage('notice', this)">सुचना तथा प्रेस विज्ञप्ति</a>
+        <a onclick="switchPage('noticesSection', this)">सुचना तथा प्रेस विज्ञप्ति</a>
         <a onclick="switchPage('contact', this)">सम्पर्क</a>
         
         <div class="dropdown">
@@ -258,7 +258,17 @@
         <div id="province-committee" class="page-section"><div class="card"><h2>प्रदेश समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
-        <div id="notice" class="page-section"><div class="card"><h2>सुचना तथा प्रेस विज्ञप्ति</h2><p>सूचनाहरू छैनन्।</p></div></div>
+        
+        <!-- सूचना तथा प्रेस विज्ञप्ति देखाउने सेक्सन index.html मा -->
+        <div id="noticesSection" class="page-section">
+            <div class="card">
+                <h2 style="color: #1a365d; border-bottom: 2px solid #008000; padding-bottom: 8px; margin-bottom: 20px;">सूचना तथा प्रेस विज्ञप्ति</h2>
+                <div id="publicNoticesContainer">
+                    <p>सूचनाहरू लोड हुँदैछ...</p>
+                </div>
+            </div>
+        </div>
+
         <div id="contact" class="page-section"><div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
 
         <!-- सदस्यता तथा नवीकरण प्रणाली सेक्सन -->
@@ -1071,6 +1081,48 @@
             document.getElementById('officialFormBox').style.display = 'none';
             document.getElementById('step3').style.display = 'none';
         }
+
+        // मुख्य पेजमा सूचनाहरू लोड गर्ने फंक्सन
+        async function loadPublicNotices() {
+            const container = document.getElementById('publicNoticesContainer');
+            const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            
+            if (error || !data || data.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-size: 15px;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            data.forEach(item => {
+                let fileContent = '';
+                if (item.file_type === 'pdf') {
+                    fileContent = `
+                        <div style="margin-top: 15px;">
+                            <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
+                        </div>
+                    `;
+                } else {
+                    fileContent = `
+                        <div style="margin-top: 15px; text-align: center;">
+                            <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;" onclick="showImage('${item.file_url}')">
+                        </div>
+                    `;
+                }
+
+                container.innerHTML += `
+                    <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d;">
+                        <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
+                        <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
+                        ${fileContent}
+                    </div>
+                `;
+            });
+        }
+
+        // पेज खुल्दा लोड हुने
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPublicNotices();
+        });
     </script>
 </body>
 </html>
