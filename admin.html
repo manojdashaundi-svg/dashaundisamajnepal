@@ -1008,12 +1008,14 @@
 
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '२०८४-०५-१२';
-            let cleaned = regDateStr.replace(/[०-९]/g, w => '०१२३४५६७८९'['०१२३४५६७८९'.indexOf(w)]);
+            let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
             let parts = cleaned.split('-');
             if(parts.length === 3) {
-                let yearPart = parts[0];
-                let nextYear = parseInt(yearPart) + 1;
-                return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
+                let yearPart = parseInt(parts[0]);
+                if (!isNaN(yearPart)) {
+                    let nextYear = yearPart + 1;
+                    return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
+                }
             }
             return '२०८४-०५-१२';
         }
