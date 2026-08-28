@@ -996,6 +996,7 @@
         const messageDiv = document.getElementById('message');
 
         function toNepaliNumber(num) {
+            if (!num) return '';
             const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
@@ -1062,8 +1063,8 @@
 
             document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
             document.getElementById('cardFamilyCode').innerText = familyCode;
-            document.getElementById('cardIssueDate').innerText = regDate;
-            document.getElementById('cardExpiryDate').innerText = expiryDate;
+            document.getElementById('cardIssueDate').innerText = toNepaliNumber(regDate);
+            document.getElementById('cardExpiryDate').innerText = toNepaliNumber(expiryDate);
             document.getElementById('cardName').innerText = fullName;
             document.getElementById('cardPosition').innerText = user.position || 'साधारण सदस्य';
             document.getElementById('cardProvince').innerText = user.province || '-';
@@ -1404,16 +1405,16 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
-                        <td><strong style="color: #1a365d;">${user.member_no || '-'}</strong></td>
+                        <td><strong style="color: #1a365d;">${toNepaliNumber(user.member_no || '-')}</strong></td>
                         <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${user.position || 'साधारण सदस्य'}</span></td>
-                        <td>${user.reg_date || '-'}</td>
+                        <td>${toNepaliNumber(user.reg_date || '-')}</td>
                         <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
                         <td><strong>${user.full_name || user.name || '-'}</strong></td>
                         <td>${user.family_code || '-'}</td>
-                        <td>${user.phone || '-'}</td>
+                        <td>${toNepaliNumber(user.phone || '-')}</td>
                         <td>${user.email || user.identifier || '-'}</td>
-                        <td>${user.dob || '-'}</td>
-                        <td>${user.citizenship_no || '-'}</td>
+                        <td>${toNepaliNumber(user.dob || '-')}</td>
+                        <td>${toNepaliNumber(user.citizenship_no || '-')}</td>
                         <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
                         <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
                         <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
@@ -1424,7 +1425,7 @@
                         <td>${user.province || '-'}</td>
                         <td>${user.district || '-'}</td>
                         <td>${user.municipality || '-'}</td>
-                        <td>${user.ward || '-'}</td>
+                        <td>${toNepaliNumber(user.ward || '-')}</td>
                         <td>${user.tole || '-'}</td>
                         <td class="no-print">
                             <button class="btn-action btn-idcard" onclick="openIdCardModal(decodeURIComponent('${userJson}'))">परिचय पत्र</button>
@@ -1573,8 +1574,8 @@
                         <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
                         <td><strong>${person.full_name}</strong></td>
                         <td>${person.position}</td>
-                        <td>${person.member_no || '-'}</td>
-                        <td>${person.phone || '-'}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
                         <td class="no-print">
                             <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">रिमुभ</button>
@@ -1633,8 +1634,8 @@
                         <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
                         <td><strong>${person.full_name}</strong></td>
                         <td>${person.position}</td>
-                        <td>${person.member_no || '-'}</td>
-                        <td>${person.phone || '-'}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
                         <td class="no-print">
                             <button class="btn-action btn-edit" onclick="editCentralMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteCentralMember('${person.id}')">रिमुभ</button>
