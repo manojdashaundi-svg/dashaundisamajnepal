@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लगइन - दशाैँदी समाज नेपाल</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #edf2f7; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #1a365d; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        button { background: #1a365d; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        button:hover { background: #2b6cb0; }
+        .error-msg { color: #e53e3e; font-size: 14px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>सदस्य लगइन</h2>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <input type="text" id="loginInput" placeholder="मोबाइल नम्बर वा इमेल हाल्नुहोस्" required>
+            <button type="submit">लगइन गर्नुहोस्</button>
+            <div id="errorMsg" class="error-msg"></div>
+        </form>
+    </div>
 
+    <script>
+        const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const inputVal = document.getElementById('loginInput').value.trim();
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.innerText = 'जाँच गरिंदैछ...';
+
+            const { data, error } = await supabaseClient
+                .from('users')
+                .select('*')
+                .or(`phone.eq.${inputVal},email.eq.${inputVal}`)
+                .single();
+
+            if (error || !data) {
+                errorDiv.innerText = 'माफ गर्नुहोला, यो मोबाइल वा इमेल फेला परेन वा स्वीकृत भएको छैन!';
+                return;
+            }
+
+            // लोकलस्टोरेजमा सेभ गरेर होमपेजमा पठाउने
+            localStorage.setItem('loggedUser', inputVal);
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
