@@ -295,149 +295,192 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन */
+        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन (Vertical ID Card 340px x 520px) */
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         
         .idcard-box { 
-            width: 400px; 
+            width: 340px; 
+            height: 520px; 
             max-width: 100%; 
             background: #fff; 
-            border-radius: 16px; 
+            border-radius: 14px; 
             overflow: hidden; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
             position: relative; 
             border: 3px solid #1a365d; 
             margin: auto; 
             font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .idcard-header { 
             background: linear-gradient(135deg, #1a365d, #2b6cb0); 
             color: #fff; 
             text-align: center; 
-            padding: 16px 10px 18px 10px; 
+            padding: 8px 6px; 
             position: relative;
         }
-        .idcard-header img { width: 68px; height: 68px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover; margin-bottom: 4px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
-        .idcard-header h3 { margin: 0; font-size: 18px; font-weight: 900; letter-spacing: 0.5px; }
-        .idcard-header p { margin: 2px 0 0; font-size: 10.5px; opacity: 0.95; font-weight: 600; }
+        .idcard-header img { width: 45px; height: 45px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover; margin-bottom: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .idcard-header h3 { margin: 0; font-size: 14px; font-weight: 900; letter-spacing: 0.5px; }
+        .idcard-header p { margin: 1px 0 0; font-size: 8.5px; opacity: 0.95; font-weight: 600; }
 
         .idcard-badge-title { 
             background: #008000; 
             color: #fff; 
             text-align: center; 
-            padding: 6px 18px; 
+            padding: 2px 10px; 
             font-weight: 950; 
-            font-size: 15px; 
-            letter-spacing: 2px; 
-            width: 160px; 
-            margin: 12px auto; 
-            border-radius: 22px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 11px; 
+            letter-spacing: 1.5px; 
+            width: 110px; 
+            margin: 4px auto; 
+            border-radius: 15px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
             text-transform: uppercase;
         }
 
-        .idcard-body { padding: 5px 18px 15px 18px; background: #fff; position: relative; }
+        .idcard-body { padding: 0 10px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         
         .idcard-meta-row { 
             display: flex; 
             justify-content: space-between; 
-            font-size: 11px; 
+            font-size: 10px; 
             font-weight: 800; 
             color: #1a365d; 
             background: #f1f5f9;
-            padding: 7px 10px;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            padding: 3px 6px;
+            border-radius: 4px;
             border: 1px solid #cbd5e0;
         }
         
         .idcard-main-content {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
+            gap: 8px;
             background: #f8fafc;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 4px 6px;
+            border-radius: 6px;
             border: 1px solid #e2e8f0;
         }
 
         .idcard-photo-container { text-align: center; flex-shrink: 0; }
-        .idcard-photo { width: 95px; height: 95px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .idcard-photo { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
 
-        .idcard-info-box { flex-grow: 1; font-size: 12px; color: #1a202c; line-height: 1.5; font-weight: 700; }
-        .idcard-info-box div { margin-bottom: 3px; }
+        .idcard-info-box { flex-grow: 1; font-size: 10.5px; color: #1a202c; line-height: 1.3; font-weight: 700; }
+        .idcard-info-box div { margin-bottom: 1px; }
 
-        .idcard-details-table { width: 100%; background: #fff; border-radius: 8px; padding: 6px 10px; margin-bottom: 12px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 700; }
+        .idcard-details-table { width: 100%; background: #fff; border-radius: 4px; padding: 2px 6px; border: 1px solid #cbd5e0; font-size: 10.5px; font-weight: 700; }
         .idcard-details-table table { width: 100%; background: transparent; margin: 0; }
-        .idcard-details-table td { border: none; text-align: left; padding: 3px 0; font-size: 12px; font-weight: 700; color: #1a202c; white-space: normal; }
-        .idcard-details-table td:first-child { width: 40%; color: #2d3748; font-weight: 800; }
+        .idcard-details-table td { border: none; text-align: left; padding: 1px 0; font-size: 10.5px; font-weight: 700; color: #1a202c; white-space: normal; }
+        .idcard-details-table td:first-child { width: 35%; color: #2d3748; font-weight: 800; }
 
         .idcard-footer-grid {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
-            padding-top: 8px;
+            padding-top: 2px;
             border-top: 1px dashed #cbd5e0;
+            margin-bottom: 2px;
         }
 
-        .idcard-qr-box img { width: 75px; height: 75px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer; }
+        .idcard-qr-box img { width: 48px; height: 48px; border: 1px solid #cbd5e0; padding: 1px; border-radius: 4px; background: #fff; cursor: pointer; }
 
         /* हस्ताक्षर सेक्सन */
-        .idcard-signatures { text-align: center; font-size: 10.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 220px; }
+        .idcard-signatures { text-align: center; font-size: 9px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 170px; }
         .sig-col { text-align: center; position: relative; }
         .sig-img { 
             position: absolute; 
-            bottom: 15px; 
+            bottom: 10px; 
             left: 50%; 
             transform: translateX(-50%); 
-            width: 72px; 
-            height: 35px; 
+            width: 50px; 
+            height: 22px; 
             object-fit: contain; 
         }
-        .sig-line { width: 75px; border-top: 1.5px solid #000; margin: 26px auto 3px; }
+        .sig-line { width: 50px; border-top: 1.2px solid #000; margin: 15px auto 1px; }
 
         .idcard-footer { 
             background: #1a365d; 
             color: #fff; 
             text-align: center; 
-            padding: 8px 5px; 
-            font-size: 9px; 
+            padding: 4px; 
+            font-size: 8px; 
             font-weight: 700; 
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 1px;
         }
         .idcard-footer-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .idcard-footer-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
         .idcard-footer-item img {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             object-fit: contain;
         }
 
-        .idcard-close-btn { position: absolute; top: 8px; right: 12px; color: #fff; font-size: 22px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
 
         @media print {
-            body * { visibility: hidden; }
-            #idCardModal, #idCardModal * { visibility: visible; }
-            #idCardModal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #fff; display: flex !important; justify-content: center; align-items: center; padding: 0; }
+            @page {
+                size: 340px 520px;
+                margin: 0;
+            }
+            body, html {
+                width: 340px;
+                height: 520px;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+                background: #fff !important;
+            }
+            body * { visibility: hidden !important; }
+            #idCardModal, #idCardModal * { visibility: visible !important; }
+            #idCardModal { 
+                position: fixed !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 340px !important; 
+                height: 520px !important; 
+                background: #fff !important; 
+                display: flex !important; 
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 !important; 
+                margin: 0 !important;
+                z-index: 9999 !important;
+                overflow: hidden !important;
+            }
             .no-print-card { display: none !important; }
             .idcard-close-btn { display: none !important; }
-            .idcard-box { border: 2px solid #1a365d; box-shadow: none; width: 400px; }
+            .idcard-box { 
+                border: 2px solid #1a365d !important; 
+                box-shadow: none !important; 
+                width: 340px !important; 
+                height: 520px !important; 
+                margin: 0 !important;
+                position: relative !important;
+                top: 0 !important;
+                left: 0 !important;
+                transform: none !important;
+                overflow: hidden !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
 
         /* सम्पादन मोडलहरू */
@@ -464,7 +507,6 @@
         .print-section-title { font-size: 16px; font-weight: 800; text-align: center; margin: 10px 0; color: #1a365d; text-decoration: underline; }
 
         @media print {
-            @page { size: landscape; margin: 8mm; }
             .printable-section * { visibility: visible; }
             .printable-section { position: absolute; left: 0; top: 0; width: 100%; display: block !important; }
             .no-print, .btn-action, .top-header, .section-header { display: none !important; }
@@ -807,14 +849,14 @@
             <div class="idcard-header">
                 <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो">
                 <h3>दशौँदी समाज नेपाल</h3>
-                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल | स्थापना: २०८०</p>
+                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
             </div>
 
             <div class="idcard-badge-title">परिचय पत्र</div>
 
             <div class="idcard-body">
                 <div class="idcard-meta-row">
-                    <span>सदस्यता नम्बर: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
+                    <span>सदस्यता नं: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                     <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
                 </div>
 
@@ -823,10 +865,10 @@
                         <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो">
                     </div>
                     <div class="idcard-info-box">
-                        <div style="font-size: 14px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
-                        <div style="color: #008000; font-weight: 800; font-size: 12.5px;" id="cardPosition">-</div>
-                        <div style="font-size: 10.5px; color: #2d3748; margin-top: 4px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
-                        <div style="font-size: 10px; color: #e53e3e; margin-top: 2px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
+                        <div style="font-size: 12px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
+                        <div style="color: #008000; font-weight: 800; font-size: 10.5px;" id="cardPosition">-</div>
+                        <div style="font-size: 9px; color: #2d3748; margin-top: 1px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
+                        <div style="font-size: 8.5px; color: #e53e3e; margin-top: 1px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
                     </div>
                 </div>
 
@@ -834,7 +876,7 @@
                     <table>
                         <tr><td>प्रदेश:</td><td><span id="cardProvince">-</span></td></tr>
                         <tr><td>जिल्ला:</td><td><span id="cardDistrict">-</span></td></tr>
-                        <tr><td>म.न.पा / न.पा / गा.पा:</td><td><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td>पालिका:</td><td><span id="cardMunicipality">-</span></td></tr>
                         <tr><td>वडा:</td><td><span id="cardWard">-</span></td></tr>
                     </table>
                 </div>
@@ -850,7 +892,7 @@
                             <div class="sig-line"></div>
                             <span>सचिव</span>
                         </div>
-                        <div class="sig-col" style="margin-left: 20px;">
+                        <div class="sig-col" style="margin-left: 8px;">
                             <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" class="sig-img" alt="अध्यक्षको हस्ताक्षर">
                             <div class="sig-line"></div>
                             <span>अध्यक्ष</span>
@@ -876,7 +918,7 @@
                         <span>🌐</span> <span>www.dashaundisamajnepal.com</span>
                     </div>
                 </div>
-                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 4px 12px; border-radius: 4px; color: #fff; display: inline-block; font-size: 10px; font-weight: bold; margin-top: 2px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 4px; color: #fff; display: inline-block; font-size: 8px; font-weight: bold; margin-top: 1px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
             </div>
         </div>
     </div>
@@ -953,28 +995,38 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
+        function toNepaliNumber(num) {
+            const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
+            return num.toString().split('').map(char => numbers[char] || char).join('');
+        }
+
         function getNepaliDate() {
             const d = new Date();
             let year = d.getFullYear();
             let month = d.getMonth() + 1;
             let day = d.getDate();
+            
             let nepaliYear = year + 57;
-            if (month < 4 || (month === 4 && day < 14)) {
-                nepaliYear -= 1;
+            let nepaliMonth = '०५'; 
+            let nepaliDay = day < 10 ? '०' + day : day;
+
+            if (month === 8 && day >= 17) {
+                nepaliDay = day - 16;
+            } else if (month === 8) {
+                nepaliDay = day + 15;
             }
-            let nMonth = (month + 8) % 12;
-            if (nMonth === 0) nMonth = 12;
-            let nDay = day < 10 ? '0' + day : day;
-            let nMonStr = nMonth < 10 ? '0' + nMonth : nMonth;
-            return `${nepaliYear}-${nMonStr}-${nDay}`;
+
+            let formattedDay = nepaliDay < 10 ? '०' + nepaliDay : nepaliDay;
+            return toNepaliNumber(`${nepaliYear}-${nepaliMonth}-${formattedDay}`);
         }
 
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '-';
             let parts = regDateStr.split('-');
             if(parts.length === 3) {
-                let expYear = parseInt(parts[0]) + 1;
-                return `${expYear}-${parts[1]}-${parts[2]}`;
+                let nepaliYearNum = 2083;
+                let expYear = nepaliYearNum + 1;
+                return toNepaliNumber(`${expYear}-${parts[1]}-${parts[2]}`);
             }
             return '-';
         }
@@ -1006,9 +1058,9 @@
             const regDate = user.reg_date || getNepaliDate();
             const expiryDate = getExpiryDate(regDate);
             const fullName = user.full_name || user.name || '-';
-            const familyCode = user.family_code || '-';
+            const familyCode = user.family_code || 'छैन';
 
-            document.getElementById('cardMemberNo').innerText = memberNo;
+            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
             document.getElementById('cardFamilyCode').innerText = familyCode;
             document.getElementById('cardIssueDate').innerText = regDate;
             document.getElementById('cardExpiryDate').innerText = expiryDate;
@@ -1017,7 +1069,7 @@
             document.getElementById('cardProvince').innerText = user.province || '-';
             document.getElementById('cardDistrict').innerText = user.district || '-';
             document.getElementById('cardMunicipality').innerText = user.municipality || '-';
-            document.getElementById('cardWard').innerText = user.ward || '-';
+            document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
             
             const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
@@ -1066,7 +1118,6 @@
         }
 
         window.onload = function() {
-            // यदि लगइन छैन भने सिधै लगइन सेक्सन देखाउने र ड्यासबोर्ड लुकाउने
             if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
                 document.getElementById('loginSection').classList.remove('hidden');
                 document.getElementById('dashboardSection').classList.add('hidden');
@@ -1255,7 +1306,7 @@
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
             if(!appError) {
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${formattedMemberNo}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
             } else {
