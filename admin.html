@@ -15,7 +15,7 @@
             --print-color: #006400;
             --bg-color: #edf2f7;
             --card-bg: #ffffff;
-            --text-color: #2d3748;
+            --text-color: #1a202c;
             --border-color: #cbd5e0;
         }
 
@@ -135,7 +135,7 @@
             display: block;
             font-weight: 600;
             margin-bottom: 6px;
-            color: #4a5568;
+            color: #2d3748;
             font-size: 13px;
         }
 
@@ -295,11 +295,11 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन (सुधारिएको) */
+        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन (नयाँ ढाँचा अनुसार) */
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         
         .idcard-box { 
-            width: 380px; 
+            width: 390px; 
             max-width: 100%; 
             background: #fff; 
             border-radius: 16px; 
@@ -308,31 +308,33 @@
             position: relative; 
             border: 3px solid #1a365d; 
             margin: auto; 
+            font-weight: 600;
         }
         
         .idcard-header { 
             background: linear-gradient(135deg, #1a365d, #2b6cb0); 
             color: #fff; 
             text-align: center; 
-            padding: 18px 10px 15px 10px; 
+            padding: 16px 10px 18px 10px; 
             position: relative;
         }
-        .idcard-header img { width: 50px; height: 50px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover; margin-bottom: 4px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
-        .idcard-header h3 { margin: 0; font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
-        .idcard-header p { margin: 2px 0 0; font-size: 9.5px; opacity: 0.9; }
+        .idcard-header img { width: 52px; height: 52px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover; margin-bottom: 4px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
+        .idcard-header h3 { margin: 0; font-size: 17px; font-weight: 900; letter-spacing: 0.5px; }
+        .idcard-header p { margin: 2px 0 0; font-size: 10px; opacity: 0.95; font-weight: 600; }
 
+        /* परिचय पत्र लेखेको ठाउँको ब्याकग्राउन्ड ग्रिन र ठूलो बोल्ट अक्षर */
         .idcard-badge-title { 
-            background: #d69e2e; 
+            background: #008000; 
             color: #fff; 
             text-align: center; 
-            padding: 5px 15px; 
-            font-weight: 800; 
-            font-size: 12px; 
-            letter-spacing: 1.5px; 
-            width: 130px; 
-            margin: 10px auto; 
-            border-radius: 20px; 
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            padding: 6px 18px; 
+            font-weight: 950; 
+            font-size: 15px; 
+            letter-spacing: 2px; 
+            width: 160px; 
+            margin: 12px auto; 
+            border-radius: 22px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             text-transform: uppercase;
         }
 
@@ -341,14 +343,14 @@
         .idcard-meta-row { 
             display: flex; 
             justify-content: space-between; 
-            font-size: 10.5px; 
-            font-weight: bold; 
+            font-size: 11px; 
+            font-weight: 800; 
             color: #1a365d; 
-            background: #f7fafc;
-            padding: 6px 10px;
+            background: #f1f5f9;
+            padding: 7px 10px;
             border-radius: 6px;
             margin-bottom: 10px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #cbd5e0;
         }
         
         .idcard-main-content {
@@ -359,19 +361,19 @@
             background: #f8fafc;
             padding: 10px;
             border-radius: 10px;
-            border: 1px solid #edf2f7;
+            border: 1px solid #e2e8f0;
         }
 
         .idcard-photo-container { text-align: center; flex-shrink: 0; }
         .idcard-photo { width: 95px; height: 95px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
 
-        .idcard-info-box { flex-grow: 1; font-size: 11.5px; color: #2d3748; line-height: 1.6; }
+        .idcard-info-box { flex-grow: 1; font-size: 12px; color: #1a202c; line-height: 1.5; font-weight: 700; }
         .idcard-info-box div { margin-bottom: 3px; }
 
-        .idcard-details-table { width: 100%; background: #fff; border-radius: 8px; padding: 6px 10px; margin-bottom: 12px; border: 1px solid #e2e8f0; font-size: 11.5px; }
+        .idcard-details-table { width: 100%; background: #fff; border-radius: 8px; padding: 6px 10px; margin-bottom: 12px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 700; }
         .idcard-details-table table { width: 100%; background: transparent; margin: 0; }
-        .idcard-details-table td { border: none; text-align: left; padding: 2px 0; font-size: 11.5px; font-weight: 600; white-space: normal; }
-        .idcard-details-table td:first-child { width: 36%; color: #4a5568; }
+        .idcard-details-table td { border: none; text-align: left; padding: 3px 0; font-size: 12px; font-weight: 700; color: #1a202c; white-space: normal; }
+        .idcard-details-table td:first-child { width: 40%; color: #2d3748; font-weight: 800; }
 
         .idcard-footer-grid {
             display: flex;
@@ -382,12 +384,15 @@
             border-top: 1px dashed #cbd5e0;
         }
 
-        .idcard-qr-box img { width: 55px; height: 55px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; }
+        /* QR कोड अलिक ठूलो बनाइएको */
+        .idcard-qr-box img { width: 72px; height: 72px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; }
 
-        .idcard-signatures { text-align: center; font-size: 9.5px; font-weight: bold; color: #2d3748; display: flex; gap: 20px; }
-        .sig-line { width: 75px; border-top: 1px solid #000; margin: 0 auto 2px; }
+        /* हस्ताक्षर सेक्सन: सचिव र दाहिनेतर्फ टाढा राखिएको अध्यक्ष */
+        .idcard-signatures { text-align: center; font-size: 10.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 220px; }
+        .sig-col { text-align: center; }
+        .sig-line { width: 75px; border-top: 1.5px solid #000; margin: 0 auto 3px; }
 
-        .idcard-footer { background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 9.5px; letter-spacing: 0.5px; }
+        .idcard-footer { background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 10px; letter-spacing: 0.5px; font-weight: 700; }
 
         .idcard-close-btn { position: absolute; top: 8px; right: 12px; color: #fff; font-size: 22px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
@@ -398,7 +403,7 @@
             #idCardModal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #fff; display: flex !important; justify-content: center; align-items: center; padding: 0; }
             .no-print-card { display: none !important; }
             .idcard-close-btn { display: none !important; }
-            .idcard-box { border: 2px solid #1a365d; box-shadow: none; width: 380px; }
+            .idcard-box { border: 2px solid #1a365d; box-shadow: none; width: 390px; }
         }
 
         /* सम्पादन मोडलहरू */
@@ -691,7 +696,7 @@
                     <div class="form-group"><label>रोल (Role):</label>
                         <select id="new_admin_role" required>
                             <option value="अध्यक्ष">अध्यक्ष</option>
-                            <option value="महासचिव">महासचिव</option>
+                            <option value="सचिव">सचिव</option>
                             <option value="एडमिन">एडमिन</option>
                         </select>
                     </div>
@@ -726,7 +731,7 @@
         <div id="message"></div>
     </div>
 
-    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल (सुधारिएको) -->
+    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div class="idcard-box">
             <span class="idcard-close-btn" onclick="closeIdCardModal()">&times;</span>
@@ -741,8 +746,8 @@
 
             <div class="idcard-body">
                 <div class="idcard-meta-row">
-                    <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
-                    <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
+                    <span>सदस्यता नम्बर: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
+                    <span>सदस्य मिति: <strong id="cardIssueDate" style="color: #1a365d;">-</strong></span>
                 </div>
 
                 <div class="idcard-main-content">
@@ -750,10 +755,10 @@
                         <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो">
                     </div>
                     <div class="idcard-info-box">
-                        <div style="font-size: 13.5px; font-weight: 800; color: #1a365d;" id="cardName">-</div>
-                        <div style="color: #008000; font-weight: bold;" id="cardPosition">-</div>
-                        <div style="font-size: 10px; color: #4a5568; margin-top: 4px;">जारी मिति: <span id="cardIssueDate" style="font-weight: bold; color: #2d3748;">-</span></div>
-                        <div style="font-size: 10px; color: #e53e3e; margin-top: 2px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: bold;">-</span></div>
+                        <div style="font-size: 14px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
+                        <div style="color: #008000; font-weight: 800; font-size: 12.5px;" id="cardPosition">-</div>
+                        <div style="font-size: 10.5px; color: #4a5568; margin-top: 4px;">फेमिली कोड: <span id="cardFamilyCode" style="font-weight: 800; color: #2d3748;">-</span></div>
+                        <div style="font-size: 10px; color: #e53e3e; margin-top: 2px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
                     </div>
                 </div>
 
@@ -761,8 +766,8 @@
                     <table>
                         <tr><td>प्रदेश:</td><td><span id="cardProvince">-</span></td></tr>
                         <tr><td>जिल्ला:</td><td><span id="cardDistrict">-</span></td></tr>
-                        <tr><td>पालिका:</td><td><span id="cardMunicipality">-</span></td></tr>
-                        <tr><td>वडा नं.:</td><td><span id="cardWard">-</span></td></tr>
+                        <tr><td>म.न.पा / न.पा / गा.पा:</td><td><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td>वडा:</td><td><span id="cardWard">-</span></td></tr>
                     </table>
                 </div>
 
@@ -771,13 +776,13 @@
                         <img id="cardQrCode" src="" alt="QR Code">
                     </div>
                     <div class="idcard-signatures">
-                        <div>
+                        <div class="sig-col">
+                            <div class="sig-line"></div>
+                            <span>सचिव</span>
+                        </div>
+                        <div class="sig-col" style="margin-left: 20px;">
                             <div class="sig-line"></div>
                             <span>अध्यक्ष</span>
-                        </div>
-                        <div>
-                            <div class="sig-line"></div>
-                            <span>महासचिव</span>
                         </div>
                     </div>
                 </div>
@@ -813,7 +818,7 @@
             <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
             <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
             <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
-            <div class="form-group"><label>पालिका:</label><input type="text" id="edit_app_municipality"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_app_municipality"></div>
             <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
             <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -843,7 +848,7 @@
             <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
             <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
             <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
-            <div class="form-group"><label>पालिका:</label><input type="text" id="edit_user_municipality"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_user_municipality"></div>
             <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
             <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -877,7 +882,6 @@
             return `${nepaliYear}-${nMonStr}-${nDay}`;
         }
 
-        // म्याद समाप्त मिति १ वर्ष थपिने फंक्सन
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '-';
             let parts = regDateStr.split('-');
@@ -932,7 +936,7 @@
             document.getElementById('cardPhoto').src = photo;
 
             const qrText = encodeURIComponent(`नाम: ${fullName}, सदस्य नं: ${memberNo}, फेमिली कोड: ${familyCode}, पद: ${user.position || 'साधारण सदस्य'}, जारी मिति: ${regDate}, म्याद समाप्त: ${expiryDate}`);
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${qrText}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrText}`;
             document.getElementById('cardQrCode').src = qrApiUrl;
 
             document.getElementById('idCardModal').style.display = 'flex';
