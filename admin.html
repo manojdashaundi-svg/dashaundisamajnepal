@@ -501,22 +501,23 @@
                 width: 18px !important;
                 height: 18px !important;
             }
-            .no-print, .btn-action, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
             
-            /* प्रिन्ट गर्दा बटनको सट्टा टेक्स्ट वा उपलब्ध देखाउने */
+            /* प्रिन्ट गर्दा बटन लुकाएर फोटो वा 'उपलब्ध' टेक्स्ट स्पष्ट पार्ने */
             .printable-section .btn-action {
                 display: inline-block !important;
                 visibility: visible !important;
                 background: none !important;
-                color: #000 !important;
+                color: #1a365d !important;
                 border: none !important;
                 padding: 0 !important;
                 font-size: 6px !important;
+                font-weight: bold !important;
             }
             .printable-section .btn-action::after {
-                content: " (उपलब्ध)";
+                content: " [फोटो]";
             }
 
+            .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
             .print-header { display: block !important; }
             
             @page {
