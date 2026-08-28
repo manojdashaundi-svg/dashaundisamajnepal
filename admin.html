@@ -1725,6 +1725,7 @@
         }
 
         function editAdmin(id, username, password, role) {
+            document.getElementById('admin_user_id').value = id; // Fixing reference safety if needed, kept generic
             document.getElementById('admin_edit_id').value = id;
             document.getElementById('new_admin_user').value = username;
             document.getElementById('new_admin_pass').value = password;
