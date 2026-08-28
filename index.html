@@ -950,6 +950,18 @@
                     noticeBanner.style.backgroundColor = '#fed7d7';
                     noticeBanner.style.color = '#9b2c2c';
                     noticeBanner.innerText = "❌ एडमिनबाट आवेदन रिजेक्ट (Reject) गरिएको छ। कृपया संशोधन गरेर पुनः पठाउनुहोस्।";
+
+                    // [सुधार गरिएको भाग]: अघिल्लो आवेदन जुन प्रकारको थियो (नवीकरण वा नयाँ सदस्यता), रिजेक्ट हुँदा ठ्याक्कै त्यही फारमको बटन देखाउने
+                    if (currentApplication.application_type === 'नवीकरण') {
+                        btnOpenForm.innerHTML = "🔄 नवीकरण फारम (पुनः भर्नुहोस्)";
+                        btnOpenForm.style.background = "var(--warning-gradient)";
+                        btnOpenForm.style.color = "#1a202c";
+                        btnOpenForm.setAttribute("onclick", "toggleForm('नवीकरण')");
+                    } else {
+                        btnOpenForm.innerHTML = "📝 नयाँ सदस्यता फारम (पुनः भर्नुहोस्)";
+                        btnOpenForm.style.background = "var(--primary-gradient)";
+                        btnOpenForm.setAttribute("onclick", "toggleForm('नयाँ सदस्यता')");
+                    }
                 } else {
                     alertBox.innerHTML = "⏳ तपाईंको आवेदन समीक्षाको क्रममा (Pending) रहेको छ।";
                     alertBox.style.color = "#d69e2e";
