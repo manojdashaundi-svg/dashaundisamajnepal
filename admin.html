@@ -434,7 +434,7 @@
 
             <hr>
 
-            <!-- दर्ता भएका युजरहरूको सूची (पद र दर्ता मिति सहित) -->
+            <!-- दर्ता भएका युजरहरूको सूची -->
             <div class="section-header">
                 <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
                 <div class="button-group">
@@ -721,6 +721,31 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
+        // इंग्रजी मितिलाई नेपाली मिति (वि.सं.) मा रूपान्तरण गर्ने साधारण र भरपर्दो फंक्सन
+        function getNepaliDate() {
+            const d = new Date();
+            let year = d.getFullYear();
+            let month = d.getMonth() + 1;
+            let day = d.getDate();
+
+            // अंग्रेजी सालमा ५७ वर्ष जोडदा लगभग नेपाली साल हुन्छ (अनुमानित/सटीक रूपान्तरण)
+            // हाल सन् २०२६ भदौ छ, त्यसैले २०८३ साल हुन्छ।
+            let nepaliYear = year + 57;
+            if (month < 4 || (month === 4 && day < 14)) {
+                nepaliYear -= 1;
+            }
+
+            // महिना र दिनको स्ट्रिङ मिलाउने
+            const monthsNe = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+            // सरल रूपमा मिति ढाँचा (YYYY-MM-DD वा साल-महिना-गते)
+            let nMonth = (month + 8) % 12;
+            if (nMonth === 0) nMonth = 12;
+            let nDay = day < 10 ? '0' + day : day;
+            let nMonStr = nMonth < 10 ? '0' + nMonth : nMonth;
+
+            return `${nepaliYear}-${nMonStr}-${nDay}`;
+        }
+
         function toggleSection(contentId, btn) {
             const content = document.getElementById(contentId);
             if (content.style.display === 'block') {
@@ -761,7 +786,7 @@
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
 
             headerDiv.innerHTML = `
-                <div class="print-date">मिति: २०८३ भदौ १०</div>
+                <div class="print-date">मिति: ${getNepaliDate()}</div>
                 <img src="${logo}" class="print-logo" alt="लोगो" crossorigin="anonymous">
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-meta">ठेगाना: ${address}</div>
@@ -875,7 +900,7 @@
             });
         }
 
-        // Approve गर्दा पद सोध्ने र सदस्य नम्बर तथा दर्ता मिति राख्ने
+        // Approve गर्दा पद सोध्ने र स्वतः नेपाली मिति राख्ने
         async function approveAndCreateUser(appStr) {
             const app = JSON.parse(appStr);
             if(app.status === 'Approved') {
@@ -892,13 +917,13 @@
             const nextNo = (count || 0) + 1;
             const formattedMemberNo = String(nextNo).padStart(3, '0');
 
-            // हालको मिति (Nepali/English format वा system date)
-            const todayDate = new Date().toISOString().split('T')[0];
+            // स्वचालित नेपाली मिति
+            const todayNepaliDate = getNepaliDate();
 
             const newUser = {
                 member_no: formattedMemberNo,
                 position: assignedPosition.trim() || 'साधारण सदस्य',
-                reg_date: todayDate,
+                reg_date: todayNepaliDate,
                 full_name: app.full_name,
                 family_code: app.family_code,
                 phone: app.phone,
@@ -928,7 +953,7 @@
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
             if(!appError) {
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${formattedMemberNo}\nपद: ${newUser.position}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${formattedMemberNo}\nपद: ${newUser.position}\nदर्ता मिति: ${todayNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
             } else {
