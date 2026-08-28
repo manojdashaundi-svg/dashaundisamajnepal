@@ -1217,13 +1217,14 @@
             const formattedMemberNo = String(nextNo).padStart(3, '0');
             const todayNepaliDate = getNepaliDate();
 
-            // Supabase को users टेबलमा केवल आधारभूत स्तومات मात्र इन्सर्ट गर्न मिल्ने गरी मिलाइएको छ
+            // इमेल स्तम्भ अनिवार्य भएकोले यहाँ email थपिएको छ (email नभए phone वा identifier प्रयोग हुनेछ)
             const newUser = {
                 member_no: formattedMemberNo,
                 position: assignedPosition,
                 reg_date: todayNepaliDate,
                 full_name: app.full_name,
                 phone: app.phone,
+                email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
                 avatar: app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
                 password: app.password || '123456'
             };
