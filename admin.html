@@ -506,12 +506,19 @@
             
             @page {
                 size: landscape;
-                margin: 5mm;
+                margin: 0;
             }
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
+        }
+
+        .print-header {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
         }
     </style>
 </head>
