@@ -434,7 +434,7 @@
 
             <hr>
 
-            <!-- दर्ता भएका युजरहरूको सूची -->
+            <!-- दर्ता भएका युजरहरूको सूची (सदस्य नं. सहित) -->
             <div class="section-header">
                 <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
                 <div class="button-group">
@@ -449,6 +449,7 @@
                         <thead>
                             <tr>
                                 <th>क्र.सं.</th>
+                                <th>सदस्य नं.</th>
                                 <th>फोटो</th>
                                 <th>नाम</th>
                                 <th>फेम्लि कोड</th>
@@ -685,6 +686,7 @@
         <div class="app-edit-content">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
             <input type="hidden" id="edit_user_id">
+            <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
             <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
             <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_user_family_code"></div>
             <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
@@ -860,13 +862,67 @@
                         <td>${statusBadge}</td>
                         <td class="no-print">
                             <button class="btn-action btn-edit" onclick="openAppEditModal('${app.id}', decodeURIComponent('${appJson}'))">सम्पादन</button>
-                            <button class="btn-action btn-success" onclick="updateAppStatus('${app.id}', 'Approved')">Approve</button>
+                            <button class="btn-action btn-success" onclick="approveAndCreateUser(decodeURIComponent('${appJson}'))">Approve</button>
                             <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
                             <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
                         </td>
                     </tr>
                 `;
             });
+        }
+
+        // नयाँ सदस्य स्वीकृत गरेर स्वतः युजर टेबलमा राख्ने र सिरियल सदस्य नम्बर निकाल्ने
+        async function approveAndCreateUser(appStr) {
+            const app = JSON.parse(appStr);
+            if(app.status === 'Approved') {
+                alert('यो आवेदन पहिल्यै स्वीकृत भइसकेको छ!');
+                return;
+            }
+
+            // वर्तमान युजर संख्या पत्ता लगाइ सिरियल नम्बर बनाउने (जस्तै: 001, 002...)
+            const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+            const nextNo = (count || 0) + 1;
+            const formattedMemberNo = String(nextNo).padStart(3, '0'); // 001, 002...
+
+            // 1. Users टेबलमा डेटा इन्सर्ट गर्ने (सदस्य नम्बर सहित)
+            const newUser = {
+                member_no: formattedMemberNo,
+                full_name: app.full_name,
+                family_code: app.family_code,
+                phone: app.phone,
+                email: app.identifier || app.email,
+                dob: app.dob,
+                citizenship_no: app.citizenship_no,
+                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+                spouse_name: app.spouse_name,
+                father_name: app.father_name,
+                mother_name: app.mother_name,
+                grandfather_name: app.grandfather_name,
+                province: app.province,
+                district: app.district,
+                municipality: app.municipality,
+                ward: app.ward,
+                tole: app.tole,
+                avatar: app.photo_url,
+                password: app.password || '123456'
+            };
+
+            const { error: userError } = await supabaseClient.from('users').insert([newUser]);
+            if(userError) {
+                alert('युजर बनाउँदा त्रुटि: ' + userError.message);
+                return;
+            }
+
+            // 2. Application को स्थिति 'Approved' मा अपडेट गर्ने
+            const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
+            if(!appError) {
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो! प्राप्त सदस्य नम्बर: ${formattedMemberNo}`);
+                loadApplicationsData();
+                loadUsersData();
+            } else {
+                alert('त्रुटि: ' + appError.message);
+            }
         }
 
         function openAppEditModal(id, appDataStr) {
@@ -945,10 +1001,10 @@
         }
 
         async function loadUsersData() {
-            const { data } = await supabaseClient.from('users').select('*');
+            const { data } = await supabaseClient.from('users').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="21">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="22">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
                 const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const citFront = user.citizenship_front || user.citizenship_front_url || '';
@@ -958,6 +1014,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
+                        <td><strong style="color: #1a365d;">${user.member_no || '-'}</strong></td>
                         <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
                         <td><strong>${user.full_name || user.name || '-'}</strong></td>
                         <td>${user.family_code || '-'}</td>
@@ -989,6 +1046,7 @@
         function openUserEditModal(id, userDataStr) {
             const user = JSON.parse(userDataStr);
             document.getElementById('edit_user_id').value = id;
+            document.getElementById('edit_user_member_no').value = user.member_no || '';
             document.getElementById('edit_user_name').value = user.full_name || user.name || '';
             document.getElementById('edit_user_family_code').value = user.family_code || '';
             document.getElementById('edit_user_phone').value = user.phone || '';
@@ -1014,6 +1072,7 @@
         async function saveEditedUser() {
             const id = document.getElementById('edit_user_id').value;
             const updatedData = {
+                member_no: document.getElementById('edit_user_member_no').value,
                 full_name: document.getElementById('edit_user_name').value,
                 family_code: document.getElementById('edit_user_family_code').value,
                 phone: document.getElementById('edit_user_phone').value,
@@ -1168,7 +1227,7 @@
         async function loadCentralCommitteeData() {
             const { data } = await supabaseClient.from('central_committee').select('*');
             const tbody = document.getElementById('centralTableBody');
-            tbody.innerHTML = '';
+            tbody.innerHTML = ``;
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
             data.forEach((person, index) => {
                 tbody.innerHTML += `
