@@ -226,32 +226,35 @@
         .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
 
+        /* प्रिन्ट गर्दा परिचय पत्र मात्र ठ ακक्कै साइजमा आउने व्यवस्था */
         @media print {
             @page {
-                size: portrait;
+                size: 340px 520px;
                 margin: 0;
             }
             body, html {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
+                width: 340px;
+                height: 520px;
+                margin: 0 !important;
+                padding: 0 !important;
                 overflow: hidden !important;
                 background: #fff !important;
             }
             body * { visibility: hidden; }
             #idCardModal, #idCardModal * { visibility: visible; }
             #idCardModal { 
-                position: absolute !important; 
+                position: fixed !important; 
                 left: 0 !important; 
                 top: 0 !important; 
-                width: 100% !important; 
-                height: 100% !important; 
+                width: 340px !important; 
+                height: 520px !important; 
                 background: #fff !important; 
-                display: block !important; 
+                display: flex !important; 
+                align-items: center !important;
+                justify-content: center !important;
                 padding: 0 !important; 
                 margin: 0 !important;
-                overflow: hidden !important;
+                z-index: 9999 !important;
             }
             .no-print-card { display: none !important; }
             .idcard-close-btn { display: none !important; }
@@ -261,9 +264,9 @@
                 width: 340px !important; 
                 height: 520px !important; 
                 margin: 0 !important;
-                position: absolute !important;
-                top: 10px !important;
-                left: 10px !important;
+                position: relative !important;
+                top: 0 !important;
+                left: 0 !important;
                 transform: none !important;
             }
             * {
@@ -728,13 +731,11 @@
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
         let currentApplication = null;
 
-        // नेपाली अङ्कमा रूपान्तरण गर्ने फंक्सन
         function toNepaliNumber(num) {
             const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
 
-        // सही नेपाली मिति (वि.सं.) स्वतः निकाल्ने फंक्सन
         function getNepaliDate() {
             const d = new Date();
             let year = d.getFullYear();
@@ -742,7 +743,7 @@
             let day = d.getDate();
             
             let nepaliYear = year + 57;
-            let nepaliMonth = '०५'; // भाद्र महिना
+            let nepaliMonth = '०५'; 
             let nepaliDay = day < 10 ? '०' + day : day;
 
             if (month === 8 && day >= 17) {
@@ -755,13 +756,11 @@
             return toNepaliNumber(`${nepaliYear}-${nepaliMonth}-${formattedDay}`);
         }
 
-        // परिचय पत्रको लागि १ वर्ष थपिएको म्याद समाप्त मिति निकाल्ने फंक्सन
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '-';
             let parts = regDateStr.split('-');
             if(parts.length === 3) {
-                // नेपाली वर्षमा १ वर्ष थप्ने र नेपाली अङ्कमा राख्ने
-                let nepaliYearNum = 2083; // हालको नेपाली वर्ष
+                let nepaliYearNum = 2083;
                 let expYear = nepaliYearNum + 1;
                 return toNepaliNumber(`${expYear}-${parts[1]}-${parts[2]}`);
             }
@@ -1145,7 +1144,6 @@
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
             
-            // कार्डमा पनि सही नेपाली मिति स्वतः सेट गर्ने
             const regDate = getNepaliDate();
             const expiryDate = getExpiryDate(regDate);
 
