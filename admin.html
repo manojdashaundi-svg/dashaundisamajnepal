@@ -1154,7 +1154,8 @@
         }
 
         async function loadApplicationsData() {
-            const { data } = await supabaseClient.from('membership_applications').select('*').order('created_at', { ascending: false });
+            // यहाँ ascending: true राखिएको छ जसले गर्दा पहिले आएको आवेदन १ नम्बरमा र पछि आएकाहरू २, ३ हुँदै देखा पर्नेछन्
+            const { data } = await supabaseClient.from('membership_applications').select('*').order('created_at', { ascending: true });
             const tbody = document.getElementById('applicationsTableBody');
             tbody.innerHTML = '';
 
