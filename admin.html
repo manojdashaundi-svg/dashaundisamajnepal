@@ -1154,21 +1154,18 @@
         }
 
         async function loadApplicationsData() {
-            // यहाँ ascending: true राखिएको छ जसले गर्दा पहिले आएको आवेदन १ नम्बरमा र पछि आएकाहरू २, ३ हुँदै देखा पर्नेछन्
-            const { data } = await supabaseClient.from('membership_applications').select('*').order('created_at', { ascending: true });
+            // स्थिति 'Pending' भएका आवेदनहरू मात्र फिल्टर गरेर तान्ने गरिएको छ
+            const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('created_at', { ascending: true });
             const tbody = document.getElementById('applicationsTableBody');
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="23">कुनै आवेदन आएको छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="23">कुनै नयाँ आवेदन बाँकी छैन</td></tr>';
                 return;
             }
 
             data.forEach((app, index) => {
-                let statusBadge = '';
-                if(app.status === 'Approved') statusBadge = '<span style="color: #276749; font-weight: bold;">Approved</span>';
-                else if(app.status === 'Rejected') statusBadge = '<span style="color: #e53e3e; font-weight: bold;">Rejected</span>';
-                else statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
+                let statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
 
                 let appTypeBadge = (app.application_type === 'नवीकरण') 
                     ? '<span style="color: #b7791f; font-weight: bold;">नवीकरण</span>' 
@@ -1699,7 +1696,7 @@
             const tbody = document.getElementById('adminTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै एडमिन छैन</td></tr>'; return; }
-            data.forEach((adm, index) => {
+            data.AddEventListener = data.forEach((adm, index) => {
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
