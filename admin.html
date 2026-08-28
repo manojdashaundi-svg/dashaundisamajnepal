@@ -572,6 +572,57 @@
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
+            <!-- सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन सेक्सन -->
+            <div class="section-header">
+                <h3>सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="noticesContent" class="collapsible-content">
+                <form id="noticeForm">
+                    <input type="hidden" id="notice_edit_id">
+                    <div class="form-group">
+                        <label>सूचनाको शीर्षक / विवरण (माथि लेख्ने टेक्स्ट):</label>
+                        <textarea id="notice_title" placeholder="सूचना वा प्रेस विज्ञप्तिबारे यहाँ लेख्नुहोस्..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>फोटो वा PDF फाइलको लिङ्क (URL):</label>
+                        <input type="text" id="notice_file_url" placeholder="फोटो वा PDF को पोस्टइम वा ड्राइभ लिङ्क राख्नुहोस्" required>
+                    </div>
+                    <div class="form-group">
+                        <label>फाइलको प्रकार:</label>
+                        <select id="notice_file_type" required>
+                            <option value="image">फोटो (Image)</option>
+                            <option value="pdf">PDF फाइल</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="noticeSubmitBtn">सूचना प्रकाशित गर्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">प्रकाशित सूचनाहरूको सूची</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesTableContent', this)">सूची हेर्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="noticesTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>शीर्षक / विवरण</th>
+                                <th>फाइलको प्रकार</th>
+                                <th>फाइल प्रिभ्यू</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="noticesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- नयाँ सदस्यहरूको आवेदन सेक्सन -->
             <div class="section-header">
                 <h3>नयाँ सदस्यहरूको आवेदन (Membership Applications)</h3>
@@ -1221,6 +1272,7 @@
             loadAdminData();
             loadUsersData();
             loadApplicationsData();
+            loadNoticesData();
         }
 
         function logout() {
@@ -1866,6 +1918,68 @@
             if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
                 await supabaseClient.from('admins').delete().eq('id', id);
                 loadAdminData();
+            }
+        }
+
+        // सूचना सेभ वा अपडेट गर्ने
+        document.getElementById('noticeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('notice_edit_id').value;
+            const noticeData = {
+                title: document.getElementById('notice_title').value,
+                file_url: document.getElementById('notice_file_url').value,
+                file_type: document.getElementById('notice_file_type').value,
+                date: getCurrentNepaliDate()
+            };
+            if (editId) {
+                await supabaseClient.from('notices').update(noticeData).eq('id', editId);
+                alert('सूचना सफलतापूर्वक अपडेट भयो!');
+            } else {
+                await supabaseClient.from('notices').insert([noticeData]);
+                alert('नयाँ सूचना सफलतापूर्वक प्रकाशित भयो!');
+            }
+            document.getElementById('noticeForm').reset();
+            document.getElementById('notice_edit_id').value = '';
+            document.getElementById('noticeSubmitBtn').innerText = 'सूचना प्रकाशित गर्नुहोस्';
+            loadNoticesData();
+        });
+
+        // एडमिन प्यानलमा सूची लोड गर्ने
+        async function loadNoticesData() {
+            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            const tbody = document.getElementById('noticesTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td style="white-space: normal; text-align: left; max-width: 300px;">${item.title}</td>
+                        <td>${item.file_type === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
+                        <td><button class="btn-action btn-view" onclick="showImage('${item.file_url}')">हेर्नुहोस्</button></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editNotice('${item.id}', \`${item.title}\`, '${item.file_url}', '${item.file_type}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editNotice(id, title, fileUrl, fileType) {
+            document.getElementById('notice_edit_id').value = id;
+            document.getElementById('notice_title').value = title;
+            document.getElementById('notice_file_url').value = fileUrl;
+            document.getElementById('notice_file_type').value = fileType;
+            document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
+            document.getElementById('noticesContent').style.display = 'block';
+        }
+
+        async function deleteNotice(id) {
+            if (confirm('के तपाईं यो सूचना मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('notices').delete().eq('id', id);
+                loadNoticesData();
             }
         }
     </script>
