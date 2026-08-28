@@ -2,7 +2,1771 @@
 <html lang="ne">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewpoब<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #008000;
+            --danger-color: #e53e3e;
+            --edit-color: #3182ce;
+            --print-color: #006400;
+            --bg-color: #edf2f7;
+            --card-bg: #ffffff;
+            --text-color: #1a202c;
+            --border-color: #cbd5e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            background: var(--card-bg);
+            padding: 30px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-header-box {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(26, 54, 93, 0.2);
+        }
+
+        .main-header-box h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f7fafc;
+            padding: 10px 15px;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .toggle-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        .print-btn {
+            background-color: var(--print-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .print-btn:hover {
+            background-color: #004d00;
+        }
+
+        .collapsible-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2d3748;
+            font-size: 13px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+        }
+
+        textarea {
+            height: 90px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #006600;
+        }
+
+        .btn-action {
+            padding: 4px 6px;
+            font-size: 10px;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 1px;
+            font-weight: bold;
+        }
+        .btn-edit { background-color: var(--edit-color); }
+        .btn-edit:hover { background-color: #2b6cb0; }
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-danger:hover { background-color: #c53030; }
+        .btn-success { background-color: #38a169; }
+        .btn-success:hover { background-color: #2f855a; }
+        .btn-view { background-color: #d69e2e; }
+        .btn-view:hover { background-color: #b7791f; }
+        .btn-idcard { background-color: #805ad5; }
+        .btn-idcard:hover { background-color: #6b46c1; }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-text {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .logout-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #2d3748;
+        }
+
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 6px 4px;
+            text-align: center;
+            font-size: 10px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .table-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #1a365d;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* इमेज प्रिभ्यू माडल */
+        .img-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; }
+        .img-modal-content { max-width: 90%; max-height: 90%; position: relative; }
+        .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
+        .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन (Vertical ID Card 340px x 520px) */
+        .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
+        
+        .idcard-box { 
+            width: 340px; 
+            height: 520px; 
+            max-width: 100%; 
+            background: #fff; 
+            border-radius: 14px; 
+            overflow: hidden; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
+            position: relative; 
+            border: 3px solid #1a365d; 
+            margin: auto; 
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .idcard-header { 
+            background: linear-gradient(135deg, #1a365d, #2b6cb0); 
+            color: #fff; 
+            text-align: center; 
+            padding: 8px 6px; 
+            position: relative;
+        }
+        .idcard-header img { width: 45px; height: 45px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover; margin-bottom: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .idcard-header h3 { margin: 0; font-size: 14px; font-weight: 900; letter-spacing: 0.5px; }
+        .idcard-header p { margin: 1px 0 0; font-size: 8.5px; opacity: 0.95; font-weight: 600; }
+
+        .idcard-badge-title { 
+            background: #008000; 
+            color: #fff; 
+            text-align: center; 
+            padding: 2px 10px; 
+            font-weight: 950; 
+            font-size: 11px; 
+            letter-spacing: 1.5px; 
+            width: 110px; 
+            margin: 4px auto; 
+            border-radius: 15px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+
+        .idcard-body { padding: 0 10px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        .idcard-meta-row { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 10px; 
+            font-weight: 800; 
+            color: #1a365d; 
+            background: #f1f5f9;
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e0;
+        }
+        
+        .idcard-main-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            padding: 4px 6px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .idcard-photo-container { text-align: center; flex-shrink: 0; }
+        .idcard-photo { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+
+        .idcard-info-box { flex-grow: 1; font-size: 10.5px; color: #1a202c; line-height: 1.3; font-weight: 700; }
+        .idcard-info-box div { margin-bottom: 1px; }
+
+        .idcard-details-table { width: 100%; background: #fff; border-radius: 4px; padding: 2px 6px; border: 1px solid #cbd5e0; font-size: 10.5px; font-weight: 700; }
+        .idcard-details-table table { width: 100%; background: transparent; margin: 0; }
+        .idcard-details-table td { border: none; text-align: left; padding: 1px 0; font-size: 10.5px; font-weight: 700; color: #1a202c; white-space: normal; }
+        .idcard-details-table td:first-child { width: 35%; color: #2d3748; font-weight: 800; }
+
+        .idcard-footer-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2px;
+            border-top: 1px dashed #cbd5e0;
+            margin-bottom: 2px;
+        }
+
+        .idcard-qr-box img { width: 48px; height: 48px; border: 1px solid #cbd5e0; padding: 1px; border-radius: 4px; background: #fff; cursor: pointer; }
+
+        /* हस्ताक्षर सेक्सन */
+        .idcard-signatures { text-align: center; font-size: 9px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 170px; }
+        .sig-col { text-align: center; position: relative; }
+        .sig-img { 
+            position: absolute; 
+            bottom: 10px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 50px; 
+            height: 22px; 
+            object-fit: contain; 
+        }
+        .sig-line { width: 50px; border-top: 1.2px solid #000; margin: 15px auto 1px; }
+
+        .idcard-footer { 
+            background: #1a365d; 
+            color: #fff; 
+            text-align: center; 
+            padding: 4px; 
+            font-size: 8px; 
+            font-weight: 700; 
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        .idcard-footer-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .idcard-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .idcard-footer-item img {
+            width: 12px;
+            height: 12px;
+            object-fit: contain;
+        }
+
+        .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
+
+        /* सम्पादन मोडलहरू */
+        .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
+        .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
+
+        .print-header {
+            display: none;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .print-logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 5px;
+            border: 2px solid #1a365d;
+        }
+        .print-title-1 { font-size: 22px; font-weight: 900; color: #1a365d; margin: 2px 0; }
+        .print-meta { font-size: 12px; font-weight: 600; color: #333; margin: 2px 0; }
+        .print-date { position: absolute; top: 0; right: 0; font-size: 11px; font-weight: bold; color: #000; }
+        .print-section-title { font-size: 16px; font-weight: 800; text-align: center; margin: 10px 0; color: #1a365d; text-decoration: underline; }
+
+        /* ग्लोबल प्रिन्ट स्टाइल्स एडमिन प्यानलको लागि सुधार्ब गरिएको */
+        @media print {
+            body * { visibility: hidden !important; }
+            #idCardModal.active-card-modal, #idCardModal.active-card-modal * { visibility: visible !important; }
+            #idCardModal.active-card-modal { 
+                position: fixed !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 340px !important; 
+                height: 520px !important; 
+                background: #fff !important; 
+                display: flex !important; 
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 !important; 
+                margin: 0 !important;
+                z-index: 9999 !important;
+                overflow: hidden !important;
+            }
+            .printable-section, .printable-section * { visibility: visible !important; }
+            .printable-section { 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                background: #fff !important;
+                display: block !important; 
+            }
+            /* सबै कलुमहरू पेजभित्र फिट हुने कोड */
+            .printable-section table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                font-size: 7px !important;
+            }
+            .printable-section th, 
+            .printable-section td {
+                padding: 2px 1px !important;
+                word-wrap: break-word !important;
+                white-space: normal !important;
+                font-size: 7px !important;
+            }
+            .printable-section .table-avatar {
+                width: 18px !important;
+                height: 18px !important;
+            }
+            
+            /* प्रिन्ट गर्दा बटन लुकाएर फोटो वा 'उपलब्ध' टेक्स्ट स्पष्ट पार्ने */
+            .printable-section .btn-action {
+                display: inline-block !important;
+                visibility: visible !important;
+                background: none !important;
+                color: #1a365d !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 6px !important;
+                font-weight: bold !important;
+            }
+            .printable-section .btn-action::after {
+                content: " [फोटो]";
+            }
+
+            .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
+            .print-header { display: block !important; }
+            
+            @page {
+                size: landscape;
+                margin: 0;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        .print-header {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <div class="login-logo-container">
+            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
+        </div>
+
+        <div class="main-header-box">
+            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
+        </div>
+
+        <!-- लगइन सेक्सन -->
+        <div id="loginSection">
+            <h3 style="text-align: center; border-left: none; padding-left: 0;">प्रशासन लगइन</h3>
+            <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
+                <div class="form-group">
+                    <label>युजरनेम (Username):</label>
+                    <input type="text" id="username" placeholder="युजरनेम हाल्नुहोस्" required>
+                </div>
+                <div class="form-group">
+                    <label>पासवर्ड (Password):</label>
+                    <input type="password" id="password" placeholder="पासवर्ड हाल्नुहोस्" required>
+                </div>
+                <button type="submit">लगइन गर्नुहोस्</button>
+            </form>
+        </div>
+
+        <!-- मुख्य ड्यासबोर्ड -->
+        <div id="dashboardSection" class="hidden">
+            <div class="top-header">
+                <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
+                <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
+            </div>
+
+            <!-- नयाँ सदस्यहरूको आवेदन सेक्सन -->
+            <div class="section-header">
+                <h3>नयाँ सदस्यहरूको आवेदन (Membership Applications)</h3>
+                <div class="button-group">
+                    <button class="toggle-btn" onclick="toggleSection('applicationsContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="applicationsContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>आवेदनको प्रकार</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>फेम्लि कोड</th>
+                                <th>मोबाइल</th>
+                                <th>इमेल / आइडी</th>
+                                <th>जन्म मिति</th>
+                                <th>नागरिकता नं.</th>
+                                <th>नागरिकता अगाडि</th>
+                                <th>नागरिकता पछाडि</th>
+                                <th>पेमेन्ट स्लिप</th>
+                                <th>पति/पत्नी</th>
+                                <th>बुबा</th>
+                                <th>आमा</th>
+                                <th>बाजे</th>
+                                <th>प्रदेश</th>
+                                <th>जिल्ला</th>
+                                <th>पालिका</th>
+                                <th>वडा</th>
+                                <th>टोल</th>
+                                <th>स्थिति</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- दर्ता भएका युजरहरूको सूची -->
+            <div class="section-header">
+                <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('usersContent', 'दर्ता भएका सम्पूर्ण सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('usersContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="usersContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>सदस्य नं.</th>
+                                <th>पद</th>
+                                <th>दर्ता मिति</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>फेम्लि कोड</th>
+                                <th>मोबाइल</th>
+                                <th>इमेल / आइडी</th>
+                                <th>जन्म मिति</th>
+                                <th>नागरिकता नं.</th>
+                                <th>नागरिकता अगाडि</th>
+                                <th>नागरिकता पछाडि</th>
+                                <th>पेमेन्ट स्लिप</th>
+                                <th>पति/पत्नी</th>
+                                <th>बुबा</th>
+                                <th>आमा</th>
+                                <th>बाजे</th>
+                                <th>प्रदेश</th>
+                                <th>जिल्ला</th>
+                                <th>पालिका</th>
+                                <th>वडा</th>
+                                <th>टोल</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- संस्थाको मुख्य विवरण -->
+            <div class="section-header">
+                <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('aboutContent', 'संस्थाको मुख्य विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="aboutContent" class="collapsible-content">
+                <form id="aboutForm">
+                    <div class="form-group"><label>लोगोको लिङ्क (Logo URL):</label><input type="text" id="logo_url" required></div>
+                    <div class="form-group"><label>संस्थाको नाम (नेपालीमा):</label><input type="text" id="title_ne" required></div>
+                    <div class="form-group"><label>संस्थाको नाम (अंग्रेजीमा):</label><input type="text" id="title_en" required></div>
+                    <div class="form-group"><label>ठेगाना:</label><input type="text" id="address" required></div>
+                    <div class="form-group"><label>स्थापना / दर्ता मिति:</label><input type="text" id="reg_date" required></div>
+                    <div class="form-group"><label>कम्पनी दर्ता नं. र पान नम्बर:</label><input type="text" id="reg_no" required></div>
+                    <div class="form-group"><label>संस्थाको परिचय:</label><textarea id="introduction" required></textarea></div>
+                    <div class="form-group"><label>कामको व्याख्या तथा उद्देश्यहरू:</label><textarea id="description" required></textarea></div>
+                    <button type="submit">मुख्य विवरण सेभ गर्नुहोस्</button>
+                </form>
+            </div>
+
+            <hr>
+
+            <!-- संस्थापक समिति सेक्सन -->
+            <div class="section-header">
+                <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="committeeContent" class="collapsible-content">
+                <form id="committeeForm">
+                    <input type="hidden" id="edit_id">
+                    <div class="form-group"><label>पूरा नाम:</label><input type="text" id="c_name" placeholder="सदस्यको नाम" required></div>
+                    <div class="form-group"><label>पद:</label><input type="text" id="c_position" placeholder="पद" required></div>
+                    <div class="form-group"><label>सदस्य नम्बर:</label><input type="text" id="c_member_no" placeholder="सदस्य नं."></div>
+                    <div class="form-group"><label>सम्पर्क नम्बर:</label><input type="text" id="c_phone" placeholder="फोन नम्बर"></div>
+                    <div class="form-group"><label>फोटोको लिङ्क (Photo URL):</label><input type="text" id="c_photo" placeholder="फोटोको लिङ्क"></div>
+                    <button type="submit" id="submitBtn">सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('tableContent', 'संस्थापक सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="tableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="committeeTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- केन्द्रीय समिति सेक्सन -->
+            <div class="section-header">
+                <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="centralContent" class="collapsible-content">
+                <form id="centralCommitteeForm">
+                    <input type="hidden" id="central_edit_id">
+                    <div class="form-group"><label>पूरा नाम:</label><input type="text" id="cc_name" placeholder="सदस्यको नाम" required></div>
+                    <div class="form-group"><label>पद:</label><input type="text" id="cc_position" placeholder="पद" required></div>
+                    <div class="form-group"><label>सदस्य नम्बर:</label><input type="text" id="cc_member_no" placeholder="सदस्य नं."></div>
+                    <div class="form-group"><label>सम्पर्क नम्बर:</label><input type="text" id="cc_phone" placeholder="फोन नम्बर"></div>
+                    <div class="form-group"><label>फोटोको लिङ्क (Photo URL):</label><input type="text" id="cc_photo" placeholder="फोटोको लिङ्क"></div>
+                    <button type="submit" id="centralSubmitBtn">केन्द्रीय सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('centralTableContent', 'केन्द्रीय सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="centralTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="centralTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- एडमिन व्यवस्थापन सेक्सन -->
+            <div class="section-header">
+                <h3 id="adminFormTitle">नयाँ एडमिन थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('adminContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="adminContent" class="collapsible-content">
+                <form id="adminForm">
+                    <input type="hidden" id="admin_edit_id">
+                    <div class="form-group"><label>युजरनेम (Username):</label><input type="text" id="new_admin_user" placeholder="युजरनेम" required></div>
+                    <div class="form-group"><label>पासवर्ड (Password):</label><input type="text" id="new_admin_pass" placeholder="पासवर्ड" required></div>
+                    <div class="form-group"><label>रोल (Role):</label>
+                        <select id="new_admin_role" required>
+                            <option value="अध्यक्ष">अध्यक्ष</option>
+                            <option value="सचिव">सचिव</option>
+                            <option value="एडमिन">एडमिन</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="adminSubmitBtn">एडमिन थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">एडमिनहरूको सूची</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('adminTableContent', this)">सूची हेर्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="adminTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>युजरनेम</th>
+                                <th>रोल (पद)</th>
+                                <th>पासवर्ड</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="message"></div>
+  </div>
+
+    <!-- पद छान्ने ड्रपडाउन मोडल (Approve Modal) -->
+    <div id="positionModal" class="app-edit-modal">
+        <div class="app-edit-content" style="width: 400px;">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता स्वीकृत (Approve)</h3>
+            <p style="font-size: 13px; font-weight: 600; color: #2d3748;">यो सदस्यलाई संस्थामा दिने पद छान्नुहोस् वा लेख्नुहोस्:</p>
+            
+            <input type="hidden" id="pendingAppStr">
+            
+            <div class="form-group">
+                <label>पद (Designation):</label>
+                <select id="selectPosition" class="form-control" onchange="checkCustomPosition(this)">
+                    <option value="साधारण सदस्य">साधारण सदस्य</option>
+                    <option value="अध्यक्ष">अध्यक्ष</option>
+                    <option value="उपाध्यक्ष">उपाध्यक्ष</option>
+                    <option value="सचिव">सचिव</option>
+                    <option value="सह-सचिव">सह-सचिव</option>
+                    <option value="कोषाध्यक्ष">कोषाध्यक्ष</option>
+                    <option value="सदस्य">सदस्य</option>
+                    <option value="अन्य (Custom)">अन्य (आफैं लेख्नुहोस्)</option>
+                </select>
+            </div>
+
+            <div class="form-group hidden" id="customPositionBox">
+                <label>नयाँ पदको नाम लेख्नुहोस्:</label>
+                <input type="text" id="customPositionInput" placeholder="पदको नाम लेख्नुहोस्">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="confirmApproveUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">स्वीकृत गर्नुहोस्</button>
+                <button type="button" onclick="closePositionModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">रद्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल -->
+    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
+        <div class="idcard-box">
+            <span class="idcard-close-btn" onclick="closeIdCardModal()">&times;</span>
+            
+            <div class="idcard-header">
+                <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो">
+                <h3>दशौँदी समाज नेपाल</h3>
+                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+            </div>
+
+            <div class="idcard-badge-title">परिचय पत्र</div>
+
+            <div class="idcard-body">
+                <div class="idcard-meta-row">
+                    <span>सदस्यता नं: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
+                    <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
+                </div>
+
+                <div class="idcard-main-content">
+                    <div class="idcard-photo-container">
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो">
+                    </div>
+                    <div class="idcard-info-box">
+                        <div style="font-size: 12px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
+                        <div style="color: #008000; font-weight: 800; font-size: 10.5px;" id="cardPosition">-</div>
+                        <div style="font-size: 9px; color: #2d3748; margin-top: 1px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
+                        <div style="font-size: 8.5px; color: #e53e3e; margin-top: 1px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
+                    </div>
+                </div>
+
+                <div class="idcard-details-table">
+                    <table>
+                        <tr><td>प्रदेश:</td><td><span id="cardProvince">-</span></td></tr>
+                        <tr><td>जिल्ला:</td><td><span id="cardDistrict">-</span></td></tr>
+                        <tr><td>पालिका:</td><td><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td>वडा:</td><td><span id="cardWard">-</span></td></tr>
+                    </table>
+                </div>
+
+                <div class="idcard-footer-grid">
+                    <div class="idcard-qr-box">
+                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्">
+                    </div>
+                    <!-- हस्ताक्षरहरू -->
+                    <div class="idcard-signatures">
+                        <div class="sig-col">
+                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिवको हस्ताक्षर">
+                            <div class="sig-line"></div>
+                            <span>सचिव</span>
+                        </div>
+                        <div class="sig-col" style="margin-left: 8px;">
+                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" class="sig-img" alt="अध्यक्षको हस्ताक्षर">
+                            <div class="sig-line"></div>
+                            <span>अध्यक्ष</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- अन्तिम निलो पट्टी -->
+            <div class="idcard-footer">
+                <div class="idcard-footer-row">
+                    <div class="idcard-footer-item">
+                        <img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" alt="WhatsApp">
+                        <span>9765240652</span>
+                    </div>
+                    <div class="idcard-footer-item">
+                        <img src="https://i.postimg.cc/Hsb76h3r/gmail.png" alt="Gmail">
+                        <span>dashaundisamajnepal@gmail.com</span>
+                    </div>
+                </div>
+                <div class="idcard-footer-row">
+                    <div class="idcard-footer-item">
+                        <span>🌐</span> <span>www.dashaundisamajnepal.com</span>
+                    </div>
+                </div>
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 4px; color: #fff; display: inline-block; font-size: 8px; font-weight: bold; margin-top: 1px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- इमेज प्रिभ्यू माडल -->
+    <div id="imageModal" class="img-modal" onclick="closeImageModal()">
+        <div class="img-modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="प्रिभ्यू">
+        </div>
+    </div>
+
+    <!-- आवेदन सम्पादन मोडल -->
+    <div id="appEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
+            <input type="hidden" id="edit_app_id">
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name"></div>
+            <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_app_family_code"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_app_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_app_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedApplication()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeAppEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- युजर सम्पादन मोडल -->
+    <div id="userEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
+            <input type="hidden" id="edit_user_id">
+            <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
+            <div class="form-group"><label>पद (Designation):</label><input type="text" id="edit_user_position"></div>
+            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date"></div>
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
+            <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_user_family_code"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
+            <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_user_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_user_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_user_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_user_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_user_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_user_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeUserEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
+        
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const messageDiv = document.getElementById('message');
+
+        function toNepaliNumber(input) {
+            if (!input) return '';
+            const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
+            return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
+        }
+
+        function getCurrentNepaliDate() {
+            return "२०८३-०५-१२";
+        }
+
+        function getExpiryDate(regDateStr) {
+            if (!regDateStr) return '२०८४-०५-१२';
+            let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
+            let parts = cleaned.split('-');
+            if(parts.length === 3) {
+                let yearPart = parseInt(parts[0]);
+                if (!isNaN(yearPart)) {
+                    let nextYear = yearPart + 1;
+                    return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
+                }
+            }
+            return '२०८४-०५-१२';
+        }
+
+        function toggleSection(contentId, btn) {
+            const content = document.getElementById(contentId);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                btn.innerText = 'खोल्नुहोस् ▾';
+            } else {
+                content.style.display = 'block';
+                btn.innerText = 'बन्द गर्नुहोस् ▴';
+            }
+        }
+
+        function showImage(url) {
+            if(!url) { alert('फाइल उपलब्ध छैन!'); return; }
+            document.getElementById('modalImage').src = url;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function openIdCardModal(userStr) {
+            const user = JSON.parse(userStr);
+            const memberNo = user.member_no || '-';
+            const regDate = toNepaliNumber(user.reg_date || "२०८३-०५-१२");
+            const expiryDate = getExpiryDate(user.reg_date || "२०८३-०५-१२");
+            const fullName = user.full_name || user.name || '-';
+            const familyCode = user.family_code || 'छैन';
+
+            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+            document.getElementById('cardFamilyCode').innerText = familyCode;
+            document.getElementById('cardIssueDate').innerText = regDate;
+            document.getElementById('cardExpiryDate').innerText = expiryDate;
+            document.getElementById('cardName').innerText = fullName;
+            document.getElementById('cardPosition').innerText = user.position || 'साधारण सदस्य';
+            document.getElementById('cardProvince').innerText = user.province || '-';
+            document.getElementById('cardDistrict').innerText = user.district || '-';
+            document.getElementById('cardMunicipality').innerText = user.municipality || '-';
+            document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
+            
+            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            document.getElementById('cardPhoto').src = photo;
+
+            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
+            document.getElementById('cardQrCode').src = qrApiUrl;
+
+            const modal = document.getElementById('idCardModal');
+            modal.classList.add('active-card-modal');
+            modal.style.display = 'flex';
+        }
+
+        function closeIdCardModal() {
+            const modal = document.getElementById('idCardModal');
+            modal.classList.remove('active-card-modal');
+            modal.style.display = 'none';
+        }
+
+        async function printSection(sectionId, sectionTitle) {
+            const sectionContent = document.getElementById(sectionId);
+            const wasOpen = sectionContent.style.display === 'block';
+            if (!wasOpen) sectionContent.style.display = 'block';
+            sectionContent.classList.add('printable-section');
+
+            let headerDiv = document.getElementById('dynamicPrintHeader');
+            if (!headerDiv) {
+                headerDiv = document.createElement('div');
+                headerDiv.id = 'dynamicPrintHeader';
+                headerDiv.className = 'print-header';
+                sectionContent.prepend(headerDiv);
+            }
+
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            const logo = (data && data.logo_url) ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
+
+            headerDiv.innerHTML = `
+                <div class="print-date">मिति: ${getCurrentNepaliDate()}</div>
+                <img src="${logo}" class="print-logo" alt="लोगो" crossorigin="anonymous">
+                <div class="print-title-1">दशौँदी समाज नेपाल</div>
+                <div class="print-meta">ठेगाना: ${address}</div>
+                <div class="print-section-title">${sectionTitle}</div>
+            `;
+
+            window.print();
+            headerDiv.remove();
+            sectionContent.classList.remove('printable-section');
+            if (!wasOpen) sectionContent.style.display = 'none';
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('dashboardSection').classList.add('hidden');
+            } else {
+                showDashboard();
+            }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+
+            const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
+            if (data) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                localStorage.setItem('currentAdmin', user);
+                localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
+                showDashboard();
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'गलत युजरनेम वा पासवर्ड!';
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
+            const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
+            document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
+            messageDiv.innerText = '';
+            
+            loadAboutData();
+            loadCommitteeData();
+            loadCentralCommitteeData();
+            loadAdminData();
+            loadUsersData();
+            loadApplicationsData();
+        }
+
+        function logout() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        async function loadApplicationsData() {
+            const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('created_at', { ascending: true });
+            const tbody = document.getElementById('applicationsTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="23">कुनै नयाँ आवेदन बाँकी छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((app, index) => {
+                let statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
+
+                let appTypeBadge = (app.application_type === 'नवीकरण') 
+                    ? '<span style="color: #b7791f; font-weight: bold;">नवीकरण</span>' 
+                    : '<span style="color: #3182ce; font-weight: bold;">नयाँ सदस्यता</span>';
+
+                const photoSrc = app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const citFront = app.citizenship_front || app.citizenship_front_url || '';
+                const citBack = app.citizenship_back || app.citizenship_back_url || '';
+                const paySlip = app.payment_slip || app.payment_slip_url || '';
+
+                const appJson = encodeURIComponent(JSON.stringify(app));
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${appTypeBadge}</td>
+                        <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
+                        <td><strong>${app.full_name || '-'}</strong></td>
+                        <td>${app.family_code || '-'}</td>
+                        <td>${app.phone || '-'}</td>
+                        <td>${app.identifier || '-'}</td>
+                        <td>${app.dob || '-'}</td>
+                        <td>${app.citizenship_no || '-'}</td>
+                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${app.spouse_name || '-'}</td>
+                        <td>${app.father_name || '-'}</td>
+                        <td>${app.mother_name || '-'}</td>
+                        <td>${app.grandfather_name || '-'}</td>
+                        <td>${app.province || '-'}</td>
+                        <td>${app.district || '-'}</td>
+                        <td>${app.municipality || '-'}</td>
+                        <td>${app.ward || '-'}</td>
+                        <td>${app.tole || '-'}</td>
+                        <td>${statusBadge}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="openAppEditModal('${app.id}', decodeURIComponent('${appJson}'))">सम्पादन</button>
+                            <button class="btn-action btn-success" onclick="openPositionModal(decodeURIComponent('${appJson}'))">Approve</button>
+                            <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
+                            <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openPositionModal(appStr) {
+            const app = JSON.parse(appStr);
+            if(app.status === 'Approved') {
+                alert('यो आवेदन पहिल्यै स्वीकृत भइसकेको छ!');
+                return;
+            }
+            document.getElementById('pendingAppStr').value = appStr;
+            document.getElementById('selectPosition').value = 'साधारण सदस्य';
+            document.getElementById('customPositionInput').value = '';
+            document.getElementById('customPositionBox').classList.add('hidden');
+            document.getElementById('positionModal').style.display = 'flex';
+        }
+
+        function closePositionModal() {
+            document.getElementById('positionModal').style.display = 'none';
+        }
+
+        function checkCustomPosition(select) {
+            const customBox = document.getElementById('customPositionBox');
+            if(select.value === 'अन्य (Custom)') {
+                customBox.classList.remove('hidden');
+                document.getElementById('customPositionInput').focus();
+            } else {
+                customBox.classList.add('hidden');
+            }
+        }
+
+        async function confirmApproveUser() {
+            const appStr = document.getElementById('pendingAppStr').value;
+            const app = JSON.parse(appStr);
+            
+            let selectedVal = document.getElementById('selectPosition').value;
+            let assignedPosition = '';
+            
+            if(selectedVal === 'अन्य (Custom)') {
+                assignedPosition = document.getElementById('customPositionInput').value.trim();
+                if(!assignedPosition) {
+                    alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
+                    return;
+                }
+            } else {
+                assignedPosition = selectedVal;
+            }
+
+            closePositionModal();
+
+            const todayNepaliDate = getCurrentNepaliDate();
+            let formattedMemberNo = '';
+
+            const isRenewal = app.application_type === 'नवीकरण';
+
+            if (isRenewal) {
+                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+                if (existingUser) {
+                    formattedMemberNo = existingUser.member_no;
+                } else {
+                    const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                    formattedMemberNo = String((count || 0) + 1).padStart(3, '0');
+                }
+            } else {
+                const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                const nextNo = (count || 0) + 1;
+                formattedMemberNo = String(nextNo).padStart(3, '0');
+            }
+
+            const userData = {
+                member_no: formattedMemberNo,
+                position: assignedPosition,
+                reg_date: todayNepaliDate,
+                full_name: app.full_name,
+                family_code: app.family_code || '',
+                phone: app.phone || '',
+                email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
+                dob: app.dob || '',
+                citizenship_no: app.citizenship_no || '',
+                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+                payment_slip: app.payment_slip || app.payment_slip_url || '',
+                spouse_name: app.spouse_name || '',
+                father_name: app.father_name || '',
+                mother_name: app.mother_name || '',
+                grandfather_name: app.grandfather_name || '',
+                province: app.province || '',
+                district: app.district || '',
+                municipality: app.municipality || '',
+                ward: app.ward || '',
+                tole: app.tole || '',
+                avatar: app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
+                password: app.password || '123456'
+            };
+
+            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+            
+            if(userError) {
+                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+                return;
+            }
+
+            const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
+            
+            if(!appError) {
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
+                loadApplicationsData();
+                loadUsersData();
+            } else {
+                alert('त्रुटि: ' + appError.message);
+            }
+        }
+
+        function openAppEditModal(id, appDataStr) {
+            const app = JSON.parse(appDataStr);
+            document.getElementById('edit_app_id').value = id;
+            document.getElementById('edit_app_name').value = app.full_name || '';
+            document.getElementById('edit_app_family_code').value = app.family_code || '';
+            document.getElementById('edit_app_phone').value = app.phone || '';
+            document.getElementById('edit_app_dob').value = app.dob || '';
+            document.getElementById('edit_app_citizenship').value = app.citizenship_no || '';
+            document.getElementById('edit_app_spouse').value = app.spouse_name || '';
+            document.getElementById('edit_app_father').value = app.father_name || '';
+            document.getElementById('edit_app_mother').value = app.mother_name || '';
+            document.getElementById('edit_app_grandfather').value = app.grandfather_name || '';
+            document.getElementById('edit_app_province').value = app.province || '';
+            document.getElementById('edit_app_district').value = app.district || '';
+            document.getElementById('edit_app_municipality').value = app.municipality || '';
+            document.getElementById('edit_app_ward').value = app.ward || '';
+            document.getElementById('edit_app_tole').value = app.tole || '';
+            document.getElementById('appEditModal').style.display = 'flex';
+        }
+
+        function closeAppEditModal() {
+            document.getElementById('appEditModal').style.display = 'none';
+        }
+
+        async function saveEditedApplication() {
+            const id = document.getElementById('edit_app_id').value;
+            const updatedData = {
+                full_name: document.getElementById('edit_app_name').value,
+                family_code: document.getElementById('edit_app_family_code').value,
+                phone: document.getElementById('edit_app_phone').value,
+                dob: document.getElementById('edit_app_dob').value,
+                citizenship_no: document.getElementById('edit_app_citizenship').value,
+                spouse_name: document.getElementById('edit_app_spouse').value,
+                father_name: document.getElementById('edit_app_father').value,
+                mother_name: document.getElementById('edit_app_mother').value,
+                grandfather_name: document.getElementById('edit_app_grandfather').value,
+                province: document.getElementById('edit_app_province').value,
+                district: document.getElementById('edit_app_district').value,
+                municipality: document.getElementById('edit_app_municipality').value,
+                ward: document.getElementById('edit_app_ward').value,
+                tole: document.getElementById('edit_app_tole').value
+            };
+
+            const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
+            if(!error) {
+                alert('आवेदन सफलतापूर्वक अपडेट भयो!');
+                closeAppEditModal();
+                loadApplicationsData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function updateAppStatus(id, status) {
+            const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
+            if(!error) {
+                alert('आवेदन ' + status + ' गरियो!');
+                loadApplicationsData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function deleteApplication(id) {
+            if(confirm('के तपाईं यो आवेदन स्थायी रूपमा मेटाउन (Remove) चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('membership_applications').delete().eq('id', id);
+                if(!error) {
+                    alert('आवेदन सफलतापूर्वक हटाइयो!');
+                    loadApplicationsData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        async function loadUsersData() {
+            const { data } = await supabaseClient.from('users').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="24">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
+            data.forEach((user, index) => {
+                const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const citFront = user.citizenship_front || user.citizenship_front_url || '';
+                const citBack = user.citizenship_back || user.citizenship_back_url || '';
+                const paySlip = user.payment_slip || user.payment_slip_url || '';
+                const userJson = encodeURIComponent(JSON.stringify(user));
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong style="color: #1a365d;">${toNepaliNumber(user.member_no || '-')}</strong></td>
+                        <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${user.position || 'साधारण सदस्य'}</span></td>
+                        <td>${toNepaliNumber(user.reg_date || '-')}</td>
+                        <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
+                        <td><strong>${user.full_name || user.name || '-'}</strong></td>
+                        <td>${user.family_code || '-'}</td>
+                        <td>${toNepaliNumber(user.phone || '-')}</td>
+                        <td>${user.email || user.identifier || '-'}</td>
+                        <td>${toNepaliNumber(user.dob || '-')}</td>
+                        <td>${toNepaliNumber(user.citizenship_no || '-')}</td>
+                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${user.spouse_name || '-'}</td>
+                        <td>${user.father_name || '-'}</td>
+                        <td>${user.mother_name || '-'}</td>
+                        <td>${user.grandfather_name || '-'}</td>
+                        <td>${user.province || '-'}</td>
+                        <td>${user.district || '-'}</td>
+                        <td>${user.municipality || '-'}</td>
+                        <td>${toNepaliNumber(user.ward || '-')}</td>
+                        <td>${user.tole || '-'}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-idcard" onclick="openIdCardModal(decodeURIComponent('${userJson}'))">परिचय पत्र</button>
+                            <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openUserEditModal(id, userDataStr) {
+            const user = JSON.parse(userDataStr);
+            document.getElementById('edit_user_id').value = id;
+            document.getElementById('edit_user_member_no').value = user.member_no || '';
+            document.getElementById('edit_user_position').value = user.position || '';
+            document.getElementById('edit_user_reg_date').value = user.reg_date || '';
+            document.getElementById('edit_user_name').value = user.full_name || user.name || '';
+            document.getElementById('edit_user_family_code').value = user.family_code || '';
+            document.getElementById('edit_user_phone').value = user.phone || '';
+            document.getElementById('edit_user_email').value = user.email || user.identifier || '';
+            document.getElementById('edit_user_dob').value = user.dob || '';
+            document.getElementById('edit_user_citizenship').value = user.citizenship_no || '';
+            document.getElementById('edit_user_spouse').value = user.spouse_name || '';
+            document.getElementById('edit_user_father').value = user.father_name || '';
+            document.getElementById('edit_user_mother').value = user.mother_name || '';
+            document.getElementById('edit_user_grandfather').value = user.grandfather_name || '';
+            document.getElementById('edit_user_province').value = user.province || '';
+            document.getElementById('edit_user_district').value = user.district || '';
+            document.getElementById('edit_user_municipality').value = user.municipality || '';
+            document.getElementById('edit_user_ward').value = user.ward || '';
+            document.getElementById('edit_user_tole').value = user.tole || '';
+            document.getElementById('userEditModal').style.display = 'flex';
+        }
+
+        function closeUserEditModal() {
+            document.getElementById('userEditModal').style.display = 'none';
+        }
+
+        async function saveEditedUser() {
+            const id = document.getElementById('edit_user_id').value;
+            const updatedData = {
+                member_no: document.getElementById('edit_user_member_no').value,
+                position: document.getElementById('edit_user_position').value,
+                reg_date: document.getElementById('edit_user_reg_date').value,
+                full_name: document.getElementById('edit_user_name').value,
+                family_code: document.getElementById('edit_user_family_code').value,
+                phone: document.getElementById('edit_user_phone').value,
+                email: document.getElementById('edit_user_email').value,
+                dob: document.getElementById('edit_user_dob').value,
+                citizenship_no: document.getElementById('edit_user_citizenship').value,
+                spouse_name: document.getElementById('edit_user_spouse').value,
+                father_name: document.getElementById('edit_user_father').value,
+                mother_name: document.getElementById('edit_user_mother').value,
+                grandfather_name: document.getElementById('edit_user_grandfather').value,
+                province: document.getElementById('edit_user_province').value,
+                district: document.getElementById('edit_user_district').value,
+                municipality: document.getElementById('edit_user_municipality').value,
+                ward: document.getElementById('edit_user_ward').value,
+                tole: document.getElementById('edit_user_tole').value
+            };
+
+            const { error } = await supabaseClient.from('users').update(updatedData).eq('id', id);
+            if(!error) {
+                alert('सदस्यको विवरण सफलतापूर्वक अपडेट भयो!');
+                closeUserEditModal();
+                loadUsersData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function deleteUser(id) {
+            if(confirm('के तपाईं यो युजरलाई मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('users').delete().eq('id', id);
+                if(!error) {
+                    alert('युजर सफलतापूर्वक हटाइयो!');
+                    loadUsersData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        async function loadAboutData() {
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            if (data) {
+                document.getElementById('logo_url').value = data.logo_url || '';
+                document.getElementById('title_ne').value = data.title_ne || '';
+                document.getElementById('title_en').value = data.title_en || '';
+                document.getElementById('address').value = data.address || '';
+                document.getElementById('reg_date').value = data.reg_date || '';
+                document.getElementById('reg_no').value = data.reg_no || '';
+                document.getElementById('introduction').value = data.introduction || '';
+                document.getElementById('description').value = data.description || '';
+            }
+        }
+
+        document.getElementById('aboutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const updatedData = {
+                id: 1,
+                logo_url: document.getElementById('logo_url').value,
+                title_ne: document.getElementById('title_ne').value,
+                title_en: document.getElementById('title_en').value,
+                address: document.getElementById('address').value,
+                reg_date: document.getElementById('reg_date').value,
+                reg_no: document.getElementById('reg_no').value,
+                introduction: document.getElementById('introduction').value,
+                description: document.getElementById('description').value
+            };
+            const { error } = await supabaseClient.from('about_us').upsert(updatedData);
+            messageDiv.style.color = error ? 'red' : 'green';
+            messageDiv.innerText = error ? 'त्रुटि: ' + error.message : 'सफलतापूर्वक सेभ भयो!';
+        });
+
+        document.getElementById('committeeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('c_name').value,
+                position: document.getElementById('c_position').value,
+                member_no: document.getElementById('c_member_no').value,
+                phone: document.getElementById('c_phone').value,
+                photo_url: document.getElementById('c_photo').value
+            };
+            if (editId) {
+                await supabaseClient.from('founder_committee').update(memberData).eq('id', editId);
+            } else {
+                await supabaseClient.from('founder_committee').insert([memberData]);
+            }
+            document.getElementById('committeeForm').reset();
+            document.getElementById('edit_id').value = '';
+            loadCommitteeData();
+        });
+
+        async function loadCommitteeData() {
+            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('committeeTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
+            data.forEach((person, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('edit_id').value = id;
+            document.getElementById('c_name').value = name;
+            document.getElementById('c_position').value = position;
+            document.getElementById('c_member_no').value = memberNo;
+            document.getElementById('c_phone').value = phone;
+            document.getElementById('c_photo').value = photoUrl;
+            document.getElementById('committeeContent').style.display = 'block';
+        }
+
+        async function deleteMember(id) {
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('founder_committee').delete().eq('id', id);
+                loadCommitteeData();
+            }
+        }
+
+        document.getElementById('centralCommitteeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('central_edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('cc_name').value,
+                position: document.getElementById('cc_position').value,
+                member_no: document.getElementById('cc_member_no').value,
+                phone: document.getElementById('cc_phone').value,
+                photo_url: document.getElementById('cc_photo').value
+            };
+            if (editId) {
+                await supabaseClient.from('central_committee').update(memberData).eq('id', editId);
+            } else {
+                await supabaseClient.from('central_committee').insert([memberData]);
+            }
+            document.getElementById('centralCommitteeForm').reset();
+            document.getElementById('central_edit_id').value = '';
+            loadCentralCommitteeData();
+        });
+
+        async function loadCentralCommitteeData() {
+            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('centralTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
+            data.forEach((person, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editCentralMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteCentralMember('${person.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editCentralMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('central_edit_id').value = id;
+            document.getElementById('cc_name').value = name;
+            document.getElementById('cc_position').value = position;
+            document.getElementById('cc_member_no').value = memberNo;
+            document.getElementById('cc_phone').value = phone;
+            document.getElementById('cc_photo').value = photoUrl;
+            document.getElementById('centralContent').style.display = 'block';
+        }
+
+        async function deleteCentralMember(id) {
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('central_committee').delete().eq('id', id);
+                loadCentralCommitteeData();
+            }
+        }
+
+        document.getElementById('adminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('admin_edit_id').value;
+            const adminData = {
+                username: document.getElementById('new_admin_user').value.trim(),
+                password: document.getElementById('new_admin_pass').value.trim(),
+                role: document.getElementById('new_admin_role').value
+            };
+            if (editId) {
+                await supabaseClient.from('admins').update(adminData).eq('id', editId);
+                alert('एडमिनको विवरण सफलतापूर्वक अपडेट भयो!');
+            } else {
+                await supabaseClient.from('admins').insert([adminData]);
+                alert('नयाँ एडमिन सफलतापूर्वक थपियो!');
+            }
+            document.getElementById('adminForm').reset();
+            document.getElementById('admin_edit_id').value = '';
+            document.getElementById('adminSubmitBtn').innerText = 'एडमिन थप्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'नयाँ एडमिन थप्ने';
+            loadAdminData();
+        });
+
+        async function loadAdminData() {
+            const { data } = await supabaseClient.from('admins').select('*');
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै एडमिन छैन</td></tr>'; return; }
+            data.forEach((adm, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${adm.username}</strong></td>
+                        <td>${adm.role || 'एडमिन'}</td>
+                        <td>${adm.password}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editAdmin('${adm.id}', '${adm.username}', '${adm.password}', '${adm.role || 'एडमिन'}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteAdmin('${adm.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editAdmin(id, username, password, role) {
+            document.getElementById('admin_edit_id').value = id;
+            document.getElementById('new_admin_user').value = username;
+            document.getElementById('new_admin_pass').value = password;
+            document.getElementById('new_admin_role').value = role;
+            
+            document.getElementById('adminSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'एडमिन विवरण सम्पादन गर्ने';
+            
+            document.getElementById('adminContent').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('adminContent').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        async function deleteAdmin(id) {
+            const { data } = await supabaseClient.from('admins').select('*');
+            if (data && data.length <= 1) { alert('कमसेकम एउटा एडमिन रहनु अनिवार्य छ!'); return; }
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('admins').delete().eq('id', id);
+                loadAdminData();
+            }
+        }
+    </script>
+</body>
+</html>rt" content="width=device-width, initial-scale=1.0">
     <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
