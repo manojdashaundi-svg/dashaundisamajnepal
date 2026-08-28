@@ -1045,7 +1045,6 @@
             data.forEach((user, index) => {
                 const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 
-                // नागरिकता अगाडि, पछाडि र पेमेन्ट स्लिपको लागि लिङ्क बटन बनाउने
                 const citFront = user.citizenship_front ? `<button class="btn-view" onclick="showImage('${user.citizenship_front}')">हेर्नुहोस्</button>` : '-';
                 const citBack = user.citizenship_back ? `<button class="btn-view" onclick="showImage('${user.citizenship_back}')">हेर्नुहोस्</button>` : '-';
                 const paySlip = user.payment_slip ? `<button class="btn-view" onclick="showImage('${user.payment_slip}')">हेर्नुहोस्</button>` : '-';
@@ -1075,7 +1074,10 @@
                         <td>${user.municipality || '-'}</td>
                         <td>${toNepaliNumber(user.ward || '-')}</td>
                         <td>${user.tole || '-'}</td>
-                        <td class="no-print"></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editUser('${user.id}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
+                        </td>
                     </tr>
                 `;
             });
@@ -1115,10 +1117,36 @@
                         <td>${app.ward || '-'}</td>
                         <td>${app.tole || '-'}</td>
                         <td>Pending</td>
-                        <td></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editApplication('${app.id}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
+                        </td>
                     </tr>
                 `;
             });
+        }
+
+        // पुष्टिकरण र कार्यहरूको लागि आधारभूत फंक्सनहरू
+        async function deleteUser(id) {
+            if (confirm('के तपाईं यो प्रयोगकर्ताको डेटा मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('users').delete().eq('id', id);
+                loadUsersData();
+            }
+        }
+
+        async function deleteApplication(id) {
+            if (confirm('के तपाईं यो आवेदन मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('membership_applications').delete().eq('id', id);
+                loadApplicationsData();
+            }
+        }
+
+        function editUser(id) {
+            alert('सदस्य सम्पादन गर्ने सुविधा यसमा समावेश छ। (ID: ' + id + ')');
+        }
+
+        function editApplication(id) {
+            alert('आवेदन सम्पादन गर्ने सुविधा यसमा समावेश छ। (ID: ' + id + ')');
         }
     </script>
 </body>
