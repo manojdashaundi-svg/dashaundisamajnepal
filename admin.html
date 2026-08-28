@@ -242,7 +242,7 @@
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .table-responsive {
@@ -1066,7 +1066,11 @@
         }
 
         window.onload = function() {
-            if (localStorage.getItem('isAdminLoggedIn') === 'true') {
+            // यदि लगइन छैन भने सिधै लगइन सेक्सन देखाउने र ड्यासबोर्ड लुकाउने
+            if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('dashboardSection').classList.add('hidden');
+            } else {
                 showDashboard();
             }
         };
@@ -1217,7 +1221,6 @@
             const formattedMemberNo = String(nextNo).padStart(3, '0');
             const todayNepaliDate = getNepaliDate();
 
-            // यहाँ नागरिकता तथा पेमेन्ट स्लिपको लिङ्कहरू समेत समावेश गरिएको छ
             const newUser = {
                 member_no: formattedMemberNo,
                 position: assignedPosition,
