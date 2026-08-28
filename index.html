@@ -845,7 +845,7 @@
         fetchAboutData();
 
         async function fetchFounderCommittee() {
-            const { data } = await supabaseClient.from('founder_committee').select('*');
+            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
             const container = document.getElementById('founder_container');
             if(container) {
                 if(!data || data.length === 0) {
@@ -867,7 +867,7 @@
         }
 
         async function fetchCentralCommittee() {
-            const { data } = await supabaseClient.from('central_committee').select('*');
+            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
             const container = document.getElementById('central_container');
             if(container) {
                 if(!data || data.length === 0) {
