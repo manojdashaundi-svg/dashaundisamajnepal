@@ -887,7 +887,7 @@
                     noticeBanner.style.display = 'block';
                     noticeBanner.style.backgroundColor = '#feebc8';
                     noticeBanner.style.color = '#744210';
-                    noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर चलाउन मिल्दैन।";
+                    noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर परिवर्तन गर्न मिल्दैन।";
                     
                     lockFormFields();
                 }
@@ -906,13 +906,13 @@
 
         let currentFormType = 'नयाँ सदस्यता';
         
-        // एकपटक क्लिक गर्दा खुल्ने र फेरि क्लिक गर्दा बन्द हुने (Toggle) फिचर
+        // एकपटक क्लिक गर्दा खुल्ने, फेरि क्लिक गर्दा बन्द हुने र सबमिट भइसकेको भए विवरण हेर्न मिल्ने तर लक हुने फिचर
         function toggleForm(type) {
             currentFormType = type;
             const formBox = document.getElementById('officialFormBox');
             const step3Box = document.getElementById('step3');
 
-            // यदि फारम पहिले नै खुलिसकेको छ भने बन्द गर्ने, छैन भने खोल्ने
+            // यदि फारम पहिले नै खुलिसकेको छ भने बन्द गर्ने
             if (formBox.style.display === 'block' || step3Box.style.display === 'block') {
                 hideOfficialForm();
                 return;
@@ -932,11 +932,28 @@
                 document.getElementById('f_father').value = currentApplication.father_name || '';
                 document.getElementById('f_mother').value = currentApplication.mother_name || '';
                 document.getElementById('f_grandfather').value = currentApplication.grandfather_name || '';
+                document.getElementById('f_province').value = currentApplication.province || '';
+                
+                // जिल्ला र स्थानीय तह अटो लोड गर्ने
+                if(currentApplication.province) {
+                    loadDistricts();
+                    document.getElementById('f_district').value = currentApplication.district || '';
+                }
+                if(currentApplication.district) {
+                    loadMunicipalities();
+                    document.getElementById('f_municipality').value = currentApplication.municipality || '';
+                }
+
                 document.getElementById('f_ward').value = currentApplication.ward || '';
                 document.getElementById('f_tole').value = currentApplication.tole || '';
                 if(currentApplication.photo_url) {
                     document.getElementById('form_photo_preview').src = currentApplication.photo_url;
                     currentUserProfile.avatar = currentApplication.photo_url;
+                }
+
+                // यदि आवेदन पेन्डिङ वा एप्रुभ भइसकेको छ (रिजेक्ट भएको छैन) भने फारम पूर्ण रूपमा लक (Read-only) गर्ने
+                if (currentApplication.status === 'Pending' || currentApplication.status === 'Approved') {
+                    lockFormFields();
                 }
             } else {
                 document.getElementById('f_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
