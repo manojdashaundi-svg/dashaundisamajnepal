@@ -765,6 +765,40 @@
         <div id="message"></div>
     </div>
 
+    <!-- पद छान्ने ड्रपडाउन मोडल (Approve Modal) -->
+    <div id="positionModal" class="app-edit-modal">
+        <div class="app-edit-content" style="width: 400px;">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता स्वीकृत (Approve)</h3>
+            <p style="font-size: 13px; font-weight: 600; color: #2d3748;">यो सदस्यलाई संस्थामा दिने पद छान्नुहोस् वा लेख्नुहोस्:</p>
+            
+            <input type="hidden" id="pendingAppStr">
+            
+            <div class="form-group">
+                <label>पद (Designation):</label>
+                <select id="selectPosition" class="form-control" onchange="checkCustomPosition(this)">
+                    <option value="साधारण सदस्य">साधारण सदस्य</option>
+                    <option value="अध्यक्ष">अध्यक्ष</option>
+                    <option value="उपाध्यक्ष">उपाध्यक्ष</option>
+                    <option value="सचिव">सचिव</option>
+                    <option value="सह-सचिव">सह-सचिव</option>
+                    <option value="कोषाध्यक्ष">कोषाध्यक्ष</option>
+                    <option value="सदस्य">सदस्य</option>
+                    <option value="अन्य (Custom)">अन्य (आफैं लेख्नुहोस्)</option>
+                </select>
+            </div>
+
+            <div class="form-group hidden" id="customPositionBox">
+                <label>नयाँ पदको नाम लेख्नुहोस्:</label>
+                <input type="text" id="customPositionInput" placeholder="पदको नाम लेख्नुहोस्">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="confirmApproveUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">स्वीकृत गर्नुहोस्</button>
+                <button type="button" onclick="closePositionModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">रद्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
     <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div class="idcard-box">
@@ -807,7 +841,6 @@
 
                 <div class="idcard-footer-grid">
                     <div class="idcard-qr-box">
-                        <!-- QR कोड स्क्यान गर्दा डिजिटल भेरिफिकेसन लिंक खुल्नेछ -->
                         <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्">
                     </div>
                     <!-- हस्ताक्षरहरू -->
@@ -989,7 +1022,6 @@
             const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
 
-            // QR कोडमा अब सदस्यको आधिकारिक भेरिफिकेसन लिंक राखिएको छ (Dynamic Verification URL)
             const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
             const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
             document.getElementById('cardQrCode').src = qrApiUrl;
@@ -1125,7 +1157,7 @@
                         <td>${statusBadge}</td>
                         <td class="no-print">
                             <button class="btn-action btn-edit" onclick="openAppEditModal('${app.id}', decodeURIComponent('${appJson}'))">सम्पादन</button>
-                            <button class="btn-action btn-success" onclick="approveAndCreateUser(decodeURIComponent('${appJson}'))">Approve</button>
+                            <button class="btn-action btn-success" onclick="openPositionModal(decodeURIComponent('${appJson}'))">Approve</button>
                             <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
                             <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
                         </td>
@@ -1134,15 +1166,53 @@
             });
         }
 
-        async function approveAndCreateUser(appStr) {
+        // नयाँ ड्रपडाउन मोडल खोल्ने फंक्सन
+        function openPositionModal(appStr) {
             const app = JSON.parse(appStr);
             if(app.status === 'Approved') {
                 alert('यो आवेदन पहिल्यै स्वीकृत भइसकेको छ!');
                 return;
             }
+            document.getElementById('pendingAppStr').value = appStr;
+            document.getElementById('selectPosition').value = 'साधारण सदस्य';
+            document.getElementById('customPositionInput').value = '';
+            document.getElementById('customPositionBox').classList.add('hidden');
+            document.getElementById('positionModal').style.display = 'flex';
+        }
 
-            let assignedPosition = prompt('यो सदस्यलाई संस्थामा दिने पद (Designation) लेख्नुहोस्:', 'साधारण सदस्य');
-            if (assignedPosition === null) return;
+        function closePositionModal() {
+            document.getElementById('positionModal').style.display = 'none';
+        }
+
+        function checkCustomPosition(select) {
+            const customBox = document.getElementById('customPositionBox');
+            if(select.value === 'अन्य (Custom)') {
+                customBox.classList.remove('hidden');
+                document.getElementById('customPositionInput').focus();
+            } else {
+                customBox.classList.add('hidden');
+            }
+        }
+
+        // ड्रपडाउन वा कस्टम इनपुटबाट पद लिएर युजर एप्रुभ गर्ने
+        async function confirmApproveUser() {
+            const appStr = document.getElementById('pendingAppStr').value;
+            const app = JSON.parse(appStr);
+            
+            let selectedVal = document.getElementById('selectPosition').value;
+            let assignedPosition = '';
+            
+            if(selectedVal === 'अन्य (Custom)') {
+                assignedPosition = document.getElementById('customPositionInput').value.trim();
+                if(!assignedPosition) {
+                    alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
+                    return;
+                }
+            } else {
+                assignedPosition = selectedVal;
+            }
+
+            closePositionModal();
 
             const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
             const nextNo = (count || 0) + 1;
@@ -1151,7 +1221,7 @@
 
             const newUser = {
                 member_no: formattedMemberNo,
-                position: assignedPosition.trim() || 'साधारण सदस्य',
+                position: assignedPosition,
                 reg_date: todayNepaliDate,
                 full_name: app.full_name,
                 family_code: app.family_code,
@@ -1182,7 +1252,7 @@
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
             if(!appError) {
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${formattedMemberNo}\nपद: ${newUser.position}\nजारी मिति: ${todayNepaliDate}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${formattedMemberNo}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
             } else {
