@@ -306,7 +306,7 @@
 
     <div class="top-bar">
         <div>महत्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
-        <div>वि.सं. २०८३ भदौ १० | नेपाल संवत ११४६</div>
+        <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
     </div>
 
     <div class="header-split">
@@ -511,7 +511,7 @@
                     <div id="formNoticeBanner" style="padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; text-align: center; display: none;"></div>
 
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                        <div><h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4></div>
+                        <div><h4 style="margin: 0; color: #718096;" id="formDateDisplay">आवेदन मिति: -</h4></div>
                         <div>
                             <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568;">पासपोर्ट फोटो</label>
                             <div class="passport-photo-box" id="passportBoxClick" onclick="triggerPhotoUpload()">
@@ -913,7 +913,6 @@
                     alertBox.innerHTML = "✅ तपाईंको सदस्यता आवेदन स्वीकृत (Approved) भइसकेको छ।";
                     alertBox.style.color = "#276749";
 
-                    // फारम अप्रुभ हुने बित्तिकै नवीकरण अप्सन खुलाउने
                     btnOpenForm.innerHTML = "🔄 सदस्यता नवीकरण फारम";
                     btnOpenForm.style.background = "var(--accent-gradient)";
                     btnOpenForm.setAttribute("onclick", "toggleForm('नवीकरण')");
@@ -968,6 +967,9 @@
             formBox.style.display = 'block';
             document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
             
+            // स्वचालित रूपमा आजको नेपाली मितի सेट गर्ने
+            document.getElementById('formDateDisplay').innerText = "आवेदन मिति: " + getNepaliDate();
+
             if(currentApplication) {
                 document.getElementById('f_name').value = currentApplication.full_name || '';
                 document.getElementById('f_family_code').value = currentApplication.family_code || '';
@@ -996,7 +998,6 @@
                     currentUserProfile.avatar = currentApplication.photo_url;
                 }
 
-                // यदि फारम 'नवीकरण' को लागि हो भने Approved भए पनि फारम भर्न मिल्ने (Editable) बनाउने
                 if (type === 'नवीकरण') {
                     const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
                     inputs.forEach(input => input.disabled = false);
