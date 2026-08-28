@@ -1217,14 +1217,26 @@
             const formattedMemberNo = String(nextNo).padStart(3, '0');
             const todayNepaliDate = getNepaliDate();
 
-            // इमेल स्तम्भ अनिवार्य भएकोले यहाँ email थपिएको छ (email नभए phone वा identifier प्रयोग हुनेछ)
+            // यहाँ आवेदन फारमका सबै व्यक्तिगत, पारिवारिक तथा ठेगाना विवरणहरू समावेश गरिएको छ
             const newUser = {
                 member_no: formattedMemberNo,
                 position: assignedPosition,
                 reg_date: todayNepaliDate,
                 full_name: app.full_name,
-                phone: app.phone,
+                family_code: app.family_code || '',
+                phone: app.phone || '',
                 email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
+                dob: app.dob || '',
+                citizenship_no: app.citizenship_no || '',
+                spouse_name: app.spouse_name || '',
+                father_name: app.father_name || '',
+                mother_name: app.mother_name || '',
+                grandfather_name: app.grandfather_name || '',
+                province: app.province || '',
+                district: app.district || '',
+                municipality: app.municipality || '',
+                ward: app.ward || '',
+                tole: app.tole || '',
                 avatar: app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
                 password: app.password || '123456'
             };
