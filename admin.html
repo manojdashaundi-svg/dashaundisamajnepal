@@ -776,6 +776,7 @@
                             <option value="एडमिन">एडमिन</option>
                         </select>
                     </div>
+                    <!-- यहाँ ID थपिएको छ -->
                     <button type="submit" id="adminSubmitBtn">एडमिन थप्नुहोस्</button>
                 </form>
             </div>
@@ -1664,7 +1665,7 @@
             }
             document.getElementById('adminForm').reset();
             document.getElementById('admin_edit_id').value = '';
-            document.getElementById('adminFormSubmitBtn').innerText = 'एडमिन थप्नुहोस्';
+            document.getElementById('adminSubmitBtn').innerText = 'एडमिन थप्नुहोस्';
             document.getElementById('adminFormTitle').innerText = 'नयाँ एडमिन थप्ने';
             loadAdminData();
         });
@@ -1697,7 +1698,7 @@
             document.getElementById('new_admin_role').value = role;
             
             // बटनको नाम र शीर्षक परिवर्तन गर्ने
-            document.getElementById('adminFormSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
+            document.getElementById('adminSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
             document.getElementById('adminFormTitle').innerText = 'एडमिन विवरण सम्पादन गर्ने';
             
             // एडमिन फर्म भएको सेक्सनलाई खुल्ने बनाउने
