@@ -1001,12 +1001,10 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-        // नयाँ सदस्य स्वीकृत गर्दा मात्र आजको मिति (२०८३-०५-१२) राख्नको लागि
         function getCurrentNepaliDate() {
             return "२०८३-०५-१२";
         }
 
-        // पुरानो सदस्यको आफ्नै सुरक्षित मिति र म्याद हिसाब गर्ने फंक्सन
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '२०८४-०५-१२';
             let cleaned = regDateStr.replace(/[०-९]/g, w => '०१२३४५६७८९'['०१२३४५६७८९'.indexOf(w)]);
@@ -1043,11 +1041,8 @@
         function openIdCardModal(userStr) {
             const user = JSON.parse(userStr);
             const memberNo = user.member_no || '-';
-            
-            // यहाँ ख्याल राख्नुहोस्: युजरको डाटाबेसमा भएको 'reg_date' लाई जस्ताको तस्तै देखाइन्छ, यसले पुरानो मिति बदल्दैन।
             const regDate = toNepaliNumber(user.reg_date || "२०८३-०५-१२");
             const expiryDate = getExpiryDate(user.reg_date || "२०८३-०५-१२");
-            
             const fullName = user.full_name || user.name || '-';
             const familyCode = user.family_code || 'छैन';
 
@@ -1261,8 +1256,6 @@
             const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
             const nextNo = (count || 0) + 1;
             const formattedMemberNo = String(nextNo).padStart(3, '0');
-            
-            // नयाँ स्वीकृत हुने सदस्यको लागि मात्र आजको मिति राखिन्छ
             const todayNepaliDate = getCurrentNepaliDate();
 
             const newUser = {
@@ -1647,13 +1640,6 @@
             document.getElementById('centralContent').style.display = 'block';
         }
 
-        async function deleteCentralMessage(id) {
-            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from('central_committee').delete().eq('id', id);
-                loadCentralCommitteeData();
-            }
-        }
-
         async function deleteCentralMember(id) {
             if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
                 await supabaseClient.from('central_committee').delete().eq('id', id);
@@ -1671,11 +1657,15 @@
             };
             if (editId) {
                 await supabaseClient.from('admins').update(adminData).eq('id', editId);
+                alert('एडमिनको विवरण सफलतापूर्वक अपडेट भयो!');
             } else {
                 await supabaseClient.from('admins').insert([adminData]);
+                alert('नयाँ एडमिन सफलतापूर्वक थपियो!');
             }
             document.getElementById('adminForm').reset();
             document.getElementById('admin_edit_id').value = '';
+            document.getElementById('adminFormSubmitBtn').innerText = 'एडमिन थप्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'नयाँ एडमिन थप्ने';
             loadAdminData();
         });
 
@@ -1692,11 +1682,27 @@
                         <td>${adm.role || 'एडमिन'}</td>
                         <td>${adm.password}</td>
                         <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editAdmin('${adm.id}', '${adm.username}', '${adm.password}', '${adm.role || 'एडमिन'}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteAdmin('${adm.id}')">रिमुभ</button>
                         </td>
                     </tr>
                 `;
             });
+        }
+
+        function editAdmin(id, username, password, role) {
+            document.getElementById('admin_edit_id').value = id;
+            document.getElementById('new_admin_user').value = username;
+            document.getElementById('new_admin_pass').value = password;
+            document.getElementById('new_admin_role').value = role;
+            
+            // बटनको नाम र शीर्षक परिवर्तन गर्ने
+            document.getElementById('adminFormSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'एडमिन विवरण सम्पादन गर्ने';
+            
+            // एडमिन फर्म भएको सेक्सनलाई खुल्ने बनाउने
+            document.getElementById('adminContent').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('adminContent').offsetTop - 50, behavior: 'smooth' });
         }
 
         async function deleteAdmin(id) {
