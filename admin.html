@@ -1154,7 +1154,6 @@
         }
 
         async function loadApplicationsData() {
-            // स्थिति 'Pending' भएका आवेदनहरू मात्र फिल्टर गरेर तान्ने गरिएको छ
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('created_at', { ascending: true });
             const tbody = document.getElementById('applicationsTableBody');
             tbody.innerHTML = '';
@@ -1570,7 +1569,7 @@
         });
 
         async function loadCommitteeData() {
-            const { data } = await supabaseClient.from('founder_committee').select('*');
+            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('committeeTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
@@ -1630,7 +1629,7 @@
         });
 
         async function loadCentralCommitteeData() {
-            const { data } = await supabaseClient.from('central_committee').select('*');
+            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('centralTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
@@ -1696,7 +1695,7 @@
             const tbody = document.getElementById('adminTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै एडमिन छैन</td></tr>'; return; }
-            data.AddEventListener = data.forEach((adm, index) => {
+            data.forEach((adm, index) => {
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
