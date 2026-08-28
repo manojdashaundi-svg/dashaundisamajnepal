@@ -226,7 +226,7 @@
         .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
 
-        /* प्रिन्ट गर्दा परिचय पत्र मात्र ठ ακक्कै साइजमा आउने व्यवस्था */
+        /* प्रिन्ट गर्दा परिचय पत्र मात्र ठ्याक्कै साइजमा आउने व्यवस्था (डण्डी/स्क्रोलबार लुकाइएको) */
         @media print {
             @page {
                 size: 340px 520px;
@@ -240,8 +240,8 @@
                 overflow: hidden !important;
                 background: #fff !important;
             }
-            body * { visibility: hidden; }
-            #idCardModal, #idCardModal * { visibility: visible; }
+            body * { visibility: hidden !important; }
+            #idCardModal, #idCardModal * { visibility: visible !important; }
             #idCardModal { 
                 position: fixed !important; 
                 left: 0 !important; 
@@ -255,6 +255,7 @@
                 padding: 0 !important; 
                 margin: 0 !important;
                 z-index: 9999 !important;
+                overflow: hidden !important;
             }
             .no-print-card { display: none !important; }
             .idcard-close-btn { display: none !important; }
@@ -268,6 +269,7 @@
                 top: 0 !important;
                 left: 0 !important;
                 transform: none !important;
+                overflow: hidden !important;
             }
             * {
                 -webkit-print-color-adjust: exact !important;
