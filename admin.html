@@ -652,7 +652,7 @@
         </div>
     </div>
 
-    <!-- युजर सम्पादन मोडल (पासवर्ड फिल्ड हटाइएको) -->
+    <!-- युजर सम्पादन मोडल (पासवर्ड सहित) -->
     <div id="userEditModal" class="app-edit-modal">
         <div class="app-edit-content">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
@@ -672,6 +672,7 @@
             <div class="form-group"><label>पालिका:</label><input type="text" id="edit_user_municipality"></div>
             <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
             <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
+            <div class="form-group"><label>पासवर्ड:</label><input type="text" id="edit_user_password"></div>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
                 <button type="button" onclick="closeUserEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
@@ -977,6 +978,7 @@
             document.getElementById('edit_user_municipality').value = user.municipality || '';
             document.getElementById('edit_user_ward').value = user.ward || '';
             document.getElementById('edit_user_tole').value = user.tole || '';
+            document.getElementById('edit_user_password').value = user.password || '';
             document.getElementById('userEditModal').style.display = 'flex';
         }
 
@@ -1001,7 +1003,8 @@
                 district: document.getElementById('edit_user_district').value,
                 municipality: document.getElementById('edit_user_municipality').value,
                 ward: document.getElementById('edit_user_ward').value,
-                tole: document.getElementById('edit_user_tole').value
+                tole: document.getElementById('edit_user_tole').value,
+                password: document.getElementById('edit_user_password').value
             };
 
             const { error } = await supabaseClient.from('users').update(updatedData).eq('id', id);
