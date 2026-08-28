@@ -382,8 +382,7 @@
         window.onload = async function() {
             const userPhoneOrEmail = localStorage.getItem('loggedUser');
             if (!userPhoneOrEmail) {
-                alert('कृपया पहिले लगइन गर्नुहोस्!');
-                window.location.href = 'login.html'; // वा तपाईंको लगइन पेजको नाम
+                window.location.href = 'login.html'; // लगइन नभएको भए सिधै लगइन पेजमा पठाउने
                 return;
             }
 
