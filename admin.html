@@ -562,6 +562,7 @@
                         <thead>
                             <tr>
                                 <th>क्र.सं.</th>
+                                <th>आवेदनको प्रकार</th>
                                 <th>फोटो</th>
                                 <th>नाम</th>
                                 <th>फेम्लि कोड</th>
@@ -1156,7 +1157,7 @@
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="22">कुनै आवेदन आएको छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="23">कुनै आवेदन आएको छैन</td></tr>';
                 return;
             }
 
@@ -1165,6 +1166,10 @@
                 if(app.status === 'Approved') statusBadge = '<span style="color: #276749; font-weight: bold;">Approved</span>';
                 else if(app.status === 'Rejected') statusBadge = '<span style="color: #e53e3e; font-weight: bold;">Rejected</span>';
                 else statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
+
+                let appTypeBadge = (app.application_type === 'नवीकरण') 
+                    ? '<span style="color: #b7791f; font-weight: bold;">नवीकरण</span>' 
+                    : '<span style="color: #3182ce; font-weight: bold;">नयाँ सदस्यता</span>';
 
                 const photoSrc = app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const citFront = app.citizenship_front || app.citizenship_front_url || '';
@@ -1176,6 +1181,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
+                        <td>${appTypeBadge}</td>
                         <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
                         <td><strong>${app.full_name || '-'}</strong></td>
                         <td>${app.family_code || '-'}</td>
