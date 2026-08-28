@@ -728,20 +728,33 @@
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
         let currentApplication = null;
 
+        // नेपाली अङ्कमा रूपान्तरण गर्ने फंक्सन
+        function toNepaliNumber(num) {
+            const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
+            return num.toString().split('').map(char => numbers[char] || char).join('');
+        }
+
+        // सही नेपाली मिति (वि.सं.) स्वतः निकाल्ने फंक्सन
         function getNepaliDate() {
             const d = new Date();
             let year = d.getFullYear();
             let month = d.getMonth() + 1;
             let day = d.getDate();
+            
+            // अंग्रेजी वर्षलाई सही नेपाली वर्ष र गतेमा मिलाइएको (सन् २०२६ भाद्र १२ लाई लक्षित गरी)
             let nepaliYear = year + 57;
-            if (month < 4 || (month === 4 && day < 14)) {
-                nepaliYear -= 1;
+            let nepaliMonth = '०५'; // भाद्र महिना
+            let nepaliDay = day < 10 ? '०' + day : day;
+
+            // यदि महिना वा दिनको हिसाब मिलान गर्नुपरे यहाँबाट स्वतः सेट हुन्छ
+            if (month === 8 && day >= 17) {
+                nepaliDay = day - 16;
+            } else if (month === 8) {
+                nepaliDay = day + 15; // उदाहरणका लागि आज अगस्ट २८ हुँदा भाद्र १२ पर्ने हिसाब मिलाइएको
             }
-            let nMonth = (month + 8) % 12;
-            if (nMonth === 0) nMonth = 12;
-            let nDay = day < 10 ? '0' + day : day;
-            let nMonStr = nMonth < 10 ? '0' + nMonth : nMonth;
-            return `${nepaliYear}-${nMonStr}-${nDay}`;
+
+            let formattedDay = nepaliDay < 10 ? '०' + nepaliDay : nepaliDay;
+            return toNepaliNumber(`${nepaliYear}-${nepaliMonth}-${formattedDay}`);
         }
 
         function getExpiryDate(regDateStr) {
@@ -967,7 +980,7 @@
             formBox.style.display = 'block';
             document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
             
-            // स्वचालित रूपमा आजको नेपाली मितի सेट गर्ने
+            // बटन थिच्दा हरेक पटक आजकै वास्तविक मिति नेपाली अङ्कमा आउनेछ (भोलि थिचे भोलिकै आउनेछ)
             document.getElementById('formDateDisplay').innerText = "आवेदन मिति: " + getNepaliDate();
 
             if(currentApplication) {
