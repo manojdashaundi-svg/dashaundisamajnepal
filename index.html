@@ -28,16 +28,14 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
         .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         
-        /* मोबाइल फ्रेन्डली हेडर डिजाइन */
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
-        .header-green { background-color: #008000; color: white; flex: 1; min-width: 280px; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .header-green { background-color: #008000; color: white; width: 100%; padding: 15px; display: flex; align-items: center; gap: 15px; }
         
         .logo-box { width: 75px; height: 75px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .logo { width: 100%; height: 100%; object-fit: cover; }
         .header-green h1 { margin: 0; font-size: 20px; color: white; line-height: 1.3; }
         .header-green p { margin: 4px 0 0 0; font-size: 13px; color: #e2e8f0; }
         
-        /* नेभिगेसन मेनुलाई मोबाइलमैत्री बनाइएको */
         .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; }
         .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
         .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
@@ -178,7 +176,7 @@
         <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- दुवैतर्फ हरियो रङ व्यवस्थित गरिएको भाग -->
+    <!-- "स्वागत छ!" शब्द पूर्ण रूपमा हटाइएको हरियो हेडर सेक्सन -->
     <div class="header-split">
         <div class="header-green">
             <div class="logo-box">
@@ -188,9 +186,6 @@
                 <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
                 <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p>
             </div>
-        </div>
-        <div class="header-green" style="justify-content: flex-end; padding-right: 25px;">
-            <p style="margin: 0; font-size: 16px; font-weight: bold; color: #e2e8f0;">स्वागत छ!</p>
         </div>
     </div>
 
@@ -981,7 +976,7 @@
             let citFrontUrl = currentApplication ? currentApplication.citizenship_front : '';
             let citBackUrl = currentApplication ? currentApplication.citizenship_back : '';
 
-            if (citFrontFile) { citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizenship'); }
+            if (citFrontFile) { citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizensship'); }
             if (citBackFile) { citBackUrl = await uploadFileToSupabase(citBackFile, 'citizenship'); }
             const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
 
