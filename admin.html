@@ -502,6 +502,21 @@
                 height: 18px !important;
             }
             .no-print, .btn-action, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
+            
+            /* प्रिन्ट गर्दा बटनको सट्टा टेक्स्ट वा उपलब्ध देखाउने */
+            .printable-section .btn-action {
+                display: inline-block !important;
+                visibility: visible !important;
+                background: none !important;
+                color: #000 !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 6px !important;
+            }
+            .printable-section .btn-action::after {
+                content: " (उपलब्ध)";
+            }
+
             .print-header { display: block !important; }
             
             @page {
@@ -1725,7 +1740,6 @@
         }
 
         function editAdmin(id, username, password, role) {
-            document.getElementById('admin_user_id').value = id; // Fixing reference safety if needed, kept generic
             document.getElementById('admin_edit_id').value = id;
             document.getElementById('new_admin_user').value = username;
             document.getElementById('new_admin_pass').value = password;
