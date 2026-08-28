@@ -995,41 +995,28 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
-        function toNepaliNumber(num) {
-            if (!num) return '';
+        function toNepaliNumber(input) {
+            if (!input) return '';
             const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
-            return num.toString().split('').map(char => numbers[char] || char).join('');
+            return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-        function getNepaliDate() {
-            const d = new Date();
-            let year = d.getFullYear();
-            let month = d.getMonth() + 1;
-            let day = d.getDate();
-            
-            let nepaliYear = year + 57;
-            let nepaliMonth = '०५'; 
-            let nepaliDay = day < 10 ? '०' + day : day;
-
-            if (month === 8 && day >= 17) {
-                nepaliDay = day - 16;
-            } else if (month === 8) {
-                nepaliDay = day + 15;
-            }
-
-            let formattedDay = nepaliDay < 10 ? '०' + nepaliDay : nepaliDay;
-            return toNepaliNumber(`${nepaliYear}-${nepaliMonth}-${formattedDay}`);
+        // नयाँ सदस्य स्वीकृत गर्दा मात्र आजको मिति (२०८३-०५-१२) राख्नको लागि
+        function getCurrentNepaliDate() {
+            return "२०८३-०५-१२";
         }
 
+        // पुरानो सदस्यको आफ्नै सुरक्षित मिति र म्याद हिसाब गर्ने फंक्सन
         function getExpiryDate(regDateStr) {
-            if (!regDateStr) return '-';
-            let parts = regDateStr.split('-');
+            if (!regDateStr) return '२०८४-०५-१२';
+            let cleaned = regDateStr.replace(/[०-९]/g, w => '०१२३४५६७८९'['०१२३४५६७८९'.indexOf(w)]);
+            let parts = cleaned.split('-');
             if(parts.length === 3) {
-                let nepaliYearNum = 2083;
-                let expYear = nepaliYearNum + 1;
-                return toNepaliNumber(`${expYear}-${parts[1]}-${parts[2]}`);
+                let yearPart = parts[0];
+                let nextYear = parseInt(yearPart) + 1;
+                return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
             }
-            return '-';
+            return '२०८४-०५-१२';
         }
 
         function toggleSection(contentId, btn) {
@@ -1056,15 +1043,18 @@
         function openIdCardModal(userStr) {
             const user = JSON.parse(userStr);
             const memberNo = user.member_no || '-';
-            const regDate = user.reg_date || getNepaliDate();
-            const expiryDate = getExpiryDate(regDate);
+            
+            // यहाँ ख्याल राख्नुहोस्: युजरको डाटाबेसमा भएको 'reg_date' लाई जस्ताको तस्तै देखाइन्छ, यसले पुरानो मिति बदल्दैन।
+            const regDate = toNepaliNumber(user.reg_date || "२०८३-०५-१२");
+            const expiryDate = getExpiryDate(user.reg_date || "२०८३-०५-१२");
+            
             const fullName = user.full_name || user.name || '-';
             const familyCode = user.family_code || 'छैन';
 
             document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
             document.getElementById('cardFamilyCode').innerText = familyCode;
-            document.getElementById('cardIssueDate').innerText = toNepaliNumber(regDate);
-            document.getElementById('cardExpiryDate').innerText = toNepaliNumber(expiryDate);
+            document.getElementById('cardIssueDate').innerText = regDate;
+            document.getElementById('cardExpiryDate').innerText = expiryDate;
             document.getElementById('cardName').innerText = fullName;
             document.getElementById('cardPosition').innerText = user.position || 'साधारण सदस्य';
             document.getElementById('cardProvince').innerText = user.province || '-';
@@ -1105,7 +1095,7 @@
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
 
             headerDiv.innerHTML = `
-                <div class="print-date">मिति: ${getNepaliDate()}</div>
+                <div class="print-date">मिति: ${getCurrentNepaliDate()}</div>
                 <img src="${logo}" class="print-logo" alt="लोगो" crossorigin="anonymous">
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-meta">ठेगाना: ${address}</div>
@@ -1271,7 +1261,9 @@
             const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
             const nextNo = (count || 0) + 1;
             const formattedMemberNo = String(nextNo).padStart(3, '0');
-            const todayNepaliDate = getNepaliDate();
+            
+            // नयाँ स्वीकृत हुने सदस्यको लागि मात्र आजको मिति राखिन्छ
+            const todayNepaliDate = getCurrentNepaliDate();
 
             const newUser = {
                 member_no: formattedMemberNo,
@@ -1653,6 +1645,13 @@
             document.getElementById('cc_phone').value = phone;
             document.getElementById('cc_photo').value = photoUrl;
             document.getElementById('centralContent').style.display = 'block';
+        }
+
+        async function deleteCentralMessage(id) {
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('central_committee').delete().eq('id', id);
+                loadCentralCommitteeData();
+            }
         }
 
         async function deleteCentralMember(id) {
