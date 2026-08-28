@@ -29,12 +29,16 @@
         .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
-        .header-green { background-color: #008000; color: white; width: 100%; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .header-green { background-color: #008000; color: white; width: 100%; padding: 18px 15px; display: flex; align-items: center; gap: 18px; }
         
-        .logo-box { width: 75px; height: 75px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .logo { width: 100%; height: 100%; object-fit: cover; }
-        .header-green h1 { margin: 0; font-size: 20px; color: white; line-height: 1.3; }
-        .header-green p { margin: 4px 0 0 0; font-size: 13px; color: #e2e8f0; }
+        
+        /* संस्थाको नाम ठूलो र बोल्ड बनाइएको */
+        .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+        
+        /* ठेगाना ठूलो र बोल्ड बनाइएको */
+        .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
         
         .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; }
         .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
@@ -176,7 +180,7 @@
         <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- "स्वागत छ!" शब्द पूर्ण रूपमा हटाइएको हरियो हेडर सेक्सन -->
+    <!-- हरियो हेडर सेक्सन (ठूलो र बोल्ड अक्षर सहित) -->
     <div class="header-split">
         <div class="header-green">
             <div class="logo-box">
@@ -184,7 +188,7 @@
             </div>
             <div>
                 <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
-                <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p>
+                <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल।</p>
             </div>
         </div>
     </div>
@@ -976,7 +980,7 @@
             let citFrontUrl = currentApplication ? currentApplication.citizenship_front : '';
             let citBackUrl = currentApplication ? currentApplication.citizenship_back : '';
 
-            if (citFrontFile) { citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizensship'); }
+            if (citFrontFile) { citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizenship'); }
             if (citBackFile) { citBackUrl = await uploadFileToSupabase(citBackFile, 'citizenship'); }
             const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
 
