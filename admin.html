@@ -776,7 +776,6 @@
                             <option value="एडमिन">एडमिन</option>
                         </select>
                     </div>
-                    <!-- यहाँ ID थपिएको छ -->
                     <button type="submit" id="adminSubmitBtn">एडमिन थप्नुहोस्</button>
                 </form>
             </div>
@@ -1254,12 +1253,26 @@
 
             closePositionModal();
 
-            const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
-            const nextNo = (count || 0) + 1;
-            const formattedMemberNo = String(nextNo).padStart(3, '0');
             const todayNepaliDate = getCurrentNepaliDate();
+            let formattedMemberNo = '';
 
-            const newUser = {
+            const isRenewal = app.application_type === 'नवीकरण';
+
+            if (isRenewal) {
+                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+                if (existingUser) {
+                    formattedMemberNo = existingUser.member_no;
+                } else {
+                    const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                    formattedMemberNo = String((count || 0) + 1).padStart(3, '0');
+                }
+            } else {
+                const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                const nextNo = (count || 0) + 1;
+                formattedMemberNo = String(nextNo).padStart(3, '0');
+            }
+
+            const userData = {
                 member_no: formattedMemberNo,
                 position: assignedPosition,
                 reg_date: todayNepaliDate,
@@ -1285,15 +1298,17 @@
                 password: app.password || '123456'
             };
 
-            const { error: userError } = await supabaseClient.from('users').insert([newUser]);
+            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+            
             if(userError) {
-                alert('युजर बनाउँदा त्रुटि: ' + userError.message);
+                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
                 return;
             }
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
+            
             if(!appError) {
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
             } else {
@@ -1697,11 +1712,9 @@
             document.getElementById('new_admin_pass').value = password;
             document.getElementById('new_admin_role').value = role;
             
-            // बटनको नाम र शीर्षक परिवर्तन गर्ने
             document.getElementById('adminSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
             document.getElementById('adminFormTitle').innerText = 'एडमिन विवरण सम्पादन गर्ने';
             
-            // एडमिन फर्म भएको सेक्सनलाई खुल्ने बनाउने
             document.getElementById('adminContent').style.display = 'block';
             window.scrollTo({ top: document.getElementById('adminContent').offsetTop - 50, behavior: 'smooth' });
         }
