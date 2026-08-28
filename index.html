@@ -88,7 +88,7 @@
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
         .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
         
-        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन (एडमिन प्यानलसँग हुबहु मिल्ने) */
+        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन */
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         
         .idcard-box { 
@@ -260,7 +260,7 @@
         .membership-brand-info h2 { margin: 0 0 8px 0; font-size: 26px; letter-spacing: 0.5px; }
         .membership-brand-info p { margin: 4px 0; font-size: 15px; color: #edf2f7; }
 
-        footer { background-color: #1a365d; color: white; text-align: center; padding: 15px; margin-top: 40px; font-size: 14px; }
+        <footer><p>&copy; २०२६ दशाैँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p></footer>
     </style>
 </head>
 <body>
@@ -554,7 +554,7 @@
         </div>
     </div>
 
-    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल (एडमिन प्यानलसँग हुबहु मिल्ने) -->
+    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
         <div class="idcard-box">
             <span class="idcard-close-btn" onclick="closeMyCard()">&times;</span>
@@ -905,10 +905,20 @@
         }
 
         let currentFormType = 'नयाँ सदस्यता';
+        
+        // एकपटक क्लिक गर्दा खुल्ने र फेरि क्लिक गर्दा बन्द हुने (Toggle) फिचर
         function toggleForm(type) {
             currentFormType = type;
             const formBox = document.getElementById('officialFormBox');
-            document.getElementById('step3').style.display = 'none';
+            const step3Box = document.getElementById('step3');
+
+            // यदि फारम पहिले नै खुलिसकेको छ भने बन्द गर्ने, छैन भने खोल्ने
+            if (formBox.style.display === 'block' || step3Box.style.display === 'block') {
+                hideOfficialForm();
+                return;
+            }
+
+            step3Box.style.display = 'none';
             formBox.style.display = 'block';
             document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
             
@@ -1034,7 +1044,6 @@
             }
         }
 
-        // एडमिन प्यानलकै जस्तो हुबहु ग्राफिक डिजाइन र प्रिन्ट फिचरसहितको परिचय पत्र
         async function openMyCard() {
             if(!currentApplication) {
                 alert('तपाईंले हालसम्म कुनै पनि सदस्यता फारम पेस गर्नुभएको छैन।');
@@ -1051,7 +1060,6 @@
                 return;
             }
 
-            // युजर टेबल वा एप्रुभेड युजर डाटाबाट सदस्य नम्बर ल्याउने वा अटो जेनेरेट गर्ने
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
             const regDate = (userData && userData.reg_date) ? userData.reg_date : getNepaliDate();
