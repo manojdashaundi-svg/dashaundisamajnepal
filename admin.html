@@ -196,8 +196,12 @@
         .btn-edit:hover { background-color: #2b6cb0; }
         .btn-danger { background-color: var(--danger-color); }
         .btn-danger:hover { background-color: #c53030; }
-        .btn-view { background-color: #d69e2e; color: #fff; text-decoration: none; padding: 2px 6px; border-radius: 3px; font-size: 10px; display: inline-block; }
+        .btn-success { background-color: #38a169; }
+        .btn-success:hover { background-color: #2f855a; }
+        .btn-view { background-color: #d69e2e; }
         .btn-view:hover { background-color: #b7791f; }
+        .btn-idcard { background-color: #805ad5; }
+        .btn-idcard:hover { background-color: #6b46c1; }
 
         .top-header {
             display: flex;
@@ -289,6 +293,9 @@
         .img-modal-content { max-width: 90%; max-height: 90%; position: relative; }
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+        .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
+        .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
         .print-header {
             display: none;
@@ -582,7 +589,7 @@
 
             <hr>
 
-            <!-- केन्द्रीय सल्लाहकार समिति सेक्सन -->
+            <!-- केन्द्रीय सल्लाहकार समिति सेक्सन (नयाँ थपिएको) -->
             <div class="section-header">
                 <h3 id="advisorFormTitle">केन्द्रीय सल्लाहकार समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('advisorContent', this)">खोल्नुहोस् ▾</button></div>
@@ -683,6 +690,62 @@
         <div class="img-modal-content">
             <span class="close-modal">&times;</span>
             <img id="modalImage" src="" alt="प्रिभ्यू">
+        </div>
+    </div>
+
+    <!-- आवेदन सम्पादन मोडल -->
+    <div id="appEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
+            <input type="hidden" id="edit_app_id">
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name"></div>
+            <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_app_family_code"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_app_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_app_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedApplication()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeAppEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- युजर सम्पादन मोडल -->
+    <div id="userEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
+            <input type="hidden" id="edit_user_id">
+            <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
+            <div class="form-group"><label>पद (Designation):</label><input type="text" id="edit_user_position"></div>
+            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date"></div>
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
+            <div class="form-group"><label>फेम्लि कोड:</label><input type="text" id="edit_user_family_code"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
+            <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_user_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_user_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_user_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_user_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_user_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_user_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeUserEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
         </div>
     </div>
 
@@ -790,7 +853,7 @@
             loadAboutData();
             loadCommitteeData();
             loadCentralCommitteeData();
-            loadAdvisorCommitteeData();
+            loadAdvisorCommitteeData(); // नयाँ सल्लाहकार लोड गर्ने फङ्गसन
             loadAdminData();
             loadUsersData();
             loadApplicationsData();
@@ -923,7 +986,7 @@
             }
         }
 
-        // केन्द्रीय सल्लाहकार समिति
+        // केन्द्रीय सल्लाहकार समिति (नयाँ थपिएको सेक्सन)
         document.getElementById('advisorCommitteeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('advisor_edit_id').value;
@@ -984,6 +1047,7 @@
             }
         }
 
+        // अन्य साधारण फङ्गसनहरू
         async function loadAboutData() {
             const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
             if (data) {
@@ -1044,11 +1108,6 @@
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="24">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
                 const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-                
-                const citFront = user.citizenship_front ? `<button class="btn-view" onclick="showImage('${user.citizenship_front}')">हेर्नुहोस्</button>` : '-';
-                const citBack = user.citizenship_back ? `<button class="btn-view" onclick="showImage('${user.citizenship_back}')">हेर्नुहोस्</button>` : '-';
-                const paySlip = user.payment_slip ? `<button class="btn-view" onclick="showImage('${user.payment_slip}')">हेर्नुहोस्</button>` : '-';
-
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
@@ -1062,9 +1121,9 @@
                         <td>${user.email || user.identifier || '-'}</td>
                         <td>${toNepaliNumber(user.dob || '-')}</td>
                         <td>${toNepaliNumber(user.citizenship_no || '-')}</td>
-                        <td>${citFront}</td>
-                        <td>${citBack}</td>
-                        <td>${paySlip}</td>
+                        <td>${user.citizenship_front ? 'उपलब्ध' : 'छैन'}</td>
+                        <td>${user.citizenship_back ? 'उपलब्ध' : 'छैन'}</td>
+                        <td>${user.payment_slip ? 'उपलब्ध' : 'छैन'}</td>
                         <td>${user.spouse_name || '-'}</td>
                         <td>${user.father_name || '-'}</td>
                         <td>${user.mother_name || '-'}</td>
@@ -1074,10 +1133,7 @@
                         <td>${user.municipality || '-'}</td>
                         <td>${toNepaliNumber(user.ward || '-')}</td>
                         <td>${user.tole || '-'}</td>
-                        <td class="no-print">
-                            <button class="btn-action btn-edit" onclick="editUser('${user.id}')">सम्पादन</button>
-                            <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
-                        </td>
+                        <td class="no-print"></td>
                     </tr>
                 `;
             });
@@ -1089,24 +1145,18 @@
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै नयाँ आवेदन बाँकी छैन</td></tr>'; return; }
             data.forEach((app, index) => {
-                const citFront = app.citizenship_front ? `<button class="btn-view" onclick="showImage('${app.citizenship_front}')">हेर्नुहोस्</button>` : '-';
-                const citBack = app.citizenship_back ? `<button class="btn-view" onclick="showImage('${app.citizenship_back}')">हेर्नुहोस्</button>` : '-';
-                const paySlip = app.payment_slip ? `<button class="btn-view" onclick="showImage('${app.payment_slip}')">हेर्नुहोस्</button>` : '-';
-
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
                         <td>नयाँ सदस्यता</td>
-                        <td><img src="${app.photo_url || ''}" class="table-avatar" onclick="showImage('${app.photo_url}')" style="cursor: pointer;"></td>
+                        <td><img src="${app.photo_url || ''}" class="table-avatar"></td>
                         <td><strong>${app.full_name || '-'}</strong></td>
                         <td>${app.family_code || '-'}</td>
                         <td>${app.phone || '-'}</td>
                         <td>${app.identifier || '-'}</td>
                         <td>${app.dob || '-'}</td>
                         <td>${app.citizenship_no || '-'}</td>
-                        <td>${citFront}</td>
-                        <td>${citBack}</td>
-                        <td>${paySlip}</td>
+                        <td>-</td><td>-</td><td>-</td>
                         <td>${app.spouse_name || '-'}</td>
                         <td>${app.father_name || '-'}</td>
                         <td>${app.mother_name || '-'}</td>
@@ -1117,36 +1167,10 @@
                         <td>${app.ward || '-'}</td>
                         <td>${app.tole || '-'}</td>
                         <td>Pending</td>
-                        <td class="no-print">
-                            <button class="btn-action btn-edit" onclick="editApplication('${app.id}')">सम्पादन</button>
-                            <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
-                        </td>
+                        <td></td>
                     </tr>
                 `;
             });
-        }
-
-        // पुष्टिकरण र कार्यहरूको लागि आधारभूत फंक्सनहरू
-        async function deleteUser(id) {
-            if (confirm('के तपाईं यो प्रयोगकर्ताको डेटा मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from('users').delete().eq('id', id);
-                loadUsersData();
-            }
-        }
-
-        async function deleteApplication(id) {
-            if (confirm('के तपाईं यो आवेदन मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from('membership_applications').delete().eq('id', id);
-                loadApplicationsData();
-            }
-        }
-
-        function editUser(id) {
-            alert('सदस्य सम्पादन गर्ने सुविधा यसमा समावेश छ। (ID: ' + id + ')');
-        }
-
-        function editApplication(id) {
-            alert('आवेदन सम्पादन गर्ने सुविधा यसमा समावेश छ। (ID: ' + id + ')');
         }
     </script>
 </body>
