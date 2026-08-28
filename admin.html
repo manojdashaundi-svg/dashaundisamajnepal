@@ -1166,7 +1166,6 @@
             });
         }
 
-        // नयाँ ड्रपडाउन मोडल खोल्ने फंक्सन
         function openPositionModal(appStr) {
             const app = JSON.parse(appStr);
             if(app.status === 'Approved') {
@@ -1194,7 +1193,6 @@
             }
         }
 
-        // ड्रपडाउन वा कस्टम इनपुटबाट पद लिएर युजर एप्रुभ गर्ने
         async function confirmApproveUser() {
             const appStr = document.getElementById('pendingAppStr').value;
             const app = JSON.parse(appStr);
@@ -1219,28 +1217,14 @@
             const formattedMemberNo = String(nextNo).padStart(3, '0');
             const todayNepaliDate = getNepaliDate();
 
+            // Supabase को users टेबलमा केवल आधारभूत स्तومات मात्र इन्सर्ट गर्न मिल्ने गरी मिलाइएको छ
             const newUser = {
                 member_no: formattedMemberNo,
                 position: assignedPosition,
                 reg_date: todayNepaliDate,
                 full_name: app.full_name,
-                family_code: app.family_code,
                 phone: app.phone,
-                email: app.identifier || app.email,
-                dob: app.dob,
-                citizenship_no: app.citizenship_no,
-                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-                spouse_name: app.spouse_name,
-                father_name: app.father_name,
-                mother_name: app.mother_name,
-                grandfather_name: app.grandfather_name,
-                province: app.province,
-                district: app.district,
-                municipality: app.municipality,
-                ward: app.ward,
-                tole: app.tole,
-                avatar: app.photo_url,
+                avatar: app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
                 password: app.password || '123456'
             };
 
