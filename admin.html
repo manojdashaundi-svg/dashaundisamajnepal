@@ -484,8 +484,30 @@
                 background: #fff !important;
                 display: block !important; 
             }
+            /* सबै कलुमहरू पेजभित्र फिट हुने कोड */
+            .printable-section table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                font-size: 7px !important;
+            }
+            .printable-section th, 
+            .printable-section td {
+                padding: 2px 1px !important;
+                word-wrap: break-word !important;
+                white-space: normal !important;
+                font-size: 7px !important;
+            }
+            .printable-section .table-avatar {
+                width: 18px !important;
+                height: 18px !important;
+            }
             .no-print, .btn-action, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
             .print-header { display: block !important; }
+            
+            @page {
+                size: landscape;
+                margin: 5mm;
+            }
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
