@@ -299,7 +299,7 @@
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         
         .idcard-box { 
-            width: 390px; 
+            width: 400px; 
             max-width: 100%; 
             background: #fff; 
             border-radius: 16px; 
@@ -385,14 +385,37 @@
         }
 
         /* QR कोड अलिक ठूलो बनाइएको */
-        .idcard-qr-box img { width: 72px; height: 72px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; }
+        .idcard-qr-box img { width: 75px; height: 75px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; }
 
-        /* हस्ताक्षर सेक्सन: सचिव र दाहिनेतर्फ टाढा राखिएको अध्यक्ष */
+        /* हस्ताक्षर सेक्सन */
         .idcard-signatures { text-align: center; font-size: 10.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 220px; }
         .sig-col { text-align: center; }
         .sig-line { width: 75px; border-top: 1.5px solid #000; margin: 0 auto 3px; }
 
-        .idcard-footer { background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 10px; letter-spacing: 0.5px; font-weight: 700; }
+        /* अन्तिमको निलो पटीमा आइकनसहित सम्पर्क विवरण */
+        .idcard-footer { 
+            background: #1a365d; 
+            color: #fff; 
+            text-align: center; 
+            padding: 8px 5px; 
+            font-size: 9px; 
+            font-weight: 700; 
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .idcard-footer-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .idcard-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
 
         .idcard-close-btn { position: absolute; top: 8px; right: 12px; color: #fff; font-size: 22px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
@@ -403,7 +426,7 @@
             #idCardModal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #fff; display: flex !important; justify-content: center; align-items: center; padding: 0; }
             .no-print-card { display: none !important; }
             .idcard-close-btn { display: none !important; }
-            .idcard-box { border: 2px solid #1a365d; box-shadow: none; width: 390px; }
+            .idcard-box { border: 2px solid #1a365d; box-shadow: none; width: 400px; }
         }
 
         /* सम्पादन मोडलहरू */
@@ -739,7 +762,7 @@
             <div class="idcard-header">
                 <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो">
                 <h3>दशौँदी समाज नेपाल</h3>
-                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल | स्थापना: २०८०</p>
             </div>
 
             <div class="idcard-badge-title">परिचय पत्र</div>
@@ -788,8 +811,22 @@
                 </div>
             </div>
 
+            <!-- अन्तिमको निलो पटीमा ह्वाट्सएप, इमेल र वेबसाइट आइकनसहित -->
             <div class="idcard-footer">
-                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 5px 15px; border-radius: 4px; color: #fff; display: inline-block; font-size: 11px; font-weight: bold; margin-bottom: 2px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+                <div class="idcard-footer-row">
+                    <div class="idcard-footer-item">
+                        <span>🟢</span> <span>9765240652</span>
+                    </div>
+                    <div class="idcard-footer-item">
+                        <span>✉️</span> <span>dashaundisamajnepal@gmail.com</span>
+                    </div>
+                </div>
+                <div class="idcard-footer-row">
+                    <div class="idcard-footer-item">
+                        <span>🌐</span> <span>www.dashaundisamajnepal.com</span>
+                    </div>
+                </div>
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 4px 12px; border-radius: 4px; color: #fff; display: inline-block; font-size: 10px; font-weight: bold; margin-top: 2px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
             </div>
         </div>
     </div>
