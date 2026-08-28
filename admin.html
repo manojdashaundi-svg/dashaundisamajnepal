@@ -383,9 +383,9 @@
             border-top: 1px dashed #cbd5e0;
         }
 
-        .idcard-qr-box img { width: 75px; height: 75px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; }
+        .idcard-qr-box img { width: 75px; height: 75px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer; }
 
-        /* हस्ताक्षर सेक्सन - हस्ताक्षरको साइज अलि ठूलो बनाइएको छ */
+        /* हस्ताक्षर सेक्सन */
         .idcard-signatures { text-align: center; font-size: 10.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 220px; }
         .sig-col { text-align: center; position: relative; }
         .sig-img { 
@@ -807,9 +807,10 @@
 
                 <div class="idcard-footer-grid">
                     <div class="idcard-qr-box">
-                        <img id="cardQrCode" src="" alt="QR Code">
+                        <!-- QR कोड स्क्यान गर्दा डिजिटल भेरिफिकेसन लिंक खुल्नेछ -->
+                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्">
                     </div>
-                    <!-- ठूला साइजका हस्ताक्षरहरू -->
+                    <!-- हस्ताक्षरहरू -->
                     <div class="idcard-signatures">
                         <div class="sig-col">
                             <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिवको हस्ताक्षर">
@@ -988,8 +989,9 @@
             const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
 
-            const qrText = encodeURIComponent(`नाम: ${fullName}, सदस्य नं: ${memberNo}, फेमिली कोड: ${familyCode}, पद: ${user.position || 'साधारण सदस्य'}, जारी मिति: ${regDate}, म्याद समाप्त: ${expiryDate}`);
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrText}`;
+            // QR कोडमा अब सदस्यको आधिकारिक भेरिफिकेसन लिंक राखिएको छ (Dynamic Verification URL)
+            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
             document.getElementById('cardQrCode').src = qrApiUrl;
 
             document.getElementById('idCardModal').style.display = 'flex';
