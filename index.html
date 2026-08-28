@@ -305,7 +305,7 @@
 <body>
 
     <div class="top-bar">
-        <div>महत्त्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
+        <div>महत्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
         <div>वि.सं. २०८३ भदौ १० | नेपाल संवत ११४६</div>
     </div>
 
@@ -905,12 +905,18 @@
             
             const alertBox = document.getElementById('applicationStatusAlert');
             const noticeBanner = document.getElementById('formNoticeBanner');
+            const btnOpenForm = document.getElementById('btnOpenForm');
             
             if(data && data.length > 0) {
                 currentApplication = data[0];
                 if(currentApplication.status === 'Approved') {
                     alertBox.innerHTML = "✅ तपाईंको सदस्यता आवेदन स्वीकृत (Approved) भइसकेको छ।";
                     alertBox.style.color = "#276749";
+
+                    // फारम अप्रुभ हुने बित्तिकै नवीकरण अप्सन खुलाउने
+                    btnOpenForm.innerHTML = "🔄 सदस्यता नवीकरण फारम";
+                    btnOpenForm.style.background = "var(--accent-gradient)";
+                    btnOpenForm.setAttribute("onclick", "toggleForm('नवीकरण')");
                 } else if(currentApplication.status === 'Rejected') {
                     alertBox.innerHTML = "❌ तपाईंको आवेदन अस्वीकृत भयो। कृपया विवरण संशोधन गरेर पठाउनुहोस्।";
                     alertBox.style.color = "#e53e3e";
@@ -932,6 +938,9 @@
                 }
             } else {
                 alertBox.innerHTML = "तपाईंले अझै सदस्यता फारम भर्नु भएको छैन।";
+                btnOpenForm.innerHTML = "📝 नयाँ सदस्यता फारम";
+                btnOpenForm.style.background = "var(--primary-gradient)";
+                btnOpenForm.setAttribute("onclick", "toggleForm('नयाँ सदस्यता')");
             }
         }
 
@@ -987,7 +996,14 @@
                     currentUserProfile.avatar = currentApplication.photo_url;
                 }
 
-                if (currentApplication.status === 'Pending' || currentApplication.status === 'Approved') {
+                // यदि फारम 'नवीकरण' को लागि हो भने Approved भए पनि फारम भर्न मिल्ने (Editable) बनाउने
+                if (type === 'नवीकरण') {
+                    const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
+                    inputs.forEach(input => input.disabled = false);
+                    document.getElementById('btnGoToPayment').style.display = 'block';
+                    document.getElementById('passportBoxClick').setAttribute('onclick', 'triggerPhotoUpload()');
+                    document.getElementById('photoUploadText').style.display = 'block';
+                } else if (currentApplication.status === 'Pending' || currentApplication.status === 'Approved') {
                     lockFormFields();
                 }
             } else {
