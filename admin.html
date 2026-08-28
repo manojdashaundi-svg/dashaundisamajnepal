@@ -200,6 +200,8 @@
         .btn-success:hover { background-color: #2f855a; }
         .btn-view { background-color: #d69e2e; }
         .btn-view:hover { background-color: #b7791f; }
+        .btn-idcard { background-color: #805ad5; }
+        .btn-idcard:hover { background-color: #6b46c1; }
 
         .top-header {
             display: flex;
@@ -293,6 +295,42 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
+        /* ID Card Modal Styling */
+        .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 4000; }
+        .idcard-box { width: 380px; background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); position: relative; border: 2px solid #1a365d; }
+        
+        .idcard-header { background: #1a365d; color: #fff; text-align: center; padding: 15px 10px; position: relative; }
+        .idcard-header img { width: 60px; height: 60px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover; margin-bottom: 5px; }
+        .idcard-header h3 { margin: 0; font-size: 18px; font-weight: 800; }
+        .idcard-header p { margin: 2px 0 0; font-size: 11px; opacity: 0.9; }
+
+        .idcard-title-bg { background: #2b6cb0; color: #fff; text-align: center; padding: 6px; font-weight: bold; font-size: 14px; letter-spacing: 1px; }
+
+        .idcard-body { padding: 15px; background: #fdfdfd; position: relative; }
+        .idcard-top-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: #1a365d; margin-bottom: 12px; border-bottom: 1px dashed #cbd5e0; padding-bottom: 8px; }
+        
+        .idcard-photo-container { text-align: center; margin-bottom: 15px; }
+        .idcard-photo { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        .idcard-details { font-size: 13px; color: #2d3748; line-height: 1.8; margin-bottom: 15px; }
+        .idcard-details table { width: 100%; background: transparent; }
+        .idcard-details td { border: none; text-align: left; padding: 2px 0; font-size: 13px; font-weight: 600; }
+        .idcard-details td:first-child { width: 35%; color: #4a5568; }
+
+        .idcard-signatures { display: flex; justify-content: space-between; margin-top: 20px; padding-top: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 11px; font-weight: bold; color: #2d3748; }
+        .sig-line { width: 100px; border-top: 1px solid #000; margin: 0 auto 3px; }
+
+        .idcard-footer { background: #1a365d; color: #fff; text-align: center; padding: 8px; font-size: 10px; }
+
+        .idcard-close-btn { position: absolute; top: 10px; right: 15px; color: #fff; font-size: 24px; cursor: pointer; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #idCardModal, #idCardModal * { visibility: visible; }
+            #idCardModal { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #fff; display: flex !important; justify-content: center; align-items: center; }
+            .no-print-card { display: none !important; }
+        }
+
         /* सम्पादन मोडल */
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
@@ -317,42 +355,11 @@
         .print-section-title { font-size: 16px; font-weight: 800; text-align: center; margin: 10px 0; color: #1a365d; text-decoration: underline; }
 
         @media print {
-            @page {
-                size: landscape;
-                margin: 8mm;
-            }
-            body * { visibility: hidden; }
-            .printable-section, .printable-section * { visibility: visible; }
-            .printable-section { 
-                position: absolute; 
-                left: 0; 
-                top: 0; 
-                width: 100%; 
-                display: block !important; 
-            }
+            @page { size: landscape; margin: 8mm; }
+            .printable-section * { visibility: visible; }
+            .printable-section { position: absolute; left: 0; top: 0; width: 100%; display: block !important; }
             .no-print, .btn-action, .top-header, .section-header { display: none !important; }
             .print-header { display: block !important; }
-            table { 
-                width: 100% !important; 
-                border-collapse: collapse !important; 
-                font-size: 7.5px !important; 
-            }
-            th, td { 
-                border: 1px solid #000 !important; 
-                padding: 3px 2px !important; 
-                color: #000 !important; 
-                font-size: 7.5px !important; 
-                white-space: nowrap !important;
-            }
-            th { 
-                background-color: #e2e8f0 !important; 
-                color: #000 !important; 
-                font-weight: 800 !important; 
-            }
-            .table-avatar {
-                width: 20px !important;
-                height: 20px !important;
-            }
         }
     </style>
 </head>
@@ -649,7 +656,52 @@
         <div id="message"></div>
     </div>
 
-    <!-- इमेज प्रिभ्यू मोडल -->
+    <!-- डिजिटल परिचय पत्र मोडल (ID Card Modal) -->
+    <div id="idCardModal" class="idcard-modal">
+        <div class="idcard-box">
+            <span class="idcard-close-btn" onclick="closeIdCardModal()">&times;</span>
+            <div class="idcard-header">
+                <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो">
+                <h3>दशौँदी समाज नेपाल</h3>
+                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+            </div>
+            <div class="idcard-title-bg">परिचय पत्र</div>
+            <div class="idcard-body">
+                <div class="idcard-top-info">
+                    <span>सदस्यता नम्बर: <strong id="cardMemberNo">-</strong></span>
+                    <span>दर्ता मिति: <strong id="cardRegDate">-</strong></span>
+                </div>
+                <div class="idcard-photo-container">
+                    <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो">
+                </div>
+                <div class="idcard-details">
+                    <table>
+                        <tr><td>नाम:</td><td><strong id="cardName" style="font-size: 14px; color: #1a365d;">-</strong></td></tr>
+                        <tr><td>पद:</td><td><span id="cardPosition" style="color: #008000; font-weight: bold;">-</span></td></tr>
+                        <tr><td>प्रदेश:</td><td><span id="cardProvince">-</span></td></tr>
+                        <tr><td>जिल्ला:</td><td><span id="cardDistrict">-</span></td></tr>
+                        <tr><td>पालिका:</td><td><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td>वडा नं.:</td><td><span id="cardWard">-</span></td></tr>
+                    </table>
+                </div>
+                <div class="idcard-signatures">
+                    <div>
+                        <div class="sig-line"></div>
+                        <span>अध्यक्ष</span>
+                    </div>
+                    <div>
+                        <div class="sig-line"></div>
+                        <span>महासचिव</span>
+                    </div>
+                </div>
+            </div>
+            <div class="idcard-footer">
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 4px 12px; border-radius: 4px; color: #fff; display: inline-block; margin-bottom: 5px; font-weight: bold;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- इमेज प्रिभ्यू माडल -->
     <div id="imageModal" class="img-modal" onclick="closeImageModal()">
         <div class="img-modal-content">
             <span class="close-modal">&times;</span>
@@ -721,28 +773,19 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
-        // इंग्रजी मितिलाई नेपाली मिति (वि.सं.) मा रूपान्तरण गर्ने साधारण र भरपर्दो फंक्सन
         function getNepaliDate() {
             const d = new Date();
             let year = d.getFullYear();
             let month = d.getMonth() + 1;
             let day = d.getDate();
-
-            // अंग्रेजी सालमा ५७ वर्ष जोडदा लगभग नेपाली साल हुन्छ (अनुमानित/सटीक रूपान्तरण)
-            // हाल सन् २०२६ भदौ छ, त्यसैले २०८३ साल हुन्छ।
             let nepaliYear = year + 57;
             if (month < 4 || (month === 4 && day < 14)) {
                 nepaliYear -= 1;
             }
-
-            // महिना र दिनको स्ट्रिङ मिलाउने
-            const monthsNe = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
-            // सरल रूपमा मिति ढाँचा (YYYY-MM-DD वा साल-महिना-गते)
             let nMonth = (month + 8) % 12;
             if (nMonth === 0) nMonth = 12;
             let nDay = day < 10 ? '0' + day : day;
             let nMonStr = nMonth < 10 ? '0' + nMonth : nMonth;
-
             return `${nepaliYear}-${nMonStr}-${nDay}`;
         }
 
@@ -765,6 +808,28 @@
 
         function closeImageModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // परिचय पत्र देखाउने फंक्सन
+        function openIdCardModal(userStr) {
+            const user = JSON.parse(userStr);
+            document.getElementById('cardMemberNo').innerText = user.member_no || '-';
+            document.getElementById('cardRegDate').innerText = user.reg_date || '-';
+            document.getElementById('cardName').innerText = user.full_name || user.name || '-';
+            document.getElementById('cardPosition').innerText = user.position || 'साधारण सदस्य';
+            document.getElementById('cardProvince').innerText = user.province || '-';
+            document.getElementById('cardDistrict').innerText = user.district || '-';
+            document.getElementById('cardMunicipality').innerText = user.municipality || '-';
+            document.getElementById('cardWard').innerText = user.ward || '-';
+            
+            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            document.getElementById('cardPhoto').src = photo;
+
+            document.getElementById('idCardModal').style.display = 'flex';
+        }
+
+        function closeIdCardModal() {
+            document.getElementById('idCardModal').style.display = 'none';
         }
 
         async function printSection(sectionId, sectionTitle) {
@@ -900,7 +965,6 @@
             });
         }
 
-        // Approve गर्दा पद सोध्ने र स्वतः नेपाली मिति राख्ने
         async function approveAndCreateUser(appStr) {
             const app = JSON.parse(appStr);
             if(app.status === 'Approved') {
@@ -908,16 +972,12 @@
                 return;
             }
 
-            // पद छनौट गर्ने प्रम्प्ट बक्स
             let assignedPosition = prompt('यो सदस्यलाई संस्थामा दिने पद (Designation) लेख्नुहोस्:', 'साधारण सदस्य');
-            if (assignedPosition === null) return; // Cancel गरेमा रोकियो
+            if (assignedPosition === null) return;
 
-            // वर्तमान युजर संख्या पत्ता लगाइ सिरियल नम्बर बनाउने (001, 002...)
             const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
             const nextNo = (count || 0) + 1;
             const formattedMemberNo = String(nextNo).padStart(3, '0');
-
-            // स्वचालित नेपाली मिति
             const todayNepaliDate = getNepaliDate();
 
             const newUser = {
@@ -1073,6 +1133,7 @@
                         <td>${user.ward || '-'}</td>
                         <td>${user.tole || '-'}</td>
                         <td class="no-print">
+                            <button class="btn-action btn-idcard" onclick="openIdCardModal(decodeURIComponent('${userJson}'))">परिचय पत्र</button>
                             <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
                         </td>
