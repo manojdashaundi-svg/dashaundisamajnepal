@@ -1142,9 +1142,9 @@
                         <td>${app.identifier || '-'}</td>
                         <td>${app.dob || '-'}</td>
                         <td>${app.citizenship_no || '-'}</td>
-                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छइन'}</td>
-                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छइन'}</td>
-                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छइन'}</td>
+                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
                         <td>${app.spouse_name || '-'}</td>
                         <td>${app.father_name || '-'}</td>
                         <td>${app.mother_name || '-'}</td>
@@ -1217,7 +1217,7 @@
             const formattedMemberNo = String(nextNo).padStart(3, '0');
             const todayNepaliDate = getNepaliDate();
 
-            // यहाँ आवेदन फारमका सबै व्यक्तिगत, पारिवारिक तथा ठेगाना विवरणहरू समावेश गरिएको छ
+            // यहाँ नागरिकता तथा पेमेन्ट स्लिपको लिङ्कहरू समेत समावेश गरिएको छ
             const newUser = {
                 member_no: formattedMemberNo,
                 position: assignedPosition,
@@ -1228,6 +1228,9 @@
                 email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
                 dob: app.dob || '',
                 citizenship_no: app.citizenship_no || '',
+                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+                payment_slip: app.payment_slip || app.payment_slip_url || '',
                 spouse_name: app.spouse_name || '',
                 father_name: app.father_name || '',
                 mother_name: app.mother_name || '',
@@ -1341,6 +1344,7 @@
                 const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const citFront = user.citizenship_front || user.citizenship_front_url || '';
                 const citBack = user.citizenship_back || user.citizenship_back_url || '';
+                const paySlip = user.payment_slip || user.payment_slip_url || '';
                 const userJson = encodeURIComponent(JSON.stringify(user));
 
                 tbody.innerHTML += `
@@ -1356,9 +1360,9 @@
                         <td>${user.email || user.identifier || '-'}</td>
                         <td>${user.dob || '-'}</td>
                         <td>${user.citizenship_no || '-'}</td>
-                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छइन'}</td>
-                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छइन'}</td>
-                        <td>-</td>
+                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
                         <td>${user.spouse_name || '-'}</td>
                         <td>${user.father_name || '-'}</td>
                         <td>${user.mother_name || '-'}</td>
