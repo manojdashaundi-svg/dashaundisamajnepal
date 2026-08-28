@@ -287,7 +287,7 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* इमेज प्रिभ्यू मोडल */
+        /* इमेज प्रिभ्यू माडल */
         .img-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; }
         .img-modal-content { max-width: 90%; max-height: 90%; position: relative; }
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
@@ -406,7 +406,7 @@
 
             <hr>
 
-            <!-- दर्ता भएका युजरहरूको सूची (नागरिकता र पेमेन्ट स्लिप सहित) -->
+            <!-- दर्ता भएका युजरहरूको सूची (पासवर्ड स्तम्भ हटाइएको) -->
             <div class="section-header">
                 <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
                 <div class="button-group">
@@ -440,7 +440,6 @@
                                 <th>पालिका</th>
                                 <th>वडा</th>
                                 <th>टोल</th>
-                                <th>पासवर्ड</th>
                                 <th class="no-print">कारवाही</th>
                             </tr>
                         </thead>
@@ -653,7 +652,7 @@
         </div>
     </div>
 
-    <!-- युजर सम्पादन मोडल -->
+    <!-- युजर सम्पादन मोडल (पासवर्ड सहित) -->
     <div id="userEditModal" class="app-edit-modal">
         <div class="app-edit-content">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
@@ -918,12 +917,12 @@
             }
         }
 
-        // दर्ता भएका सदस्यहरूको सूची लोड गर्ने (नागरिकता अगाडि, पछाडि सहित)
+        // दर्ता भएका सदस्यहरूको सूची लोड गर्ने (पासवर्ड स्तम्भ हटाइएको)
         async function loadUsersData() {
             const { data } = await supabaseClient.from('users').select('*');
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="22">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="21">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
                 const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const citFront = user.citizenship_front || user.citizenship_front_url || '';
@@ -952,7 +951,6 @@
                         <td>${user.municipality || '-'}</td>
                         <td>${user.ward || '-'}</td>
                         <td>${user.tole || '-'}</td>
-                        <td>${user.password || '-'}</td>
                         <td class="no-print">
                             <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
