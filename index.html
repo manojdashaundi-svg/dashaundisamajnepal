@@ -47,15 +47,20 @@
         .dropdown:hover .dropdown-content { display: block; }
 
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; text-align: center; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
         
-        .card > h2, .page-section .card h2 {
+        /* सबै हेडिङहरूलाई अत्यधिक बोल्ड, व्यावसायिक र आकर्षक बनाइएको स्टाइल */
+        .card > h2, .page-section .card h2, .about-section h3 {
             display: inline-block;
             color: #1a365d;
-            border-bottom: 2px solid #008000;
-            padding-bottom: 5px;
-            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            border-bottom: 3px solid #008000;
+            padding-bottom: 6px;
+            margin-bottom: 24px;
             text-align: center;
+            text-transform: uppercase;
         }
 
         .page-section { display: none; }
@@ -66,15 +71,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 'हाम्रो बारेमा' पेजभित्रको लोगोलाई सानो र आकर्षक बनाइएको स्टाइल */
         .about-header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .about-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: white; }
         
-        .about-title-ne { font-size: 24px; color: #1a365d; margin: 0 0 5px 0; font-weight: bold; border-bottom: 2px solid #008000; padding-bottom: 5px; display: inline-block; }
-        .about-title-en { font-size: 18px; color: #555; margin: 0 0 15px 0; font-weight: bold; }
-        .about-meta { font-size: 15px; color: #333; margin: 6px 0; }
-        .about-section { margin-top: 20px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
-        .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; display: inline-block; padding-bottom: 5px; margin-top: 20px; }
+        .about-title-ne { font-size: 26px; color: #1a365d; font-weight: 900; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3px solid #008000; padding-bottom: 6px; display: inline-block; }
+        .about-title-en { font-size: 18px; color: #4a5568; font-weight: 800; margin: 0 0 15px 0; }
+        .about-meta { font-size: 15px; color: #2d3748; font-weight: 700; margin: 6px 0; }
+        .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
 
         #home .content-section {
             max-width: 900px;
@@ -114,7 +117,7 @@
         .committee-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 10px; }
 
         .form-group { margin-bottom: 18px; text-align: left; }
-        label { display: block; font-weight: 600; margin-bottom: 6px; color: #4a5568; font-size: 14px; }
+        label { display: block; font-weight: 700; margin-bottom: 6px; color: #2d3748; font-size: 14px; }
         input[type="text"], input[type="email"], input[type="date"], input[type="password"], input[type="file"], select, textarea {
             width: 100%; padding: 10px 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 14px; box-sizing: border-box; background-color: #fcfdfd; transition: all 0.3s;
         }
@@ -125,7 +128,7 @@
         .otp-container { position: relative; display: flex; align-items: center; }
         .otp-container input { width: 100%; padding-right: 40px; text-align: center; font-size: 18px; letter-spacing: 3px; font-weight: bold; }
         .otp-status-icon { position: absolute; right: 12px; font-size: 18px; font-weight: bold; }
-        button { background: var(--accent-gradient); color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); transition: all 0.2s; }
+        button { background: var(--accent-gradient); color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; font-weight: 800; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); transition: all 0.2s; }
         button:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0, 128, 0, 0.3); }
         .timer { font-weight: bold; color: #e53e3e; text-align: center; margin-top: 10px; font-size: 14px; }
         .official-form { border: 2px solid #e2e8f0; padding: 20px; background: #fff; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); position: relative; margin-top: 20px; text-align: left; }
@@ -135,7 +138,7 @@
         .qr-img { width: 180px; height: 210px; object-fit: contain; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); background: #fff; padding: 5px; }
         #message { margin-top: 15px; text-align: center; font-weight: bold; font-size: 14px; }
         .choice-box { text-align: center; padding: 10px; }
-        .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 13px; color: #4a5568; }
+        .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 13px; color: #2d3748; font-weight: 600; }
         .profile-pic-container { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; text-align: left; }
         .passport-photo-box { width: 110px; height: 135px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 15px; }
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
@@ -186,10 +189,10 @@
 
         .membership-brand-header { background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .membership-brand-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: white; padding: 4px; border: 3px solid #cbd5e0; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; letter-spacing: 0.5px; }
-        .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; }
+        .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
+        .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
 
-        footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; }
+        footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -313,7 +316,7 @@
             </div>
 
             <div class="card">
-                <h3 style="color: #1a365d; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-top: 0;">सदस्यता तथा नवीकरण प्रणाली</h3>
+                <h3 style="color: #1a365d; text-align: center; border-bottom: 3px solid #008000; padding-bottom: 8px; margin-top: 0; font-weight: 900; font-size: 22px;">सदस्यता तथा नवीकरण प्रणाली</h3>
                 
                 <!-- मुख्य विकल्प छनोट -->
                 <div id="mainChoiceStep" class="sub-section active">
@@ -331,7 +334,7 @@
                 <!-- नयाँ खाता दर्ता फारम -->
                 <div id="registerStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left;">नयाँ खाता दर्ता फारम</h3>
+                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">नयाँ खाता दर्ता फारम</h3>
                     
                     <form id="registerForm">
                         <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required></div>
@@ -368,7 +371,7 @@
                 <!-- पुरानो खाता लगइन फारम -->
                 <div id="loginStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left;">पुरानो खाता लगइन</h3>
+                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पुरानो खाता लगइन</h3>
                     
                     <form id="loginForm" onsubmit="handleLogin(event)">
                         <div class="form-group"><label>इमेल ठेगाना:</label><input type="email" id="login_email" placeholder="तपाईको इमेल" required></div>
@@ -386,14 +389,14 @@
                 <div id="dashboardStep" class="sub-section" style="display: none;">
                     <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; text-align: left;">
                         <div>
-                            <h3 style="color: #234e52; margin: 0; font-size: 18px;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
-                            <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
+                            <h3 style="color: #234e52; margin: 0; font-size: 18px; font-weight: 900;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
+                            <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px; font-weight: 700;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
                         </div>
                         <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 6px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
                     </div>
 
                     <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
-                        <h4 style="color: #1a365d; margin: 0 0 12px 0; font-size: 16px;">👤 मेरो प्रोफाइल विवरण</h4>
+                        <h4 style="color: #1a365d; margin: 0 0 12px 0; font-size: 16px; font-weight: 900;">👤 मेरो प्रोफाइल विवरण</h4>
                         <div class="profile-pic-container">
                             <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar" style="width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0;">
                             <div>
@@ -406,7 +409,7 @@
                     </div>
 
                     <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
-                        <h4 style="color: #1a365d; margin-top: 0; font-size: 18px;">सदस्यता सेवाहरू</h4>
+                        <h4 style="color: #1a365d; margin-top: 0; font-size: 18px; font-weight: 900;">सदस्यता सेवाहरू</h4>
                         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 12px;">
                             <button type="button" id="btnOpenForm" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 10px 20px; font-size: 14px;">📝 नयाँ सदस्यता फारम</button>
                             <button type="button" onclick="openMyCard()" style="width: auto; background: #805ad5; padding: 10px 20px; font-size: 14px;">🆔 मेरो कार्ड (Digital ID)</button>
@@ -421,9 +424,9 @@
                     <div id="formNoticeBanner" style="padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; text-align: center; display: none; font-size: 13px;"></div>
 
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-                        <div><h4 style="margin: 0; color: #718096; font-size: 14px;" id="formDateDisplay">आवेदन मिति: -</h4></div>
+                        <div><h4 style="margin: 0; color: #718096; font-size: 14px; font-weight: 700;" id="formDateDisplay">आवेदन मिति: -</h4></div>
                         <div>
-                            <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568;">पासपोर्ट फोटो</label>
+                            <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568; font-weight: 700;">पासपोर्ट फोटो</label>
                             <div class="passport-photo-box" id="passportBoxClick" onclick="triggerPhotoUpload()">
                                 <img id="form_photo_preview" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="पासपोर्ट फोटो">
                                 <div id="photoUploadText" style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 2px 0;">📸 फोटो राख्नुहोस्</div>
@@ -432,8 +435,8 @@
                         </div>
                     </div>
 
-                    <p style="margin-top: 0; font-size: 14px;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
-                    <p style="text-align: center; font-weight: bold; font-size: 16px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
+                    <p style="margin-top: 0; font-size: 14px; font-weight: 600;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
+                    <p style="text-align: center; font-weight: 900; font-size: 16px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
                     
                     <form id="membershipApplicationForm" style="margin-top: 15px;">
                         <div class="form-row">
@@ -484,7 +487,7 @@
                 <!-- स्टेप ३: कागजात र भुक्तानी -->
                 <div id="step3" class="sub-section" style="display: none; margin-top: 15px; text-align: left;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
+                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; font-weight: 900;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
                     
                     <div class="form-group">
                         <label>१. नागरिकता अगाडि:</label>
@@ -501,7 +504,7 @@
                     </div>
 
                     <div class="qr-box">
-                        <h4 style="margin-top: 0; color: #2b6cb0; font-size: 15px;">सदस्यता शुल्क: रु. ५००/-</h4>
+                        <h4 style="margin-top: 0; color: #2b6cb0; font-size: 15px; font-weight: 900;">सदस्यता शुल्क: रु. ५००/-</h4>
                         <img src="https://i.postimg.cc/j555F5qL/ka-ya-a-ra.jpg" class="qr-img" alt="QR">
                     </div>
 
@@ -705,9 +708,9 @@
                     container.innerHTML += `
                         <div class="committee-card">
                             <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
-                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px;">${item.full_name}</h4>
+                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
                             <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                            <p style="margin:2px 0; font-size:12px; color:#718096;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                            <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
                         </div>
                     `;
                 });
@@ -724,9 +727,9 @@
                     container.innerHTML += `
                         <div class="committee-card">
                             <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
-                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px;">${item.full_name}</h4>
+                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
                             <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                            <p style="margin:2px 0; font-size:12px; color:#718096;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                            <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
                         </div>
                     `;
                 });
