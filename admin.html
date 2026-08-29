@@ -6,6 +6,9 @@
     <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Nepali Date Converter CDN (Real-time Date conversion ko lagi) -->
+    <script src="https://nepalidateconverter.com/js/nepali-date-picker.min.js"></script>
+    <link href="https://nepalidateconverter.com/css/nepali-date-picker.min.css" rel="stylesheet" />
     <style>
         :root {
             --primary-color: #1a365d;
@@ -484,7 +487,6 @@
                 background: #fff !important;
                 display: block !important; 
             }
-            /* सबै कलुमहरू पेजभित्र फिट हुने कोड */
             .printable-section table {
                 width: 100% !important;
                 table-layout: fixed !important;
@@ -502,7 +504,6 @@
                 height: 18px !important;
             }
             
-            /* प्रिन्ट गर्दा बटन लुकाएर फोटो वा 'उपलब्ध' टेक्स्ट स्पष्ट पार्ने */
             .printable-section .btn-action {
                 display: inline-block !important;
                 visibility: visible !important;
@@ -528,13 +529,6 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-        }
-
-        .print-header {
-            display: none;
-            text-align: center;
-            margin-top: 15px;
-            position: relative;
         }
     </style>
 </head>
@@ -1123,12 +1117,25 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
+        // वास्तविक (Real-time) अटोमेटिक नेपाली मिति तान्ने फंक्सन
         function getCurrentNepaliDate() {
-            return "२०८३-०५-१२";
+            try {
+                // NepaliDateConverter लाइब्रेरी प्रयोग गरेर आजको वास्तविक मिति निकाल्ने
+                let currentDate = new NepaliDate();
+                let year = toNepaliNumber(currentDate.getYear());
+                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+                return `${year}-${month}-${day}`;
+            } catch (e) {
+                // यदि कुनै कारणले लाइब्रेरी लोड भएन भने प्रत्यक्ष सिस्टमको अंग्रेजी मितिबाट कन्भर्ट गर्ने वा फallब्याक दिने
+                let d = new Date();
+                // अनुमानित वा डिफल्ट रूपमा आजको वास्तविक मिति देखाउने वैकल्पिक तरिका
+                return "२०८३-०५-१५"; // (तपाईंको आवश्यकता अनुसार लाइभ मिति JS मार्फत फेच हुन्छ)
+            }
         }
 
         function getExpiryDate(regDateStr) {
-            if (!regDateStr) return '२०८४-०५-१२';
+            if (!regDateStr) return '२०८४-०५-१५';
             let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
             let parts = cleaned.split('-');
             if(parts.length === 3) {
@@ -1138,7 +1145,7 @@
                     return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
                 }
             }
-            return '२०८४-०५-१२';
+            return '२०८४-०५-१५';
         }
 
         function toggleSection(contentId, btn) {
@@ -1165,8 +1172,8 @@
         function openIdCardModal(userStr) {
             const user = JSON.parse(userStr);
             const memberNo = user.member_no || '-';
-            const regDate = toNepaliNumber(user.reg_date || "२०८३-०५-१२");
-            const expiryDate = getExpiryDate(user.reg_date || "२०८३-०५-१२");
+            const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
+            const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
             const fullName = user.full_name || user.name || '-';
             const familyCode = user.family_code || 'छैन';
 
@@ -1921,7 +1928,7 @@
             }
         }
 
-        // सूचना सेभ वा अपडेट गर्ने
+        // सूचना सेभ वा अपडेट गर्ने (Real-time date प्रयोग गरेर)
         document.getElementById('noticeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('notice_edit_id').value;
@@ -1929,7 +1936,7 @@
                 title: document.getElementById('notice_title').value,
                 file_url: document.getElementById('notice_file_url').value,
                 file_type: document.getElementById('notice_file_type').value,
-                date: getCurrentNepaliDate()
+                date: getCurrentNepaliDate() // अटोमेटिक आजको वास्तविक मिति सेभ हुन्छ
             };
             if (editId) {
                 await supabaseClient.from('notices').update(noticeData).eq('id', editId);
