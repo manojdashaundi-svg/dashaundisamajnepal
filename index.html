@@ -209,6 +209,7 @@
             <div>
                 <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
                 <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल।</p>
+                <p id="top_est" style="margin: 4px 0 0 0; font-size: 14px; font-weight: 700; color: #e2e8f0;">स्थापना: २०८०</p>
             </div>
         </div>
     </div>
@@ -708,7 +709,6 @@
                 document.getElementById('db_introduction').innerText = data.introduction || '';
                 document.getElementById('db_description').innerText = data.description || '';
 
-                // गृहपृष्ठमा पनि राख्ने
                 const introEl = document.getElementById('homeIntroduction');
                 const aboutEl = document.getElementById('homeAboutText');
                 if(introEl) introEl.innerText = data.introduction || '';
@@ -739,7 +739,6 @@
         async function fetchCentralCommittee() {
             const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
             
-            // छुट्टै छुट्टै कन्टेनरमा देखाउने (पेजको लागि र गृहपृष्ठको लागि)
             const container = document.getElementById('central_container');
             const homeContainer = document.getElementById('home_central_container');
 
@@ -1142,7 +1141,6 @@
         }
 
         async function loadPublicNotices() {
-            // नयाँ अपडेट हुनेबित्तिकै क्रमस माथि देखिने गरी 'id' वा 'created_at' को आधारमा descending order मा फेच गरिएको छ
             const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
             
             const containers = [
