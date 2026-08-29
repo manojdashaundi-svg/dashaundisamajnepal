@@ -1927,10 +1927,10 @@
             const tbody = document.getElementById('noticesTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
+            
             data.forEach((item, index) => {
-                // शीर्षक र अन्य डेटालाई encodeURIComponent मार्फत सुरक्षित पारिएको छ (Line break errors रोक्न)
-                const encodedTitle = encodeURIComponent(item.title || '');
-                const encodedUrl = encodeURIComponent(item.file_url || '');
+                // डेटालाई सुरक्षित रूपमा JSON स्ट्रिङमा बदलेर एट्रिब्युटमा राख्ने
+                const safeItemJson = JSON.stringify(item).replace(/"/g, '&quot;');
                 
                 tbody.innerHTML += `
                     <tr>
@@ -1940,7 +1940,7 @@
                         <td>${item.file_type === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
                         <td><button class="btn-action btn-view" onclick="showImage('${item.file_url}')">हेर्नुहोस्</button></td>
                         <td class="no-print">
-                            <button class="btn-action btn-edit" onclick="editNotice('${item.id}', '${encodedTitle}', '${encodedUrl}', '${item.file_type}')">सम्पादन</button>
+                            <button class="btn-action btn-edit" onclick='editNotice(${safeItemJson})'>सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
                         </td>
                     </tr>
@@ -1948,12 +1948,14 @@
             });
         }
 
-        function editNotice(id, encodedTitle, encodedUrl, fileType) {
-            document.getElementById('notice_edit_id').value = id;
-            document.getElementById('notice_title').value = decodeURIComponent(encodedTitle);
-            document.getElementById('notice_file_url').value = decodeURIComponent(encodedUrl);
-            document.getElementById('notice_file_type').value = fileType;
+        function editNotice(item) {
+            document.getElementById('notice_edit_id').value = item.id;
+            document.getElementById('notice_title').value = item.title || '';
+            document.getElementById('notice_file_url').value = item.file_url || '';
+            document.getElementById('notice_file_type').value = item.file_type || 'image';
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
+            
+            // सूचना सेक्सनलाई अटोमेटिक खोल्ने र स्क्रोल गर्ने
             document.getElementById('noticesContent').style.display = 'block';
             window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
         }
