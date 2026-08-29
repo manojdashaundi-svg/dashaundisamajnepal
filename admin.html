@@ -987,79 +987,73 @@
         <div class="idcard-box">
             <span class="idcard-close-btn" onclick="closeIdCardModal()">&times;</span>
             
-            <div class="idcard-header">
-                <div class="idcard-header-logo-container">
-                    <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो">
-                </div>
-                <h3>दशौँदी समाज नेपाल</h3>
-                <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+            <!-- माथिल्लो गोलो लोगो र हेडिन -->
+            <div class="idcard-header-logo-container" style="width: 70px; height: 70px; background: #fff; border-radius: 50%; margin: -35px auto 5px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 3px solid #1a365d; position: relative; z-index: 10;">
+                <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
             </div>
 
-            <div class="idcard-badge-title">परिचय पत्र</div>
+            <div class="idcard-header" style="background: linear-gradient(135deg, #1a365d 0%, #008000 100%); color: #fff; text-align: center; padding: 5px 10px 15px 10px; border-bottom-left-radius: 50% 20px; border-bottom-right-radius: 50% 20px; margin-top: -35px; padding-top: 40px;">
+                <h3 style="margin: 0; font-size: 20px; font-weight: 900; letter-spacing: 0.5px;">दशौँदी समाज नेपाल</h3>
+                <p style="margin: 2px 0 0 0; font-size: 10px; font-weight: 600;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+            </div>
 
-            <div class="idcard-body">
-                <div class="idcard-meta-row">
-                    <span>सदस्यता नं: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
+            <div class="idcard-badge-title" style="background: #008000; color: #fff; text-align: center; padding: 3px 18px; font-weight: 900; font-size: 11px; letter-spacing: 1px; width: 90px; margin: -12px auto 6px auto; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); text-transform: uppercase; position: relative; z-index: 5;">परिचय पत्र</div>
+
+            <div class="idcard-body" style="padding: 0 12px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background-image: url('https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'); background-repeat: no-repeat; background-position: center; background-size: 180px 180px;">
+                
+                <div class="idcard-meta-row" style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f8fafc; padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e0;">
+                    <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                     <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
                 </div>
 
-                <div class="idcard-main-content">
-                    <div class="idcard-photo-container">
-                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो">
+                <div class="idcard-main-content" style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <div class="idcard-photo-container" style="flex-shrink: 0;">
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
                     </div>
-                    <div class="idcard-info-box">
-                        <div style="font-size: 12px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
-                        <div style="color: #008000; font-weight: 800; font-size: 10.5px;" id="cardPosition">-</div>
-                        <div style="font-size: 9px; color: #2d3748; margin-top: 1px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
-                        <div style="font-size: 8.5px; color: #e53e3e; margin-top: 1px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
+                    <div class="idcard-info-box" style="flex-grow: 1; font-size: 11px; color: #1a202c; line-height: 1.3; font-weight: 700;">
+                        <div style="font-size: 13px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
+                        <div style="color: #008000; font-weight: 800; font-size: 11px;" id="cardPosition">-</div>
+                        <div style="font-size: 9.5px; color: #2d3748; margin-top: 2px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
+                        <div style="font-size: 9px; color: #e53e3e; margin-top: 1px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
                     </div>
                 </div>
 
-                <div class="idcard-details-table">
-                    <table>
-                        <tr><td>प्रदेश:</td><td><span id="cardProvince">-</span></td></tr>
-                        <tr><td>जिल्ला:</td><td><span id="cardDistrict">-</span></td></tr>
-                        <tr><td>पालिका:</td><td><span id="cardMunicipality">-</span></td></tr>
-                        <tr><td>वडा:</td><td><span id="cardWard">-</span></td></tr>
+                <!-- आइकन सहितको ठेगाना बक्स -->
+                <div class="idcard-details-table" style="background: #fff; border-radius: 6px; padding: 4px 8px; border: 1px solid #cbd5e0;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="width: 25px; border:none;"><span style="font-size: 13px;">📍</span></td><td style="width: 32%; border:none; font-weight:800; color:#2d3748; font-size:10.5px;">प्रदेश:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardProvince">-</span></td></tr>
+                        <tr><td style="border:none;"><span style="font-size: 13px;">🏛️</span></td><td style="border:none; font-weight:800; color:#2d3748; font-size:10.5px;">जिल्ला:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardDistrict">-</span></td></tr>
+                        <tr><td style="border:none;"><span style="font-size: 13px;">🏢</span></td><td style="border:none; font-weight:800; color:#2d3748; font-size:10.5px;">पालिका:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td style="border:none;"><span style="font-size: 13px;">👥</span></td><td style="border:none; font-weight:800; color:#2d3748; font-size:10.5px;">वडा:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardWard">-</span></td></tr>
                     </table>
                 </div>
 
-                <div class="idcard-footer-grid">
+                <div class="idcard-footer-grid" style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #cbd5e0; margin-bottom: 4px;">
                     <div class="idcard-qr-box">
-                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्">
+                        <img id="cardQrCode" src="" alt="QR Code" style="width: 52px; height: 52px; border: 1px solid #cbd5e0; padding: 1px; border-radius: 4px; background: #fff;">
                     </div>
-                    <div class="idcard-signatures">
-                        <div class="sig-col">
-                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिवको हस्ताक्षर">
-                            <div class="sig-line"></div>
+                    <div class="idcard-signatures" style="text-align: center; font-size: 9.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 180px;">
+                        <div class="sig-col" style="position: relative; text-align: center;">
+                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिव" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 55px; height: 25px; object-fit: contain;">
+                            <div class="sig-line" style="width: 55px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
                             <span>सचिव</span>
                         </div>
-                        <div class="sig-col" style="margin-left: 8px;">
-                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" class="sig-img" alt="अध्यक्षको हस्ताक्षर">
-                            <div class="sig-line"></div>
+                        <div class="sig-col" style="position: relative; text-align: center;">
+                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" class="sig-img" alt="अध्यक्ष" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 55px; height: 25px; object-fit: contain;">
+                            <div class="sig-line" style="width: 55px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
                             <span>अध्यक्ष</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="idcard-footer">
-                <div class="idcard-footer-row">
-                    <div class="idcard-footer-item">
-                        <img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" alt="WhatsApp">
-                        <span>9765240652</span>
-                    </div>
-                    <div class="idcard-footer-item">
-                        <img src="https://i.postimg.cc/Hsb76h3r/gmail.png" alt="Gmail">
-                        <span>dashaundisamajnepal@gmail.com</span>
-                    </div>
+            <div class="idcard-footer" style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 8.5px; font-weight: 700;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 2px;">
+                    <span style="display: flex; align-items: center; gap: 3px;"><img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" style="width: 12px; height: 12px;"> 9765240652</span>
+                    <span style="display: flex; align-items: center; gap: 3px;"><img src="https://i.postimg.cc/Hsb76h3r/gmail.png" style="width: 12px; height: 12px;"> dashaundisamajnepal@gmail.com</span>
                 </div>
-                <div class="idcard-footer-row">
-                    <div class="idcard-footer-item">
-                        <span>🌐</span> <span>www.dashaundisamajnepal.com</span>
-                    </div>
-                </div>
-                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 4px; color: #fff; display: inline-block; font-size: 8px; font-weight: bold; margin-top: 1px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+                <div>🌐 www.dashaundisamajnepal.com</div>
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 4px; color: #fff; display: inline-block; font-size: 8px; font-weight: bold; margin-top: 2px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
             </div>
         </div>
     </div>
@@ -1973,7 +1967,6 @@
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
             
             data.forEach((item, index) => {
-                // डेटा सुरक्षित रूपमा ट्रान्सफर गर्न btoa (Base64) प्रयोग गरिएको छ
                 const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
 
                 tbody.innerHTML += `
@@ -2004,7 +1997,6 @@
             document.getElementById('notice_file_type').value = item.file_type || 'image';
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
             
-            // सूचना सेक्सनलाई अटोमेटिक खोल्ने र स्क्रोल गर्ने
             document.getElementById('noticesContent').style.display = 'block';
             window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
         }
