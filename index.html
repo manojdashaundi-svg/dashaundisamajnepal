@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>दशाैँदी समाज नेपाल</title>
-    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- EmailJS CDN -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
@@ -33,12 +31,7 @@
         
         /* हल्लिने झण्डाको लागि स्टाइल */
         .header-flag-box { position: absolute; right: 25px; top: 50%; transform: translateY(-50%); width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; }
-        .header-flag-box img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); animation: waveFlag 2s ease-in-out infinite alternate; }
-        @keyframes waveFlag {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.05) rotate(3deg); }
-            100% { transform: scale(1) rotate(-2deg); }
-        }
+        .header-flag-box img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
 
         .header-logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 3px solid white; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .header-logo { width: 100%; height: 100%; object-fit: cover; }
@@ -209,12 +202,10 @@
         <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- हरियो हेडर सेक्सन -->
     <div class="header-split">
         <div class="header-green">
-            <!-- दायाँ साइडमा हल्लिने (Animated) नेपाली झण्डा -->
             <div class="header-flag-box">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_Nepal_%28animated%29.gif" alt="नेपालको झण्डा">
+                <img src="https://giwmscdnone.gov.np/static/grapejs/img/Nepal-flag.gif" alt="animated nepal flag">
             </div>
 
             <div class="header-logo-box">
@@ -258,7 +249,6 @@
     <div class="container">
         
         <div id="home" class="page-section active-page">
-            <!-- १. सूचना तथा प्रेस विज्ञप्ति (नयाँ अपडेट हुनेबित्तिकै क्रमैसँग माथि देखिने गरी) -->
             <div class="card">
                 <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
                 <div id="homeNoticesContainer">
@@ -266,7 +256,6 @@
                 </div>
             </div>
 
-            <!-- २. केन्द्रीय समिति -->
             <div class="card">
                 <h2>केन्द्रीय समिति</h2>
                 <div id="home_central_container" class="committee-grid">
@@ -274,7 +263,6 @@
                 </div>
             </div>
 
-            <!-- ३. हाम्रो बारेमा (सबैभन्दा तल) -->
             <div class="card">
                 <div class="content-section">
                     <h2>परिचय</h2>
@@ -288,7 +276,6 @@
             </div>
         </div>
 
-        <!-- हाम्रो बारेमा पेज सेक्सन -->
         <div id="about" class="page-section">
             <div class="card">
                 <div class="about-header">
@@ -319,7 +306,6 @@
         <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         
-        <!-- सूचना तथा प्रेस विज्ञप्ति देखाउने छुट्टै सेक्सन -->
         <div id="noticesSection" class="page-section">
             <div class="card">
                 <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
@@ -331,7 +317,6 @@
 
         <div id="contact" class="page-section"><div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
 
-        <!-- सदस्यता तथा नवीकरण प्रणाली सेक्सन -->
         <div id="membershipMainStep" class="page-section">
             <div class="membership-brand-header">
                 <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="membership-brand-logo">
@@ -346,7 +331,6 @@
             <div class="card">
                 <h3 style="color: #1a365d; text-align: center; border-bottom: 3.5px solid #008000; padding-bottom: 8px; margin-top: 0; font-weight: 950; font-size: 24px;">सदस्यता तथा नवीकरण प्रणाली</h3>
                 
-                <!-- मुख्य विकल्प छनोट -->
                 <div id="mainChoiceStep" class="sub-section active">
                     <div class="choice-box">
                         <div class="card-box" style="text-align: left; max-width: 550px; margin: 0 auto 20px auto;">
@@ -359,7 +343,6 @@
                     </div>
                 </div>
 
-                <!-- नयाँ खाता दर्ता फारम -->
                 <div id="registerStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">नयाँ खाता दर्ता फारम</h3>
@@ -396,7 +379,6 @@
                     </div>
                 </div>
 
-                <!-- पुरानो खाता लगइन फारम -->
                 <div id="loginStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पुरानो खाता लगइन</h3>
@@ -413,7 +395,6 @@
                     </form>
                 </div>
 
-                <!-- ड्यासबोर्ड -->
                 <div id="dashboardStep" class="sub-section" style="display: none;">
                     <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; text-align: left;">
                         <div>
@@ -445,7 +426,6 @@
                     </div>
                 </div>
 
-                <!-- आधिकारिक फारम -->
                 <div id="officialFormBox" class="official-form" style="display: none;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
                     
@@ -512,7 +492,6 @@
                     </form>
                 </div>
 
-                <!-- स्टेप ३: कागजात र भुक्तानी -->
                 <div id="step3" class="sub-section" style="display: none; margin-top: 15px; text-align: left;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; font-weight: 900;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
@@ -545,7 +524,6 @@
         </div>
     </div>
 
-    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
         <div class="idcard-box">
             <span class="idcard-close-btn" onclick="closeMyCard()">&times;</span>
