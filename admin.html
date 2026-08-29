@@ -6,7 +6,7 @@
     <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Nepali Date Converter CDN (Real-time Date conversion ko lagi) -->
+    <!-- Nepali Date Converter CDN -->
     <script src="https://nepalidateconverter.com/js/nepali-date-picker.min.js"></script>
     <link href="https://nepalidateconverter.com/css/nepali-date-picker.min.css" rel="stylesheet" />
     <style>
@@ -292,13 +292,11 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* इमेज प्रिभ्यू माडल */
         .img-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; }
         .img-modal-content { max-width: 90%; max-height: 90%; position: relative; }
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        /* प्रोफेसनल ग्राफिक परिचय पत्र डिजाइन (Vertical ID Card 340px x 520px) */
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         
         .idcard-box { 
@@ -390,7 +388,6 @@
 
         .idcard-qr-box img { width: 48px; height: 48px; border: 1px solid #cbd5e0; padding: 1px; border-radius: 4px; background: #fff; cursor: pointer; }
 
-        /* हस्ताक्षर सेक्सन */
         .idcard-signatures { text-align: center; font-size: 9px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 170px; }
         .sig-col { text-align: center; position: relative; }
         .sig-img { 
@@ -436,7 +433,6 @@
         .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
 
-        /* सम्पादन मोडलहरू */
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
@@ -459,7 +455,6 @@
         .print-date { position: absolute; top: 0; right: 0; font-size: 11px; font-weight: bold; color: #000; }
         .print-section-title { font-size: 16px; font-weight: 800; text-align: center; margin: 10px 0; color: #1a365d; text-decoration: underline; }
 
-        /* ग्लोबल प्रिन्ट स्टाइल्स एडमिन प्यानलको लागि सुधार्ब गरिएको */
         @media print {
             body * { visibility: hidden !important; }
             #idCardModal.active-card-modal, #idCardModal.active-card-modal * { visibility: visible !important; }
@@ -543,7 +538,6 @@
             <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
 
-        <!-- लगइन सेक्सन -->
         <div id="loginSection">
             <h3 style="text-align: center; border-left: none; padding-left: 0;">प्रशासन लगइन</h3>
             <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
@@ -559,14 +553,12 @@
             </form>
         </div>
 
-        <!-- मुख्य ड्यासबोर्ड -->
         <div id="dashboardSection" class="hidden">
             <div class="top-header">
                 <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
-            <!-- सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन सेक्सन -->
             <div class="section-header">
                 <h3>सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesContent', this)">खोल्नुहोस् ▾</button></div>
@@ -594,7 +586,6 @@
                 </form>
             </div>
 
-            <!-- ठीक यसको तल प्रकाशित सूचनाहरूको सूची र कन्ट्रोल बटनहरू राखिएको छ -->
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">प्रकाशित सूचनाहरूको सूची</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesTableContent', this)">सूची हेर्नुहोस् ▾</button></div>
@@ -618,7 +609,6 @@
                 </div>
             </div>
 
-            <!-- नयाँ सदस्यहरूको आवेदन सेक्सन -->
             <div class="section-header">
                 <h3>नयाँ सदस्यहरूको आवेदन (Membership Applications)</h3>
                 <div class="button-group">
@@ -663,7 +653,6 @@
 
             <hr>
 
-            <!-- दर्ता भएका युजरहरूको सूची -->
             <div class="section-header">
                 <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
                 <div class="button-group">
@@ -710,7 +699,6 @@
 
             <hr>
 
-            <!-- संस्थाको मुख्य विवरण -->
             <div class="section-header">
                 <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
                 <div class="button-group">
@@ -734,7 +722,6 @@
 
             <hr>
 
-            <!-- संस्थापक समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button></div>
@@ -781,7 +768,6 @@
 
             <hr>
 
-            <!-- केन्द्रीय समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button></div>
@@ -828,7 +814,6 @@
 
             <hr>
 
-            <!-- केन्द्रीय सल्लाहकार समिति सेक्सन -->
             <div class="section-header">
                 <h3 id="advisorFormTitle">केन्द्रीय सल्लाहकार समितिमा नयाँ सदस्य थप्ने</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('advisorContent', this)">खोल्नुहोस् ▾</button></div>
@@ -875,7 +860,6 @@
 
             <hr>
 
-            <!-- एडमिन व्यवस्थापन सेक्सन -->
             <div class="section-header">
                 <h3 id="adminFormTitle">नयाँ एडमिन थप्ने</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('adminContent', this)">खोल्नुहोस् ▾</button></div>
@@ -924,7 +908,6 @@
         <div id="message"></div>
     </div>
 
-    <!-- पद छान्ने ड्रपडाउन मोडल (Approve Modal) -->
     <div id="positionModal" class="app-edit-modal">
         <div class="app-edit-content" style="width: 400px;">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता स्वीकृत (Approve)</h3>
@@ -958,7 +941,6 @@
         </div>
     </div>
 
-    <!-- प्रोफेसनल ग्राफिक परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div class="idcard-box">
             <span class="idcard-close-btn" onclick="closeIdCardModal()">&times;</span>
@@ -1002,7 +984,6 @@
                     <div class="idcard-qr-box">
                         <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्">
                     </div>
-                    <!-- हस्ताक्षरहरू -->
                     <div class="idcard-signatures">
                         <div class="sig-col">
                             <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिवको हस्ताक्षर">
@@ -1018,7 +999,6 @@
                 </div>
             </div>
 
-            <!-- अन्तिम निलो पट्टी -->
             <div class="idcard-footer">
                 <div class="idcard-footer-row">
                     <div class="idcard-footer-item">
@@ -1040,7 +1020,6 @@
         </div>
     </div>
 
-    <!-- इमेज प्रिभ्यू माडल -->
     <div id="imageModal" class="img-modal" onclick="closeImageModal()">
         <div class="img-modal-content">
             <span class="close-modal">&times;</span>
@@ -1048,7 +1027,6 @@
         </div>
     </div>
 
-    <!-- आवेदन सम्पादन मोडल -->
     <div id="appEditModal" class="app-edit-modal">
         <div class="app-edit-content">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
@@ -1074,7 +1052,6 @@
         </div>
     </div>
 
-    <!-- युजर सम्पादन मोडल -->
     <div id="userEditModal" class="app-edit-modal">
         <div class="app-edit-content">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
@@ -1118,20 +1095,15 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-        // वास्तविक (Real-time) अटोमेटिक नेपाली मिति तान्ने फंक्सन
         function getCurrentNepaliDate() {
             try {
-                // NepaliDateConverter लाइब्रेरी प्रयोग गरेर आजको वास्तविक मिति निकाल्ने
                 let currentDate = new NepaliDate();
                 let year = toNepaliNumber(currentDate.getYear());
                 let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
                 let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
                 return `${year}-${month}-${day}`;
             } catch (e) {
-                // यदि कुनै कारणले लाइब्रेरी लोड भएन भने प्रत्यक्ष सिस्टमको अंग्रेजी मितिबाट कन्भर्ट गर्ने वा फallब्याक दिने
-                let d = new Date();
-                // अनुमानित वा डिफल्ट रूपमा आजको वास्तविक मिति देखाउने वैकल्पिक तरिका
-                return "२०८३-०५-१५"; // (तपाईंको आवश्यकता अनुसार लाइभ मिति JS मार्फत फेच हुन्छ)
+                return "२०८३-०५-१५";
             }
         }
 
@@ -1803,7 +1775,6 @@
             }
         }
 
-        // केन्द्रीय सल्लाहकार समिति
         document.getElementById('advisorCommitteeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('advisor_edit_id').value;
@@ -1929,7 +1900,6 @@
             }
         }
 
-        // सूचना सेभ वा अपडेट गर्ने (Real-time date प्रयोग गरेर)
         document.getElementById('noticeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('notice_edit_id').value;
@@ -1937,7 +1907,7 @@
                 title: document.getElementById('notice_title').value,
                 file_url: document.getElementById('notice_file_url').value,
                 file_type: document.getElementById('notice_file_type').value,
-                date: getCurrentNepaliDate() // अटोमेटिक आजको वास्तविक मिति सेभ हुन्छ
+                date: getCurrentNepaliDate()
             };
             if (editId) {
                 await supabaseClient.from('notices').update(noticeData).eq('id', editId);
@@ -1952,13 +1922,16 @@
             loadNoticesData();
         });
 
-        // एडमिन प्यानलमा सूची लोड गर्ने
         async function loadNoticesData() {
             const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
             const tbody = document.getElementById('noticesTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
             data.forEach((item, index) => {
+                // शीर्षक र अन्य डेटालाई encodeURIComponent मार्फत सुरक्षित पारिएको छ (Line break errors रोक्न)
+                const encodedTitle = encodeURIComponent(item.title || '');
+                const encodedUrl = encodeURIComponent(item.file_url || '');
+                
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
@@ -1967,7 +1940,7 @@
                         <td>${item.file_type === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
                         <td><button class="btn-action btn-view" onclick="showImage('${item.file_url}')">हेर्नुहोस्</button></td>
                         <td class="no-print">
-                            <button class="btn-action btn-edit" onclick="editNotice('${item.id}', \`${item.title}\`, '${item.file_url}', '${item.file_type}')">सम्पादन</button>
+                            <button class="btn-action btn-edit" onclick="editNotice('${item.id}', '${encodedTitle}', '${encodedUrl}', '${item.file_type}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
                         </td>
                     </tr>
@@ -1975,13 +1948,14 @@
             });
         }
 
-        function editNotice(id, title, fileUrl, fileType) {
+        function editNotice(id, encodedTitle, encodedUrl, fileType) {
             document.getElementById('notice_edit_id').value = id;
-            document.getElementById('notice_title').value = title;
-            document.getElementById('notice_file_url').value = fileUrl;
+            document.getElementById('notice_title').value = decodeURIComponent(encodedTitle);
+            document.getElementById('notice_file_url').value = decodeURIComponent(encodedUrl);
             document.getElementById('notice_file_type').value = fileType;
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
             document.getElementById('noticesContent').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
         }
 
         async function deleteNotice(id) {
