@@ -1098,17 +1098,17 @@
         function getCurrentNepaliDate() {
             try {
                 let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                return `${year}-${month}-${day}`;
+                let year = currentDate.getYear();
+                let month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                let day = String(currentDate.getDate()).padStart(2, '0');
+                return toNepaliNumber(`${year}-${month}-${day}`);
             } catch (e) {
-                return "२०८३-०५-१५";
+                return "२०८३-०५-१३";
             }
         }
 
         function getExpiryDate(regDateStr) {
-            if (!regDateStr) return '२०८४-०५-१५';
+            if (!regDateStr) return '२०८४-०५-१३';
             let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
             let parts = cleaned.split('-');
             if(parts.length === 3) {
@@ -1118,7 +1118,7 @@
                     return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
                 }
             }
-            return '२०८४-०५-१५';
+            return '२०८४-०५-१३';
         }
 
         function toggleSection(contentId, btn) {
@@ -1907,7 +1907,7 @@
                 title: document.getElementById('notice_title').value,
                 file_url: document.getElementById('notice_file_url').value,
                 file_type: document.getElementById('notice_file_type').value,
-                date: getCurrentNepaliDate()
+                date: getCurrentNepaliDate() // सिस्टमबाटै स्वतः आजको सहि नेपाली मिति लिने
             };
             if (editId) {
                 await supabaseClient.from('notices').update(noticeData).eq('id', editId);
@@ -1929,7 +1929,6 @@
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
             
             data.forEach((item, index) => {
-                // डेटा सुरक्षित रूपमा ट्रान्सफर गर्न btoa (Base64) प्रयोग गरिएको छ
                 const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
 
                 tbody.innerHTML += `
@@ -1960,7 +1959,6 @@
             document.getElementById('notice_file_type').value = item.file_type || 'image';
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
             
-            // सूचना सेक्सनलाई अटोमेटिक खोल्ने र स्क्रोल गर्ने
             document.getElementById('noticesContent').style.display = 'block';
             window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
         }
