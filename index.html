@@ -47,7 +47,18 @@
         .dropdown:hover .dropdown-content { display: block; }
 
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; text-align: center; }
+        
+        /* सबै कार्डभित्रका मुख्य शीर्षकहरूलाई (H2) बीचमा (Center) र आकर्षक बनाउने */
+        .card > h2, .page-section .card h2 {
+            display: inline-block;
+            color: #1a365d;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         .page-section { display: none; }
         .page-section.active-page { display: block; animation: fadeIn 0.4s ease-in-out; }
 
@@ -61,27 +72,17 @@
         .about-title-ne { font-size: 24px; color: #1a365d; margin: 0 0 5px 0; font-weight: bold; }
         .about-title-en { font-size: 18px; color: #555; margin: 0 0 15px 0; font-weight: bold; }
         .about-meta { font-size: 15px; color: #333; margin: 6px 0; }
-        .about-section { margin-top: 20px; line-height: 1.8; color: #444; font-size: 15px; }
-        .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 20px; }
+        .about-section { margin-top: 20px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
+        .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; display: inline-block; padding-bottom: 5px; margin-top: 20px; }
 
         /* गृहपृष्ठका सामग्रीहरूलाई बीचमा (Center) राख्नको लागि */
-        #home .card {
-            text-align: center;
-        }
         #home .content-section {
             max-width: 900px;
             margin: 0 auto 30px auto;
             text-align: center;
         }
-        #home .content-section h2 {
-            color: #1a365d;
-            border-bottom: 2px solid #008000;
-            display: inline-block;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-        }
         #home .content-section p {
-            text-align: justify; /* पढ्न सहज होस् भनेर अनुच्छेदलाई Justify गरिएको छ, चाहिएमा center बनाउन सकिन्छ */
+            text-align: justify;
             text-align-last: center;
         }
 
@@ -90,6 +91,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin-top: 15px;
+            text-align: left;
         }
 
         @media (max-width: 992px) { .committee-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -288,14 +290,14 @@
         <!-- सूचना तथा प्रेस विज्ञप्ति देखाउने छुट्टै सेक्सन -->
         <div id="noticesSection" class="page-section">
             <div class="card">
-                <h2 style="color: #1a365d; border-bottom: 2px solid #008000; padding-bottom: 8px; margin-bottom: 20px; text-align: center;">सूचना तथा प्रेस विज्ञप्ति</h2>
+                <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
                 <div id="publicNoticesContainer">
                     <p style="text-align: center;">सूचनाहरू लोड हुँदैछ...</p>
                 </div>
             </div>
         </div>
 
-        <div id="contact" class="page-section"><div class="card" style="text-align: center;"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
+        <div id="contact" class="page-section"><div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
 
         <!-- सदस्यता तथा नवीकरण प्रणाली सेक्सन -->
         <div id="membershipMainStep" class="page-section">
@@ -328,7 +330,7 @@
                 <!-- नयाँ खाता दर्ता फारम -->
                 <div id="registerStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ खाता दर्ता फारम</h3>
+                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left;">नयाँ खाता दर्ता फारम</h3>
                     
                     <form id="registerForm">
                         <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required></div>
@@ -348,7 +350,7 @@
                         <button type="submit" id="sendOtpBtn">🚀 सबमिट गरी OTP पर्खनुहोस्</button>
                     </form>
 
-                    <div id="otpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0;">
+                    <div id="otpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0; text-align: left;">
                         <div class="form-group" style="margin-bottom: 12px;">
                             <label style="color: #2b6cb0;">इमेलमा प्राप्त ६ अंकको OTP कोड:</label>
                             <div class="otp-container">
@@ -365,7 +367,7 @@
                 <!-- पुरानो खाता लगइन फारम -->
                 <div id="loginStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पुरानो खाता लगइन</h3>
+                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left;">पुरानो खाता लगइन</h3>
                     
                     <form id="loginForm" onsubmit="handleLogin(event)">
                         <div class="form-group"><label>इमेल ठेगाना:</label><input type="email" id="login_email" placeholder="तपाईको इमेल" required></div>
@@ -381,7 +383,7 @@
 
                 <!-- ड्यासबोर्ड -->
                 <div id="dashboardStep" class="sub-section" style="display: none;">
-                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; text-align: left;">
                         <div>
                             <h3 style="color: #234e52; margin: 0; font-size: 18px;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
                             <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
@@ -389,7 +391,7 @@
                         <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 6px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
                     </div>
 
-                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
                         <h4 style="color: #1a365d; margin: 0 0 12px 0; font-size: 16px;">👤 मेरो प्रोफाइल विवरण</h4>
                         <div class="profile-pic-container">
                             <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar" style="width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0;">
@@ -479,7 +481,7 @@
                 </div>
 
                 <!-- स्टेप ३: कागजात र भुक्तानी -->
-                <div id="step3" class="sub-section" style="display: none; margin-top: 15px;">
+                <div id="step3" class="sub-section" style="display: none; margin-top: 15px; text-align: left;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
                     
@@ -1134,9 +1136,9 @@
                 }
 
                 container.innerHTML += `
-                    <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d;">
+                    <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
                         <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                        <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0; text-align: left;">${item.title}</p>
+                        <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
                         ${fileContent}
                     </div>
                 `;
@@ -1144,7 +1146,6 @@
         }
 
         async function loadHomePageContent() {
-            // क. हाम्रो बारेमा विवरण लोड गर्ने (गृहपृष्ठको लागि)
             const { data: aboutData } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
             if (aboutData) {
                 document.getElementById('homeIntroduction').innerText = aboutData.introduction || '';
@@ -1152,7 +1153,6 @@
             }
         }
 
-        // पेज खुल्दा लोड हुने
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
             loadHomePageContent();
