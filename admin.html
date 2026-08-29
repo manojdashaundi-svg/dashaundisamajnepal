@@ -581,7 +581,7 @@
                     </div>
                     <div class="form-group">
                         <label>फोटो वा PDF फाइलको लिङ्क (URL):</label>
-                        <input type="text" id="notice_file_url" placeholder="फोटो वा PDF को पोस्टइम वा ड्राइभ लिङ्क राख्नुहोस्" required>
+                        <input type="text" id="notice_file_url" placeholder="फोटो वा PDF को लिङ्क राख्नुहोस्" required>
                     </div>
                     <div class="form-group">
                         <label>फाइलको प्रकार:</label>
@@ -594,6 +594,7 @@
                 </form>
             </div>
 
+            <!-- ठीक यसको तल प्रकाशित सूचनाहरूको सूची र कन्ट्रोल बटनहरू राखिएको छ -->
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">प्रकाशित सूचनाहरूको सूची</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesTableContent', this)">सूची हेर्नुहोस् ▾</button></div>
@@ -609,7 +610,7 @@
                                 <th>शीर्षक / विवरण</th>
                                 <th>फाइलको प्रकार</th>
                                 <th>फाइल प्रिभ्यू</th>
-                                <th class="no-print">नियन्त्रण</th>
+                                <th class="no-print">नियन्त्रण (सम्पादन / रिमुभ)</th>
                             </tr>
                         </thead>
                         <tbody id="noticesTableBody"></tbody>
