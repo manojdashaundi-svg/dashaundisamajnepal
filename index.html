@@ -28,7 +28,6 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
         .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         
-        /* हरियो हेडरभित्र लोगोलाई माथि र बीचमा (Center) राख्ने स्टाइल */
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
         .header-green { background-color: #008000; color: white; width: 100%; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         
@@ -67,9 +66,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .about-header { text-align: center; margin-bottom: 30px; }
-        .about-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .about-title-ne { font-size: 24px; color: #1a365d; margin: 0 0 5px 0; font-weight: bold; }
+        /* 'हाम्रो बारेमा' पेजभित्रको लोगोलाई सानो र आकर्षक बनाइएको स्टाइल */
+        .about-header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .about-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: white; }
+        
+        .about-title-ne { font-size: 24px; color: #1a365d; margin: 0 0 5px 0; font-weight: bold; border-bottom: 2px solid #008000; padding-bottom: 5px; display: inline-block; }
         .about-title-en { font-size: 18px; color: #555; margin: 0 0 15px 0; font-weight: bold; }
         .about-meta { font-size: 15px; color: #333; margin: 6px 0; }
         .about-section { margin-top: 20px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
@@ -198,7 +199,7 @@
         <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- हरियो हेडर सेक्सन (लोगो माथि र बीचमा राखिएको) -->
+    <!-- हरियो हेडर सेक्सन -->
     <div class="header-split">
         <div class="header-green">
             <div class="header-logo-box">
@@ -256,6 +257,7 @@
             </div>
         </div>
 
+        <!-- हाम्रो बारेमा पेज सेक्सन -->
         <div id="about" class="page-section">
             <div class="card">
                 <div class="about-header">
