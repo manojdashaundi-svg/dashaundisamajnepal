@@ -28,17 +28,17 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
         .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         
+        /* हरियो हेडरभित्र लोगोलाई माथि र बीचमा (Center) राख्ने स्टाइल */
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
-        .header-green { background-color: #008000; color: white; width: 100%; padding: 15px 20px; display: flex; align-items: center; gap: 18px; }
+        .header-green { background-color: #008000; color: white; width: 100%; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         
-        /* लोगो बाकसलाई व्यवस्थित गरिएको */
-        .logo-box { width: 75px; height: 75px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .logo { width: 100%; height: 100%; object-fit: cover; }
+        .header-logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 3px solid white; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .header-logo { width: 100%; height: 100%; object-fit: cover; }
         
-        .header-green h1 { margin: 0; font-size: 26px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        .header-green p { margin: 4px 0 0 0; font-size: 15px; font-weight: 700; color: #f7fafc; }
+        .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+        .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
         
-        .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; }
+        .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; justify-content: center; }
         .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
         .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
         .dropdown { position: relative; display: inline-block; }
@@ -198,11 +198,11 @@
         <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
     </div>
 
-    <!-- हरियो हेडर सेक्सन -->
+    <!-- हरियो हेडर सेक्सन (लोगो माथि र बीचमा राखिएको) -->
     <div class="header-split">
         <div class="header-green">
-            <div class="logo-box">
-                <img id="top_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="logo">
+            <div class="header-logo-box">
+                <img id="top_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="header-logo">
             </div>
             <div>
                 <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
