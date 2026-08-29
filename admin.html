@@ -297,7 +297,7 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        /* हुबहु पहिलो तस्बिर जस्तै डिजिटल परिचय पत्र (Digital ID Card) स्टाइल */
+        /* हुबहु मौलिक परिचय पत्र (Digital ID Card) स्टाइल */
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         
         .idcard-box { 
@@ -317,163 +317,8 @@
             justify-content: space-between; 
         }
 
-        /* पहिलो फोटो जस्तै माथिल्लो वेभ/कभर्ड हेडर डिजाइन */
-        .idcard-header { 
-            background: #1a365d; 
-            color: #fff; 
-            text-align: center; 
-            padding: 12px 6px 18px 6px; 
-            position: relative; 
-            border-bottom-left-radius: 50% 15px;
-            border-bottom-right-radius: 50% 15px;
-            background-image: radial-gradient(circle at 50% 120%, #008000 45%, #1a365d 46%);
-        }
-
-        /* बाहिर सेतो भागमा बसेको लोगो */
-        .idcard-header-logo-container {
-            width: 50px;
-            height: 50px;
-            background: #fff;
-            border-radius: 50%;
-            margin: 0 auto 4px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            border: 2px solid #fff;
-        }
-        .idcard-header img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
-        
-        .idcard-badge-title { 
-            background: #008000; 
-            color: #fff; 
-            text-align: center; 
-            padding: 2px 14px; 
-            font-weight: 950; 
-            font-size: 11px; 
-            letter-spacing: 1px; 
-            width: 100px; 
-            margin: -12px auto 4px auto; 
-            border-radius: 15px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
-            text-transform: uppercase; 
-            position: relative; 
-            z-index: 5;
-        }
-
-        .idcard-body { 
-            padding: 0 10px; 
-            background: #fff; 
-            position: relative; 
-            flex-grow: 1; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            /* संस्थाको लोगोको वाटरमार्क */
-            background-image: url('https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png');
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 160px 160px;
-            background-blend-mode: overlay;
-        }
-        .idcard-body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.92);
-            pointer-events: none;
-            z-index: 1;
-        }
-        .idcard-body > * { position: relative; z-index: 2; }
-        
-        .idcard-meta-row { 
-            display: flex; 
-            justify-content: space-between; 
-            font-size: 10px; 
-            font-weight: 800; 
-            color: #1a365d; 
-            background: #f1f5f9;
-            padding: 3px 6px;
-            border-radius: 4px;
-            border: 1px solid #cbd5e0;
-        }
-        
-        .idcard-main-content {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            padding: 4px 6px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .idcard-photo-container { text-align: center; flex-shrink: 0; }
-        .idcard-photo { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-
-        .idcard-info-box { flex-grow: 1; font-size: 10.5px; color: #1a202c; line-height: 1.3; font-weight: 700; }
-        .idcard-info-box div { margin-bottom: 1px; }
-
-        .idcard-details-table { width: 100%; background: #fff; border-radius: 4px; padding: 2px 6px; border: 1px solid #cbd5e0; font-size: 10.5px; font-weight: 700; }
-        .idcard-details-table table { width: 100%; background: transparent; margin: 0; }
-        .idcard-details-table td { border: none; text-align: left; padding: 1px 0; font-size: 10.5px; font-weight: 700; color: #1a202c; white-space: normal; }
-        .idcard-details-table td:first-child { width: 35%; color: #2d3748; font-weight: 800; }
-
-        .idcard-footer-grid {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 2px;
-            border-top: 1px dashed #cbd5e0;
-            margin-bottom: 2px;
-        }
-
-        .idcard-qr-box img { width: 48px; height: 48px; border: 1px solid #cbd5e0; padding: 1px; border-radius: 4px; background: #fff; cursor: pointer; }
-
-        .idcard-signatures { text-align: center; font-size: 9px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 170px; }
-        .sig-col { text-align: center; position: relative; }
-        .sig-img { 
-            position: absolute; 
-            bottom: 10px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 50px; 
-            height: 22px; 
-            object-fit: contain; 
-        }
-        .sig-line { width: 50px; border-top: 1.2px solid #000; margin: 15px auto 1px; }
-
-        .idcard-footer { 
-            background: #1a365d; 
-            color: #fff; 
-            text-align: center; 
-            padding: 4px; 
-            font-size: 8px; 
-            font-weight: 700; 
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-        .idcard-footer-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .idcard-footer-item {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-        .idcard-footer-item img {
-            width: 12px;
-            height: 12px;
-            object-fit: contain;
-        }
-
-        .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(0,0,0,0.2); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .idcard-close-btn:hover { background: rgba(0,0,0,0.5); }
+        .idcard-close-btn { position: absolute; top: 6px; right: 10px; color: #fff; font-size: 20px; cursor: pointer; z-index: 20; background: rgba(0,0,0,0.3); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .idcard-close-btn:hover { background: rgba(0,0,0,0.6); }
 
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
@@ -983,34 +828,35 @@
         </div>
     </div>
 
+    <!-- हुबहु मिल्ने आइडी कार्ड मोडल कोड -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
-        <div class="idcard-box">
+        <div class="idcard-box" style="width: 340px; height: 520px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative; border: 2px solid #cbd5e0; margin: auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span class="idcard-close-btn" onclick="closeIdCardModal()">&times;</span>
             
             <!-- माथिल्लो गोलो लोगो र हेडिन -->
-            <div class="idcard-header-logo-container" style="width: 70px; height: 70px; background: #fff; border-radius: 50%; margin: -35px auto 5px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 3px solid #1a365d; position: relative; z-index: 10;">
+            <div style="width: 70px; height: 70px; background: #fff; border-radius: 50%; margin: -35px auto 5px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 3px solid #1a365d; position: relative; z-index: 10;">
                 <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
             </div>
 
-            <div class="idcard-header" style="background: linear-gradient(135deg, #1a365d 0%, #008000 100%); color: #fff; text-align: center; padding: 5px 10px 15px 10px; border-bottom-left-radius: 50% 20px; border-bottom-right-radius: 50% 20px; margin-top: -35px; padding-top: 40px;">
+            <div style="background: linear-gradient(135deg, #1a365d 0%, #008000 100%); color: #fff; text-align: center; padding: 5px 10px 15px 10px; border-bottom-left-radius: 50% 20px; border-bottom-right-radius: 50% 20px; margin-top: -35px; padding-top: 40px;">
                 <h3 style="margin: 0; font-size: 20px; font-weight: 900; letter-spacing: 0.5px;">दशौँदी समाज नेपाल</h3>
                 <p style="margin: 2px 0 0 0; font-size: 10px; font-weight: 600;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
             </div>
 
-            <div class="idcard-badge-title" style="background: #008000; color: #fff; text-align: center; padding: 3px 18px; font-weight: 900; font-size: 11px; letter-spacing: 1px; width: 90px; margin: -12px auto 6px auto; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); text-transform: uppercase; position: relative; z-index: 5;">परिचय पत्र</div>
+            <div style="background: #008000; color: #fff; text-align: center; padding: 3px 18px; font-weight: 900; font-size: 11px; letter-spacing: 1px; width: 90px; margin: -12px auto 6px auto; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); text-transform: uppercase; position: relative; z-index: 5;">परिचय पत्र</div>
 
-            <div class="idcard-body" style="padding: 0 12px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background-image: url('https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'); background-repeat: no-repeat; background-position: center; background-size: 180px 180px;">
+            <div style="padding: 0 12px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background-image: url('https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'); background-repeat: no-repeat; background-position: center; background-size: 180px 180px;">
                 
-                <div class="idcard-meta-row" style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f8fafc; padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e0;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f8fafc; padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e0;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                     <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
                 </div>
 
-                <div class="idcard-main-content" style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0;">
-                    <div class="idcard-photo-container" style="flex-shrink: 0;">
-                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="idcard-photo" alt="फोटो" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+                <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <div style="flex-shrink: 0;">
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
                     </div>
-                    <div class="idcard-info-box" style="flex-grow: 1; font-size: 11px; color: #1a202c; line-height: 1.3; font-weight: 700;">
+                    <div style="flex-grow: 1; font-size: 11px; color: #1a202c; line-height: 1.3; font-weight: 700;">
                         <div style="font-size: 13px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
                         <div style="color: #008000; font-weight: 800; font-size: 11px;" id="cardPosition">-</div>
                         <div style="font-size: 9.5px; color: #2d3748; margin-top: 2px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
@@ -1018,36 +864,52 @@
                     </div>
                 </div>
 
-                <!-- आइकन सहितको ठेगाना बक्स -->
-                <div class="idcard-details-table" style="background: #fff; border-radius: 6px; padding: 4px 8px; border: 1px solid #cbd5e0;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <tr><td style="width: 25px; border:none;"><span style="font-size: 13px;">📍</span></td><td style="width: 32%; border:none; font-weight:800; color:#2d3748; font-size:10.5px;">प्रदेश:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardProvince">-</span></td></tr>
-                        <tr><td style="border:none;"><span style="font-size: 13px;">🏛️</span></td><td style="border:none; font-weight:800; color:#2d3748; font-size:10.5px;">जिल्ला:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardDistrict">-</span></td></tr>
-                        <tr><td style="border:none;"><span style="font-size: 13px;">🏢</span></td><td style="border:none; font-weight:800; color:#2d3748; font-size:10.5px;">पालिका:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardMunicipality">-</span></td></tr>
-                        <tr><td style="border:none;"><span style="font-size: 13px;">👥</span></td><td style="border:none; font-weight:800; color:#2d3748; font-size:10.5px;">वडा:</td><td style="border:none; font-weight:700; font-size:10.5px;"><span id="cardWard">-</span></td></tr>
+                <!-- आइकन सहितको ठेगाना बक्स (ठ्याक्कै मिल्ने किसिमले डिजाइन गरिएको) -->
+                <div style="background: #fff; border-radius: 6px; border: 1px solid #cbd5e0; overflow: hidden;">
+                    <table style="width: 100%; border-collapse: collapse; margin: 0;">
+                        <tr>
+                            <td style="width: 28px; background: #1a365d; text-align: center; padding: 4px 0; border-bottom: 1px solid #cbd5e0; font-size: 12px;">📍</td>
+                            <td style="width: 28%; padding: 4px 6px; font-weight: 800; color: #2d3748; font-size: 10.5px; border-bottom: 1px solid #cbd5e0; text-align: left;">प्रदेश:</td>
+                            <td style="padding: 4px 6px; font-weight: 700; font-size: 10.5px; color: #1a202c; border-bottom: 1px solid #cbd5e0; text-align: left;"><span id="cardProvince">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #1a365d; text-align: center; padding: 4px 0; border-bottom: 1px solid #cbd5e0; font-size: 12px;">🏛️</td>
+                            <td style="padding: 4px 6px; font-weight: 800; color: #2d3748; font-size: 10.5px; border-bottom: 1px solid #cbd5e0; text-align: left;">जिल्ला:</td>
+                            <td style="padding: 4px 6px; font-weight: 700; font-size: 10.5px; color: #1a202c; border-bottom: 1px solid #cbd5e0; text-align: left;"><span id="cardDistrict">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #1a365d; text-align: center; padding: 4px 0; border-bottom: 1px solid #cbd5e0; font-size: 12px;">🏢</td>
+                            <td style="padding: 4px 6px; font-weight: 800; color: #2d3748; font-size: 10.5px; border-bottom: 1px solid #cbd5e0; text-align: left;">पालिका:</td>
+                            <td style="padding: 4px 6px; font-weight: 700; font-size: 10.5px; color: #1a202c; border-bottom: 1px solid #cbd5e0; text-align: left;"><span id="cardMunicipality">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="background: #1a365d; text-align: center; padding: 4px 0; font-size: 12px;">👥</td>
+                            <td style="padding: 4px 6px; font-weight: 800; color: #2d3748; font-size: 10.5px; text-align: left;">वडा:</td>
+                            <td style="padding: 4px 6px; font-weight: 700; font-size: 10.5px; color: #1a202c; text-align: left;"><span id="cardWard">-</span></td>
+                        </tr>
                     </table>
                 </div>
 
-                <div class="idcard-footer-grid" style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #cbd5e0; margin-bottom: 4px;">
-                    <div class="idcard-qr-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #cbd5e0; margin-bottom: 4px;">
+                    <div>
                         <img id="cardQrCode" src="" alt="QR Code" style="width: 52px; height: 52px; border: 1px solid #cbd5e0; padding: 1px; border-radius: 4px; background: #fff;">
                     </div>
-                    <div class="idcard-signatures" style="text-align: center; font-size: 9.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 180px;">
-                        <div class="sig-col" style="position: relative; text-align: center;">
-                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिव" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 55px; height: 25px; object-fit: contain;">
-                            <div class="sig-line" style="width: 55px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
+                    <div style="text-align: center; font-size: 9.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 180px;">
+                        <div style="position: relative; text-align: center;">
+                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिव" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 55px; height: 25px; object-fit: contain;">
+                            <div style="width: 55px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
                             <span>सचिव</span>
                         </div>
-                        <div class="sig-col" style="position: relative; text-align: center;">
-                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" class="sig-img" alt="अध्यक्ष" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 55px; height: 25px; object-fit: contain;">
-                            <div class="sig-line" style="width: 55px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
+                        <div style="position: relative; text-align: center;">
+                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्ष" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 55px; height: 25px; object-fit: contain;">
+                            <div style="width: 55px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
                             <span>अध्यक्ष</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="idcard-footer" style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 8.5px; font-weight: 700;">
+            <div style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 8.5px; font-weight: 700;">
                 <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 2px;">
                     <span style="display: flex; align-items: center; gap: 3px;"><img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" style="width: 12px; height: 12px;"> 9765240652</span>
                     <span style="display: flex; align-items: center; gap: 3px;"><img src="https://i.postimg.cc/Hsb76h3r/gmail.png" style="width: 12px; height: 12px;"> dashaundisamajnepal@gmail.com</span>
