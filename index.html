@@ -29,13 +29,14 @@
         .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
-        .header-green { background-color: #008000; color: white; width: 100%; padding: 18px 15px; display: flex; align-items: center; gap: 18px; }
+        .header-green { background-color: #008000; color: white; width: 100%; padding: 15px 20px; display: flex; align-items: center; gap: 18px; }
         
-        .logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        /* लोगो बाकसलाई व्यवस्थित गरिएको */
+        .logo-box { width: 75px; height: 75px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .logo { width: 100%; height: 100%; object-fit: cover; }
         
-        .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
+        .header-green h1 { margin: 0; font-size: 26px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+        .header-green p { margin: 4px 0 0 0; font-size: 15px; font-weight: 700; color: #f7fafc; }
         
         .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; }
         .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
@@ -49,7 +50,6 @@
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; text-align: center; }
         
-        /* सबै कार्डभित्रका मुख्य शीर्षकहरूलाई (H2) बीचमा (Center) र आकर्षक बनाउने */
         .card > h2, .page-section .card h2 {
             display: inline-block;
             color: #1a365d;
@@ -75,7 +75,6 @@
         .about-section { margin-top: 20px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
         .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; display: inline-block; padding-bottom: 5px; margin-top: 20px; }
 
-        /* गृहपृष्ठका सामग्रीहरूलाई बीचमा (Center) राख्नको लागि */
         #home .content-section {
             max-width: 900px;
             margin: 0 auto 30px auto;
@@ -1108,7 +1107,6 @@
             document.getElementById('step3').style.display = 'none';
         }
 
-        // सूचनाहरू लोड गर्ने फंक्सन (सूचना तथा प्रेस विज्ञप्ति पेजको लागि)
         async function loadPublicNotices() {
             const container = document.getElementById('publicNoticesContainer');
             const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
