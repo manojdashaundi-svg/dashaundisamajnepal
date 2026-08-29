@@ -1929,9 +1929,9 @@
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
             
             data.forEach((item, index) => {
-                // डेटालाई सुरक्षित रूपमा JSON स्ट्रिङमा बदलेर एट्रिब्युटमा राख्ने
-                const safeItemJson = JSON.stringify(item).replace(/"/g, '&quot;');
-                
+                // डेटा सुरक्षित रूपमा ट्रान्सफर गर्न btoa (Base64) प्रयोग गरिएको छ
+                const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
+
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
@@ -1940,12 +1940,17 @@
                         <td>${item.file_type === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
                         <td><button class="btn-action btn-view" onclick="showImage('${item.file_url}')">हेर्नुहोस्</button></td>
                         <td class="no-print">
-                            <button class="btn-action btn-edit" onclick='editNotice(${safeItemJson})'>सम्पादन</button>
+                            <button class="btn-action btn-edit" onclick="triggerEditNotice('${encodedItem}')">सम्पादन</button>
                             <button class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
                         </td>
                     </tr>
                 `;
             });
+        }
+
+        function triggerEditNotice(encodedItem) {
+            const item = JSON.parse(decodeURIComponent(escape(atob(encodedItem))));
+            editNotice(item);
         }
 
         function editNotice(item) {
@@ -1969,4 +1974,3 @@
     </script>
 </body>
 </html>
-
