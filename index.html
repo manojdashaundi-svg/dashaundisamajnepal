@@ -34,10 +34,7 @@
         .logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .logo { width: 100%; height: 100%; object-fit: cover; }
         
-        /* संस्थाको नाम ठूलो र बोल्ड बनाइएको */
         .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        
-        /* ठेगाना ठूलो र बोल्ड बनाइएको */
         .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
         
         .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; }
@@ -67,6 +64,27 @@
         .about-section { margin-top: 20px; line-height: 1.8; color: #444; font-size: 15px; }
         .about-section h3 { color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 5px; margin-top: 20px; }
 
+        /* गृहपृष्ठका सामग्रीहरूलाई बीचमा (Center) राख्नको लागि */
+        #home .card {
+            text-align: center;
+        }
+        #home .content-section {
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+        }
+        #home .content-section h2 {
+            color: #1a365d;
+            border-bottom: 2px solid #008000;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        #home .content-section p {
+            text-align: justify; /* पढ्न सहज होस् भनेर अनुच्छेदलाई Justify गरिएको छ, चाहिएमा center बनाउन सकिन्छ */
+            text-align-last: center;
+        }
+
         .committee-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -93,7 +111,7 @@
         .committee-card:hover { transform: translateY(-3px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); }
         .committee-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 10px; }
 
-        .form-group { margin-bottom: 18px; }
+        .form-group { margin-bottom: 18px; text-align: left; }
         label { display: block; font-weight: 600; margin-bottom: 6px; color: #4a5568; font-size: 14px; }
         input[type="text"], input[type="email"], input[type="date"], input[type="password"], input[type="file"], select, textarea {
             width: 100%; padding: 10px 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 14px; box-sizing: border-box; background-color: #fcfdfd; transition: all 0.3s;
@@ -108,7 +126,7 @@
         button { background: var(--accent-gradient); color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); transition: all 0.2s; }
         button:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0, 128, 0, 0.3); }
         .timer { font-weight: bold; color: #e53e3e; text-align: center; margin-top: 10px; font-size: 14px; }
-        .official-form { border: 2px solid #e2e8f0; padding: 20px; background: #fff; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); position: relative; margin-top: 20px; }
+        .official-form { border: 2px solid #e2e8f0; padding: 20px; background: #fff; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); position: relative; margin-top: 20px; text-align: left; }
         .form-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
         .form-col { flex: 1; min-width: 240px; }
         .qr-box { text-align: center; background: #f7fafc; padding: 20px; border: 2px dashed #cbd5e0; border-radius: 10px; margin-bottom: 15px; }
@@ -116,12 +134,11 @@
         #message { margin-top: 15px; text-align: center; font-weight: bold; font-size: 14px; }
         .choice-box { text-align: center; padding: 10px; }
         .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 13px; color: #4a5568; }
-        .profile-pic-container { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .profile-pic-container { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; text-align: left; }
         .passport-photo-box { width: 110px; height: 135px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 15px; }
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
         .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
         
-        /* परिचय पत्र साइज */
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
         .idcard-box { width: 340px; height: 520px; max-width: 100%; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative; border: 3px solid #1a365d; margin: auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between; }
         .idcard-header { background: linear-gradient(135deg, #1a365d, #2b6cb0); color: #fff; text-align: center; padding: 8px 6px; position: relative; }
@@ -134,7 +151,7 @@
         .idcard-main-content { display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 4px 6px; border-radius: 6px; border: 1px solid #e2e8f0; }
         .idcard-photo-container { text-align: center; flex-shrink: 0; }
         .idcard-photo { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-        .idcard-info-box { flex-grow: 1; font-size: 10.5px; color: #1a202c; line-height: 1.3; font-weight: 700; }
+        .idcard-info-box { flex-grow: 1; font-size: 10.5px; color: #1a202c; line-height: 1.3; font-weight: 700; text-align: left; }
         .idcard-info-box div { margin-bottom: 1px; }
         .idcard-details-table { width: 100%; background: #fff; border-radius: 4px; padding: 2px 6px; border: 1px solid #cbd5e0; font-size: 10.5px; font-weight: 700; }
         .idcard-details-table table { width: 100%; background: transparent; margin: 0; }
@@ -178,9 +195,9 @@
     <div class="top-bar">
         <div>महत्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
         <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
-  </div>
+    </div>
 
-    <!-- हरियो हेडर सेक्सन (ठूलो र बोल्ड अक्षर सहित) -->
+    <!-- हरियो हेडर सेक्सन -->
     <div class="header-split">
         <div class="header-green">
             <div class="logo-box">
@@ -224,33 +241,17 @@
         
         <div id="home" class="page-section active-page">
             <div class="card">
-                <!-- १.परिचय-->
-<div class="content-section">
-    <h2>परिचय</h2>
-    <p id="homeIntroduction">यस दशौँदी समाज नेपालको आधिकारिक वेबसाइटमा हार्दिक स्वागत छ...</p>
-</div>
+                <!-- १. परिचय -->
+                <div class="content-section">
+                    <h2>परिचय</h2>
+                    <p id="homeIntroduction">यस दशौँदी समाज नेपालको आधिकारिक वेबसाइटमा हार्दिक स्वागत छ...</p>
+                </div>
 
-<!-- २. सूचना तथा प्रेस विज्ञप्ति (नयाँ अपडेट हुनेबित्तिकै क्रमैसँग देखिने) -->
-<div class="content-section">
-    <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
-    <div id="homeNoticesContainer">
-        <!-- Supabase बाट fetch भएर यहाँ सूचनाहरू देखा पर्नेछन् -->
-    </div>
-</div>
-
-<!-- ३. केन्द्रीय समिति -->
-<div class="content-section">
-    <h2>केन्द्रीय समिति</h2>
-    <div id="homeCentralCommitteeContainer">
-        <!-- Supabase बाट केन्द्रीय समितिका सदस्यहरूको सूची यहाँ लोड हुनेछ -->
-    </div>
-</div>
-
-<!-- ४. हाम्रो बारेमा (सबैभन्दा तल) -->
-<div class="content-section" id="aboutUsSection">
-    <h2>हाम्रो बारेमा</h2>
-    <p id="homeAboutText">संस्थाको परिचय तथा विस्तृत विवरण...</p>
-</div>
+                <!-- २. हाम्रो बारेमा (गृहपृष्ठमा राखिएको) -->
+                <div class="content-section" id="aboutUsSection">
+                    <h2>हाम्रो बारेमा</h2>
+                    <p id="homeAboutText">संस्थाको परिचय तथा विस्तृत विवरण...</p>
+                </div>
             </div>
         </div>
 
@@ -284,17 +285,17 @@
         <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         
-        <!-- सूचना तथा प्रेस विज्ञप्ति देखाउने सेक्सन index.html मा -->
+        <!-- सूचना तथा प्रेस विज्ञप्ति देखाउने छुट्टै सेक्सन -->
         <div id="noticesSection" class="page-section">
             <div class="card">
-                <h2 style="color: #1a365d; border-bottom: 2px solid #008000; padding-bottom: 8px; margin-bottom: 20px;">सूचना तथा प्रेस विज्ञप्ति</h2>
+                <h2 style="color: #1a365d; border-bottom: 2px solid #008000; padding-bottom: 8px; margin-bottom: 20px; text-align: center;">सूचना तथा प्रेस विज्ञप्ति</h2>
                 <div id="publicNoticesContainer">
-                    <p>सूचनाहरू लोड हुँदैछ...</p>
+                    <p style="text-align: center;">सूचनाहरू लोड हुँदैछ...</p>
                 </div>
             </div>
         </div>
 
-        <div id="contact" class="page-section"><div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
+        <div id="contact" class="page-section"><div class="card" style="text-align: center;"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
 
         <!-- सदस्यता तथा नवीकरण प्रणाली सेक्सन -->
         <div id="membershipMainStep" class="page-section">
@@ -554,7 +555,6 @@
                     <div class="idcard-qr-box">
                         <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्">
                     </div>
-                    <!-- हस्ताक्षरहरू -->
                     <div class="idcard-signatures">
                         <div class="sig-col">
                             <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" class="sig-img" alt="सचिवको हस्ताक्षर">
@@ -570,7 +570,6 @@
                 </div>
             </div>
 
-            <!-- अन्तिम निलो पट्टी -->
             <div class="idcard-footer">
                 <div class="idcard-footer-row">
                     <div class="idcard-footer-item">
@@ -1107,29 +1106,29 @@
             document.getElementById('step3').style.display = 'none';
         }
 
-        // मुख्य पेजमा सूचनाहरू लोड गर्ने फंक्सन
+        // सूचनाहरू लोड गर्ने फंक्सन (सूचना तथा प्रेस विज्ञप्ति पेजको लागि)
         async function loadPublicNotices() {
             const container = document.getElementById('publicNoticesContainer');
             const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
             
             if (error || !data || data.length === 0) {
-                container.innerHTML = '<p style="color: #666; font-size: 15px;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
+                container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
                 return;
             }
 
             container.innerHTML = '';
             data.forEach(item => {
                 let fileContent = '';
-                if (item.file_type === 'pdf') {
+                if (item.file_type === 'pdf' || (item.file_url && item.file_url.endsWith('.pdf'))) {
                     fileContent = `
-                        <div style="margin-top: 15px;">
+                        <div style="margin-top: 15px; text-align: center;">
                             <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
                         </div>
                     `;
-                } else {
+                } else if (item.file_url) {
                     fileContent = `
                         <div style="margin-top: 15px; text-align: center;">
-                            <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;" onclick="showImage('${item.file_url}')">
+                            <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;">
                         </div>
                     `;
                 }
@@ -1137,7 +1136,7 @@
                 container.innerHTML += `
                     <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d;">
                         <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                        <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
+                        <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0; text-align: left;">${item.title}</p>
                         ${fileContent}
                     </div>
                 `;
@@ -1145,67 +1144,11 @@
         }
 
         async function loadHomePageContent() {
-            // क. हाम्रो बारेमा विवरण लोड गर्ने (सबैभन्दा तलको लागि)
+            // क. हाम्रो बारेमा विवरण लोड गर्ने (गृहपृष्ठको लागि)
             const { data: aboutData } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
             if (aboutData) {
                 document.getElementById('homeIntroduction').innerText = aboutData.introduction || '';
                 document.getElementById('homeAboutText').innerText = aboutData.description || '';
-            }
-
-            // ख. सूचना तथा प्रेस विज्ञप्ति लोड गर्ने (नयाँ अपडेट क्रмати: ascending वा descending मिलाउने)
-            const { data: noticesData } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
-            const noticeContainer = document.getElementById('homeNoticesContainer');
-            noticeContainer.innerHTML = '';
-            if (noticesData && noticesData.length > 0) {
-                noticesData.forEach(item => {
-                    let fileContent = '';
-                    if (item.file_url) {
-                        if (item.file_type === 'pdf' || item.file_url.endsWith('.pdf')) {
-                            fileContent = `
-                                <div style="margin-top: 15px;">
-                                    <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
-                                </div>
-                            `;
-                        } else {
-                            fileContent = `
-                                <div style="margin-top: 15px; text-align: center;">
-                                    <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;" onclick="showImage('${item.file_url}')">
-                                </div>
-                            `;
-                        }
-                    }
-
-                    noticeContainer.innerHTML += `
-                        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d;">
-                            <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                            <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
-                            ${fileContent}
-                        </div>
-                    `;
-                });
-            } else {
-                noticeContainer.innerHTML = '<p>कुनै सूचना उपलब्ध छैन।</p>';
-            }
-
-            // ग. केन्द्रीय समिति लोड गर्ने
-            const { data: centralData } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
-            const centralContainer = document.getElementById('homeCentralCommitteeContainer');
-            centralContainer.innerHTML = '';
-            if (centralData && centralData.length > 0) {
-                let gridHtml = '<div style="display: flex; flex-wrap: wrap; gap: 15px;">';
-                centralData.forEach(person => {
-                    gridHtml += `
-                        <div style="background: #fff; border: 1px solid #cbd5e0; padding: 10px; border-radius: 6px; width: 180px; text-align: center;">
-                            <img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #1a365d;">
-                            <h4 style="margin: 8px 0 2px; font-size: 14px; color: #1a365d;">${person.full_name}</h4>
-                            <p style="margin: 0; font-size: 12px; color: #008000; font-weight: bold;">${person.position}</p>
-                        </div>
-                    `;
-                });
-                gridHtml += '</div>';
-                centralContainer.innerHTML = gridHtml;
-            } else {
-                centralContainer.innerHTML = '<p>केन्द्रीय समितिको विवरण उपलब्ध छैन।</p>';
             }
         }
 
