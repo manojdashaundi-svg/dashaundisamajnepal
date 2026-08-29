@@ -49,7 +49,6 @@
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
         
-        /* संस्थापक समिति लगायत सबै हेडिङहरूलाई अझ बढी बोल्ड र व्यावसायिक बनाइएको स्टाइल */
         .card > h2, .page-section .card h2, .about-section h3 {
             display: inline-block;
             color: #1a365d;
@@ -244,15 +243,30 @@
     <div class="container">
         
         <div id="home" class="page-section active-page">
+            <!-- १. सूचना तथा प्रेस विज्ञप्ति (नयाँ अपडेट हुनेबित्तिकै क्रमैसँग माथि देखिने गरी) -->
             <div class="card">
-                <!-- १. परिचय -->
+                <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
+                <div id="homeNoticesContainer">
+                    <p style="text-align: center;">सूचनाहरू लोड हुँदैछ...</p>
+                </div>
+            </div>
+
+            <!-- २. केन्द्रीय समिति -->
+            <div class="card">
+                <h2>केन्द्रीय समिति</h2>
+                <div id="home_central_container" class="committee-grid">
+                    <p style="text-align: center; width: 100%;">विवरण लोड हुँदैछ...</p>
+                </div>
+            </div>
+
+            <!-- ३. हाम्रो बारेमा (सबैभन्दा तल) -->
+            <div class="card">
                 <div class="content-section">
                     <h2>परिचय</h2>
                     <p id="homeIntroduction">यस दशौँदी समाज नेपालको आधिकारिक वेबसाइटमा हार्दिक स्वागत छ...</p>
                 </div>
 
-                <!-- २. हाम्रो बारेमा (गृहपृष्ठमा राखिएको) -->
-                <div class="content-section" id="aboutUsSection">
+                <div class="content-section" id="aboutUsSection" style="margin-top: 30px;">
                     <h2>हाम्रो बारेमा</h2>
                     <p id="homeAboutText">संस्थाको परिचय तथा विस्तृत विवरण...</p>
                 </div>
@@ -693,6 +707,12 @@
                 document.getElementById('db_reg_no').innerText = data.reg_no || '';
                 document.getElementById('db_introduction').innerText = data.introduction || '';
                 document.getElementById('db_description').innerText = data.description || '';
+
+                // गृहपृष्ठमा पनि राख्ने
+                const introEl = document.getElementById('homeIntroduction');
+                const aboutEl = document.getElementById('homeAboutText');
+                if(introEl) introEl.innerText = data.introduction || '';
+                if(aboutEl) aboutEl.innerText = data.description || '';
             }
         }
         fetchAboutData();
@@ -718,21 +738,31 @@
 
         async function fetchCentralCommittee() {
             const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
+            
+            // छुट्टै छुट्टै कन्टेनरमा देखाउने (पेजको लागि र गृहपृष्ठको लागि)
             const container = document.getElementById('central_container');
-            if(container) {
-                if(!data || data.length === 0) { container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>'; return; }
-                container.innerHTML = '';
-                data.forEach(item => {
-                    container.innerHTML += `
-                        <div class="committee-card">
-                            <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
-                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
-                            <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                            <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
-                        </div>
-                    `;
-                });
+            const homeContainer = document.getElementById('home_central_container');
+
+            if(!data || data.length === 0) {
+                if(container) container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
+                if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
+                return;
             }
+
+            let htmlContent = '';
+            data.forEach(item => {
+                htmlContent += `
+                    <div class="committee-card">
+                        <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
+                        <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
+                        <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
+                        <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                    </div>
+                `;
+            });
+
+            if(container) container.innerHTML = htmlContent;
+            if(homeContainer) homeContainer.innerHTML = htmlContent;
         }
 
         fetchFounderCommittee();
@@ -1112,52 +1142,51 @@
         }
 
         async function loadPublicNotices() {
-            const container = document.getElementById('publicNoticesContainer');
+            // नयाँ अपडेट हुनेबित्तिकै क्रमस माथि देखिने गरी 'id' वा 'created_at' को आधारमा descending order मा फेच गरिएको छ
             const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
             
-            if (error || !data || data.length === 0) {
-                container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
-                return;
-            }
+            const containers = [
+                document.getElementById('publicNoticesContainer'),
+                document.getElementById('homeNoticesContainer')
+            ];
 
-            container.innerHTML = '';
-            data.forEach(item => {
-                let fileContent = '';
-                if (item.file_type === 'pdf' || (item.file_url && item.file_url.endsWith('.pdf'))) {
-                    fileContent = `
-                        <div style="margin-top: 15px; text-align: center;">
-                            <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
-                        </div>
-                    `;
-                } else if (item.file_url) {
-                    fileContent = `
-                        <div style="margin-top: 15px; text-align: center;">
-                            <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;">
-                        </div>
-                    `;
+            containers.forEach(container => {
+                if(!container) return;
+                if (error || !data || data.length === 0) {
+                    container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
+                    return;
                 }
 
-                container.innerHTML += `
-                    <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
-                        <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                        <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
-                        ${fileContent}
-                    </div>
-                `;
-            });
-        }
+                container.innerHTML = '';
+                data.forEach(item => {
+                    let fileContent = '';
+                    if (item.file_type === 'pdf' || (item.file_url && item.file_url.endsWith('.pdf'))) {
+                        fileContent = `
+                            <div style="margin-top: 15px; text-align: center;">
+                                <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
+                            </div>
+                        `;
+                    } else if (item.file_url) {
+                        fileContent = `
+                            <div style="margin-top: 15px; text-align: center;">
+                                <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;">
+                            </div>
+                        `;
+                    }
 
-        async function loadHomePageContent() {
-            const { data: aboutData } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
-            if (aboutData) {
-                document.getElementById('homeIntroduction').innerText = aboutData.introduction || '';
-                document.getElementById('homeAboutText').innerText = aboutData.description || '';
-            }
+                    container.innerHTML += `
+                        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
+                            <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
+                            <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
+                            ${fileContent}
+                        </div>
+                    `;
+                });
+            });
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
-            loadHomePageContent();
         });
     </script>
 </body>
