@@ -3,556 +3,827 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>दशाैँदी समाज नेपाल</title>
+    <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("Znfw9-9eMPrqc8ob4");
-        })();
-    </script>
+    <script src="https://nepalidateconverter.com/js/nepali-date-picker.min.js"></script>
+    <link href="https://nepalidateconverter.com/css/nepali-date-picker.min.css" rel="stylesheet" />
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
-            --accent-gradient: linear-gradient(135deg, #276749 0%, #38a169 100%);
-            --warning-gradient: linear-gradient(135deg, #d69e2e 0%, #ecc94b 100%);
-            --danger-gradient: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
-            --bg-color: #f4f6f9;
+            --primary-color: #1a365d;
+            --accent-color: #008000;
+            --danger-color: #e53e3e;
+            --edit-color: #3182ce;
+            --print-color: #006400;
+            --bg-color: #edf2f7;
             --card-bg: #ffffff;
-            --text-color: #2d3748;
-            --border-color: #e2e8f0;
+            --text-color: #1a202c;
+            --border-color: #cbd5e0;
         }
 
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
-        .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
-        
-        .header-split { display: flex; width: 100%; flex-wrap: wrap; }
-        .header-green { background-color: #008000; color: white; width: 100%; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; }
-        
-        /* हल्लिने झण्डाको साइज डबल गरिएको भाग */
-        .header-flag-box { position: absolute; right: -30px; top: 28%; transform: translateY(-50%); width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
-        .header-flag-box img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-        .header-logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 3px solid white; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-        .header-logo { width: 100%; height: 100%; object-fit: cover; }
-        
-        .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
-        
-        .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; justify-content: center; }
-        .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 200px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 10; top: 100%; left: 0; }
-        .dropdown-content a { color: white; padding: 10px 14px; text-decoration: none; display: block; font-weight: normal; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; }
-        .dropdown-content a:hover { background-color: #3b5998; }
-        .dropdown:hover .dropdown-content { display: block; }
+        .admin-container {
+            max-width: 1400px;
+            background: var(--card-bg);
+            padding: 30px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
 
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
-        
-        .card > h2, .page-section .card h2, .about-section h3 {
-            display: inline-block;
-            color: #1a365d;
-            font-size: 26px;
-            font-weight: 950;
-            letter-spacing: 1px;
-            border-bottom: 3.5px solid #008000;
-            padding-bottom: 6px;
-            margin-bottom: 25px;
+        .login-logo-container {
             text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .page-section { display: none; }
-        .page-section.active-page { display: block; animation: fadeIn 0.4s ease-in-out; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .about-header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .about-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: white; }
-        
-        .about-title-ne { font-size: 26px; color: #1a365d; font-weight: 950; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3.5px solid #008000; padding-bottom: 6px; display: inline-block; }
-        .about-title-en { font-size: 18px; color: #4a5568; font-weight: 800; margin: 0 0 15px 0; }
-        .about-meta { font-size: 15px; color: #2d3748; font-weight: 700; margin: 6px 0; }
-        .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
-
-        #home .content-section {
-            max-width: 900px;
-            margin: 0 auto 30px auto;
+        .main-header-box {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
             text-align: center;
-        }
-        #home .content-section p {
-            text-align: justify;
-            text-align-last: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(26, 54, 93, 0.2);
         }
 
-        .committee-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-            text-align: left;
+        .main-header-box h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.5px;
+            color: white;
         }
 
-        @media (max-width: 992px) { .committee-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .committee-grid { grid-template-columns: 1fr; } }
-
-        .committee-card {
-            background: #fff;
-            border: 1px solid #cbd5e0;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        .section-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            transition: transform 0.2s ease;
+            background-color: #f7fafc;
+            padding: 10px 15px;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
+            margin-top: 35px;
+            margin-bottom: 15px;
         }
 
-        .committee-card:hover { transform: translateY(-3px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); }
-        .committee-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 10px; }
-
-        .form-group { margin-bottom: 18px; text-align: left; }
-        label { display: block; font-weight: 700; margin-bottom: 6px; color: #2d3748; font-size: 14px; }
-        input[type="text"], input[type="email"], input[type="date"], input[type="password"], input[type="file"], select, textarea {
-            width: 100%; padding: 10px 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 14px; box-sizing: border-box; background-color: #fcfdfd; transition: all 0.3s;
+        .section-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 20px;
         }
-        input:focus, select:focus { border-color: #3182ce; box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15); outline: none; background-color: #fff; }
-        .password-container { position: relative; display: flex; align-items: center; }
-        .password-container input { width: 100%; padding-right: 40px; }
-        .toggle-password { position: absolute; right: 12px; background: none; border: none; cursor: pointer; font-size: 16px; color: #718096; padding: 0; width: auto; box-shadow: none; }
-        .otp-container { position: relative; display: flex; align-items: center; }
-        .otp-container input { width: 100%; padding-right: 40px; text-align: center; font-size: 18px; letter-spacing: 3px; font-weight: bold; }
-        .otp-status-icon { position: absolute; right: 12px; font-size: 18px; font-weight: bold; }
-        button { background: var(--accent-gradient); color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; font-weight: 800; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); transition: all 0.2s; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0, 128, 0, 0.3); }
-        .timer { font-weight: bold; color: #e53e3e; text-align: center; margin-top: 10px; font-size: 14px; }
-        .official-form { border: 2px solid #e2e8f0; padding: 20px; background: #fff; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); position: relative; margin-top: 20px; text-align: left; }
-        .form-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
-        .form-col { flex: 1; min-width: 240px; }
-        .qr-box { text-align: center; background: #f7fafc; padding: 20px; border: 2px dashed #cbd5e0; border-radius: 10px; margin-bottom: 15px; }
-        .qr-img { width: 180px; height: 210px; object-fit: contain; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); background: #fff; padding: 5px; }
-        #message { margin-top: 15px; text-align: center; font-weight: bold; font-size: 14px; }
-        .choice-box { text-align: center; padding: 10px; }
-        .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 13px; color: #2d3748; font-weight: 600; }
-        .profile-pic-container { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; text-align: left; }
-        .passport-photo-box { width: 110px; height: 135px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 15px; }
-        .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
-        .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .toggle-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        .print-btn {
+            background-color: var(--print-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+
+        .print-btn:hover {
+            background-color: #004d00;
+        }
+
+        .collapsible-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2d3748;
+            font-size: 13px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+        }
+
+        textarea {
+            height: 90px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #006600;
+        }
+
+        .btn-action {
+            padding: 4px 6px;
+            font-size: 10px;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 1px;
+            font-weight: bold;
+        }
+        .btn-edit { background-color: var(--edit-color); }
+        .btn-edit:hover { background-color: #2b6cb0; }
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-danger:hover { background-color: #c53030; }
+        .btn-success { background-color: #38a169; }
+        .btn-success:hover { background-color: #2f855a; }
+        .btn-view { background-color: #d69e2e; }
+        .btn-view:hover { background-color: #b7791f; }
+        .btn-idcard { background-color: #805ad5; }
+        .btn-idcard:hover { background-color: #6b46c1; }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-text {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .logout-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #2d3748;
+        }
+
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 6px 4px;
+            text-align: center;
+            font-size: 10px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .table-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #1a365d;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .img-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; }
+        .img-modal-content { max-width: 90%; max-height: 90%; position: relative; }
+        .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
+        .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+        .idcard-modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.75); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 4000; 
+            padding: 10px; 
+            overflow-y: auto; 
+        }
         
-        .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
+        .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
+        .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
+
+        .print-header {
+            display: none;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .print-logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 5px;
+            border: 2px solid #1a365d;
+        }
+        .print-title-1 { font-size: 22px; font-weight: 900; color: #1a365d; margin: 2px 0; }
+        .print-meta { font-size: 12px; font-weight: 600; color: #333; margin: 2px 0; }
+        .print-date { position: absolute; top: 0; right: 0; font-size: 11px; font-weight: bold; color: #000; }
+        .print-section-title { font-size: 16px; font-weight: 800; text-align: center; margin: 10px 0; color: #1a365d; text-decoration: underline; }
 
         @media print {
-            @page { size: 450px auto; margin: 0; }
-            body, html { width: 100%; height: auto; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background: #fff !important; }
             body * { visibility: hidden !important; }
-            #idCardModal, #idCardModal * { visibility: visible !important; }
-            #idCardModal { position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; margin: 0 !important; z-index: 9999 !important; overflow: hidden !important; }
-            .no-print-card { display: none !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #idCardModal.active-card-modal, #idCardModal.active-card-modal * { visibility: visible !important; }
+            #idCardModal.active-card-modal { 
+                position: fixed !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                height: 100vh !important; 
+                background: #fff !important; 
+                display: flex !important; 
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 !important; 
+                margin: 0 !important;
+                z-index: 9999 !important;
+                transform: scale(0.85);
+                transform-origin: center;
+            }
+            .printable-section, .printable-section * { visibility: visible !important; }
+            .printable-section { 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
+                background: #fff !important;
+                display: block !important; 
+            }
+            .printable-section table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                font-size: 7px !important;
+            }
+            .printable-section th, 
+            .printable-section td {
+                padding: 2px 1px !important;
+                word-wrap: break-word !important;
+                white-space: normal !important;
+                font-size: 7px !important;
+            }
+            .printable-section .table-avatar {
+                width: 18px !important;
+                height: 18px !important;
+            }
+            
+            .printable-section .btn-action {
+                display: inline-block !important;
+                visibility: visible !important;
+                background: none !important;
+                color: #1a365d !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 6px !important;
+                font-weight: bold !important;
+            }
+            .printable-section .btn-action::after {
+                content: " [फोटो]";
+            }
+
+            .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
+            .print-header { display: block !important; }
+            
+            @page {
+                size: landscape;
+                margin: 0;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
-
-        .membership-brand-header { background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        .membership-brand-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: white; padding: 4px; border: 3px solid #cbd5e0; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
-        .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
-
-        footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <div>महत्वपूर्ण सूचना: दशाैँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</div>
-        <div>वि.सं. २०८३ भदौ १२ | नेपाल संवत ११४६</div>
-    </div>
-
-    <div class="header-split">
-        <div class="header-green">
-            <div class="header-flag-box">
-                <img src="https://i.postimg.cc/DmVj6Kmj/Animated-Flag-Nepal.gif" alt="animated nepal flag">
-            </div>
-
-            <div class="header-logo-box">
-                <img id="top_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="header-logo">
-            </div>
-            <div>
-                <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
-                <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल।</p>
-                <p id="top_est" style="margin: 4px 0 0 0; font-size: 14px; font-weight: 700; color: #e2e8f0;">स्थापना: २०८०</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="nav">
-        <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
-        <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
-        
-        <div class="dropdown">
-            <a href="#">समिति ▾</a>
-            <div class="dropdown-content">
-                <a onclick="switchPage('founder-committee', this)">संस्थापक समिति</a>
-                <a onclick="switchPage('central-committee', this)">केन्द्रीय समिति</a>
-                <a onclick="switchPage('advisory-committee', this)">केन्द्रीय सल्लाहकार समिति</a>
-                <a onclick="switchPage('province-committee', this)">प्रदेश समिति</a>
-                <a onclick="switchPage('district-committee', this)">जिल्ला समिति</a>
-                <a onclick="switchPage('local-committee', this)">स्थानिय समिति</a>
-            </div>
+    <div class="admin-container">
+        <div class="login-logo-container">
+            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
         </div>
 
-        <a onclick="switchPage('noticesSection', this)">सुचना तथा प्रेस विज्ञप्ति</a>
-        <a onclick="switchPage('contact', this)">सम्पर्क</a>
-        
-        <div class="dropdown">
-            <a href="#">सदस्यता ▾</a>
-            <div class="dropdown-content">
-                <a onclick="switchPage('membershipMainStep', this)">नयाँ सदस्यता / नवीकरण</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        
-        <div id="home" class="page-section active-page">
-            <div class="card">
-                <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
-                <div id="homeNoticesContainer">
-                    <p style="text-align: center;">सूचनाहरू लोड हुँदैछ...</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>केन्द्रीय समिति</h2>
-                <div id="home_central_container" class="committee-grid">
-                    <p style="text-align: center; width: 100%;">विवरण लोड हुँदैछ...</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="content-section">
-                    <h2>परिचय</h2>
-                    <p id="homeIntroduction">यस दशौँदी समाज नेपालको आधिकारिक वेबसाइटमा हार्दिक स्वागत छ...</p>
-                </div>
-
-                <div class="content-section" id="aboutUsSection" style="margin-top: 30px;">
-                    <h2>हाम्रो बारेमा</h2>
-                    <p id="homeAboutText">संस्थाको परिचय तथा विस्तृत विवरण...</p>
-                </div>
-            </div>
+        <div class="main-header-box">
+            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
 
-        <div id="about" class="page-section">
-            <div class="card">
-                <div class="about-header">
-                    <img id="db_logo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="about-logo">
-                    <h2 class="about-title-ne" id="db_title_ne">लोड हुँदैछ...</h2>
-                    <h3 class="about-title-en" id="db_title_en"></h3>
-                    <div class="about-meta" id="db_address"></div>
-                    <div class="about-meta" id="db_reg_date"></div>
-                    <div class="about-meta" id="db_reg_no"></div>
+        <div id="loginSection">
+            <h3 style="text-align: center; border-left: none; padding-left: 0;">प्रशासन लगइन</h3>
+            <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
+                <div class="form-group">
+                    <label>युजरनेम (Username):</label>
+                    <input type="text" id="username" placeholder="युजरनेम हाल्नुहोस्" required>
                 </div>
-
-                <div class="about-section">
-                    <h3>संस्थाको परिचय</h3>
-                    <p id="db_introduction"></p>
+                <div class="form-group">
+                    <label>पासवर्ड (Password):</label>
+                    <input type="password" id="password" placeholder="पासवर्ड हाल्नुहोस्" required>
                 </div>
-
-                <div class="about-section">
-                    <h3>कामको व्याख्या तथा उद्देश्यहरू</h3>
-                    <p id="db_description"></p>
-                </div>
-            </div>
+                <button type="submit">लगइन गर्नुहोस्</button>
+            </form>
         </div>
 
-        <div id="founder-committee" class="page-section"><div class="card"><h2>संस्थापक समिति</h2><div id="founder_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
-        <div id="central-committee" class="page-section"><div class="card"><h2>केन्द्रीय समिति</h2><div id="central_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
-        <div id="advisory-committee" class="page-section"><div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>विवरण राखिनेछ।</p></div></div>
-        <div id="province-committee" class="page-section"><div class="card"><h2>प्रदेश समिति</h2><p>विवरण राखिनेछ।</p></div></div>
-        <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
-        <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
-        
-        <div id="noticesSection" class="page-section">
-            <div class="card">
-                <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
-                <div id="publicNoticesContainer">
-                    <p style="text-align: center;">सूचनाहरू लोड हुँदैछ...</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="contact" class="page-section"><div class="card"><h2>सम्पर्क विवरण</h2><p>केन्द्रीय कार्यालय, कर्णाली प्रदेश सुर्खेत, नेपाल।</p></div></div>
-
-        <div id="membershipMainStep" class="page-section">
-            <div class="membership-brand-header">
-                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" class="membership-brand-logo">
-                <div class="membership-brand-info">
-                    <h2>दशाैँदी समाज नेपाल</h2>
-                    <p>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
-                    <p>dashaundisamajnepal@gmail.com</p>
-                    <p>स्थापना : वि.सं. २०८० आश्विन २५ गते (12 October 2023)</p>
-                </div>
+        <div id="dashboardSection" class="hidden">
+            <div class="top-header">
+                <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
+                <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
 
-            <div class="card">
-                <h3 style="color: #1a365d; text-align: center; border-bottom: 3.5px solid #008000; padding-bottom: 8px; margin-top: 0; font-weight: 950; font-size: 24px;">सदस्यता तथा नवीकरण प्रणाली</h3>
-                
-                <div id="mainChoiceStep" class="sub-section active">
-                    <div class="choice-box">
-                        <div class="card-box" style="text-align: left; max-width: 550px; margin: 0 auto 20px auto;">
-                            <strong>सुचना:</strong> नयाँ सदस्य बन्नको लागि <strong>'नयाँ खाता खोल्नुहोस्'</strong> मा क्लिक गरी आफ्नो विवरण भरेर OTP प्रमाणीकरण गर्नुहोला।
-                        </div>
-                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                            <button type="button" onclick="showSubSection('registerStep')" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">✨ नयाँ खाता खोल्नुहोस्</button>
-                            <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 12px 25px;">🔐 पुरानो खाता लगइन गर्नुहोस्</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="section-header">
+                <h3>सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
 
-                <div id="registerStep" class="sub-section" style="display: none;">
-                    <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">नयाँ खाता दर्ता फारम</h3>
-                    
-                    <form id="registerForm">
-                        <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required></div>
-                        <div class="form-row">
-                            <div class="form-col"><label>मोबाइल नम्बर:</label><input type="text" id="reg_phone" placeholder="98XXXXXXXX" required></div>
-                            <div class="form-col"><label>इमेल ठेगाना:</label><input type="email" id="identifier" placeholder="example@gmail.com" required></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col"><label>जन्म मिति:</label><input type="text" id="reg_dob" placeholder="वि.सं. (उदा. २०४९-०९-१०)" required></div>
-                            <div class="form-col"><label>पासवर्ड:</label>
-                                <div class="password-container">
-                                    <input type="password" id="reg_password" placeholder="बलियो पासवर्ड" required>
-                                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('reg_password', this)">👁</button>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" id="sendOtpBtn">🚀 सबमिट गरी OTP पर्खनुहोस्</button>
-                    </form>
-
-                    <div id="otpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0; text-align: left;">
-                        <div class="form-group" style="margin-bottom: 12px;">
-                            <label style="color: #2b6cb0;">इमेलमा प्राप्त ६ अंकको OTP कोड:</label>
-                            <div class="otp-container">
-                                <input type="text" id="otpCode" placeholder="______" maxlength="6" oninput="checkOtpMatch(this.value, currentGeneratedOtp, 'otpStatusIcon')">
-                                <span id="otpStatusIcon" class="otp-status-icon"></span>
-                            </div>
-                            <small id="emailStatusInfo" style="color: #38a169; display: block; margin-top: 4px; font-weight: bold;"></small>
-                        </div>
-                        <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
-                        <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 8px; background: var(--accent-gradient);">✔ कोड प्रमाणित गर्नुहोस्</button>
-                    </div>
-                </div>
-
-                <div id="loginStep" class="sub-section" style="display: none;">
-                    <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पुरानो खाता लगइन</h3>
-                    
-                    <form id="loginForm" onsubmit="handleLogin(event)">
-                        <div class="form-group"><label>इमेल ठेगाना:</label><input type="email" id="login_email" placeholder="तपाईको इमेल" required></div>
-                        <div class="form-group"><label>पासवर्ड:</label>
-                            <div class="password-container">
-                                <input type="password" id="login_password" placeholder="पासवर्ड" required>
-                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('login_password', this)">👁</button>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: right; margin-top: 8px;">
-                            <a href="javascript:void(0);" onclick="showForgotPasswordStep()" style="color: #2b6cb0; font-size: 13px; font-weight: bold; text-decoration: none;">पासवर्ड बिर्सनुभयो?</a>
-                        </div>
-
-                        <button type="submit" style="background: var(--primary-gradient); margin-top: 10px;">लगइन गर्नुहोस्</button>
-                    </form>
-                </div>
-
-                <div id="forgotPasswordStep" class="sub-section" style="display: none;">
-                    <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← लगइनमा फर्कनुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पासवर्ड रिसेट गर्नुहोस्</h3>
-                    
+            <div id="noticesContent" class="collapsible-content">
+                <form id="noticeForm">
+                    <input type="hidden" id="notice_edit_id">
                     <div class="form-group">
-                        <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
-                        <input type="email" id="forgot_email" placeholder="example@gmail.com">
+                        <label>सूचनाको शीर्षक / विवरण (माथि लेख्ने टेक्स्ट):</label>
+                        <textarea id="notice_title" placeholder="सूचना वा प्रेस विज्ञप्तिबारे यहाँ लेख्नुहोस्..." required></textarea>
                     </div>
-                    <button type="button" onclick="sendForgotPasswordOtp()" style="background: var(--warning-gradient); color: #1a202c;">✉ रिसेट कोड पठाउनुहोस्</button>
-
-                    <div id="forgotOtpSection" style="display: none; margin-top: 15px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0; text-align: left;">
-                        <div class="form-group">
-                            <label style="color: #2b6cb0;">इमेलमा आएको ६ अंकको कोड:</label>
-                            <input type="text" id="forgot_otp_code" placeholder="______" maxlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label>नयाँ पासवर्ड:</label>
-                            <input type="password" id="new_password" placeholder="नयाँ बलियो पासवर्ड">
-                        </div>
-                        <button type="button" onclick="verifyAndResetPassword()" style="background: var(--accent-gradient);">✔ पासवर्ड परिवर्तन गर्नुहोस्</button>
-                    </div>
-                </div>
-
-                <div id="dashboardStep" class="sub-section" style="display: none;">
-                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; text-align: left;">
-                        <div>
-                            <h3 style="color: #234e52; margin: 0; font-size: 18px; font-weight: 900;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
-                            <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px; font-weight: 700;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
-                        </div>
-                        <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 6px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
-                    </div>
-
-                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <h4 style="color: #1a365d; margin: 0; font-size: 16px; font-weight: 900;">👤 मेरो प्रोफाइल विवरण</h4>
-                            <button type="button" onclick="toggleEditProfile()" id="btnEditToggle" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 14px; font-size: 12px; box-shadow: none;">✏ प्रोफाइल एडिट गर्नुहोस्</button>
-                        </div>
-
-                        <!-- साधारण अवलोकन दृश्य (View Mode) -->
-                        <div id="profileViewMode" class="profile-pic-container">
-                            <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar" style="width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0;">
-                            <div>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>मोबाइल:</strong> <span id="lbl_phone">-</span></p>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>इमेल:</strong> <span id="lbl_email">-</span></p>
-                                <p style="margin: 0; font-size: 14px;"><strong>जन्म मिति:</strong> <span id="lbl_dob">-</span></p>
-                            </div>
-                        </div>
-
-                        <!-- प्रोफाइल एडिट गर्ने फारम (Edit Mode - सुरुमा लुकेको हुन्छ) -->
-                        <div id="profileEditMode" style="display: none; margin-top: 15px; border-top: 2px dashed #e2e8f0; padding-top: 15px;">
-                            <div class="form-group" style="text-align: center;">
-                                <label style="display: block; margin-bottom: 8px;">प्रोफाइल फोटो परिवर्तन गर्नुहोस्:</label>
-                                <div style="width: 85px; height: 85px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px auto; border: 3px solid #2b6cb0; cursor: pointer; position: relative;" onclick="document.getElementById('edit_avatar_file').click()">
-                                    <img id="edit_avatar_preview" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" style="width: 100%; height: 100%; object-fit: cover;">
-                                </div>
-                                <input type="file" id="edit_avatar_file" accept="image/*" style="display: none;" onchange="previewEditAvatar(event)">
-                            </div>
-                            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_name"></div>
-                            <div class="form-row">
-                                <div class="form-col"><label>मोबाइल नम्बर:</label><input type="text" id="edit_phone"></div>
-                                <div class="form-col"><label>जन्म मिति:</label><input type="text" id="edit_dob"></div>
-                            </div>
-                            <div class="form-group"><label>नयाँ पासवर्ड (परिवर्तन गर्न नचाहिए खाली छाड्नुहोस्):</label><input type="password" id="edit_password" placeholder="नयाँ पासवर्ड"></div>
-                            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                <button type="button" onclick="saveProfileChanges()" style="background: var(--accent-gradient); flex: 1;">💾 परिवर्तनहरू सेभ गर्नुहोस्</button>
-                                <button type="button" onclick="toggleEditProfile()" style="background: #718096; flex: 1; box-shadow: none;">रद्द गर्नुहोस्</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
-                        <h4 style="color: #1a365d; margin-top: 0; font-size: 18px; font-weight: 900;">सदस्यता सेवाहरू</h4>
-                        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 12px;">
-                            <button type="button" id="btnOpenForm" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 10px 20px; font-size: 14px;">📝 नयाँ सदस्यता फारम</button>
-                            <button type="button" onclick="openMyCard()" style="width: auto; background: #805ad5; padding: 10px 20px; font-size: 14px;">🆔 मेरो कार्ड (Digital ID)</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="officialFormBox" class="official-form" style="display: none;">
-                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
-                    
-                    <div id="formNoticeBanner" style="padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; text-align: center; display: none; font-size: 13px;"></div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-                        <div><h4 style="margin: 0; color: #718096; font-size: 14px; font-weight: 700;" id="formDateDisplay">आवेदन मिति: -</h4></div>
-                        <div>
-                            <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568; font-weight: 700;">पासपोर्ट फोटो</label>
-                            <div class="passport-photo-box" id="passportBoxClick" onclick="triggerPhotoUpload()">
-                                <img id="form_photo_preview" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="पासपोर्ट फोटो">
-                                <div id="photoUploadText" style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 2px 0;">📸 फोटो राख्नुहोस्</div>
-                            </div>
-                            <input type="file" id="form_passport_photo" accept="image/*" style="display: none;" onchange="previewFormPhoto(event)">
-                        </div>
-                    </div>
-
-                    <p style="margin-top: 0; font-size: 14px; font-weight: 600;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
-                    <p style="text-align: center; font-weight: 900; font-size: 16px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
-                    
-                    <form id="membershipApplicationForm" style="margin-top: 15px;">
-                        <div class="form-row">
-                            <div class="form-col" style="flex: 2;"><label>पूरा नाम थर:</label><input type="text" id="f_name" required></div>
-                            <div class="form-col" style="flex: 1;"><label>फेम्लि कोड:</label><input type="text" id="f_family_code" placeholder="छैन"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col"><label>मोबाइल नम्बर:</label><input type="text" id="f_phone" required></div>
-                            <div class="form-col"><label>जन्म मिति:</label><input type="text" id="f_dob" placeholder="वि.सं. (उदा. २०४९-०९-१०)" required></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col"><label>नागरिकता प्र.नं.:</label><input type="text" id="f_citizenship" required></div>
-                            <div class="form-col"><label>पति/पत्नीको नाम:</label><input type="text" id="f_spouse" placeholder="अविवाहित भए 'अविवाहित'"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col"><label>बुबाको नाम:</label><input type="text" id="f_father" required></div>
-                            <div class="form-col"><label>आमाको नाम:</label><input type="text" id="f_mother"></div>
-                        </div>
-                        <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="f_grandfather"></div>
-                        <div class="form-row">
-                            <div class="form-col"><label>प्रदेश:</label>
-                                <select id="f_province" onchange="loadDistricts()" required>
-                                    <option value="">-- प्रदेश छान्नुहोस् --</option>
-                                    <option value="कोशी प्रदेश">कोशी प्रदेश</option>
-                                    <option value="मधेश प्रदेश">मधेश प्रदेश</option>
-                                    <option value="बागमती प्रदेश">बागमती प्रदेश</option>
-                                    <option value="गण्डकी प्रदेश">गण्डकी प्रदेश</option>
-                                    <option value="लुम्बिनी प्रदेश">लुम्बिनी प्रदेश</option>
-                                    <option value="कर्णाली प्रदेश">कर्णाली प्रदेश</option>
-                                    <option value="सुदूरपश्चिम प्रदेश">सुदूरपश्चिम प्रदेश</option>
-                                </select>
-                            </div>
-                            <div class="form-col"><label>जिल्ला:</label>
-                                <select id="f_district" onchange="loadMunicipalities()" required><option value="">-- पहिले प्रदेश छान्नुहोस् --</option></select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-col"><label>गाउँपालिका/नगरपालिका:</label>
-                                <select id="f_municipality" required><option value="">-- पहिले जिल्ला छान्नुहोस् --</option></select>
-                            </div>
-                            <div class="form-col"><label>वडा नं.:</label><input type="text" id="f_ward" required></div>
-                        </div>
-                        <div class="form-group"><label>टोल:</label><input type="text" id="f_tole"></div>
-                        <button type="button" id="btnGoToPayment" onclick="goToPaymentStep()" style="background: var(--primary-gradient); margin-top: 8px;">फारम सुरक्षित गरी भुक्तानी तर्फ जानुहोस् →</button>
-                    </form>
-                </div>
-
-                <div id="step3" class="sub-section" style="display: none; margin-top: 15px; text-align: left;">
-                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; font-weight: 900;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
-                    
                     <div class="form-group">
-                        <label>१. नागरिकता अगाडि:</label>
-                        <input type="file" id="citizenshipFront" accept="image/*">
-                        <small id="citFrontNotice" style="color: #e53e3e; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">* नयाँ सदस्यताको लागि नागरिकता अगाडिको फोटो अनिवार्य छ।</small>
-                        <small id="citFrontNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
+                        <label>फोटो वा PDF फाइलको लिङ्क (URL):</label>
+                        <input type="text" id="notice_file_url" placeholder="फोटो वा PDF को लिङ्क राख्नुहोस्" required>
                     </div>
-
                     <div class="form-group">
-                        <label>२. नागरिकता पछाडि:</label>
-                        <input type="file" id="citizenshipBack" accept="image/*">
-                        <small id="citBackNotice" style="color: #e53e3e; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">* नयाँ सदस्यताको लागि नागरिकता पछाडिको फोटो अनिवार्य छ।</small>
-                        <small id="citBackNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
+                        <label>फाइलको प्रकार:</label>
+                        <select id="notice_file_type" required>
+                            <option value="image">फोटो (Image)</option>
+                            <option value="pdf">PDF फाइल</option>
+                        </select>
                     </div>
+                    <button type="submit" id="noticeSubmitBtn">सूचना प्रकाशित गर्नुहोस्</button>
+                </form>
+            </div>
 
-                    <div class="qr-box">
-                        <h4 style="margin-top: 0; color: #2b6cb0; font-size: 15px; font-weight: 900;">सदस्यता शुल्क: रु. ५००/-</h4>
-                        <img src="https://i.postimg.cc/j555F5qL/ka-ya-a-ra.jpg" class="qr-img" alt="QR">
-                    </div>
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">प्रकाशित सूचनाहरूको सूची</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesTableContent', this)">सूची हेर्नुहोस् ▾</button></div>
+            </div>
 
-                    <div class="form-group"><label>३. भुक्तानी भौचर/स्क्रीनसट *:</label><input type="file" id="paymentSlip" accept="image/*" required></div>
-                    <button type="button" id="btnFinalSubmit" onclick="finalSubmit()" style="background: var(--accent-gradient);">✔ सबै प्रक्रिया पूरा गरी सबमिट गर्नुहोस्</button>
+            <div id="noticesTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>शीर्षक / विवरण</th>
+                                <th>फाइलको प्रकार</th>
+                                <th>फाइल प्रिभ्यू</th>
+                                <th class="no-print">नियन्त्रण (सम्पादन / रिमुभ)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="noticesTableBody"></tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div id="message"></div>
+            <div class="section-header">
+                <h3>नयाँ सदस्यहरूको आवेदन (Membership Applications)</h3>
+                <div class="button-group">
+                    <button class="toggle-btn" onclick="toggleSection('applicationsContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="applicationsContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>आवेदनको प्रकार</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>मोबाइल</th>
+                                <th>इमेल / आइडी</th>
+                                <th>जन्म मिति</th>
+                                <th>नागरिकता नं.</th>
+                                <th>नागरिकता अगाडि</th>
+                                <th>नागरिकता पछाडि</th>
+                                <th>पेमेन्ट स्लिप</th>
+                                <th>पति/पत्नी</th>
+                                <th>बुबा</th>
+                                <th>आमा</th>
+                                <th>बाजे</th>
+                                <th>प्रदेश</th>
+                                <th>जिल्ला</th>
+                                <th>पालिका</th>
+                                <th>वडा</th>
+                                <th>टोल</th>
+                                <th>स्थिति</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-header">
+                <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('usersContent', 'दर्ता भएका सम्पूर्ण सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('usersContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="usersContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>सदस्य नं.</th>
+                                <th>पद</th>
+                                <th>दर्ता मिति</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>मोबाइल</th>
+                                <th>इमेल / आइडी</th>
+                                <th>जन्म मिति</th>
+                                <th>नागरिकता नं.</th>
+                                <th>नागरिकता अगाडि</th>
+                                <th>नागरिकता पछाडि</th>
+                                <th>पेमेन्ट स्लिप</th>
+                                <th>पति/पत्नी</th>
+                                <th>बुबा</th>
+                                <th>आमा</th>
+                                <th>बाजे</th>
+                                <th>प्रदेश</th>
+                                <th>जिल्ला</th>
+                                <th>पालिका</th>
+                                <th>वडा</th>
+                                <th>टोल</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-header">
+                <h3>संस्थाको मुख्य विवरण अपडेट गर्ने</h3>
+                <div class="button-group">
+                    <button class="toggle-btn" onclick="toggleSection('aboutContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="aboutContent" class="collapsible-content">
+                <form id="aboutForm">
+                    <div class="form-group"><label>लोगोको लिङ्क (Logo URL):</label><input type="text" id="logo_url" required></div>
+                    <div class="form-group"><label>संस्थाको नाम (नेपालीमा):</label><input type="text" id="title_ne" required></div>
+                    <div class="form-group"><label>संस्थाको नाम (अंग्रेजीमा):</label><input type="text" id="title_en" required></div>
+                    <div class="form-group"><label>ठेगाना:</label><input type="text" id="address" required></div>
+                    <div class="form-group"><label>स्थापना / दर्ता मिति:</label><input type="text" id="reg_date" required></div>
+                    <div class="form-group"><label>कम्पनी दर्ता नं. र पान नम्बर:</label><input type="text" id="reg_no" required></div>
+                    <div class="form-group"><label>संस्थाको परिचय:</label><textarea id="introduction" required></textarea></div>
+                    <div class="form-group"><label>कामको व्याख्या तथा उद्देश्यहरू:</label><textarea id="description" required></textarea></div>
+                    <button type="submit">मुख्य विवरण सेभ गर्नुहोस्</button>
+                </form>
+            </div>
+
+            <hr>
+
+            <div class="section-header">
+                <h3 id="formTitle">संस्थापक समितिमा नयाँ सदस्य थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('committeeContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="committeeContent" class="collapsible-content">
+                <form id="committeeForm">
+                    <input type="hidden" id="edit_id">
+                    <div class="form-group"><label>पूरा नाम:</label><input type="text" id="c_name" placeholder="सदस्यको नाम" required></div>
+                    <div class="form-group"><label>पद:</label><input type="text" id="c_position" placeholder="पद" required></div>
+                    <div class="form-group"><label>सदस्य नम्बर:</label><input type="text" id="c_member_no" placeholder="सदस्य नं."></div>
+                    <div class="form-group"><label>सम्पर्क नम्बर:</label><input type="text" id="c_phone" placeholder="फोन नम्बर"></div>
+                    <div class="form-group"><label>फोटोको लिङ्क (Photo URL):</label><input type="text" id="c_photo" placeholder="फोटोको लिङ्क"></div>
+                    <button type="submit" id="submitBtn">सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('tableContent', 'संस्थापक सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="tableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="committeeTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-header">
+                <h3 id="centralFormTitle">केन्द्रीय समितिमा नयाँ सदस्य थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('centralContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="centralContent" class="collapsible-content">
+                <form id="centralCommitteeForm">
+                    <input type="hidden" id="central_edit_id">
+                    <div class="form-group"><label>पूरा नाम:</label><input type="text" id="cc_name" placeholder="सदस्यको नाम" required></div>
+                    <div class="form-group"><label>पद:</label><input type="text" id="cc_position" placeholder="पद" required></div>
+                    <div class="form-group"><label>सदस्य नम्बर:</label><input type="text" id="cc_member_no" placeholder="सदस्य नं."></div>
+                    <div class="form-group"><label>सम्पर्क नम्बर:</label><input type="text" id="cc_phone" placeholder="फोन नम्बर"></div>
+                    <div class="form-group"><label>फोटोको लिङ्क (Photo URL):</label><input type="text" id="cc_photo" placeholder="फोटोको लिङ्क"></div>
+                    <button type="submit" id="centralSubmitBtn">केन्द्रीय सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('centralTableContent', 'केन्द्रीय सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="centralTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="centralTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-header">
+                <h3 id="advisorFormTitle">केन्द्रीय सल्लाहकार समितिमा नयाँ सदस्य थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('advisorContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="advisorContent" class="collapsible-content">
+                <form id="advisorCommitteeForm">
+                    <input type="hidden" id="advisor_edit_id">
+                    <div class="form-group"><label>पूरा नाम:</label><input type="text" id="ac_name" placeholder="सदस्यको नाम" required></div>
+                    <div class="form-group"><label>पद:</label><input type="text" id="ac_position" placeholder="पद" required></div>
+                    <div class="form-group"><label>सदस्य नम्बर:</label><input type="text" id="ac_member_no" placeholder="सदस्य नं."></div>
+                    <div class="form-group"><label>सम्पर्क नम्बर:</label><input type="text" id="ac_phone" placeholder="फोन नम्बर"></div>
+                    <div class="form-group"><label>फोटोको लिङ्क (Photo URL):</label><input type="text" id="ac_photo" placeholder="फोटोको लिङ्क"></div>
+                    <button type="submit" id="advisorSubmitBtn">केन्द्रीय सल्लाहकार सदस्य थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">केन्द्रीय सल्लाहकार सदस्यहरूको सूची</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('advisorTableContent', 'केन्द्रीय सल्लाहकार सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('advisorTableContent', this)">सूची हेर्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="advisorTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>फोटो</th>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>सदस्य नं.</th>
+                                <th>सम्पर्क</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="advisorTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-header">
+                <h3 id="adminFormTitle">नयाँ एडमिन थप्ने</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('adminContent', this)">खोल्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="adminContent" class="collapsible-content">
+                <form id="adminForm">
+                    <input type="hidden" id="admin_edit_id">
+                    <div class="form-group"><label>युजरनेम (Username):</label><input type="text" id="new_admin_user" placeholder="युजरनेम" required></div>
+                    <div class="form-group"><label>पासवर्ड (Password):</label><input type="text" id="new_admin_pass" placeholder="पासवर्ड" required></div>
+                    <div class="form-group"><label>रोल (Role):</label>
+                        <select id="new_admin_role" required>
+                            <option value="अध्यक्ष">अध्यक्ष</option>
+                            <option value="सचिव">सचिव</option>
+                            <option value="एडमिन">एडमिन</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="adminSubmitBtn">एडमिन थप्नुहोस्</button>
+                </form>
+            </div>
+
+            <div class="section-header" style="margin-top: 35px;">
+                <h3 style="color: #1a365d;">एडमिनहरूको सूची</h3>
+                <div class="button-group"><button class="toggle-btn" onclick="toggleSection('adminTableContent', this)">सूची हेर्नुहोस् ▾</button></div>
+            </div>
+
+            <div id="adminTableContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>युजरनेम</th>
+                                <th>रोल (पद)</th>
+                                <th>पासवर्ड</th>
+                                <th class="no-print">नियन्त्रण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <div id="positionModal" class="app-edit-modal">
+        <div class="app-edit-content" style="width: 400px;">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता स्वीकृत (Approve)</h3>
+            <p style="font-size: 13px; font-weight: 600; color: #2d3748;">यो सदस्यलाई संस्थामा दिने पद छान्नुहोस् वा लेख्नुहोस्:</p>
+            
+            <input type="hidden" id="pendingAppStr">
+            
+            <div class="form-group">
+                <label>पद (Designation):</label>
+                <select id="selectPosition" class="form-control" onchange="checkCustomPosition(this)">
+                    <option value="साधारण सदस्य">साधारण सदस्य</option>
+                    <option value="अध्यक्ष">अध्यक्ष</option>
+                    <option value="उपाध्यक्ष">उपाध्यक्ष</option>
+                    <option value="सचिव">सचिव</option>
+                    <option value="सह-सचिव">सह-सचिव</option>
+                    <option value="कोषाध्यक्ष">कोषाध्यक्ष</option>
+                    <option value="सदस्य">सदस्य</option>
+                    <option value="अन्य (Custom)">अन्य (आफैं लेख्नुहोस्)</option>
+                </select>
+            </div>
+
+            <div class="form-group hidden" id="customPositionBox">
+                <label>नयाँ पदको नाम लेख्नुहोस्:</label>
+                <input type="text" id="customPositionInput" placeholder="पदको नाम लेख्नुहोस्">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="confirmApproveUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">स्वीकृत गर्नुहोस्</button>
+                <button type="button" onclick="closePositionModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">रद्द गर्नुहोस्</button>
             </div>
         </div>
     </div>
 
-    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
+    <!-- परिचय पत्र मोडल -->
+    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
                 
-                <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
+                <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
 
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
@@ -574,7 +845,6 @@
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 18px;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
-                    <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 8px; position: relative; overflow: hidden;">
@@ -587,10 +857,10 @@
                     </div>
                     
                     <div style="flex-grow: 1; font-size: 13px; color: #000000; line-height: 1.45; font-weight: 900; z-index: 1;">
-                        <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">-</div>
-                        <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">-</div>
-                        <div style="font-size: 11.5px; color: #111111; margin-top: 4px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000; font-weight: 950;">-</span></div>
-                        <div style="font-size: 11.5px; color: #c53030; margin-top: 2px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 950;">-</span></div>
+                        <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">Manoj Kumar Dashaundi</div>
+                        <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">सचिव</div>
+                        <div style="font-size: 11.5px; color: #111111; margin-top: 4px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000; font-weight: 950;">२०८३-०५-१२</span></div>
+                        <div style="font-size: 11.5px; color: #c53030; margin-top: 2px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 950;">२०८४-०५-१२</span></div>
                     </div>
                 </div>
 
@@ -603,17 +873,17 @@
                     </div>
                     <div style="flex-grow: 1; padding: 2px 6px;">
                         <table style="width: 100%; background: transparent; margin: 0;">
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px;"><span id="cardProvince">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px;"><span id="cardProvince">कर्णाली प्रदेश</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">सुर्खेत</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">वीरेन्द्रनगर नगरपालिका</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">४</span></td></tr>
                         </table>
                     </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1.5px dashed #cbd5e0; margin-bottom: 4px;">
                     <div>
-                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्" style="width: 66px; height: 66px; border: 1.5px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer;">
+                        <img id="cardQrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ManojKumarDashaundi" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्" style="width: 66px; height: 66px; border: 1.5px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer;">
                     </div>
                     <div style="text-align: center; font-size: 12px; font-weight: 950; color: #000000; display: flex; justify-content: space-between; width: 230px;">
                         <div style="text-align: center; position: relative; flex: 1;">
@@ -649,7 +919,64 @@
         </div>
     </div>
 
-    <footer><p>&copy; २०२६ दशाैँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p></footer>
+    <div id="imageModal" class="img-modal" onclick="closeImageModal()">
+        <div class="img-modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="प्रिभ्यू">
+        </div>
+    </div>
+
+    <div id="appEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
+            <input type="hidden" id="edit_app_id">
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_app_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_app_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedApplication()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeAppEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="userEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
+            <input type="hidden" id="edit_user_id">
+            <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
+            <div class="form-group"><label>पद (Designation):</label><input type="text" id="edit_user_position"></div>
+            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date"></div>
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
+            <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_user_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_user_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_user_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_user_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_user_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_user_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeUserEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
@@ -657,63 +984,28 @@
         
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const messageDiv = document.getElementById('message');
 
-        const districtData = {
-            "कोशी प्रदेश": ["भोजपुर", "धनकुटा", "इलाम", "झापा", "खोटाङ", "मोरङ", "ओखलढुंगा", "पाँचथर", "संखुवासभा", "सोलुखुम्बु", "सुनसरी", "ताप्लेजुङ", "तेह्रथुम", "उदयपुर"],
-            "मधेश प्रदेश": ["बारा", "धनुषा", "महोत्तरी", "पर्सा", "सप्तरी", "सर्लाही", "सिरहा", "रौतहट"],
-            "बागमती प्रदेश": ["भक्तपुर", "चितवन", "धादिङ", "दोलखा", "काठमाडौं", "काभ्रेपलाञ्चोक", "ललितपुर", "मकवानपुर", "नुवाकोट", "रसुवा", "सिन्धुली", "सिन्धुपाल्चोक", "रामेछाप"],
-            "गण्डकी प्रदेश": ["बाग्लुङ", "गोर्खा", "कास्की", "लमजुङ", "मनाङ", "मुस्ताङ", "म्याग्दी", "नवलपुर", "पर्वत", "स्याङ्जा", "तनहुँ"],
-            "लुम्बिनी प्रदेश": ["अर्घाखाँची", "बाँके", "बर्दिया", "दाङ", "पूर्वी रुकुम", "गुल्मी", "कपिलवस्तु", "नवलपरासी पश्चिम", "पाल्पा", "प्युठान", "रोल्पा", "रूपन्देही"],
-            "कर्णाली प्रदेश": ["दैलेख", "डोल्पा", "हुम्ला", "जाजरकोट", "जुम्ला", "कालिकोट", "मुगु", "सल्यान", "सुर्खेत", "पश्चिम रुकुम"],
-            "सुदूरपश्चिम प्रदेश": ["अछाम", "बैतडी", "बझाङ", "बाजुरा", "डडेल्धुरा", "दार्चुला", "डोटी", "कैलाली", "कञ्चनपुर"]
-        };
-
-        const sampleMunicipalities = {
-            "सुर्खेत": ["वीरेन्द्रनगर नगरपालिका", "भेरीगंगा नगरपालिका", "गंगामामाला गाउँपालिका", "चौकुने गाउँपालिका", "पञ्चपुरी नगरपालिका", "बराहताल गाउँपालिका", "चिनगार्ड गाउँपालिका", "सिम्ता गाउँपालिका", "लेकबेसी नगरपालिका"],
-            "दैलेख": ["नारायण नगरपालिका", "दुल्लु नगरपालिका", "आठबीस नगरपालिका", "चामुण्डा बिन्द्रासैनी नगरपालिका", "भगवतीमाई गाउँपालिका", "गुराँस गाउँपालिका", "डुङ्गेश्वर गाउँपालिका", "थाँतीकाँध गाउँपालिका", "नारायण गाउँपालिका", "महाबु गाउँपालिका", "नौमुले गाउँपालिका"]
-        };
-
-        function loadDistricts() {
-            const provinceSelect = document.getElementById('f_province').value;
-            const districtSelect = document.getElementById('f_district');
-            districtSelect.innerHTML = '<option value="">-- जिल्ला छान्नुहोस् --</option>';
-            if (provinceSelect && districtData[provinceSelect]) {
-                districtData[provinceSelect].forEach(dist => {
-                    const opt = document.createElement('option'); opt.value = dist; opt.textContent = dist; districtSelect.appendChild(opt);
-                });
-            }
-        }
-
-        function loadMunicipalities() {
-            const districtSelect = document.getElementById('f_district').value;
-            const muniSelect = document.getElementById('f_municipality');
-            muniSelect.innerHTML = '<option value="">-- गाउँपालिका/नगरपालिका छान्नुहोस् --</option>';
-            if (districtSelect && sampleMunicipalities[districtSelect]) {
-                sampleMunicipalities[districtSelect].forEach(muni => {
-                    const opt = document.createElement('option'); opt.value = muni; opt.textContent = muni; muniSelect.appendChild(opt);
-                });
-            } else if (districtSelect) {
-                ['नगरपालिका', 'गाउँपालिका'].forEach(t => {
-                    const opt = document.createElement('option'); opt.value = districtSelect + ' ' + t; opt.textContent = districtSelect + ' स्थानीय तह (' + t + ')'; muniSelect.appendChild(opt);
-                });
-            }
-        }
-
-        let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
-        let currentApplication = null;
-
-        function toNepaliNumber(num) {
-            if (!num) return '';
+        function toNepaliNumber(input) {
+            if (!input) return '';
             const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
-            return num.toString().split('').map(char => numbers[char] || char).join('');
+            return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-        function getNepaliDate() {
-            return "२०८३-०५-१२";
+        function getCurrentNepaliDate() {
+            try {
+                let currentDate = new NepaliDate();
+                let year = toNepaliNumber(currentDate.getYear());
+                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+                return `${year}-${month}-${day}`;
+            } catch (e) {
+                return "२०८३-०५-१५";
+            }
         }
 
         function getExpiryDate(regDateStr) {
-            if (!regDateStr) return '२०८४-०५-१२';
+            if (!regDateStr) return '२०८४-०५-१५';
             let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
             let parts = cleaned.split('-');
             if(parts.length === 3) {
@@ -723,653 +1015,848 @@
                     return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
                 }
             }
-            return '२०८४-०५-१२';
+            return '२०८४-०५-१५';
         }
 
-        function isMembershipExpired(regDateStr) {
-            if (!regDateStr) return false;
-            let expiryDateStr = getExpiryDate(regDateStr);
-            let cleanedExp = expiryDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
-            let cleanedCurrent = getNepaliDate().replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
-            return cleanedCurrent >= cleanedExp;
-        }
-
-        async function fetchAboutData() {
-            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
-            if (data) {
-                if(data.logo_url) { document.getElementById('db_logo').src = data.logo_url; document.getElementById('top_logo').src = data.logo_url; }
-                if(data.title_ne) { document.getElementById('db_title_ne').innerText = data.title_ne; document.getElementById('top_title').innerText = data.title_ne; }
-                document.getElementById('db_title_en').innerText = data.title_en || '';
-                document.getElementById('db_address').innerText = "ठेगाना: " + (data.address || '');
-                document.getElementById('top_address').innerText = data.address || '';
-                document.getElementById('db_reg_date').innerText = "स्थापना / दर्ता मिति: " + (data.reg_date || '');
-                document.getElementById('db_reg_no').innerText = data.reg_no || '';
-                document.getElementById('db_introduction').innerText = data.introduction || '';
-                document.getElementById('db_description').innerText = data.description || '';
-
-                const introEl = document.getElementById('homeIntroduction');
-                const aboutEl = document.getElementById('homeAboutText');
-                if(introEl) introEl.innerText = data.introduction || '';
-                if(aboutEl) aboutEl.innerText = data.description || '';
-            }
-        }
-        fetchAboutData();
-
-        async function fetchFounderCommittee() {
-            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
-            const container = document.getElementById('founder_container');
-            if(container) {
-                if(!data || data.length === 0) { container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>'; return; }
-                container.innerHTML = '';
-                data.forEach(item => {
-                    container.innerHTML += `
-                        <div class="committee-card">
-                            <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
-                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
-                            <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                            <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        async function fetchCentralCommittee() {
-            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
-            
-            const container = document.getElementById('central_container');
-            const homeContainer = document.getElementById('home_central_container');
-
-            if(!data || data.length === 0) {
-                if(container) container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
-                if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
-                return;
-            }
-
-            let htmlContent = '';
-            data.forEach(item => {
-                htmlContent += `
-                    <div class="committee-card">
-                        <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
-                        <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
-                        <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                        <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
-                    </div>
-                `;
-            });
-
-            if(container) container.innerHTML = htmlContent;
-            if(homeContainer) homeContainer.innerHTML = htmlContent;
-        }
-
-        fetchFounderCommittee();
-        fetchCentralCommittee();
-
-        function switchPage(pageId, element) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
-            document.querySelectorAll('.nav > a').forEach(l => l.classList.remove('active'));
-            if(element) element.classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        function showSubSection(sectionId) {
-            document.querySelectorAll('.sub-section').forEach(el => el.style.display = 'none');
-            document.getElementById(sectionId).style.display = 'block';
-        }
-
-        function togglePasswordVisibility(fieldId, btn) {
-            const f = document.getElementById(fieldId);
-            f.type = f.type === "password" ? "text" : "password";
-            btn.innerText = f.type === "password" ? "👁" : "🙈";
-        }
-
-        function checkOtpMatch(val, correct, iconId) {
-            const icon = document.getElementById(iconId);
-            if (val.length === 6) {
-                icon.innerHTML = val === correct ? "✔" : "✘";
-                icon.style.color = val === correct ? "#38a169" : "#e53e3e";
-            } else { icon.innerHTML = ""; }
-        }
-
-        let currentGeneratedOtp = '';
-        async function generateAndSendOtp(e) {
-            e.preventDefault();
-            const email = document.getElementById('identifier').value.trim();
-            const name = document.getElementById('reg_name').value.trim();
-            const phone = document.getElementById('reg_phone').value.trim();
-            const dob = document.getElementById('reg_dob').value.trim();
-            const password = document.getElementById('reg_password').value.trim();
-
-            if(!email || !name) return;
-            currentUserProfile = { name, phone, email, dob, password, avatar: 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png' };
-            currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-
-            await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentGeneratedOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
-
-            emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentGeneratedOtp, time: "१ मिनेट" })
-                .then(() => { document.getElementById('emailStatusInfo').innerText = '✔ इमेलमा कोड पठाइयो!'; });
-
-            document.getElementById('otpSection').style.display = 'block';
-            document.getElementById('sendOtpBtn').innerText = 'इमेल पठाइयो ✓';
-        }
-        document.getElementById('registerForm').addEventListener('submit', generateAndSendOtp);
-
-        async function verifyOtp() {
-            const entered = document.getElementById('otpCode').value.trim();
-            if(entered !== currentGeneratedOtp) { alert('गलत OTP कोड!'); return; }
-            await supabaseClient.from('users').insert([currentUserProfile]);
-            alert('खाता सफलतापूर्वक दर्ता भयो!');
-            loadDashboard();
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('login_email').value.trim();
-            const password = document.getElementById('login_password').value.trim();
-
-            const { data } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password);
-            if(!data || data.length === 0) { alert('गलत इमेल वा पासवर्ड!'); return; }
-
-            currentUserProfile = data[0];
-            alert('लगइन सफल भयो!');
-            loadDashboard();
-        }
-
-        let currentForgotOtp = '';
-
-        function showForgotPasswordStep() {
-            showSubSection('forgotPasswordStep');
-            document.getElementById('forgotOtpSection').style.display = 'none';
-            document.getElementById('forgot_email').value = '';
-            document.getElementById('forgot_otp_code').value = '';
-            document.getElementById('new_password').value = '';
-        }
-
-        async function sendForgotPasswordOtp() {
-            const email = document.getElementById('forgot_email').value.trim();
-            if(!email) { alert('कृपया इमेल ठेगाना लेख्नुहोस्!'); return; }
-
-            const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).single();
-            if(!data) { alert('यो इमेलबाट कुनै पनि खाता दर्ता गरिएको छैन!'); return; }
-
-            currentForgotOtp = Math.floor(100000 + Math.random() * 900000).toString();
-
-            await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentForgotOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
-
-            emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentForgotOtp, time: "१ मिनेट" })
-                .then(() => { 
-                    alert('✔ पासवर्ड रिसेट गर्ने कोड इमेलमा पठाइयो!');
-                    document.getElementById('forgotOtpSection').style.display = 'block';
-                }).catch(err => {
-                    alert('इमेल पठाउन असफल: JSON त्रुटि');
-                });
-        }
-
-        async function verifyAndResetPassword() {
-            const email = document.getElementById('forgot_email').value.trim();
-            const enteredOtp = document.getElementById('forgot_otp_code').value.trim();
-            const newPassword = document.getElementById('new_password').value.trim();
-
-            if(enteredOtp !== currentForgotOtp) {
-                alert('गलत OTP कोड!');
-                return;
-            }
-
-            if(!newPassword || newPassword.length < 4) {
-                alert('कृपया कम्तिमा ४ अंक/अक्षरको नयाँ पासवर्ड राख्नुहोस्!');
-                return;
-            }
-
-            const { error } = await supabaseClient.from('users').update({ password: newPassword }).eq('email', email);
-
-            if(error) {
-                alert('पासवर्ड अपडेट गर्न असफल: ' + error.message);
+        function toggleSection(contentId, btn) {
+            const content = document.getElementById(contentId);
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                btn.innerText = 'खोल्नुहोस् ▾';
             } else {
-                alert('✔ पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डमार्फत लगइन गर्नुहोस्।');
-                showSubSection('loginStep');
+                content.style.display = 'block';
+                btn.innerText = 'बन्द गर्नुहोस् ▴';
             }
         }
 
-        // प्रोफाइल एडिट सम्बन्धी नयाँ फंक्सनहरू
-        function toggleEditProfile() {
-            const viewMode = document.getElementById('profileViewMode');
-            const editMode = document.getElementById('profileEditMode');
-            const editBtn = document.getElementById('btnEditToggle');
-
-            if (editMode.style.display === 'none') {
-                editMode.style.display = 'block';
-                viewMode.style.display = 'none';
-                editBtn.innerText = '✕ बन्द गर्नुहोस्';
-
-                // पुराना डेटा इन्पुट बक्समा भर्ने
-                document.getElementById('edit_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
-                document.getElementById('edit_phone').value = currentUserProfile.phone || '';
-                document.getElementById('edit_dob').value = currentUserProfile.dob || '';
-                document.getElementById('edit_password').value = '';
-                if(currentUserProfile.avatar) {
-                    document.getElementById('edit_avatar_preview').src = currentUserProfile.avatar;
-                }
-            } else {
-                editMode.style.display = 'none';
-                viewMode.style.display = 'flex';
-                editBtn.innerText = '✏ प्रोफाइल एडिट गर्नुहोस्';
-            }
+        function showImage(url) {
+            if(!url) { alert('फाइल उपलब्ध छैन!'); return; }
+            document.getElementById('modalImage').src = url;
+            document.getElementById('imageModal').style.display = 'flex';
         }
 
-        function previewEditAvatar(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('edit_avatar_preview').src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
         }
 
-        async function saveProfileChanges() {
-            const newName = document.getElementById('edit_name').value.trim();
-            const newPhone = document.getElementById('edit_phone').value.trim();
-            const newDob = document.getElementById('edit_dob').value.trim();
-            const newPassword = document.getElementById('edit_password').value.trim();
-            const avatarFile = document.getElementById('edit_avatar_file').files[0];
-
-            if (!newName) {
-                alert('कृपया पूरा नाम लेख्नुहोस्!');
-                return;
-            }
-
-            alert('प्रोफाइल अपडेट हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
-
-            let avatarUrl = currentUserProfile.avatar;
-            if (avatarFile) {
-                avatarUrl = await uploadFileToSupabase(avatarFile, 'avatars');
-            }
-
-            let updateData = {
-                full_name: newName,
-                name: newName,
-                phone: newPhone,
-                dob: newDob,
-                avatar: avatarUrl
-            };
-
-            if (newPassword) {
-                updateData.password = newPassword;
-            }
-
-            const { error } = await supabaseClient.from('users').update(updateData).eq('email', currentUserProfile.email);
-
-            if (error) {
-                alert('प्रोफाइल अपडेट गर्न असफल: ' + error.message);
-            } else {
-                alert('✔ प्रोफाइल सफलतापूर्वक अपडेट भयो!');
-                currentUserProfile.full_name = newName;
-                currentUserProfile.name = newName;
-                currentUserProfile.phone = newPhone;
-                currentUserProfile.dob = newDob;
-                currentUserProfile.avatar = avatarUrl;
-                if(newPassword) currentUserProfile.password = newPassword;
-
-                loadDashboard();
-                toggleEditProfile();
-            }
-        }
-
-        async function loadDashboard() {
-            showSubSection('dashboardStep');
-            // एडिट मोड खुला रहेछ भने बन्द गर्ने
-            document.getElementById('profileEditMode').style.display = 'none';
-            document.getElementById('profileViewMode').style.display = 'flex';
-            document.getElementById('btnEditToggle').innerText = '✏ प्रोफाइल एडिट गर्नुहोस्';
-
-            document.getElementById('userDashboardName').innerText = currentUserProfile.full_name || currentUserProfile.name;
-            document.getElementById('lbl_name').innerText = currentUserProfile.full_name || currentUserProfile.name;
-            document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
-            document.getElementById('lbl_email').innerText = currentUserProfile.email;
-            document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
-            if(currentUserProfile.avatar) document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
-
-            const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
-            const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-            
-            const alertBox = document.getElementById('applicationStatusAlert');
-            const noticeBanner = document.getElementById('formNoticeBanner');
-            const btnOpenForm = document.getElementById('btnOpenForm');
-            
-            if(data && data.length > 0) {
-                currentApplication = data[0];
-                let isExpired = userData && isMembershipExpired(userData.reg_date);
-                let isRemoved = currentApplication.status === 'Removed';
-                let isRejected = currentApplication.status === 'Rejected';
-                let isApprovedActive = currentApplication.status === 'Approved' && !isExpired;
-
-                if (isApprovedActive) {
-                    alertBox.innerHTML = "✅ तपाईंको सदस्यता स्वीकृत (Approved) छ र हाल चालु अवस्थामा छ।";
-                    alertBox.style.color = "#276749";
-
-                    btnOpenForm.innerHTML = "📝 सदस्यता विवरण हेर्नुहोस् (चालु)";
-                    btnOpenForm.style.background = "#718096";
-                    btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
-                } 
-                else if (isExpired || isRejected || isRemoved) {
-                    let reasonText = isExpired ? "⏳ तपाईंको परिचय पत्रको म्याद समाप्त भएको छ।" : (isRejected ? "❌ तपाईंको आवेदन एडमिनबाट अस्वीकृत (Rejected) भएको छ।" : "⚠️ तपाईंको सदस्यता हटाइएको (Removed) छ।");
-                    alertBox.innerHTML = reasonText + " कृपया नवीकरण फारम भरी पुनः पेस गर्नुहोस्।";
-                    alertBox.style.color = "#e53e3e";
-
-                    btnOpenForm.innerHTML = "🔄 सदस्यता नवीकरण फारम";
-                    btnOpenForm.style.background = "var(--accent-gradient)";
-                    btnOpenForm.setAttribute("onclick", "toggleForm('नवीकरण')");
-                } 
-                else {
-                    alertBox.innerHTML = "⏳ तपाईंको आवेदन समीक्षाको क्रममा (Pending) रहेको छ।";
-                    alertBox.style.color = "#d69e2e";
-
-                    noticeBanner.style.display = 'block';
-                    noticeBanner.style.backgroundColor = '#feebc8';
-                    noticeBanner.style.color = '#744210';
-                    noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर परिवर्तन गर्न मिल्दैन।";
-                    
-                    btnOpenForm.innerHTML = "📝 आवेदन विवरण हेर्नुहोस्";
-                    btnOpenForm.style.background = "#718096";
-                    btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
-                }
-            } else {
-                alertBox.innerHTML = "तपाईंले अझै सदस्यता फारम भर्नु भएको छैन।";
-                btnOpenForm.innerHTML = "📝 नयाँ सदस्यता फारम";
-                btnOpenForm.style.background = "var(--primary-gradient)";
-                btnOpenForm.setAttribute("onclick", "toggleForm('नयाँ सदस्यता')");
-            }
-        }
-
-        function lockFormFields() {
-            const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
-            inputs.forEach(input => input.disabled = true);
-            document.getElementById('btnGoToPayment').style.display = 'none';
-            document.getElementById('passportBoxClick').removeAttribute('onclick');
-            document.getElementById('photoUploadText').style.display = 'none';
-        }
-
-        let currentFormType = 'नयाँ सदस्यता';
-        
-        function toggleForm(type) {
-            currentFormType = type;
-            const formBox = document.getElementById('officialFormBox');
-            const step3Box = document.getElementById('step3');
-
-            if (formBox.style.display === 'block' || step3Box.style.display === 'block') {
-                hideOfficialForm();
-                return;
-            }
-
-            step3Box.style.display = 'none';
-            formBox.style.display = 'block';
-            document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : (type === 'विवरण मात्र' ? 'सदस्यता विवरण' : 'सदस्यता नवीकरण गरिपाउँ');
-            
-            document.getElementById('formDateDisplay').innerText = "आवेदन मिति: " + getNepaliDate();
-
-            if (type === 'नवीकरण') {
-                document.getElementById('citFrontNotice').style.display = 'none';
-                document.getElementById('citFrontNoticeRenew').style.display = 'block';
-                document.getElementById('citBackNotice').style.display = 'none';
-                document.getElementById('citBackNoticeRenew').style.display = 'block';
-            } else {
-                document.getElementById('citFrontNotice').style.display = 'block';
-                document.getElementById('citFrontNoticeRenew').style.display = 'none';
-                document.getElementById('citBackNotice').style.display = 'block';
-                document.getElementById('citBackNoticeRenew').style.display = 'none';
-            }
-
-            if(currentApplication) {
-                document.getElementById('f_name').value = currentApplication.full_name || '';
-                document.getElementById('f_family_code').value = currentApplication.family_code || '';
-                document.getElementById('f_phone').value = currentApplication.phone || currentUserProfile.phone || '';
-                document.getElementById('f_dob').value = currentApplication.dob || currentUserProfile.dob || '';
-                document.getElementById('f_citizenship').value = currentApplication.citizenship_no || '';
-                document.getElementById('f_spouse').value = currentApplication.spouse_name || '';
-                document.getElementById('f_father').value = currentApplication.father_name || '';
-                document.getElementById('f_mother').value = currentApplication.mother_name || '';
-                document.getElementById('f_grandfather').value = currentApplication.grandfather_name || '';
-                document.getElementById('f_province').value = currentApplication.province || '';
-                
-                if(currentApplication.province) {
-                    loadDistricts();
-                    document.getElementById('f_district').value = currentApplication.district || '';
-                }
-                if(currentApplication.district) {
-                    loadMunicipalities();
-                    document.getElementById('f_municipality').value = currentApplication.municipality || '';
-                }
-
-                document.getElementById('f_ward').value = currentApplication.ward || '';
-                document.getElementById('f_tole').value = currentApplication.tole || '';
-                if(currentApplication.photo_url) {
-                    document.getElementById('form_photo_preview').src = currentApplication.photo_url;
-                    currentUserProfile.avatar = currentApplication.photo_url;
-                }
-
-                if (type === 'नवीकरण' || type === 'नयाँ सदस्यता') {
-                    const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
-                    inputs.forEach(input => input.disabled = false);
-                    document.getElementById('btnGoToPayment').style.display = 'block';
-                    document.getElementById('passportBoxClick').setAttribute('onclick', 'triggerPhotoUpload()');
-                    document.getElementById('photoUploadText').style.display = 'block';
-                } else if (type === 'विवरण मात्र') {
-                    lockFormFields();
-                }
-            } else {
-                document.getElementById('f_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
-                document.getElementById('f_phone').value = currentUserProfile.phone || '';
-                document.getElementById('f_dob').value = currentUserProfile.dob || '';
-            }
-            formBox.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function hideOfficialForm() {
-            document.getElementById('officialFormBox').style.display = 'none';
-            document.getElementById('step3').style.display = 'none';
-        }
-
-        function triggerPhotoUpload() {
-            document.getElementById('form_passport_photo').click();
-        }
-
-        function previewFormPhoto(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => { 
-                    document.getElementById('form_photo_preview').src = e.target.result; 
-                    currentUserProfile.avatar = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function goToPaymentStep() {
-            const name = document.getElementById('f_name').value.trim();
-            const citizenship = document.getElementById('f_citizenship').value.trim();
-            if(!name || !citizenship) { alert('कृपया अनिवार्य विवरणहरू (नाम, नागरिकता) भर्नुहोस्!'); return; }
-            document.getElementById('officialFormBox').style.display = 'none';
-            document.getElementById('step3').style.display = 'block';
-            document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        async function uploadFileToSupabase(file, folderName) {
-            if (!file) return '';
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
-            const filePath = `${folderName}/${fileName}`;
-
-            const { data, error } = await supabaseClient.storage.from('documents').upload(filePath, file);
-            if (error) {
-                console.error('Upload Error:', error.message);
-                return '';
-            }
-
-            const { data: publicUrlData } = supabaseClient.storage.from('documents').getPublicUrl(filePath);
-            return publicUrlData ? publicUrlData.publicUrl : '';
-        }
-
-        async function finalSubmit() {
-            const citFrontFile = document.getElementById('citizenshipFront').files[0];
-            const citBackFile = document.getElementById('citizenshipBack').files[0];
-            const paySlipFile = document.getElementById('paymentSlip').files[0];
-
-            if (currentFormType === 'नयाँ सदस्यता' && (!citFrontFile || !citBackFile)) {
-                alert('कृपया नयाँ सदस्यताको लागि नागरिकताको अगाडि र पछाडिको फोटो अनिवार्य अपलोड गर्नुहोस्!');
-                return;
-            }
-
-            if(!paySlipFile) {
-                alert('कृपया भुक्तानी भौचर/स्क्रीनसट अनिवार्य अपलोड गर्नुहोस्!');
-                return;
-            }
-
-            alert('फाइलहरू अपलोड हुँदैछन्, कृपया केही सेकेन्ड पर्खनुहोस्...');
-
-            let citFrontUrl = currentApplication ? currentApplication.citizenship_front : '';
-            let citBackUrl = currentApplication ? currentApplication.citizenship_back : '';
-
-            if (citFrontFile) { citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizenship'); }
-            if (citBackFile) { citBackUrl = await uploadFileToSupabase(citBackFile, 'citizenship'); }
-            const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
-
-            const formData = {
-                identifier: currentUserProfile.email,
-                application_type: currentFormType,
-                full_name: document.getElementById('f_name').value.trim(),
-                family_code: document.getElementById('f_family_code').value.trim(),
-                phone: document.getElementById('f_phone').value.trim(),
-                dob: document.getElementById('f_dob').value.trim(),
-                citizenship_no: document.getElementById('f_citizenship').value.trim(),
-                spouse_name: document.getElementById('f_spouse').value.trim(),
-                father_name: document.getElementById('f_father').value.trim(),
-                mother_name: document.getElementById('f_mother').value.trim(),
-                grandfather_name: document.getElementById('f_grandfather').value.trim(),
-                province: document.getElementById('f_province').value,
-                district: document.getElementById('f_district').value,
-                municipality: document.getElementById('f_municipality').value,
-                ward: document.getElementById('f_ward').value.trim(),
-                tole: document.getElementById('f_tole').value.trim(),
-                photo_url: currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
-                citizenship_front: citFrontUrl,
-                citizenship_back: citBackUrl,
-                payment_slip: paySlipUrl,
-                status: 'Pending'
-            };
-
-            const { error } = await supabaseClient.from('membership_applications').insert([formData]);
-            if(error) { alert('त्रुटि: ' + error.message); } 
-            else { 
-                alert('आवेदन सफलतापूर्वक सबमिट भयो!');
-                location.reload(); 
-            }
-        }
-
-        async function openMyCard() {
-            if(!currentApplication) {
-                alert('तपाईंले हालसम्म कुनै पनि सदस्यता फारम पेस गर्नुभएको छैन।');
-                return;
-            }
-
-            if(currentApplication.status === 'Pending') {
-                alert('तपाईंको आवेदन समीक्षामा (Pending) रहेको छ। स्वीकृत भएपछि मात्र कार्ड हेर्न मिल्नेछ।');
-                return;
-            }
-
-            if(currentApplication.status === 'Rejected' || currentApplication.status === 'Removed') {
-                alert('तपाईंको आवेदन अस्वीकृत वा हटाइएको छ। कृपया नवीकरण/नयाँ फारम पेस गर्नुहोस्।');
-                return;
-            }
-
-            const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-            const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
-            
-            const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-            const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-
-            const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
-            const familyCode = currentApplication.family_code || 'छैन';
+        function openIdCardModal(userStr) {
+            const user = JSON.parse(userStr);
+            const memberNo = user.member_no || '-';
+            const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
+            const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
+            const fullName = user.full_name || user.name || '-';
 
             document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-            document.getElementById('cardFamilyCode').innerText = familyCode;
             document.getElementById('cardIssueDate').innerText = regDate;
             document.getElementById('cardExpiryDate').innerText = expiryDate;
             document.getElementById('cardName').innerText = fullName;
-            document.getElementById('cardPosition').innerText = (userData && userData.position) ? userData.position : 'साधारण सदस्य';
-            document.getElementById('cardProvince').innerText = currentApplication.province || '-';
-            document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
-            document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
-            document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
+            document.getElementById('cardPosition').innerText = user.position || 'साधारण सदस्य';
+            document.getElementById('cardProvince').innerText = user.province || '-';
+            document.getElementById('cardDistrict').innerText = user.district || '-';
+            document.getElementById('cardMunicipality').innerText = user.municipality || '-';
+            document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
             
-            const photo = currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
 
             const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
             const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
             document.getElementById('cardQrCode').src = qrApiUrl;
 
-            document.getElementById('idCardModal').style.display = 'flex';
+            const modal = document.getElementById('idCardModal');
+            modal.classList.add('active-card-modal');
+            modal.style.display = 'flex';
         }
 
-        function closeMyCard() {
-            document.getElementById('idCardModal').style.display = 'none';
+        function closeIdCardModal() {
+            const modal = document.getElementById('idCardModal');
+            modal.classList.remove('active-card-modal');
+            modal.style.display = 'none';
         }
 
-        function resetMembershipFlow() {
-            showSubSection('mainChoiceStep');
-            document.getElementById('officialFormBox').style.display = 'none';
-            document.getElementById('step3').style.display = 'none';
+        async function printSection(sectionId, sectionTitle) {
+            const sectionContent = document.getElementById(sectionId);
+            const wasOpen = sectionContent.style.display === 'block';
+            if (!wasOpen) sectionContent.style.display = 'block';
+            sectionContent.classList.add('printable-section');
+
+            let headerDiv = document.getElementById('dynamicPrintHeader');
+            if (!headerDiv) {
+                headerDiv = document.createElement('div');
+                headerDiv.id = 'dynamicPrintHeader';
+                headerDiv.className = 'print-header';
+                sectionContent.prepend(headerDiv);
+            }
+
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            const logo = (data && data.logo_url) ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
+
+            headerDiv.innerHTML = `
+                <div class="print-date">मिति: ${getCurrentNepaliDate()}</div>
+                <img src="${logo}" class="print-logo" alt="लोगो" crossorigin="anonymous">
+                <div class="print-title-1">दशौँदी समाज नेपाल</div>
+                <div class="print-meta">ठेगाना: ${address}</div>
+                <div class="print-section-title">${sectionTitle}</div>
+            `;
+
+            window.print();
+            headerDiv.remove();
+            sectionContent.classList.remove('printable-section');
+            if (!wasOpen) sectionContent.style.display = 'none';
         }
 
-        async function loadPublicNotices() {
-            const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+        window.onload = function() {
+            if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('dashboardSection').classList.add('hidden');
+            } else {
+                showDashboard();
+            }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+
+            const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
+            if (data) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                localStorage.setItem('currentAdmin', user);
+                localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
+                showDashboard();
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = 'गलत युजरनेम वा पासवर्ड!';
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
+            const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
+            document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
+            messageDiv.innerText = '';
             
-            const containers = [
-                document.getElementById('publicNoticesContainer'),
-                document.getElementById('homeNoticesContainer')
-            ];
+            loadAboutData();
+            loadCommitteeData();
+            loadCentralCommitteeData();
+            loadAdvisorCommitteeData();
+            loadAdminData();
+            loadUsersData();
+            loadApplicationsData();
+            loadNoticesData();
+        }
 
-            containers.forEach(container => {
-                if(!container) return;
-                if (error || !data || data.length === 0) {
-                    container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
-                    return;
-                }
+        function logout() {
+            localStorage.clear();
+            location.reload();
+        }
 
-                container.innerHTML = '';
-                data.forEach(item => {
-                    let fileContent = '';
-                    if (item.file_type === 'pdf' || (item.file_url && item.file_url.endsWith('.pdf'))) {
-                        fileContent = `
-                            <div style="margin-top: 15px; text-align: center;">
-                                <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
-                            </div>
-                        `;
-                    } else if (item.file_url) {
-                        fileContent = `
-                            <div style="margin-top: 15px; text-align: center;">
-                                <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;">
-                            </div>
-                        `;
-                    }
+        async function loadApplicationsData() {
+            const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('created_at', { ascending: true });
+            const tbody = document.getElementById('applicationsTableBody');
+            tbody.innerHTML = '';
 
-                    container.innerHTML += `
-                        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
-                            <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                            <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
-                            ${fileContent}
-                        </div>
-                    `;
-                });
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="22">कुनै नयाँ आवेदन बाँकी छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((app, index) => {
+                let statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
+
+                let appTypeBadge = (app.application_type === 'नवीकरण') 
+                    ? '<span style="color: #b7791f; font-weight: bold;">नवीकरण</span>' 
+                    : '<span style="color: #3182ce; font-weight: bold;">नयाँ सदस्यता</span>';
+
+                const photoSrc = app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const citFront = app.citizenship_front || app.citizenship_front_url || '';
+                const citBack = app.citizenship_back || app.citizenship_back_url || '';
+                const paySlip = app.payment_slip || app.payment_slip_url || '';
+
+                const appJson = encodeURIComponent(JSON.stringify(app));
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${appTypeBadge}</td>
+                        <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
+                        <td><strong>${app.full_name || '-'}</strong></td>
+                        <td>${app.phone || '-'}</td>
+                        <td>${app.identifier || '-'}</td>
+                        <td>${app.dob || '-'}</td>
+                        <td>${app.citizenship_no || '-'}</td>
+                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${app.spouse_name || '-'}</td>
+                        <td>${app.father_name || '-'}</td>
+                        <td>${app.mother_name || '-'}</td>
+                        <td>${app.grandfather_name || '-'}</td>
+                        <td>${app.province || '-'}</td>
+                        <td>${app.district || '-'}</td>
+                        <td>${app.municipality || '-'}</td>
+                        <td>${app.ward || '-'}</td>
+                        <td>${app.tole || '-'}</td>
+                        <td>${statusBadge}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="openAppEditModal('${app.id}', decodeURIComponent('${appJson}'))">सम्पादन</button>
+                            <button class="btn-action btn-success" onclick="openPositionModal(decodeURIComponent('${appJson}'))">Approve</button>
+                            <button class="btn-action btn-danger" onclick="updateAppStatus('${app.id}', 'Rejected')">Reject</button>
+                            <button class="btn-action btn-danger" onclick="deleteApplication('${app.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
             });
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadPublicNotices();
+        function openPositionModal(appStr) {
+            const app = JSON.parse(appStr);
+            if(app.status === 'Approved') {
+                alert('यो आवेदन पहिल्यै स्वीकृत भइसकेको छ!');
+                return;
+            }
+            document.getElementById('pendingAppStr').value = appStr;
+            document.getElementById('selectPosition').value = 'साधारण सदस्य';
+            document.getElementById('customPositionInput').value = '';
+            document.getElementById('customPositionBox').classList.add('hidden');
+            document.getElementById('positionModal').style.display = 'flex';
+        }
+
+        function closePositionModal() {
+            document.getElementById('positionModal').style.display = 'none';
+        }
+
+        function checkCustomPosition(select) {
+            const customBox = document.getElementById('customPositionBox');
+            if(select.value === 'अन्य (Custom)') {
+                customBox.classList.remove('hidden');
+                document.getElementById('customPositionInput').focus();
+            } else {
+                customBox.classList.add('hidden');
+            }
+        }
+
+        async function confirmApproveUser() {
+            const appStr = document.getElementById('pendingAppStr').value;
+            const app = JSON.parse(appStr);
+            
+            let selectedVal = document.getElementById('selectPosition').value;
+            let assignedPosition = '';
+            
+            if(selectedVal === 'अन्य (Custom)') {
+                assignedPosition = document.getElementById('customPositionInput').value.trim();
+                if(!assignedPosition) {
+                    alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
+                    return;
+                }
+            } else {
+                assignedPosition = selectedVal;
+            }
+
+            closePositionModal();
+
+            const todayNepaliDate = getCurrentNepaliDate();
+            let formattedMemberNo = '';
+
+            const isRenewal = app.application_type === 'नवीकरण';
+
+            if (isRenewal) {
+                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+                if (existingUser) {
+                    formattedMemberNo = existingUser.member_no;
+                } else {
+                    const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                    formattedMemberNo = String((count || 0) + 1).padStart(3, '0');
+                }
+            } else {
+                const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                const nextNo = (count || 0) + 1;
+                formattedMemberNo = String(nextNo).padStart(3, '0');
+            }
+
+            const userData = {
+                member_no: formattedMemberNo,
+                position: assignedPosition,
+                reg_date: todayNepaliDate,
+                full_name: app.full_name,
+                phone: app.phone || '',
+                email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
+                dob: app.dob || '',
+                citizenship_no: app.citizenship_no || '',
+                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+                payment_slip: app.payment_slip || app.payment_slip_url || '',
+                spouse_name: app.spouse_name || '',
+                father_name: app.father_name || '',
+                mother_name: app.mother_name || '',
+                grandfather_name: app.grandfather_name || '',
+                province: app.province || '',
+                district: app.district || '',
+                municipality: app.municipality || '',
+                ward: app.ward || '',
+                tole: app.tole || '',
+                avatar: app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
+                password: app.password || '123456'
+            };
+
+            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+            
+            if(userError) {
+                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+                return;
+            }
+
+            const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
+            
+            if(!appError) {
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
+                loadApplicationsData();
+                loadUsersData();
+            } else {
+                alert('त्रुटि: ' + appError.message);
+            }
+        }
+
+        function openAppEditModal(id, appDataStr) {
+            const app = JSON.parse(appDataStr);
+            document.getElementById('edit_app_id').value = id;
+            document.getElementById('edit_app_name').value = app.full_name || '';
+            document.getElementById('edit_app_phone').value = app.phone || '';
+            document.getElementById('edit_app_dob').value = app.dob || '';
+            document.getElementById('edit_app_citizenship').value = app.citizenship_no || '';
+            document.getElementById('edit_app_spouse').value = app.spouse_name || '';
+            document.getElementById('edit_app_father').value = app.father_name || '';
+            document.getElementById('edit_app_mother').value = app.mother_name || '';
+            document.getElementById('edit_app_grandfather').value = app.grandfather_name || '';
+            document.getElementById('edit_app_province').value = app.province || '';
+            document.getElementById('edit_app_district').value = app.district || '';
+            document.getElementById('edit_app_municipality').value = app.municipality || '';
+            document.getElementById('edit_app_ward').value = app.ward || '';
+            document.getElementById('edit_app_tole').value = app.tole || '';
+            document.getElementById('appEditModal').style.display = 'flex';
+        }
+
+        function closeAppEditModal() {
+            document.getElementById('appEditModal').style.display = 'none';
+        }
+
+        async function saveEditedApplication() {
+            const id = document.getElementById('edit_app_id').value;
+            const updatedData = {
+                full_name: document.getElementById('edit_app_name').value,
+                phone: document.getElementById('edit_app_phone').value,
+                dob: document.getElementById('edit_app_dob').value,
+                citizenship_no: document.getElementById('edit_app_citizenship').value,
+                spouse_name: document.getElementById('edit_app_spouse').value,
+                father_name: document.getElementById('edit_app_father').value,
+                mother_name: document.getElementById('edit_app_mother').value,
+                grandfather_name: document.getElementById('edit_app_grandfather').value,
+                province: document.getElementById('edit_app_province').value,
+                district: document.getElementById('edit_app_district').value,
+                municipality: document.getElementById('edit_app_municipality').value,
+                ward: document.getElementById('edit_app_ward').value,
+                tole: document.getElementById('edit_app_tole').value
+            };
+
+            const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
+            if(!error) {
+                alert('आवेदन सफलतापूर्वक अपडेट भयो!');
+                closeAppEditModal();
+                loadApplicationsData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function updateAppStatus(id, status) {
+            const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
+            if(!error) {
+                alert('आवेदन ' + status + ' गरियो!');
+                loadApplicationsData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function deleteApplication(id) {
+            if(confirm('के तपाईं यो आवेदन स्थायी रूपमा मेटाउन (Remove) चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('membership_applications').delete().eq('id', id);
+                if(!error) {
+                    alert('आवेदन सफलतापूर्वक हटाइयो!');
+                    loadApplicationsData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        async function loadUsersData() {
+            const { data } = await supabaseClient.from('users').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
+            data.forEach((user, index) => {
+                const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+                const citFront = user.citizenship_front || user.citizenship_front_url || '';
+                const citBack = user.citizenship_back || user.citizenship_back_url || '';
+                const paySlip = user.payment_slip || user.payment_slip_url || '';
+                const userJson = encodeURIComponent(JSON.stringify(user));
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong style="color: #1a365d;">${toNepaliNumber(user.member_no || '-')}</strong></td>
+                        <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${user.position || 'साधारण सदस्य'}</span></td>
+                        <td>${toNepaliNumber(user.reg_date || '-')}</td>
+                        <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
+                        <td><strong>${user.full_name || user.name || '-'}</strong></td>
+                        <td>${toNepaliNumber(user.phone || '-')}</td>
+                        <td>${user.email || user.identifier || '-'}</td>
+                        <td>${toNepaliNumber(user.dob || '-')}</td>
+                        <td>${toNepaliNumber(user.citizenship_no || '-')}</td>
+                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                        <td>${user.spouse_name || '-'}</td>
+                        <td>${user.father_name || '-'}</td>
+                        <td>${user.mother_name || '-'}</td>
+                        <td>${user.grandfather_name || '-'}</td>
+                        <td>${user.province || '-'}</td>
+                        <td>${user.district || '-'}</td>
+                        <td>${user.municipality || '-'}</td>
+                        <td>${toNepaliNumber(user.ward || '-')}</td>
+                        <td>${user.tole || '-'}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-idcard" onclick="openIdCardModal(decodeURIComponent('${userJson}'))">परिचय पत्र</button>
+                            <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openUserEditModal(id, userDataStr) {
+            const user = JSON.parse(userDataStr);
+            document.getElementById('edit_user_id').value = id;
+            document.getElementById('edit_user_member_no').value = user.member_no || '';
+            document.getElementById('edit_user_position').value = user.position || '';
+            document.getElementById('edit_user_reg_date').value = user.reg_date || '';
+            document.getElementById('edit_user_name').value = user.full_name || user.name || '';
+            document.getElementById('edit_user_phone').value = user.phone || '';
+            document.getElementById('edit_user_email').value = user.email || user.identifier || '';
+            document.getElementById('edit_user_dob').value = user.dob || '';
+            document.getElementById('edit_user_citizenship').value = user.citizenship_no || '';
+            document.getElementById('edit_user_spouse').value = user.spouse_name || '';
+            document.getElementById('edit_user_father').value = user.father_name || '';
+            document.getElementById('edit_user_mother').value = user.mother_name || '';
+            document.getElementById('edit_user_grandfather').value = user.grandfather_name || '';
+            document.getElementById('edit_user_province').value = user.province || '';
+            document.getElementById('edit_user_district').value = user.district || '';
+            document.getElementById('edit_user_municipality').value = user.municipality || '';
+            document.getElementById('edit_user_ward').value = user.ward || '';
+            document.getElementById('edit_user_tole').value = user.tole || '';
+            document.getElementById('userEditModal').style.display = 'flex';
+        }
+
+        function closeUserEditModal() {
+            document.getElementById('userEditModal').style.display = 'none';
+        }
+
+        async function saveEditedUser() {
+            const id = document.getElementById('edit_user_id').value;
+            const updatedData = {
+                member_no: document.getElementById('edit_user_member_no').value,
+                position: document.getElementById('edit_user_position').value,
+                reg_date: document.getElementById('edit_user_reg_date').value,
+                full_name: document.getElementById('edit_user_name').value,
+                phone: document.getElementById('edit_user_phone').value,
+                email: document.getElementById('edit_user_email').value,
+                dob: document.getElementById('edit_user_dob').value,
+                citizenship_no: document.getElementById('edit_user_citizenship').value,
+                spouse_name: document.getElementById('edit_user_spouse').value,
+                father_name: document.getElementById('edit_user_father').value,
+                mother_name: document.getElementById('edit_user_mother').value,
+                grandfather_name: document.getElementById('edit_user_grandfather').value,
+                province: document.getElementById('edit_user_province').value,
+                district: document.getElementById('edit_user_district').value,
+                municipality: document.getElementById('edit_user_municipality').value,
+                ward: document.getElementById('edit_user_ward').value,
+                tole: document.getElementById('edit_user_tole').value
+            };
+
+            const { error } = await supabaseClient.from('users').update(updatedData).eq('id', id);
+            if(!error) {
+                alert('सदस्यको विवरण सफलतापूर्वक अपडेट भयो!');
+                closeUserEditModal();
+                loadUsersData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function deleteUser(id) {
+            if(confirm('के तपाईं यो युजरलाई मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('users').delete().eq('id', id);
+                if(!error) {
+                    alert('युजर सफलतापूर्वक हटाइयो!');
+                    loadUsersData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        async function loadAboutData() {
+            const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
+            if (data) {
+                document.getElementById('logo_url').value = data.logo_url || '';
+                document.getElementById('title_ne').value = data.title_ne || '';
+                document.getElementById('title_en').value = data.title_en || '';
+                document.getElementById('address').value = data.address || '';
+                document.getElementById('reg_date').value = data.reg_date || '';
+                document.getElementById('reg_no').value = data.reg_no || '';
+                document.getElementById('introduction').value = data.introduction || '';
+                document.getElementById('description').value = data.description || '';
+            }
+        }
+
+        document.getElementById('aboutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const updatedData = {
+                id: 1,
+                logo_url: document.getElementById('logo_url').value,
+                title_ne: document.getElementById('title_ne').value,
+                title_en: document.getElementById('title_en').value,
+                address: document.getElementById('address').value,
+                reg_date: document.getElementById('reg_date').value,
+                reg_no: document.getElementById('reg_no').value,
+                introduction: document.getElementById('introduction').value,
+                description: document.getElementById('description').value
+            };
+            const { error } = await supabaseClient.from('about_us').upsert(updatedData);
+            messageDiv.style.color = error ? 'red' : 'green';
+            messageDiv.innerText = error ? 'त्रुटि: ' + error.message : 'सफलतापूर्वक सेभ भयो!';
         });
+
+        document.getElementById('committeeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('c_name').value,
+                position: document.getElementById('c_position').value,
+                member_no: document.getElementById('c_member_no').value,
+                phone: document.getElementById('c_phone').value,
+                photo_url: document.getElementById('c_photo').value
+            };
+            if (editId) {
+                await supabaseClient.from('founder_committee').update(memberData).eq('id', editId);
+            } else {
+                await supabaseClient.from('founder_committee').insert([memberData]);
+            }
+            document.getElementById('committeeForm').reset();
+            document.getElementById('edit_id').value = '';
+            loadCommitteeData();
+        });
+
+        async function loadCommitteeData() {
+            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('committeeTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
+            data.forEach((person, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteMember('${person.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('edit_id').value = id;
+            document.getElementById('c_name').value = name;
+            document.getElementById('c_position').value = position;
+            document.getElementById('c_member_no').value = memberNo;
+            document.getElementById('c_phone').value = phone;
+            document.getElementById('c_photo').value = photoUrl;
+            document.getElementById('committeeContent').style.display = 'block';
+        }
+
+        async function deleteMember(id) {
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('founder_committee').delete().eq('id', id);
+                loadCommitteeData();
+            }
+        }
+
+        document.getElementById('centralCommitteeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('central_edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('cc_name').value,
+                position: document.getElementById('cc_position').value,
+                member_no: document.getElementById('cc_member_no').value,
+                phone: document.getElementById('cc_phone').value,
+                photo_url: document.getElementById('cc_photo').value
+            };
+            if (editId) {
+                await supabaseClient.from('central_committee').update(memberData).eq('id', editId);
+            } else {
+                await supabaseClient.from('central_committee').insert([memberData]);
+            }
+            document.getElementById('centralCommitteeForm').reset();
+            document.getElementById('central_edit_id').value = '';
+            loadCentralCommitteeData();
+        });
+
+        async function loadCentralCommitteeData() {
+            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('centralTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
+            data.forEach((person, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editCentralMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteCentralMember('${person.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editCentralMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('central_edit_id').value = id;
+            document.getElementById('cc_name').value = name;
+            document.getElementById('cc_position').value = position;
+            document.getElementById('cc_member_no').value = memberNo;
+            document.getElementById('cc_phone').value = phone;
+            document.getElementById('cc_photo').value = photoUrl;
+            document.getElementById('centralContent').style.display = 'block';
+        }
+
+        async function deleteCentralMember(id) {
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('central_committee').delete().eq('id', id);
+                loadCentralCommitteeData();
+            }
+        }
+
+        document.getElementById('advisorCommitteeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('advisor_edit_id').value;
+            const memberData = {
+                full_name: document.getElementById('ac_name').value,
+                position: document.getElementById('ac_position').value,
+                member_no: document.getElementById('ac_member_no').value,
+                phone: document.getElementById('ac_phone').value,
+                photo_url: document.getElementById('ac_photo').value
+            };
+            if (editId) {
+                await supabaseClient.from('advisor_committee').update(memberData).eq('id', editId);
+            } else {
+                await supabaseClient.from('advisor_committee').insert([memberData]);
+            }
+            document.getElementById('advisorCommitteeForm').reset();
+            document.getElementById('advisor_edit_id').value = '';
+            loadAdvisorCommitteeData();
+        });
+
+        async function loadAdvisorCommitteeData() {
+            const { data } = await supabaseClient.from('advisor_committee').select('*').order('member_no', { ascending: true });
+            const tbody = document.getElementById('advisorTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
+            data.forEach((person, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
+                        <td><strong>${person.full_name}</strong></td>
+                        <td>${person.position}</td>
+                        <td>${toNepaliNumber(person.member_no || '-')}</td>
+                        <td>${toNepaliNumber(person.phone || '-')}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editAdvisorMember('${person.id}', '${person.full_name}', '${person.position}', '${person.member_no || ''}', '${person.phone || ''}', '${person.photo_url || ''}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteAdvisorMember('${person.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editAdvisorMember(id, name, position, memberNo, phone, photoUrl) {
+            document.getElementById('advisor_edit_id').value = id;
+            document.getElementById('ac_name').value = name;
+            document.getElementById('ac_position').value = position;
+            document.getElementById('ac_member_no').value = memberNo;
+            document.getElementById('ac_phone').value = phone;
+            document.getElementById('ac_photo').value = photoUrl;
+            document.getElementById('advisorContent').style.display = 'block';
+        }
+
+        async function deleteAdvisorMember(id) {
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('advisor_committee').delete().eq('id', id);
+                loadAdvisorCommitteeData();
+            }
+        }
+
+        document.getElementById('adminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('admin_edit_id').value;
+            const adminData = {
+                username: document.getElementById('new_admin_user').value.trim(),
+                password: document.getElementById('new_admin_pass').value.trim(),
+                role: document.getElementById('new_admin_role').value
+            };
+            if (editId) {
+                await supabaseClient.from('admins').update(adminData).eq('id', editId);
+                alert('एडमिनको विवरण सफलतापूर्वक अपडेट भयो!');
+            } else {
+                await supabaseClient.from('admins').insert([adminData]);
+                alert('नयाँ एडमिन सफलतापूर्वक थपियो!');
+            }
+            document.getElementById('adminForm').reset();
+            document.getElementById('admin_edit_id').value = '';
+            document.getElementById('adminSubmitBtn').innerText = 'एडमिन थप्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'नयाँ एडमिन थप्ने';
+            loadAdminData();
+        });
+
+        async function loadAdminData() {
+            const { data } = await supabaseClient.from('admins').select('*');
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै एडमिन छैन</td></tr>'; return; }
+            data.forEach((adm, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${adm.username}</strong></td>
+                        <td>${adm.role || 'एडमिन'}</td>
+                        <td>${adm.password}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="editAdmin('${adm.id}', '${adm.username}', '${adm.password}', '${adm.role || 'एडमिन'}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteAdmin('${adm.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editAdmin(id, username, password, role) {
+            document.getElementById('admin_edit_id').value = id;
+            document.getElementById('new_admin_user').value = username;
+            document.getElementById('new_admin_pass').value = password;
+            document.getElementById('new_admin_role').value = role;
+            
+            document.getElementById('adminSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
+            document.getElementById('adminFormTitle').innerText = 'एडमिन विवरण सम्पादन गर्ने';
+            
+            document.getElementById('adminContent').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('adminContent').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        async function deleteAdmin(id) {
+            const { data } = await supabaseClient.from('admins').select('*');
+            if (data && data.length <= 1) { alert('कमसेकम एउटा एडमिन रहनु अनिवार्य छ!'); return; }
+            if (confirm('के तपाईं मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('admins').delete().eq('id', id);
+                loadAdminData();
+            }
+        }
+
+        document.getElementById('noticeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('notice_edit_id').value;
+            const noticeData = {
+                title: document.getElementById('notice_title').value,
+                file_url: document.getElementById('notice_file_url').value,
+                file_type: document.getElementById('notice_file_type5').value,
+                date: getCurrentNepaliDate()
+            };
+            if (editId) {
+                await supabaseClient.from('notices').update(noticeData).eq('id', editId);
+                alert('सूचना सफलतापूर्वक अपडेट भयो!');
+            } else {
+                await supabaseClient.from('notices').insert([noticeData]);
+                alert('नयाँ सूचना सफलतापूर्वक प्रकाशित भयो!');
+            }
+            document.getElementById('noticeForm').reset();
+            document.getElementById('notice_edit_id').value = '';
+            document.getElementById('noticeSubmitBtn').innerText = 'सूचना प्रकाशित गर्नुहोस्';
+            loadNoticesData();
+        });
+
+        async function loadNoticesData() {
+            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            const tbody = document.getElementById('noticesTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
+            
+            data.forEach((item, index) => {
+                const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td style="white-space: normal; text-align: left; max-width: 300px;">${item.title}</td>
+                        <td>${item.file_type === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
+                        <td><button class="btn-action btn-view" onclick="showImage('${item.file_url}')">हेर्नुहोस्</button></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-edit" onclick="triggerEditNotice('${encodedItem}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function triggerEditNotice(encodedItem) {
+            const item = JSON.parse(decodeURIComponent(escape(atob(encodedItem))));
+            editNotice(item);
+        }
+
+        function editNotice(item) {
+            document.getElementById('notice_edit_id').value = item.id;
+            document.getElementById('notice_title').value = item.title || '';
+            document.getElementById('notice_file_url').value = item.file_url || '';
+            document.getElementById('notice_file_type').value = item.file_type || 'image';
+            document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
+            
+            document.getElementById('noticesContent').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        async function deleteNotice(id) {
+            if (confirm('के तपाईं यो सूचना मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('notices').delete().eq('id', id);
+                loadNoticesData();
+            }
+        }
     </script>
 </body>
 </html>
