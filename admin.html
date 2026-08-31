@@ -828,7 +828,6 @@
            <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -90px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
             
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                <!-- यहाँ सदस्यता नं. र फेमिली कोड भएको बक्सलाई तल झारिएको छ -->
                 <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 35px;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                     <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
@@ -836,7 +835,8 @@
 
                 <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 8px;">
                     <div style="text-align: center; flex-shrink: 0;">
-                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 78px; height: 78px; border-radius: 50%; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+                        <!-- यहाँ परिचय पत्रको फोटो चारकुने (border-radius: 0) बनाइएको छ -->
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 78px; height: 78px; border-radius: 0px; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
                     </div>
                     <div style="flex-grow: 1; font-size: 11.5px; color: #1a202c; line-height: 1.4; font-weight: 700;">
                         <div style="font-size: 15px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
