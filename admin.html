@@ -807,19 +807,17 @@
         </div>
     </div>
 
-    <!-- परिचय पत्र मोडल (सन्तुलित U-Shape गहिराई भएको) -->
+    <!-- परिचय पत्र मोडल ("परिचय पत्र" ब्याजब्यान्ड नीलो र सेतो भागको बीचमा सेट गरिएको) -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 480px; height: 700px; background: #fff; border-radius: 16px; overflow: visible !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: 60px auto 40px auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
             
-            <!-- नीलो हेडर (अलि कम गहिरो U-Shape SVG) -->
-            <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 15px 105px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
-                <!-- Balanced U-Shape SVG Background -->
-                <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-                    <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
+            <!-- नीलो हेडर (U-Shape SVG) -->
+            <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 15px 75px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
+                <svg viewBox="0 0 500 240" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                    <path d="M0,0 L500,0 L500,165 Q250,230 0,165 Z" fill="#1a365d"></path>
                 </svg>
 
-                <!-- गोलाकार लोगो नीलो हेडरभित्र ठीक ठाउँमा राखिएको -->
                 <div style="width: 74px; height: 74px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.25); border: 3px solid #ffffff; position: relative; z-index: 10;">
                     <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;">
                 </div>
@@ -831,10 +829,10 @@
                 </div>
             </div>
 
-            <!-- परिचय पत्र ब्याज शीर्षक (सेतो ब्याकग्राउन्डमा हरियो बोर्डर) - ठीक नीलो हेडरको फेदमा सेट गरिएको -->
-            <div style="background: #ffffff; color: #008000; border: 2.5px solid #008000; text-align: center; padding: 3px 22px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 130px; margin: -35px auto 8px auto; border-radius: 20px; box-shadow: 0 3px 6px rgba(0,0,0,0.15); text-transform: uppercase; position: relative; z-index: 15;">परिचय पत्र</div>
+            <!-- "परिचय पत्र" ब्याज शीर्षक (नीलो र सेतो भागको ठीक बीचको कर्भमा आधा नीलो/आधा सेतोमा सेट गरिएको) -->
+            <div style="background: #ffffff; color: #008000; border: 2.5px solid #008000; text-align: center; padding: 3px 22px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 130px; margin: -22px auto 8px auto; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); text-transform: uppercase; position: relative; z-index: 20;">परिचय पत्र</div>
 
-            <!-- बडी भाग (मेटा row, मुख्य जानकारी, विवरण टेबल र सही-छाप) -->
+            <!-- बडी भाग -->
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
