@@ -828,8 +828,8 @@
            <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -80px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
             
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                <!-- सदस्यता नम्बर र फेमिली कोड भएको बक्सलाई तल झारिएको (margin-top थपिएको) भाग -->
-                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 25px;">
+                <!-- यहाँ सदस्यता नं. र फेमिली कोड भएको बक्सलाई तल झारिएको छ -->
+                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 35px;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                     <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
                 </div>
@@ -1743,8 +1743,8 @@
                         <td>${adm.role || 'एडमिन'}</td>
                         <td>${adm.password}</td>
                         <td class="no-print">
-                            <button class="btn-action btn-edit" onclick="editAdmin('${adm.id}', '${adm.username}', '${adm.password}', '${adm.role || 'एडमिन'}')">सम्पादन तल झार्नुहोस्</button>
-                            <button class="db-action btn-danger" onclick="deleteAdmin('${adm.id}')">रिमुभ</button>
+                            <button class="btn-action btn-edit" onclick="editAdmin('${adm.id}', '${adm.username}', '${adm.password}', '${adm.role || 'एडमिन'}')">सम्पादन</button>
+                            <button class="btn-action btn-danger" onclick="deleteAdmin('${adm.id}')">रिमुभ</button>
                         </td>
                     </tr>
                 `;
@@ -1754,7 +1754,7 @@
         function editAdmin(id, username, password, role) {
             document.getElementById('admin_edit_id').value = id;
             document.getElementById('new_admin_user').value = username;
-            document.getElementById('new_admin_pass').value, password;
+            document.getElementById('new_admin_pass').value = password;
             document.getElementById('new_admin_role').value = role;
             
             document.getElementById('adminSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
@@ -1826,7 +1826,7 @@
         }
 
         function editNotice(item) {
-            document.getElementById('notice_edit_id').value = id; // fixed reference matching
+            document.getElementById('notice_edit_id').value = item.id;
             document.getElementById('notice_title').value = item.title || '';
             document.getElementById('notice_file_url').value = item.file_url || '';
             document.getElementById('notice_file_type').value = item.file_type || 'image';
