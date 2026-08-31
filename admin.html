@@ -326,8 +326,8 @@
                 position: fixed !important; 
                 left: 0 !important; 
                 top: 0 !important; 
-                width: 480px !important; 
-                height: 700px !important; 
+                width: 100% !important; 
+                height: 100vh !important; 
                 background: #fff !important; 
                 display: flex !important; 
                 align-items: center !important;
@@ -335,7 +335,8 @@
                 padding: 0 !important; 
                 margin: 0 !important;
                 z-index: 9999 !important;
-                overflow: hidden !important;
+                transform: scale(0.85); /* यहाँ स्केल थपिएको छ ताकि तलको भाग नटुकियोस् */
+                transform-origin: center;
             }
             .printable-section, .printable-section * { visibility: visible !important; }
             .printable-section { 
@@ -810,7 +811,6 @@
         <div style="width: 480px; height: 700px; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: 60px auto 40px auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
             
-            <!-- यहाँ नीलो सेक्सनको तलको स्पेस (padding-bottom: 95px) बढाइएको छ र टेक्स्टहरू राम्ररी देखिने बनाइएको छ -->
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
@@ -827,8 +827,7 @@
                 </div>
             </div>
 
-            <!-- हरियो "परिचय पत्र" बक्सको पोजिसन (margin-top: -65px) मा मिलाइएको छ -->
-           <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -60px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
+            <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -60px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
             
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 5px;">
