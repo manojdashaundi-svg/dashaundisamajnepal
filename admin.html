@@ -805,7 +805,7 @@
         </div>
     </div>
 
-    <!-- हुबहु दोस्रो फोटोको डिजाइन अनुसारको परिचय पत्र मोडल -->
+    <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 480px; height: 700px; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: 60px auto 40px auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
@@ -834,9 +834,7 @@
                     <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
                 </div>
 
-                <!-- फोटो र विवरणको बीचमा हुबहु वाटरमार्क लोगो राखिएको छ -->
                 <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 8px; position: relative; overflow: hidden;">
-                    <!-- वाटरमार्क लोगो -->
                     <div style="position: absolute; right: -15px; top: 50%; transform: translateY(-50%); opacity: 0.12; pointer-events: none; z-index: 0;">
                         <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 140px; height: 140px; object-fit: contain;">
                     </div>
@@ -853,8 +851,8 @@
                     </div>
                 </div>
 
-                <!-- दोस्रो फोटो जस्तै बायाँतिर निलो बक्स र आइकनहरू राखिएको ठेगाना टेबल -->
-                <div style="width: 100%; background: #fff; border-radius: 8px; border: 1px solid #cbd5e0; font-size: 11.5px; font-weight: 700; overflow: hidden; display: flex;">
+                <!-- ठेगाना बक्सको टेक्स्टलाई अझ ठूलो, बोल्ड र गाढा कालो बनाइएको छ -->
+                <div style="width: 100%; background: #fff; border-radius: 8px; border: 1px solid #cbd5e0; font-size: 13px; font-weight: 900; overflow: hidden; display: flex;">
                     <div style="width: 36px; background: #1a365d; display: flex; flex-direction: column;">
                         <div style="height: 25.5px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
                         <div style="height: 25.5px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
@@ -863,10 +861,10 @@
                     </div>
                     <div style="flex-grow: 1; padding: 2px 6px;">
                         <table style="width: 100%; background: transparent; margin: 0;">
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #2d3748; font-weight: 800;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #1a202c;"><span id="cardProvince">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #2d3748; font-weight: 800; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #1a202c; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #2d3748; font-weight: 800; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #1a202c; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #2d3748; font-weight: 800; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #1a202c; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px;"><span id="cardProvince">-</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
                         </table>
                     </div>
                 </div>
