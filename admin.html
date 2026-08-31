@@ -297,7 +297,8 @@
         .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
         .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
 
-        .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 4000; padding: 70px 10px 30px 10px; overflow-y: auto; }
+        .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
+        
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
@@ -336,7 +337,7 @@
                 padding: 0 !important; 
                 margin: 0 !important;
                 z-index: 9999 !important;
-                overflow: visible !important;
+                overflow: hidden !important;
             }
             .printable-section, .printable-section * { visibility: visible !important; }
             .printable-section { 
@@ -363,6 +364,7 @@
                 width: 18px !important;
                 height: 18px !important;
             }
+            
             .printable-section .btn-action {
                 display: inline-block !important;
                 visibility: visible !important;
@@ -376,8 +378,10 @@
             .printable-section .btn-action::after {
                 content: " [फोटो]";
             }
+
             .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
             .print-header { display: block !important; }
+            
             @page {
                 size: landscape;
                 margin: 0;
@@ -803,16 +807,16 @@
         </div>
     </div>
 
-    <!-- कालो मार्क गरिएको ठाउँसम्म (परिचय पत्रको फेदसम्म) पुग्ने गरी अत्यधिक गहिरो U-Shape गहिराइ सहितको आइडी कार्ड मोडल -->
+    <!-- कालो मार्क गरिएको ठाउँसम्म पुग्ने गरी पूर्ण गहिरो U-Shape गहिराइ भएको आइडी कार्ड मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 480px; height: 700px; background: #fff; border-radius: 16px; overflow: visible !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: 60px auto 40px auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
             
-            <!-- नीलो हेडर (कालो मार्क गरिएको ठाउँसम्म तल तानिएको अत्यधिक गहिरो U-Shape SVG) -->
-            <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 15px 115px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
-                <!-- Reaching the Black Mark (Badge Bottom) Curved Wave / U-Shape SVG Background -->
-                <svg viewBox="0 0 500 350" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-                    <path d="M0,0 L500,0 L500,280 Q500,340 0,280 Z" fill="#1a365d"></path>
+            <!-- नीलो हेडर (तपाईले मार्क गरेको ठाउँसम्मै तल तानिएको अत्यधिक गहिरो U-Shape SVG) -->
+            <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 15px 140px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
+                <!-- Deep U-Shape SVG Background -->
+                <svg viewBox="0 0 500 380" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                    <path d="M0,0 L500,0 L500,260 Q250,370 0,260 Z" fill="#1a365d"></path>
                 </svg>
 
                 <!-- गोलाकार लोगो नीलो हेडरभित्र ठीक ठाउँमा राखिएको -->
@@ -827,89 +831,71 @@
             </div>
 
             <!-- परिचय पत्र ब्याज शीर्षक (सेतो ब्याकग्राउन्डमा हरियो बोर्डर) - ठीक नीलो हेडरको फेदमा सेट गरिएको -->
-            <div style="background: #ffffff; color: #008000; border: 2.5px solid #008000; text-align: center; padding: 3px 22px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 130px; margin: -32px auto 8px auto; border-radius: 20px; box-shadow: 0 3px 6px rgba(0,0,0,0.15); text-transform: uppercase; position: relative; z-index: 15;">परिचय पत्र</div>
+            <div style="background: #ffffff; color: #008000; border: 2.5px solid #008000; text-align: center; padding: 3px 22px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 130px; margin: -35px auto 8px auto; border-radius: 20px; box-shadow: 0 3px 6px rgba(0,0,0,0.15); text-transform: uppercase; position: relative; z-index: 15;">परिचय पत्र</div>
 
-            <!-- मुख्य बडी भाग (वाटरमार्क सहित) -->
-            <div style="padding: 0 16px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background-image: url('https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'); background-repeat: no-repeat; background-position: center 55%; background-size: 280px 280px; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;">
-                
-                <!-- वाटरमार्कलाई स्पष्ट देखाउनको लागि हल्का सेतो ओभरले -->
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.91); pointer-events: none; z-index: 1; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;"></div>
+            <!-- बडी भाग (मेटा row, मुख्य जानकारी, विवरण टेबल र सही-छाप) -->
+            <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0;">
+                    <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
+                    <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
+                </div>
 
-                <!-- सबै कन्टेन्टहरू वाटरमार्कको माथि राख्ने -->
-                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding-bottom: 6px;">
-                    
-                    <div style="display: flex; justify-content: space-between; font-size: 14.5px; font-weight: 800; color: #1a365d; background: #f8fafc; padding: 7px 14px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 4px;">
-                        <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
-                        <span>फेमिली कोड: <strong id="cardFamilyCode">-</strong></span>
+                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="text-align: center; flex-shrink: 0;">
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 78px; height: 78px; border-radius: 50%; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
                     </div>
-
-                    <div style="display: flex; align-items: center; gap: 14px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                        <div style="flex-shrink: 0;">
-                            <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 105px; height: 105px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; box-shadow: 0 3px 8px rgba(0,0,0,0.18);">
-                        </div>
-                        <div style="flex-grow: 1; font-size: 14.5px; color: #1a202c; line-height: 1.4; font-weight: 700;">
-                            <div style="font-size: 18px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
-                            <div style="color: #008000; font-weight: 800; font-size: 15.5px;" id="cardPosition">-</div>
-                            <div style="font-size: 13px; color: #2d3748; margin-top: 3px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
-                            <div style="font-size: 12.5px; color: #e53e3e; margin-top: 1px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
-                        </div>
+                    <div style="flex-grow: 1; font-size: 11.5px; color: #1a202c; line-height: 1.4; font-weight: 700;">
+                        <div style="font-size: 15px; font-weight: 900; color: #1a365d;" id="cardName">-</div>
+                        <div style="color: #008000; font-weight: 800; font-size: 12px;" id="cardPosition">-</div>
+                        <div style="font-size: 10px; color: #2d3748; margin-top: 2px; font-weight: 800;">जारी मिति: <span id="cardIssueDate" style="color: #1a365d;">-</span></div>
+                        <div style="font-size: 10px; color: #e53e3e; margin-top: 1px;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 800;">-</span></div>
                     </div>
+                </div>
 
-                    <!-- ठेगाना बक्स -->
-                    <div style="background: #fff; border-radius: 8px; border: 1px solid #cbd5e0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
-                        <table style="width: 100%; border-collapse: collapse; margin: 0;">
-                            <tr>
-                                <td style="width: 38px; background: #1a365d; text-align: center; vertical-align: middle; padding: 7px 0; border-bottom: 1px solid #cbd5e0; font-size: 14px; color: #fff;">📍</td>
-                                <td style="width: 28%; padding: 7px 10px; font-weight: 800; color: #2d3748; font-size: 14px; border-bottom: 1px solid #cbd5e0; text-align: left; vertical-align: middle;">प्रदेश:</td>
-                                <td style="padding: 7px 10px; font-weight: 700; font-size: 14px; color: #1a202c; border-bottom: 1px solid #cbd5e0; text-align: left; vertical-align: middle;"><span id="cardProvince">-</span></td>
-                            </tr>
-                            <tr>
-                                <td style="background: #1a365d; text-align: center; vertical-align: middle; padding: 7px 0; border-bottom: 1px solid #cbd5e0; font-size: 14px; color: #fff;">🏛️</td>
-                                <td style="padding: 7px 10px; font-weight: 800; color: #2d3748; font-size: 14px; border-bottom: 1px solid #cbd5e0; text-align: left; vertical-align: middle;">जिल्ला:</td>
-                                <td style="padding: 7px 10px; font-weight: 700; font-size: 14px; color: #1a202c; border-bottom: 1px solid #cbd5e0; text-align: left; vertical-align: middle;"><span id="cardDistrict">-</span></td>
-                            </tr>
-                            <tr>
-                                <td style="background: #1a365d; text-align: center; vertical-align: middle; padding: 7px 0; border-bottom: 1px solid #cbd5e0; font-size: 14px; color: #fff;">🏢</td>
-                                <td style="padding: 7px 10px; font-weight: 800; color: #2d3748; font-size: 14px; border-bottom: 1px solid #cbd5e0; text-align: left; vertical-align: middle;">पालिका:</td>
-                                <td style="padding: 7px 10px; font-weight: 700; font-size: 14px; color: #1a202c; border-bottom: 1px solid #cbd5e0; text-align: left; vertical-align: middle;"><span id="cardMunicipality">-</span></td>
-                            </tr>
-                            <tr>
-                                <td style="background: #1a365d; text-align: center; vertical-align: middle; padding: 7px 0; font-size: 14px; color: #fff;">👥</td>
-                                <td style="padding: 7px 10px; font-weight: 800; color: #2d3748; font-size: 14px; text-align: left; vertical-align: middle;">वडा:</td>
-                                <td style="padding: 7px 10px; font-weight: 700; font-size: 14px; color: #1a202c; text-align: left; vertical-align: middle;"><span id="cardWard">-</span></td>
-                            </tr>
-                        </table>
+                <div style="width: 100%; background: #fff; border-radius: 6px; padding: 6px 10px; border: 1px solid #cbd5e0; font-size: 11.5px; font-weight: 700;">
+                    <table style="width: 100%; background: transparent; margin: 0;">
+                        <tr><td style="border: none; text-align: left; padding: 2px 0; width: 35%; color: #2d3748; font-weight: 800;">प्रदेश:</td><td style="border: none; text-align: left; padding: 2px 0; color: #1a202c;"><span id="cardProvince">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px 0; color: #2d3748; font-weight: 800;">जिल्ला:</td><td style="border: none; text-align: left; padding: 2px 0; color: #1a202c;"><span id="cardDistrict">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px 0; color: #2d3748; font-weight: 800;">पालिका:</td><td style="border: none; text-align: left; padding: 2px 0; color: #1a202c;"><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px 0; color: #2d3748; font-weight: 800;">वडा:</td><td style="border: none; text-align: left; padding: 2px 0; color: #1a202c;"><span id="cardWard">-</span></td></tr>
+                    </table>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #cbd5e0; margin-bottom: 4px;">
+                    <div>
+                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्" style="width: 58px; height: 58px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer;">
                     </div>
-
-                    <!-- QR Code र सही हस्ताक्षर भाग -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1px dashed #cbd5e0;">
-                        <div>
-                            <img id="cardQrCode" src="" alt="QR Code" style="width: 72px; height: 72px; border: 1px solid #cbd5e0; padding: 2px; border-radius: 6px; background: #fff;">
+                    <div style="text-align: center; font-size: 10px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 200px;">
+                        <div style="text-align: center; position: relative; flex: 1;">
+                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिवको हस्ताक्षर" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 60px; height: 26px; object-fit: contain;">
+                            <div style="width: 65px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
+                            <span>सचिव</span>
                         </div>
-                        <div style="text-align: center; font-size: 13.5px; font-weight: 800; color: #1a202c; display: flex; justify-content: space-between; width: 250px;">
-                            <div style="position: relative; text-align: center;">
-                                <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिव" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 78px; height: 32px; object-fit: contain;">
-                                <div style="width: 78px; border-top: 1.5px solid #000; margin: 20px auto 2px;"></div>
-                                <span>सचिव</span>
-                            </div>
-                            <div style="position: relative; text-align: center;">
-                                <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्ष" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 78px; height: 32px; object-fit: contain;">
-                                <div style="width: 78px; border-top: 1.5px solid #000; margin: 20px auto 2px;"></div>
-                                <span>अध्यक्ष</span>
-                            </div>
+                        <div style="text-align: center; position: relative; flex: 1; margin-left: 10px;">
+                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्षको हस्ताक्षर" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 60px; height: 26px; object-fit: contain;">
+                            <div style="width: 65px; border-top: 1.2px solid #000; margin: 18px auto 2px;"></div>
+                            <span>अध्यक्ष</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- तल्लो सम्पर्क विवरण फुटर -->
-            <div style="background: #1a365d; color: #fff; text-align: center; padding: 7px; font-size: 11.5px; font-weight: 700; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 3px;">
-                    <span style="display: flex; align-items: center; gap: 4px;"><img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" style="width: 14px; height: 14px;"> 9765240652</span>
-                    <span style="display: flex; align-items: center; gap: 4px;"><img src="https://i.postimg.cc/Hsb76h3r/gmail.png" style="width: 14px; height: 14px;"> dashaundisamajnepal@gmail.com</span>
+            <!-- कार्डको फेद (Footer) -->
+            <div style="background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 9.5px; font-weight: 700; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; display: flex; flex-direction: column; gap: 3px;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" alt="WhatsApp" style="width: 14px; height: 14px; object-fit: contain;">
+                        <span>9765240652</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <img src="https://i.postimg.cc/Hsb76h3r/gmail.png" alt="Gmail" style="width: 14px; height: 14px; object-fit: contain;">
+                        <span>dashaundisamajnepal@gmail.com</span>
+                    </div>
                 </div>
-                <div>🌐 www.dashaundisamajnepal.com</div>
-                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 3px 10px; border-radius: 4px; color: #fff; display: inline-block; font-size: 11px; font-weight: bold; margin-top: 3px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+                    <span>🌐</span> <span>www.dashaundisamajnepal.com</span>
+                </div>
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 3px 12px; border-radius: 4px; color: #fff; display: inline-block; font-size: 9px; font-weight: bold; margin-top: 2px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
             </div>
         </div>
     </div>
