@@ -805,7 +805,6 @@
         </div>
     </div>
 
-    <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 480px; height: 700px; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: 60px auto 40px auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
@@ -835,7 +834,7 @@
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 8px; position: relative; overflow: hidden;">
-                    <div style="position: absolute; right: -15px; top: 50%; transform: translateY(-50%); opacity: 0.12; pointer-events: none; z-index: 0;">
+                    <div style="position: absolute; right: 35px; top: 50%; transform: translateY(-50%); opacity: 0.12; pointer-events: none; z-index: 0;">
                         <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 140px; height: 140px; object-fit: contain;">
                     </div>
 
@@ -844,10 +843,10 @@
                     </div>
                     
                     <div style="flex-grow: 1; font-size: 13px; color: #000000; line-height: 1.45; font-weight: 900; z-index: 1;">
-                        <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">-</div>
-                        <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">-</div>
-                        <div style="font-size: 11.5px; color: #111111; margin-top: 4px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000; font-weight: 950;">-</span></div>
-                        <div style="font-size: 11.5px; color: #c53030; margin-top: 2px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 950;">-</span></div>
+                        <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">Manoj Kumar Dashaundi</div>
+                        <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">सचिव</div>
+                        <div style="font-size: 11.5px; color: #111111; margin-top: 4px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000; font-weight: 950;">२०८३-०५-१२</span></div>
+                        <div style="font-size: 11.5px; color: #c53030; margin-top: 2px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 950;">२०८४-०५-१२</span></div>
                     </div>
                 </div>
 
@@ -860,18 +859,17 @@
                     </div>
                     <div style="flex-grow: 1; padding: 2px 6px;">
                         <table style="width: 100%; background: transparent; margin: 0;">
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px;"><span id="cardProvince">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px;"><span id="cardProvince">कर्णाली प्रदेश</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">सुर्खेत</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">वीरेन्द्रनगर नगरपालिका</span></td></tr>
+                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">४</span></td></tr>
                         </table>
                     </div>
                 </div>
 
-                <!-- यहाँ हस्ताक्षरको साइज डबल (width: 125px, height: 50px) बनाइएको छ -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1.5px dashed #cbd5e0; margin-bottom: 4px;">
                     <div>
-                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्" style="width: 66px; height: 66px; border: 1.5px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer;">
+                        <img id="cardQrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ManojKumarDashaundi" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्" style="width: 66px; height: 66px; border: 1.5px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer;">
                     </div>
                     <div style="text-align: center; font-size: 12px; font-weight: 950; color: #000000; display: flex; justify-content: space-between; width: 230px;">
                         <div style="text-align: center; position: relative; flex: 1;">
