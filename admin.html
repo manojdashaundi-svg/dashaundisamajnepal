@@ -348,7 +348,7 @@
                 padding: 0 !important; 
                 margin: 0 !important;
                 z-index: 9999 !important;
-                transform: scale(0.75);
+                transform: scale(1.15); /* यहाँ साइजलाई अझ स्पष्ट र ठूलो बनाउन स्केल बढाइएको छ */
                 transform-origin: center;
             }
             .printable-section, .printable-section * { visibility: visible !important; }
@@ -395,7 +395,7 @@
             .print-header { display: block !important; }
             
             @page {
-                size: landscape;
+                size: portrait; /* परिचयपत्र ठाडो (Portrait) हुने भएकोले यसलाई portrait बनाइएको छ */
                 margin: 0;
             }
             * {
