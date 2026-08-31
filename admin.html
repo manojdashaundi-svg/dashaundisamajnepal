@@ -348,7 +348,7 @@
                 padding: 0 !important; 
                 margin: 0 !important;
                 z-index: 9999 !important;
-                transform: scale(1.15); /* यहाँ साइजलाई अझ स्पष्ट र ठूलो बनाउन स्केल बढाइएको छ */
+                transform: scale(0.85);
                 transform-origin: center;
             }
             .printable-section, .printable-section * { visibility: visible !important; }
@@ -395,7 +395,7 @@
             .print-header { display: block !important; }
             
             @page {
-                size: portrait; /* परिचयपत्र ठाडो (Portrait) हुने भएकोले यसलाई portrait बनाइएको छ */
+                size: landscape;
                 margin: 0;
             }
             * {
@@ -820,13 +820,9 @@
     </div>
 
     <!-- परिचय पत्र मोडल -->
-<div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
-    <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
-        
-        <!-- प्रस्ट बन्द गर्ने क्रस बटन -->
-        <div style="text-align: right; background: #1a365d; padding: 6px 12px;">
-            <button type="button" onclick="closeIdCardModal()" style="background: #e53e3e; color: #fff; border: none; padding: 4px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px;">बन्द गर्नुहोस् &times;</button>
-        </div>
+    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
+        <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
+            <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
             
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
