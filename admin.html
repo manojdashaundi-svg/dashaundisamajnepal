@@ -822,9 +822,12 @@
     <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
-            <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
             
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
+                
+                <!-- यहाँ केवल × चिन्ह भएको क्लोज बटन राखिएको छ जुन प्रिन्ट गर्दा देखिंदैन -->
+                <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
+
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
                 </svg>
