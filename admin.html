@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
-    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Nepali Date Converter CDN -->
     <script src="https://nepalidateconverter.com/js/nepali-date-picker.min.js"></script>
     <link href="https://nepalidateconverter.com/css/nepali-date-picker.min.css" rel="stylesheet" />
     <style>
@@ -807,19 +805,15 @@
         </div>
     </div>
 
-    <!-- परिचय पत्र मोडल (सन्तुलित U-Shape गहिराई भएको) -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 480px; height: 700px; background: #fff; border-radius: 16px; overflow: visible !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: 60px auto 40px auto; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
             <span style="position: absolute; top: -45px; right: 0px; color: #fff; font-size: 26px; cursor: pointer; z-index: 25; background: rgba(0,0,0,0.6); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;" onclick="closeIdCardModal()">&times;</span>
             
-            <!-- नीलो हेडर (अलि कम गहिरो U-Shape SVG) -->
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 15px 105px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
-                <!-- Balanced U-Shape SVG Background -->
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
                 </svg>
 
-                <!-- गोलाकार लोगो नीलो हेडरभित्र ठीक ठाउँमा राखिएको -->
                 <div style="width: 74px; height: 74px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.25); border: 3px solid #ffffff; position: relative; z-index: 10;">
                     <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;">
                 </div>
@@ -831,8 +825,7 @@
                 </div>
             </div>
 
-           <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -80px auto 10px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
-            <!-- बडी भाग (मेटा row, मुख्य जानकारी, विवरण टेबल र सही-छाप) -->
+           <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -80px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
@@ -879,7 +872,6 @@
                 </div>
             </div>
 
-            <!-- कार्डको फेद (Footer) -->
             <div style="background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 9.5px; font-weight: 700; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; display: flex; flex-direction: column; gap: 3px;">
                 <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 4px;">
