@@ -360,8 +360,36 @@
                                 <button type="button" class="toggle-password" onclick="togglePasswordVisibility('login_password', this)">👁</button>
                             </div>
                         </div>
-                        <button type="submit" style="background: var(--primary-gradient);">लगइन गर्नुहोस्</button>
+                        
+                        <div style="text-align: right; margin-top: 8px;">
+                            <a href="javascript:void(0);" onclick="showForgotPasswordStep()" style="color: #2b6cb0; font-size: 13px; font-weight: bold; text-decoration: none;">पासवर्ड बिर्सनुभयो?</a>
+                        </div>
+
+                        <button type="submit" style="background: var(--primary-gradient); margin-top: 10px;">लगइन गर्नुहोस्</button>
                     </form>
+                </div>
+
+                <div id="forgotPasswordStep" class="sub-section" style="display: none;">
+                    <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← लगइनमा फर्कनुहोस्</button>
+                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पासवर्ड रिसेट गर्नुहोस्</h3>
+                    
+                    <div class="form-group">
+                        <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
+                        <input type="email" id="forgot_email" placeholder="example@gmail.com">
+                    </div>
+                    <button type="button" onclick="sendForgotPasswordOtp()" style="background: var(--warning-gradient); color: #1a202c;">✉ रिसेट कोड पठाउनुहोस्</button>
+
+                    <div id="forgotOtpSection" style="display: none; margin-top: 15px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0; text-align: left;">
+                        <div class="form-group">
+                            <label style="color: #2b6cb0;">इमेलमा आएको ६ अंकको कोड:</label>
+                            <input type="text" id="forgot_otp_code" placeholder="______" maxlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>नयाँ पासवर्ड:</label>
+                            <input type="password" id="new_password" placeholder="नयाँ बलियो पासवर्ड">
+                        </div>
+                        <button type="button" onclick="verifyAndResetPassword()" style="background: var(--accent-gradient);">✔ पासवर्ड परिवर्तन गर्नुहोस्</button>
+                    </div>
                 </div>
 
                 <div id="dashboardStep" class="sub-section" style="display: none;">
@@ -820,6 +848,62 @@
             currentUserProfile = data[0];
             alert('लगइन सफल भयो!');
             loadDashboard();
+        }
+
+        // पासवर्ड बिर्सनुभयो? सम्बन्धी नयाँ फंक्सनहरू
+        let currentForgotOtp = '';
+
+        function showForgotPasswordStep() {
+            showSubSection('forgotPasswordStep');
+            document.getElementById('forgotOtpSection').style.display = 'none';
+            document.getElementById('forgot_email').value = '';
+            document.getElementById('forgot_otp_code').value = '';
+            document.getElementById('new_password').value = '';
+        }
+
+        async function sendForgotPasswordOtp() {
+            const email = document.getElementById('forgot_email').value.trim();
+            if(!email) { alert('कृपया इमेल ठेगाना लेख्नुहोस्!'); return; }
+
+            const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).single();
+            if(!data) { alert('यो इमेलबाट कुनै पनि खाता दर्ता गरिएको छैन!'); return; }
+
+            currentForgotOtp = Math.floor(100000 + Math.random() * 900000).toString();
+
+            await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentForgotOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
+
+            emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentForgotOtp, time: "१ मिनेट" })
+                .then(() => { 
+                    alert('✔ पासवर्ड रिसेट गर्ने कोड इमेलमा पठाइयो!');
+                    document.getElementById('forgotOtpSection').style.display = 'block';
+                }).catch(err => {
+                    alert('इमेल पठाउन असफल: JSON त्रुटि');
+                });
+        }
+
+        async function verifyAndResetPassword() {
+            const email = document.getElementById('forgot_email').value.trim();
+            const enteredOtp = document.getElementById('forgot_otp_code').value.trim();
+            const newPassword = document.getElementById('new_password').value.trim();
+
+            if(enteredOtp !== currentForgotOtp) {
+                alert('गलत OTP कोड!');
+                return;
+            }
+
+            if(!newPassword || newPassword.length < 4) {
+                alert('कृपया कम्तिमा ४ अंक/अक्षरको नयाँ पासवर्ड राख्नुहोस्!');
+                return;
+            }
+
+            const { error } = await supabaseClient.from('users').update({ password: newPassword }).eq('email', email);
+
+            if(error) {
+                alert('पासवर्ड अपडेट गर्न असफल: ' + error.message);
+            } else {
+                alert('✔ पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डमार्फत लगइन गर्नुहोस्।');
+                showSubSection('loginStep');
+            }
         }
 
         async function loadDashboard() {
