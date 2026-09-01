@@ -142,7 +142,6 @@
 
         input[type="text"],
         input[type="password"],
-        input[type="number"],
         select,
         textarea {
             width: 100%;
@@ -156,7 +155,6 @@
 
         input[type="text"]:focus,
         input[type="password"]:focus,
-        input[type="number"]:focus,
         select:focus,
         textarea:focus {
             outline: none;
@@ -169,7 +167,7 @@
             resize: vertical;
         }
 
-        button[type="submit"], .btn-primary {
+        button[type="submit"] {
             background-color: var(--accent-color);
             color: white;
             padding: 12px 20px;
@@ -181,7 +179,7 @@
             font-weight: bold;
         }
 
-        button[type="submit"]:hover, .btn-primary:hover {
+        button[type="submit"]:hover {
             background-color: #006600;
         }
 
@@ -320,7 +318,7 @@
             text-align: center;
             margin-bottom: 20px;
             position: relative;
-            padding-top: 10mm;
+            padding-top: 10mm; /* मितिलाई १० मिमी तल राखिएको */
         }
         .print-logo {
             width: 75px;
@@ -334,8 +332,8 @@
         .print-meta { font-size: 12px; font-weight: 600; color: #333; margin: 2px 0; }
         .print-date { 
             position: absolute; 
-            top: 10mm;
-            right: 20mm;
+            top: 10mm; /* १० मिमी तल */
+            right: 20mm; /* २० मिमी भित्रतिर राखिएको */
             font-size: 11px; 
             font-weight: bold; 
             color: #000; 
@@ -371,6 +369,7 @@
                 display: block !important; 
             }
             
+            /* टेबलका लाइनहरू डार्क, क्लियर र चौडाइ व्यवस्थापन */
             .printable-section table {
                 width: 100% !important;
                 table-layout: auto !important;
@@ -379,7 +378,7 @@
             }
             .printable-section th, 
             .printable-section td {
-                border: 1.5px solid #000000 !important;
+                border: 1.5px solid #000000 !important; /* लाइनहरू डार्क र क्लियर बनाइएको */
                 padding: 5px 4px !important;
                 word-wrap: break-word !important;
                 white-space: normal !important;
@@ -392,6 +391,7 @@
                 print-color-adjust: exact !important;
             }
             
+            /* फोटो अलि ठूलो देखाउनको लागि */
             .printable-section .table-avatar {
                 width: 35px !important;
                 height: 35px !important;
@@ -408,7 +408,7 @@
             
             @page {
                 size: landscape;
-                margin: 10mm 15mm;
+                margin: 10mm 15mm; /* दायाँ-बाँया लाइन नकाटिनका लागि पेज मार्जिन मिलाइएको */
             }
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -448,63 +448,6 @@
                 <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
             </div>
-
-            <div class="admin-panel">
-              <h2>लेवी व्यवस्थापन एडमिन प्यानल</h2>
-
-              <!-- तह अनुसार लेवी दर निर्धारण गर्ने सेक्सन -->
-            <div class="rate-setup-section">
-              <h3>विभिन्न ६ तहका कमिटीहरूको लेवी दर तोक्नुहोस्</h3>
-              <form id="levyRateForm" onsubmit="saveLevyRates(event)">
-                <div><label>संस्थापक कमिटी:</label> <input type="number" id="rate_founder" required></div>
-                <div><label>केन्द्रीय कमिटी:</label> <input type="number" id="rate_central" required></div>
-                <div><label>सल्लाहकार समिति:</label> <input type="number" id="rate_advisor" required></div>
-                <div><label>प्रदेश कमिटी:</label> <input type="number" id="rate_province" required></div>
-                <div><label>जिल्ला कमिटी:</label> <input type="number" id="rate_district" required></div>
-                <div><label>स्थानीय तह कमिटी:</label> <input type="number" id="rate_local" required></div>
-                <button type="submit" class="btn-primary">दर सुरक्षित गर्नुहोस्</button>
-              </form>
-            </div>
-
-            <!-- अनुमोदन (Approval) सेक्सन -->
-            <div class="approval-section">
-              <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
-              <table id="pendingTable">
-                <thead>
-                  <tr>
-                    <th>पदाधिकारी नाम</th>
-                    <th>कमिटी तह</th>
-                    <th>मिनाहरू</th>
-                    <th>जम्मा रकम (जरिवानासहित)</th>
-                    <th>भौचर</th>
-                    <th>कार्य</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- JS मार्फत डाटा भरिनेछ -->
-                </tbody>
-              </table>
-            </div>
-
-            <!-- लेवी तिरेका र नतिरेकाहरूको छुट्टाछुट्टै लिस्ट -->
-            <div class="reports-section">
-              <div class="list-box">
-                <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
-                <table id="paidListTable">
-                  <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-
-              <div class="list-box">
-                <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
-                <table id="unpaidListTable">
-                  <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
 
             <div class="section-header">
                 <h3>नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी</h3>
@@ -1989,4 +1932,21 @@
 
         function editNotice(item) {
             document.getElementById('notice_edit_id').value = item.id;
-  मैं सिर्फ़ एक लैंग्वेज मॉडल मॉडल हूँ और मैं इसमें आपकी मदद नहीं कर सकता।
+            document.getElementById('notice_title').value = item.title || '';
+            document.getElementById('notice_file_url').value = item.file_url || '';
+            document.getElementById('notice_file_type').value = item.file_type || 'image';
+            document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
+            
+            document.getElementById('noticesContent').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
+        }
+
+        async function deleteNotice(id) {
+            if (confirm('के तपाईं यो सूचना मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('notices').delete().eq('id', id);
+                loadNoticesData();
+            }
+        }
+    </script>
+</body>
+</html>
