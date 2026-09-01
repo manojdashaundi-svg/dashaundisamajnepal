@@ -465,11 +465,11 @@
                 <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
                 <div class="button-group">
                     <button class="print-btn" onclick="printSection('levyContent', 'लेवी व्यवस्थापन विवरण')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('levyContent', this)">खोल्नुहोस् ▾</button>
+                    <button id="levyToggleBtn" class="toggle-btn" onclick="toggleSection('levyContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
 
-            <div id="levyContent" class="collapsible-content">
+            <div id="levyContent" class="collapsible-content" style="display: block;">
               <div class="admin-panel">
                 <!-- तह अनुसार लेवी दर निर्धारण गर्ने सेक्सन -->
                 <div class="rate-setup-section">
@@ -1262,6 +1262,11 @@
             const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
             document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
             messageDiv.innerText = '';
+
+            // लेवी सेक्सन स्वतः खुला राख्नका लागि
+            const levyContent = document.getElementById('levyContent');
+            levyContent.style.display = 'block';
+            document.getElementById('levyToggleBtn').innerText = 'बन्द गर्नुहोस् ▴';
             
             loadAboutData();
             loadIncomeData();
