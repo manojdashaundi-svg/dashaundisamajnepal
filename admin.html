@@ -378,8 +378,16 @@
                 left: 0 !important; 
                 top: 0 !important; 
                 width: 100% !important; 
+                height: auto !important;
                 background: #fff !important;
                 display: block !important; 
+                page-break-inside: avoid !important;
+            }
+            
+            /* समग्र प्रिन्ट कन्टेन्टलाई स्वतः एउटै पेजमा फिट गराउन */
+            @page {
+                size: A4 landscape;
+                margin: 5mm;
             }
             
             .printable-section table {
@@ -417,10 +425,6 @@
             .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
             .print-header { display: block !important; }
             
-            @page {
-                size: landscape;
-                margin: 10mm 15mm;
-            }
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
