@@ -1284,6 +1284,7 @@
             loadUsersData();
             loadApplicationsData();
             loadNoticesData();
+            loadLevyRates();
         }
 
         function logout() {
@@ -2046,15 +2047,44 @@
         // लेवी दर सेभ गर्ने फंक्सन
         async function saveLevyRates(event) {
             event.preventDefault();
-            const rates = {
-                founder: document.getElementById('rate_founder').value,
-                central: document.getElementById('rate_central').value,
-                advisor: document.getElementById('rate_advisor').value,
-                province: document.getElementById('rate_province').value,
-                district: document.getElementById('rate_district').value,
-                local: document.getElementById('rate_local').value
-            };
-            alert('लेवी दर सफलतापूर्वक सुरक्षित गरियो!');
+            
+            const ratesData = [
+                { committee_level: 'founder', monthly_amount: parseFloat(document.getElementById('rate_founder').value) || 0 },
+                { committee_level: 'central', monthly_amount: parseFloat(document.getElementById('rate_central').value) || 0 },
+                { committee_level: 'advisor', monthly_amount: parseFloat(document.getElementById('rate_advisor').value) || 0 },
+                { committee_level: 'province', monthly_amount: parseFloat(document.getElementById('rate_province').value) || 0 },
+                { committee_level: 'district', monthly_amount: parseFloat(document.getElementById('rate_district').value) || 0 },
+                { committee_level: 'local', monthly_amount: parseFloat(document.getElementById('rate_local').value) || 0 }
+            ];
+
+            // सुपाबेसको levy_rates टेबलमा डेटा पठाउने (committee_level लाई unique मान्दै upsert गर्ने)
+            for (let rate of ratesData) {
+                const { error } = await supabaseClient
+                    .from('levy_rates')
+                    .upsert([rate], { onConflict: 'committee_level' });
+
+                if (error) {
+                    alert('त्रुटि देखियो: ' + error.message);
+                    return;
+                }
+            }
+
+            alert('लेवी दर सफलतापूर्वक सुपाबेस डाटाबेसमा सुरक्षित गरियो!');
+            loadLevyRates(); // सेभ भएपछि डाटा रिफ्रेस गर्न
+        }
+
+        async function loadLevyRates() {
+            const { data, error } = await supabaseClient.from('levy_rates').select('*');
+            if (data && data.length > 0) {
+                data.forEach(item => {
+                    if (item.committee_level === 'founder') document.getElementById('rate_founder').value = item.monthly_amount;
+                    if (item.committee_level === 'central') document.getElementById('rate_central').value = item.monthly_amount;
+                    if (item.committee_level === 'advisor') document.getElementById('rate_advisor').value = item.monthly_amount;
+                    if (item.committee_level === 'province') document.getElementById('rate_province').value = item.monthly_amount;
+                    if (item.committee_level === 'district') document.getElementById('rate_district').value = item.monthly_amount;
+                    if (item.committee_level === 'local') document.getElementById('rate_local').value = item.monthly_amount;
+                });
+            }
         }
 
         // एडमिन प्रमाणीकरण फंक्सन (अप्रुभ वा रिजेक्ट गर्ने)
