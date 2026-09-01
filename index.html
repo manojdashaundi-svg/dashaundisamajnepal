@@ -160,7 +160,24 @@
         .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
         .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
 
-        footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600; }
+        /* Levy Portal Additional Styles */
+        .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
+        .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
+        .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 10px; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 5000; padding: 15px; box-sizing: border-box; overflow-y: auto; }
+        .modal-content { background: #fff; padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left; }
+        .close { position: absolute; top: 15px; right: 20px; font-size: 24px; font-weight: bold; cursor: pointer; color: #718096; }
+        .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+        .month-box { padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 700; border: 1px solid #cbd5e0; transition: 0.2s; }
+        .bg-green { background: #c6f6d5; color: #22543d; border-color: #9ae6b4; }
+        .bg-red { background: #fed7d7; color: #742a2a; border-color: #feb2b2; }
+        .bg-normal { background: #edf2f7; color: #2d3748; border-color: #cbd5e0; }
+        .summary-box { background: #f7fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 14px; font-weight: 600; }
+        .summary-box p { margin: 5px 0; }
+        .fine-text { color: #e53e3e; }
+
+        <footer>text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600;</footer>
     </style>
 </head>
 <body>
@@ -400,7 +417,37 @@
                         <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 6px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
                     </div>
 
-                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
+                    <div class="levy-dashboard-card">
+                        <h3>मेरो लेवी भुक्तानी (My Levy Portal)</h3>
+                        <button onclick="openLevyModal()" class="btn-primary">लेवी तिर्नुहोस् (Pay Levy)</button>
+
+                        <div id="levyModal" class="modal" style="display:none;">
+                            <div class="modal-content">
+                                <span onclick="closeLevyModal()" class="close">&times;</span>
+                                <h4>महिना अनुसार लेवी छनोट गर्नुहोस्</h4>
+                                
+                                <div id="monthsGrid" class="months-grid">
+                                    </div>
+
+                                <div class="summary-box">
+                                    <p>चयन गरिएका महिनाहरू: <span id="selectedCount">0</span></p>
+                                    <p>मूल लेवी रकम: रू. <span id="baseTotal">0.00</span></p>
+                                    <p class="fine-text">जरिवाना (१०%): रू. <span id="fineTotal">0.00</span></p>
+                                    <hr>
+                                    <h4>जम्मा कुल रकम: रू. <span id="grandTotal">0.00</span></h4>
+                                </div>
+
+                                <div class="form-group">
+                                    भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्:
+                                    <input type="file" id="voucherFile" accept="image/*,application/pdf">
+                                </div>
+
+                                <button onclick="submitLevyPayment()" class="btn-success">भुक्तानी अनुरोध पठाउनुहोस्</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-top: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                             <h4 style="color: #1a365d; margin: 0; font-size: 16px; font-weight: 900;">👤 मेरो प्रोफाइल विवरण</h4>
                             <button type="button" onclick="toggleEditProfile()" id="btnEditToggle" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 14px; font-size: 12px; box-shadow: none;">✏ प्रोफाइल एडिट गर्नुहोस्</button>
@@ -1350,6 +1397,64 @@
                         </div>
                     `;
                 });
+            });
+        }
+
+        // Levy Modal JavaScript Functions
+        function openLevyModal() {
+            document.getElementById('levyModal').style.display = 'flex';
+            // Sample call to renderMonths with dummy data (can be replaced with user's actual database history and rate)
+            renderMonths(['01', '02'], 500); 
+        }
+
+        function closeLevyModal() {
+            document.getElementById('levyModal').style.display = 'none';
+        }
+
+        function checkIfLate(monthVal) {
+            // उदाहरणका लागि समय नाघेको जाँच्ने साधारण लजिक (तपाईंको आवश्यकता अनुसार बदल्न सकिन्छ)
+            return parseInt(monthVal) < 5; 
+        }
+
+        function toggleMonth(val, rate, isLate) {
+            // महिना छनोट र कुल रकम गणना गर्ने फंक्सनको आधार
+            alert(m.name + ' महिना छनोट गरियो।');
+        }
+
+        function submitLevyPayment() {
+            const fileInput = document.getElementById('voucherFile');
+            if(fileInput.files.length === 0) {
+                alert('कृपया भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्!');
+                return;
+            }
+            alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
+            closeLevyModal();
+        }
+
+        // महिनाहरूको स्थिति र रङ जनरेट गर्ने फंक्सन (समय नाघेपछि रातो र १०% जरिवाना जोडिने)
+        function renderMonths(userHistory, committeeRate) {
+            const grid = document.getElementById('monthsGrid');
+            grid.innerHTML = '';
+            
+            const monthsList = [
+                {name: 'वैशाख', val: '01'}, {name: 'जेठ', val: '02'}, {name: 'असार', val: '03'},
+                {name: 'साउन', val: '04'}, {name: 'भदौ', val: '05'}, {name: 'असोज', val: '06'},
+                {name: 'कार्तिक', val: '07'}, {name: 'मंसिर', val: '08'}, {name: 'पुष', val: '09'},
+                {name: 'माघ', val: '10'}, {name: 'फागुन', val: '11'}, {name: 'चैत', val: '12'}
+            ];
+
+            monthsList.forEach(m => {
+                let isPaid = userHistory.includes(m.val);
+                let isLate = checkIfLate(m.val); // १ दिन ढिला भए पनि जाँच्ने लजिक
+                
+                let boxClass = isPaid ? 'bg-green' : (isLate ? 'bg-red' : 'bg-normal');
+                
+                grid.innerHTML += `
+                    <div class="month-box ${boxClass}" onclick="toggleMonth('${m.val}', ${committeeRate}, ${isLate})">
+                        <span>${m.name}</span>
+                        <small>${isPaid ? 'तिरिसकिएको' : (isLate ? 'ढिलाइ (जरिवाना)' : 'बाँकी')}</small>
+                    </div>
+                `;
             });
         }
 
