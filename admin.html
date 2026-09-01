@@ -438,6 +438,33 @@
             </div>
 
             <div class="section-header">
+                <h3>नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('incomeContent', 'नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('incomeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="incomeContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>सदस्यको नाम</th>
+                                <th>शीर्षक (Category)</th>
+                                <th>विवरण / प्रकार</th>
+                                <th>रकम (रु.)</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incomeTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section-header">
                 <h3>सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesContent', this)">खोल्नुहोस् ▾</button></div>
             </div>
@@ -1141,6 +1168,7 @@
             messageDiv.innerText = '';
             
             loadAboutData();
+            loadIncomeData();
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1153,6 +1181,45 @@
         function logout() {
             localStorage.clear();
             location.reload();
+        }
+
+        async function loadIncomeData() {
+            const { data } = await supabaseClient.from('income_records').select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById('incomeTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">कुनै आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.name || '-'}</strong></td>
+                        <td>${item.category || '-'}</td>
+                        <td>${item.description || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '५००')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteIncomeRecord('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteIncomeRecord(id) {
+            if(confirm('के तपाईं यो आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('income_records').delete().eq('id', id);
+                if(!error) {
+                    alert('आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
+                    loadIncomeData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
         }
 
         async function loadApplicationsData() {
@@ -1313,9 +1380,19 @@
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
             
             if(!appError) {
+                const incomeRecord = {
+                    date: todayNepaliDate,
+                    name: app.full_name,
+                    category: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
+                    description: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
+                    amount: '५००'
+                };
+                await supabaseClient.from('income_records').insert([incomeRecord]);
+
                 alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
+                loadIncomeData();
             } else {
                 alert('त्रुटि: ' + appError.message);
             }
