@@ -29,7 +29,6 @@
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
         .header-green { background-color: #008000; color: white; width: 100%; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; }
         
-        /* हल्लिने झण्डाको साइज डबल गरिएको भाग */
         .header-flag-box { position: absolute; right: -30px; top: 28%; transform: translateY(-50%); width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
         .header-flag-box img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
 
@@ -407,7 +406,7 @@
                             <button type="button" onclick="toggleEditProfile()" id="btnEditToggle" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 14px; font-size: 12px; box-shadow: none;">✏ प्रोफाइल एडिट गर्नुहोस्</button>
                         </div>
 
-                                                <div id="profileViewMode" class="profile-pic-container">
+                        <div id="profileViewMode" class="profile-pic-container">
                             <img id="lbl_avatar_img" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" class="profile-avatar" style="width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0;">
                             <div>
                                 <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
@@ -417,7 +416,7 @@
                             </div>
                         </div>
 
-                                                <div id="profileEditMode" style="display: none; margin-top: 15px; border-top: 2px dashed #e2e8f0; padding-top: 15px;">
+                        <div id="profileEditMode" style="display: none; margin-top: 15px; border-top: 2px dashed #e2e8f0; padding-top: 15px;">
                             <div class="form-group" style="text-align: center;">
                                 <label style="display: block; margin-bottom: 8px;">प्रोफाइल फोटो परिवर्तन गर्नुहोस्:</label>
                                 <div style="width: 85px; height: 85px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px auto; border: 3px solid #2b6cb0; cursor: pointer; position: relative;" onclick="document.getElementById('edit_avatar_file').click()">
@@ -925,7 +924,6 @@
             }
         }
 
-        // प्रोफाइल एडिट सम्बन्धी नयाँ फंक्सनहरू
         function toggleEditProfile() {
             const viewMode = document.getElementById('profileViewMode');
             const editMode = document.getElementById('profileEditMode');
@@ -936,7 +934,6 @@
                 viewMode.style.display = 'none';
                 editBtn.innerText = '✕ बन्द गर्नुहोस्';
 
-                // पुराना डेटा इन्पुट बक्समा भर्ने
                 document.getElementById('edit_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
                 document.getElementById('edit_phone').value = currentUserProfile.phone || '';
                 document.getElementById('edit_dob').value = currentUserProfile.dob || '';
@@ -1013,7 +1010,6 @@
 
         async function loadDashboard() {
             showSubSection('dashboardStep');
-            // एडिट मोड खुला रहेछ भने बन्द गर्ने
             document.getElementById('profileEditMode').style.display = 'none';
             document.getElementById('profileViewMode').style.display = 'flex';
             document.getElementById('btnEditToggle').innerText = '✏ प्रोफाइल एडिट गर्नुहोस्';
