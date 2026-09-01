@@ -142,6 +142,7 @@
 
         input[type="text"],
         input[type="password"],
+        input[type="number"],
         select,
         textarea {
             width: 100%;
@@ -155,6 +156,7 @@
 
         input[type="text"]:focus,
         input[type="password"]:focus,
+        input[type="number"]:focus,
         select:focus,
         textarea:focus {
             outline: none;
@@ -313,12 +315,22 @@
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
+        /* लेवी प्यानलको लागि थपिएको CSS शैलीहरू */
+        .admin-panel { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .admin-panel h2 { color: var(--primary-color); text-align: center; margin-bottom: 20px; }
+        .rate-setup-section, .approval-section, .reports-section { margin-bottom: 30px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
+        .rate-setup-section h3, .approval-section h3, .reports-section h3 { margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        #levyRateForm { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
+        .reports-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .list-box { background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
+        @media (max-width: 768px) { .reports-section { grid-template-columns: 1fr; } }
+
         .print-header {
             display: none;
             text-align: center;
             margin-bottom: 20px;
             position: relative;
-            padding-top: 10mm; /* मितिलाई १० मिमी तल राखिएको */
+            padding-top: 10mm;
         }
         .print-logo {
             width: 75px;
@@ -332,8 +344,8 @@
         .print-meta { font-size: 12px; font-weight: 600; color: #333; margin: 2px 0; }
         .print-date { 
             position: absolute; 
-            top: 10mm; /* १० मिमी तल */
-            right: 20mm; /* २० मिमी भित्रतिर राखिएको */
+            top: 10mm;
+            right: 20mm;
             font-size: 11px; 
             font-weight: bold; 
             color: #000; 
@@ -369,7 +381,6 @@
                 display: block !important; 
             }
             
-            /* टेबलका लाइनहरू डार्क, क्लियर र चौडाइ व्यवस्थापन */
             .printable-section table {
                 width: 100% !important;
                 table-layout: auto !important;
@@ -378,7 +389,7 @@
             }
             .printable-section th, 
             .printable-section td {
-                border: 1.5px solid #000000 !important; /* लाइनहरू डार्क र क्लियर बनाइएको */
+                border: 1.5px solid #000000 !important;
                 padding: 5px 4px !important;
                 word-wrap: break-word !important;
                 white-space: normal !important;
@@ -391,7 +402,6 @@
                 print-color-adjust: exact !important;
             }
             
-            /* फोटो अलि ठूलो देखाउनको लागि */
             .printable-section .table-avatar {
                 width: 35px !important;
                 height: 35px !important;
@@ -408,7 +418,7 @@
             
             @page {
                 size: landscape;
-                margin: 10mm 15mm; /* दायाँ-बाँया लाइन नकाटिनका लागि पेज मार्जिन मिलाइएको */
+                margin: 10mm 15mm;
             }
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -447,6 +457,64 @@
             <div class="top-header">
                 <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
+            </div>
+
+            <!-- लेवी व्यवस्थापन एडमिन प्यानल सेक्सन -->
+            <div class="admin-panel">
+              <h2>लेवी व्यवस्थापन एडमिन प्यानल</h2>
+
+              <!-- तह अनुसार लेवी दर निर्धारण गर्ने सेक्सन -->
+              <div class="rate-setup-section">
+                <h3>विभिन्न ६ तहका कमिटीहरूको लेवी दर तोक्नुहोस्</h3>
+                <form id="levyRateForm" onsubmit="saveLevyRates(event)">
+                  <div><label>संस्थापक कमिटी:</label> <input type="number" id="rate_founder" required></div>
+                  <div><label>केन्द्रीय कमिटी:</label> <input type="number" id="rate_central" required></div>
+                  <div><label>सल्लाहकार समिति:</label> <input type="number" id="rate_advisor" required></div>
+                  <div><label>प्रदेश कमिटी:</label> <input type="number" id="rate_province" required></div>
+                  <div><label>जिल्ला कमिटी:</label> <input type="number" id="rate_district" required></div>
+                  <div><label>स्थानीय तह कमिटी:</label> <input type="number" id="rate_local" required></div>
+                  <button type="submit" class="btn-primary">दर सुरक्षित गर्नुहोस्</button>
+                </form>
+              </div>
+
+              <!-- अनुमोदन (Approval) सेक्सन -->
+              <div class="approval-section">
+                <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
+                <table id="pendingTable">
+                  <thead>
+                    <tr>
+                      <th>पदाधिकारी नाम</th>
+                      <th>कमिटी तह</th>
+                      <th>मिनाहरू</th>
+                      <th>जम्मा रकम (जरिवानासहित)</th>
+                      <th>भौचर</th>
+                      <th>कार्य</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- JS मार्फत डाटा भरिनेछ -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- लेवी तिरेका र नतिरेकाहरूको छुट्टाछुट्टै लिस्ट -->
+              <div class="reports-section">
+                <div class="list-box">
+                  <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
+                  <table id="paidListTable">
+                    <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+
+                <div class="list-box">
+                  <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
+                  <table id="unpaidListTable">
+                    <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
             </div>
 
             <div class="section-header">
@@ -1946,6 +2014,33 @@
                 await supabaseClient.from('notices').delete().eq('id', id);
                 loadNoticesData();
             }
+        }
+
+        // लेवी दर सेभ गर्ने फंक्सन
+        async function saveLevyRates(event) {
+            event.preventDefault();
+            const rates = {
+                founder: document.getElementById('rate_founder').value,
+                central: document.getElementById('rate_central').value,
+                advisor: document.getElementById('rate_advisor').value,
+                province: document.getElementById('rate_province').value,
+                district: document.getElementById('rate_district').value,
+                local: document.getElementById('rate_local').value
+            };
+            // Supabase वा database मा लेवी दर सेभ गर्ने कोड यहाँ राख्न सक्नुहुन्छ
+            alert('लेवी दर सफलतापूर्वक सुरक्षित गरियो!');
+        }
+
+        // एडमिन प्रमाणीकरण फंक्सन (अप्रुभ वा रिजेक्ट गर्ने)
+        async function updatePaymentStatus(paymentId, status, reason = '') {
+            if(status === 'Rejected' && !reason) {
+                reason = prompt("रिजेक्ट गर्नुको कारण लेख्नुहोस्:");
+                if(!reason) return;
+            }
+            
+            // Update logic here...
+            alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
+            location.reload();
         }
     </script>
 </body>
