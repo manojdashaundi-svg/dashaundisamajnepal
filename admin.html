@@ -316,9 +316,8 @@
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
         /* लेवी प्यानलको लागि थपिएको CSS शैलीहरू */
-        .admin-panel { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; }
-        .admin-panel h2 { color: var(--primary-color); text-align: center; margin-bottom: 20px; }
-        .rate-setup-section, .approval-section, .reports-section { margin-bottom: 30px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
+        .admin-panel { background: #fff; padding: 0; border-radius: 8px; margin-top: 20px; }
+        .rate-setup-section, .approval-section, .reports-section { margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
         .rate-setup-section h3, .approval-section h3, .reports-section h3 { margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
         #levyRateForm { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
         .reports-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -460,59 +459,67 @@
             </div>
 
             <!-- लेवी व्यवस्थापन एडमिन प्यानल सेक्सन -->
-            <div class="admin-panel">
-              <h2>लेवी व्यवस्थापन एडमिन प्यानल</h2>
+            <div class="section-header">
+                <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('levyContent', 'लेवी व्यवस्थापन विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('levyContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
 
-              <!-- तह अनुसार लेवी दर निर्धारण गर्ने सेक्सन -->
-              <div class="rate-setup-section">
-                <h3>विभिन्न ६ तहका कमिटीहरूको लेवी दर तोक्नुहोस्</h3>
-                <form id="levyRateForm" onsubmit="saveLevyRates(event)">
-                  <div><label>संस्थापक कमिटी:</label> <input type="number" id="rate_founder" required></div>
-                  <div><label>केन्द्रीय कमिटी:</label> <input type="number" id="rate_central" required></div>
-                  <div><label>सल्लाहकार समिति:</label> <input type="number" id="rate_advisor" required></div>
-                  <div><label>प्रदेश कमिटी:</label> <input type="number" id="rate_province" required></div>
-                  <div><label>जिल्ला कमिटी:</label> <input type="number" id="rate_district" required></div>
-                  <div><label>स्थानीय तह कमिटी:</label> <input type="number" id="rate_local" required></div>
-                  <button type="submit" class="btn-primary">दर सुरक्षित गर्नुहोस्</button>
-                </form>
-              </div>
+            <div id="levyContent" class="collapsible-content">
+              <div class="admin-panel">
+                <!-- तह अनुसार लेवी दर निर्धारण गर्ने सेक्सन -->
+                <div class="rate-setup-section">
+                  <h3>विभिन्न ६ तहका कमिटीहरूको लेवी दर तोक्नुहोस्</h3>
+                  <form id="levyRateForm" onsubmit="saveLevyRates(event)">
+                    <div><label>संस्थापक कमिटी:</label> <input type="number" id="rate_founder" required></div>
+                    <div><label>केन्द्रीय कमिटी:</label> <input type="number" id="rate_central" required></div>
+                    <div><label>सल्लाहकार समिति:</label> <input type="number" id="rate_advisor" required></div>
+                    <div><label>प्रदेश कमिटी:</label> <input type="number" id="rate_province" required></div>
+                    <div><label>जिल्ला कमिटी:</label> <input type="number" id="rate_district" required></div>
+                    <div><label>स्थानीय तह कमिटी:</label> <input type="number" id="rate_local" required></div>
+                    <button type="submit" class="btn-primary">दर सुरक्षित गर्नुहोस्</button>
+                  </form>
+                </div>
 
-              <!-- अनुमोदन (Approval) सेक्सन -->
-              <div class="approval-section">
-                <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
-                <table id="pendingTable">
-                  <thead>
-                    <tr>
-                      <th>पदाधिकारी नाम</th>
-                      <th>कमिटी तह</th>
-                      <th>मिनाहरू</th>
-                      <th>जम्मा रकम (जरिवानासहित)</th>
-                      <th>भौचर</th>
-                      <th>कार्य</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- JS मार्फत डाटा भरिनेछ -->
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- लेवी तिरेका र नतिरेकाहरूको छुट्टाछुट्टै लिस्ट -->
-              <div class="reports-section">
-                <div class="list-box">
-                  <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
-                  <table id="paidListTable">
-                    <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
-                    <tbody></tbody>
+                <!-- अनुमोदन (Approval) सेक्सन -->
+                <div class="approval-section">
+                  <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
+                  <table id="pendingTable">
+                    <thead>
+                      <tr>
+                        <th>पदाधिकारी नाम</th>
+                        <th>कमिटी तह</th>
+                        <th>मिनाहरू</th>
+                        <th>जम्मा रकम (जरिवानासहित)</th>
+                        <th>भौचर</th>
+                        <th>कार्य</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- JS मार्फत डाटा भरिनेछ -->
+                    </tbody>
                   </table>
                 </div>
 
-                <div class="list-box">
-                  <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
-                  <table id="unpaidListTable">
-                    <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
-                    <tbody></tbody>
-                  </table>
+                <!-- लेवी तिरेका र नतिरेकाहरूको छुट्टाछुट्टै लिस्ट -->
+                <div class="reports-section">
+                  <div class="list-box">
+                    <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
+                    <table id="paidListTable">
+                      <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+
+                  <div class="list-box">
+                    <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
+                    <table id="unpaidListTable">
+                      <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2027,7 +2034,6 @@
                 district: document.getElementById('rate_district').value,
                 local: document.getElementById('rate_local').value
             };
-            // Supabase वा database मा लेवी दर सेभ गर्ने कोड यहाँ राख्न सक्नुहुन्छ
             alert('लेवी दर सफलतापूर्वक सुरक्षित गरियो!');
         }
 
@@ -2038,7 +2044,6 @@
                 if(!reason) return;
             }
             
-            // Update logic here...
             alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
             location.reload();
         }
