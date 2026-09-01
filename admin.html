@@ -1199,7 +1199,9 @@
         async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
-            if (!wasOpen) sectionContent.style.display = 'block';
+            
+            // प्रिन्ट गर्नका लागि सेक्सनलाई अनिवार्य खोल्ने
+            sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
             let headerDiv = document.getElementById('dynamicPrintHeader');
@@ -1224,9 +1226,15 @@
             `;
 
             window.print();
+
+            // प्रिन्ट बन्द भएपछि हेड हटाउने र पहिलाकै अवस्थामा फर्काउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
-            if (!wasOpen) sectionContent.style.display = 'none';
+            
+            // यदि प्रिन्ट गर्नुभन्दा अगाडि यो सेक्सन बन्द थियो भने मात्र बन्द गर्ने, नत्र खुला नै राख्ने
+            if (!wasOpen && sectionId !== 'levyContent') {
+                sectionContent.style.display = 'none';
+            }
         }
 
         window.onload = function() {
