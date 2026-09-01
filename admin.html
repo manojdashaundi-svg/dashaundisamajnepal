@@ -321,7 +321,9 @@
         .rate-setup-section h3, .approval-section h3, .reports-section h3 { margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
         #levyRateForm { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
         .reports-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .list-box { background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
+        .list-box { background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); position: relative; }
+        .list-box-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; }
+        .list-box-header h3 { margin: 0; border-bottom: none; padding-bottom: 0; }
         @media (max-width: 768px) { .reports-section { grid-template-columns: 1fr; } }
 
         .print-header {
@@ -408,7 +410,7 @@
                 object-fit: cover !important;
             }
             
-            .printable-section .btn-action {
+            .printable-section .btn-action, .printable-section .print-btn {
                 display: none !important;
             }
 
@@ -505,16 +507,22 @@
 
                 <!-- लेवी तिरेका र नतिरेकाहरूको छुट्टाछुट्टै लिस्ट -->
                 <div class="reports-section">
-                  <div class="list-box">
-                    <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
+                  <div class="list-box" id="paidBoxContainer">
+                    <div class="list-box-header">
+                      <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
+                      <button class="print-btn" onclick="printSection('paidBoxContainer', 'लेवी तिरेका पदाधिकारीहरूको सूची')">प्रिन्ट / PDF</button>
+                    </div>
                     <table id="paidListTable">
                       <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
                       <tbody></tbody>
                     </table>
                   </div>
 
-                  <div class="list-box">
-                    <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
+                  <div class="list-box" id="unpaidBoxContainer">
+                    <div class="list-box-header">
+                      <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
+                      <button class="print-btn" onclick="printSection('unpaidBoxContainer', 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)')">प्रिन्ट / PDF</button>
+                    </div>
                     <table id="unpaidListTable">
                       <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
                       <tbody></tbody>
