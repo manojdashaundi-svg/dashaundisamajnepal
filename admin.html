@@ -465,16 +465,29 @@
 
         @media print {
     body * { visibility: hidden !important; }
+    
+    /* भौचर प्रिन्टको लागि */
     .voucher-modal.active-voucher, .voucher-modal.active-voucher * { visibility: visible !important; }
     .voucher-modal.active-voucher {
         position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100vh !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important; padding: 0 !important;
     }
+
+    /* सेसन प्रिन्टको लागि (फारम, बटन, इनपुट पूर्ण लुकाउने) */
     .printable-section, .printable-section * { visibility: visible !important; }
     .printable-section {
         position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; background: #fff !important; display: block !important;
     }
-    /* यहाँ फर्म, इनपुट, बटन र एडमिन प्यानलका नचाहिने भागहरू लुकाइयो */
-    .no-print, .top-header, .section-header, .toggle-btn, form, .admin-panel > div:first-child, input, select, button { 
+    .printable-section form, 
+    .printable-section .admin-panel, 
+    .printable-section input, 
+    .printable-section select, 
+    .printable-section button, 
+    .printable-section label { 
+        display: none !important; 
+        visibility: hidden !important; 
+    }
+
+    .no-print, .top-header, .section-header, .toggle-btn, form, input, select, button { 
         display: none !important; 
         visibility: hidden !important; 
     }
