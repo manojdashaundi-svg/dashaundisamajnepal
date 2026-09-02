@@ -449,7 +449,7 @@
         </div>
 
         <div class="main-header-box">
-            <h2>दशौँदी समाज नेपाल - एडमिन प्यानल</h2>
+            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
 
         <div id="loginSection">
@@ -1265,231 +1265,6 @@
         </div>
     </div>
 
-    <!-- थपिएको डिजिटल भौचर मोडल सेक्सन -->
-    <div class="voucher-modal-overlay" style="display: none;">
-        <div class="voucher-container">
-            <!-- बन्द गर्ने इन्टु (X) बटन -->
-            <button class="close-btn" onclick="closeVoucher()" title="बन्द गर्नुहोस्">&times;</button>
-
-            <!-- संस्थाको विवरण (Header) -->
-            <div class="voucher-header">
-                <h2>दशौँदी समाज नेपाल</h2>
-                <p class="sub-title">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
-                <p class="contact-info">इमेल: dashaundisamajnepal@gmail.com | स्थापना : वि.सं. २०८० आश्विन २५ गते (12 October 2023)</p>
-                <hr class="header-divider">
-                <h3 class="voucher-title">आधिकारिक डिजिटल आम्दानी भौचर</h3>
-                <div class="voucher-meta">
-                    <span>भौचर नम्बर: <strong>VOU-2026-001</strong></span>
-                    <span>मिति: <strong id="real-nepali-date">२०८३-०५-१५</strong></span>
-                </div>
-            </div>
-
-            <!-- भौचरको मुख्य विवरण (Body) -->
-            <div class="voucher-body">
-                <table class="voucher-table">
-                    <tr>
-                        <td class="label">दाता/सहयोगीको नाम:</td>
-                        <td class="value">राजन</td>
-                    </tr>
-                    <tr>
-                        <td class="label">जम्मा गरिएको कोष:</td>
-                        <td class="value">आपातकालीन कोष</td>
-                    </tr>
-                    <tr>
-                        <td class="label">प्राप्त रकम:</td>
-                        <td class="value amount-highlight">रु. ९/-</td>
-                    </tr>
-                    <tr>
-                        <td class="label">विवरण / प्रयोजन:</td>
-                        <td class="value">सहयोग</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- सहीछाप र हस्ताक्षर (Footer) -->
-            <div class="voucher-footer">
-                <div class="signature-box">
-                    <p>बुझाउनेको सही: ...........................</p>
-                </div>
-                <div class="signature-box">
-                    <p>कार्यालयको सही: ...........................</p>
-                </div>
-            </div>
-
-            <!-- प्रिन्ट बटन -->
-            <div class="voucher-actions">
-                <button class="print-btn" onclick="window.print()">🖨️ प्रिन्ट / PDF गर्नुहोहोस्</button>
-            </div>
-        </div>
-    </div>
-
-    <style>
-    /* भौचरको व्यावसायिक डिजाइन स्टाइल्स */
-    .voucher-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        font-family: 'Kalimati', 'Mukta', sans-serif;
-    }
-
-    .voucher-container {
-        background: #fff;
-        width: 650px;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        position: relative;
-        border: 2px solid #1b5e20;
-    }
-
-    /* इन्टु (X) बटनको डिजाइन */
-    .close-btn {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: #ffebee;
-        color: #c62828;
-        border: none;
-        font-size: 24px;
-        font-weight: bold;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.2s;
-    }
-
-    .close-btn:hover {
-        background: #c62828;
-        color: #fff;
-    }
-
-    .voucher-header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .voucher-header h2 {
-        margin: 0;
-        color: #1b5e20;
-        font-size: 26px;
-        font-weight: 700;
-    }
-
-    .sub-title {
-        margin: 5px 0;
-        font-size: 14px;
-        color: #444;
-        font-weight: 600;
-    }
-
-    .contact-info {
-        margin: 3px 0 10px 0;
-        font-size: 12px;
-        color: #666;
-    }
-
-    .header-divider {
-        border: 0;
-        height: 2px;
-        background: #1b5e20;
-        margin: 10px 0;
-    }
-
-    .voucher-title {
-        font-size: 16px;
-        color: #333;
-        background: #e8f5e9;
-        padding: 5px;
-        border-radius: 4px;
-        display: inline-block;
-        margin-top: 5px;
-    }
-
-    .voucher-meta {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-        font-size: 14px;
-        background: #f9f9f9;
-        padding: 8px 12px;
-        border-radius: 6px;
-    }
-
-    .voucher-body {
-        margin: 20px 0;
-    }
-
-    .voucher-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .voucher-table td {
-        padding: 10px;
-        font-size: 15px;
-        border-bottom: 1px dashed #ddd;
-    }
-
-    .voucher-table .label {
-        font-weight: 600;
-        color: #333;
-        width: 40%;
-    }
-
-    .voucher-table .value {
-        color: #111;
-    }
-
-    .amount-highlight {
-        font-weight: bold;
-        color: #2e7d32;
-        font-size: 16px;
-    }
-
-    .voucher-footer {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 40px;
-        margin-bottom: 20px;
-    }
-
-    .signature-box p {
-        font-size: 14px;
-        color: #333;
-    }
-
-    .voucher-actions {
-        text-align: center;
-    }
-
-    .voucher-container .print-btn {
-        background: #2e7d32;
-        color: white;
-        border: none;
-        padding: 10px 25px;
-        font-size: 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background 0.2s;
-    }
-
-    .voucher-container .print-btn:hover {
-        background: #1b5e20;
-    }
-    </style>
-
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
@@ -1497,13 +1272,6 @@
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
-
-        function closeVoucher() {
-            const modal = document.querySelector('.voucher-modal-overlay');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
 
         function toNepaliNumber(input) {
             if (!input) return '';
@@ -1597,9 +1365,11 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
+            // प्रिन्ट गर्नका लागि सेक्सन खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
+            // फारम र बटनहरू प्रिन्टबाट लुकाउनको लागि 'no-print' क्लास थप्ने
             const adminPanelDiv = sectionContent.querySelector('.admin-panel');
             if (adminPanelDiv) {
                 adminPanelDiv.classList.add('no-print');
@@ -1628,6 +1398,7 @@
 
             window.print();
 
+            // प्रिन्ट बन्द भएपछि हेड हटाउने र फारमलाई फेरि देखाउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
             if (adminPanelDiv) {
@@ -1645,10 +1416,6 @@
                 document.getElementById('dashboardSection').classList.add('hidden');
             } else {
                 showDashboard();
-            }
-            const dateEl = document.getElementById('real-nepali-date');
-            if(dateEl) {
-                dateEl.innerText = getCurrentNepaliDate();
             }
         };
 
@@ -1685,7 +1452,7 @@
             loadIncomeData();
             loadMonthlyLevyIncomeData();
             loadGrantIncomeData();
-            loadDailyExpenseData();
+            loadDailyExpenseData(); // दैनिक खर्च लोड गर्ने फंक्सन थपियो
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1849,6 +1616,7 @@
             }
         }
 
+        // दैनिक खर्च सेभ गर्ने फंक्सन
         async function saveDailyExpense(event) {
             event.preventDefault();
 
@@ -1872,6 +1640,7 @@
             }
         }
 
+        // दैनिक खर्च लोड गर्ने फंक्सन
         async function loadDailyExpenseData() {
             const { data, error } = await supabaseClient
                 .from('daily_expenses')
@@ -1904,6 +1673,7 @@
             });
         }
 
+        // दैनिक खर्च रेकर्ड मेटाउने फंक्सन
         async function deleteDailyExpenseRecord(id) {
             if (confirm('के तपाईं यो खर्चको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('daily_expenses').delete().eq('id', id);
@@ -2668,6 +2438,16 @@
                     if (item.committee_level === 'local') document.getElementById('rate_local').value = item.monthly_amount;
                 });
             }
+        }
+
+        async function updatePaymentStatus(paymentId, status, reason = '') {
+            if(status === 'Rejected' && !reason) {
+                reason = prompt("रिजेक्ट गर्नुको कारण लेख्नुहोस्:");
+                if(!reason) return;
+            }
+
+            alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
+            location.reload();
         }
     </script>
 </body>
