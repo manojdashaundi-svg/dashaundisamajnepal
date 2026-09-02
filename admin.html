@@ -1265,6 +1265,176 @@
         </div>
     </div>
 
+    <!-- १) मानव बचाउ अभियान कोष सेक्सन -->
+            <div class="section-header">
+                <h3>मानव बचाउ अभियान कोष</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('humanFundContent', 'मानव बचाउ अभियान कोष विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('humanFundContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="humanFundContent" class="collapsible-content">
+                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">मानव बचाउ अभियान कोषमा दाता/सहयोग थप्ने</h4>
+                    <form id="humanFundForm" onsubmit="saveFundIncome(event, 'human_fund', 'मानव बचाउ अभियान कोष')">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="human_donor" required></div>
+                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="human_title" value="मानव बचाउ अभियान सहयोग" required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="human_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="human_amount" required></div>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="humanFundTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- २) आपत्कालीन कोष सेक्सन -->
+            <div class="section-header">
+                <h3>आपत्कालीन कोष</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('emergencyFundContent', 'आपत्कालीन कोष विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('emergencyFundContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="emergencyFundContent" class="collapsible-content">
+                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">आपत्कालीन कोषमा दाता/सहयोग थप्ने</h4>
+                    <form id="emergencyFundForm" onsubmit="saveFundIncome(event, 'emergency_fund', 'आपत्कालीन कोष')">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="emergency_donor" required></div>
+                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="emergency_title" value="आपत्कालीन कोष सहयोग" required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="emergency_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="emergency_amount" required></div>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="emergencyFundTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ३) उद्धार तथा राहत कोष सेक्सन -->
+            <div class="section-header">
+                <h3>उद्धार तथा राहत कोष</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('reliefFundContent', 'उद्धार तथा राहत कोष विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('reliefFundContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="reliefFundContent" class="collapsible-content">
+                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">उद्धार तथा राहत कोषमा दाता/सहयोग थप्ने</h4>
+                    <form id="reliefFundForm" onsubmit="saveFundIncome(event, 'relief_fund', 'उद्धार तथा राहत कोष')">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="relief_donor" required></div>
+                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="relief_title" value="उद्धार तथा राहत सहयोग" required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="relief_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="relief_amount" required></div>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="reliefFundTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- दैनिक खर्चको विवरण सेक्सन (कोष छान्ने सुविधासहित) -->
+            <div class="section-header">
+                <h3>दैनिक खर्चको विवरण (कोष कटौतीसहित)</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('dailyExpenseContent', 'दैनिक खर्चको विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('dailyExpenseContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="dailyExpenseContent" class="collapsible-content">
+                <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">नयाँ खर्च प्रविष्टि गर्ने (कुनै कोष वा साधारण आम्दानीबाट)</h4>
+                    <form id="dailyExpenseForm" onsubmit="saveDailyExpense(event)">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group">
+                                <label>कुन कोष वा आम्दानीबाट खर्च गर्ने?:</label>
+                                <select id="exp_source_fund" required>
+                                    <option value="साधारण आम्दानी / सामान्य कोष">साधारण आम्दानी / सामान्य कोष</option>
+                                    <option value="मानव बचाउ अभियान कोष">मानव बचाउ अभियान कोष</option>
+                                    <option value="आपत्कालीन कोष">आपत्कालीन कोष</option>
+                                    <option value="उद्धार तथा राहत कोष">उद्धार तथा राहत कोष</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>खर्चको विवरण:</label><input type="text" id="exp_details" placeholder="शीर्षक वा कारण" required></div>
+                            <div class="form-group"><label>रसिद नं.:</label><input type="text" id="exp_receipt_no" placeholder="बिल नं." required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="exp_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="वालेट / इसेवा">वालेट / इसेवा</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="exp_amount" required></div>
+                            <div class="form-group"><label>संस्था/पसलको नाम:</label><input type="text" id="exp_org_name" required></div>
+                        </div>
+                        <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">खर्च सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>मिति</th><th>खर्च गरिएको कोष/स्रोत</th><th>खर्चको विवरण</th><th>रसिद नं.</th><th>माध्यम</th><th>रकम (रु.)</th><th>संस्थाको नाम</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="dailyExpenseTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- डिजिटल भौचर हेर्ने मोडल -->
+    <div id="voucherModal" class="voucher-modal" onclick="if(event.target === this) closeVoucherModal()">
+        <div class="voucher-box" id="printableVoucherBox">
+            <span style="position: absolute; top: 12px; right: 18px; font-size: 26px; font-weight: bold; cursor: pointer;" onclick="closeVoucherModal()">&times;</span>
+            <div style="text-align: center; border-bottom: 2px dashed #cbd5e0; padding-bottom: 12px; margin-bottom: 15px;">
+                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover;">
+                <h3 style="margin: 5px 0 0; color: #1a365d;">दशौँदी समाज नेपाल</h3>
+                <p style="margin: 2px 0; font-size: 12px; color: #718096;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
+                <h4 style="margin: 8px 0 0; background: #2b6cb0; color: #fff; display: inline-block; padding: 4px 15px; border-radius: 20px; font-size: 14px;" id="vouchCategoryTitle">आधिकारिक आम्दानी भौचर</h4>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 12px; background: #f7fafc; padding: 8px; border-radius: 6px;">
+                <span>भौचर नं.: <span id="vouchNo" style="color: #b7791f;">-</span></span>
+                <span>मिति: <span id="vouchDate">-</span></span>
+            </div>
+            <table style="width: 100%; margin-bottom: 15px; font-size: 13px;">
+                <tr><td style="text-align: left; font-weight: bold; width: 35%;">दाता / सदस्यको नाम:</td><td style="text-align: left;" id="vouchDonor">-</td></tr>
+                <tr><td style="text-align: left; font-weight: bold;">सहयोगको शीर्षक:</td><td style="text-align: left;" id="vouchTitle">-</td></tr>
+                <tr><td style="text-align: left; font-weight: bold;">भुक्तानी माध्यम:</td><td style="text-align: left;" id="vouchMedium">-</td></tr>
+                <tr><td style="text-align: left; font-weight: bold;">जम्मा रकम (अंकमा):</td><td style="text-align: left; color: #008000; font-weight: bold;" id="vouchAmount">रू. -</td></tr>
+            </table>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; font-size: 13px; font-weight: bold;">
+                <div style="text-align: center;">
+                    <div style="width: 120px; border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                    <span>बुझाउनेको सही</span>
+                </div>
+                <div style="text-align: center;">
+                    <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" style="width: 90px; height: 35px; object-fit: contain; display: block; margin: 0 auto;">
+                    <div style="width: 120px; border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                    <span>कोषाध्यक्ष / सचिव</span>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 25px;" class="no-print">
+                <button type="button" onclick="window.print()" style="background: #006400; color: #fff; padding: 10px 25px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">🖨 भौचर प्रिन्ट / PDF गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
