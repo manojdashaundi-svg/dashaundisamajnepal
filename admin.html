@@ -315,6 +315,7 @@
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
+        /* लेवी प्यानलको लागि थपिएको CSS शैलीहरू */
         .admin-panel { background: #fff; padding: 0; border-radius: 8px; margin-top: 20px; }
         .rate-setup-section, .approval-section, .reports-section { margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
         .rate-setup-section h3, .approval-section h3, .reports-section h3 { margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
@@ -1342,7 +1343,7 @@
                             <p><b>मिति:</b> ${v.date}</p>
                             <p><b>कोषको नाम:</b> ${v.fundName}</p>
                             <p><b>दाता/सहयोगीको नाम:</b> ${v.donorName}</p>
-                            <p><b>رقم (Amount):</b> रू. ${v.amount.toLocaleString()}</p>
+                            <p><b>रकम (Amount):</b> रू. ${v.amount.toLocaleString()}</p>
                             <p><b>विवरण:</b> ${v.remarks}</p>
                         </div>
                         <div class="footer">
