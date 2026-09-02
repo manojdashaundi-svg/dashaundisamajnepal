@@ -582,7 +582,7 @@
                     <button class="toggle-btn" onclick="toggleSection('grantIncomeContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
-            
+
             <div id="grantIncomeContent" class="collapsible-content">
                 <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
                     <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ सहयोग वा अनुदान थप्ने</h3>
@@ -1363,7 +1363,7 @@
         // खर्च इन्ट्रि गर्ने फंक्सन
         function addExpense(fundKey, expenseTitle, amount, billNo) {
             if (fundData.funds[fundKey].balance < amount) {
-                alert("त्रुटि: यो कोषमा αρκεट मौज्दात (Balance) छैन!");
+                alert("त्रुटि: यो कोषमा पर्याप्त मौज्दात (Balance) छैन!");
                 return;
             }
 
@@ -1485,9 +1485,11 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
+            // प्रिन्ट गर्नका लागि सेक्सन खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
+            // फारम र बटनहरू प्रिन्टबाट लुकाउनको लागि 'no-print' क्लास थप्ने
             const adminPanelDiv = sectionContent.querySelector('.admin-panel');
             if (adminPanelDiv) {
                 adminPanelDiv.classList.add('no-print');
@@ -1516,6 +1518,7 @@
 
             window.print();
 
+            // प्रिन्ट बन्द भएपछि हेड हटाउने र फारमलाई फेरि देखाउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
             if (adminPanelDiv) {
@@ -1569,7 +1572,7 @@
             loadIncomeData();
             loadMonthlyLevyIncomeData();
             loadGrantIncomeData();
-            loadDailyExpenseData();
+            loadDailyExpenseData(); // दैनिक खर्च लोड गर्ने फंक्सन थपियो
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1733,6 +1736,7 @@
             }
         }
 
+        // दैनिक खर्च सेभ गर्ने फंक्सन
         async function saveDailyExpense(event) {
             event.preventDefault();
 
@@ -1756,6 +1760,7 @@
             }
         }
 
+        // दैनिक खर्च लोड गर्ने फंक्सन
         async function loadDailyExpenseData() {
             const { data, error } = await supabaseClient
                 .from('daily_expenses')
@@ -1788,6 +1793,7 @@
             });
         }
 
+        // दैनिक खर्च रेकर्ड मेटाउने फंक्सन
         async function deleteDailyExpenseRecord(id) {
             if (confirm('के तपाईं यो खर्चको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('daily_expenses').delete().eq('id', id);
