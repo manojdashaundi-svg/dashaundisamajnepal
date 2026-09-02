@@ -392,7 +392,6 @@
                 margin: 5mm;
             }
 
-            /* यहाँ टेबलको चौडाइ १००% र बायाँ-दायाँ पूरा फैलिने बनाइएको छ */
             .printable-section table {
                 width: 100% !important;
                 max-width: 100% !important;
@@ -401,7 +400,6 @@
                 font-size: 11px !important;
             }
 
-            /* टेबलभित्रका कन्टेनर र उत्तरदायी कक्षहरूलाई पूरा फैलाउन */
             .printable-section .table-responsive {
                 width: 100% !important;
                 overflow: visible !important;
@@ -630,6 +628,69 @@
                             </tr>
                         </thead>
                         <tbody id="grantIncomeTableBody">
+                            <!-- JS मार्फत डाटा भरिनेछ -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- दैनिक खर्चको विवरण सेक्सन -->
+            <div class="section-header">
+                <h3>दैनिक खर्चको विवरण</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('dailyExpenseContent', 'दैनिक खर्चको विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('dailyExpenseContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="dailyExpenseContent" class="collapsible-content">
+                <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ खर्च प्रविष्टि गर्ने</h3>
+                    <form id="dailyExpenseForm" onsubmit="saveDailyExpense(event)">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>खर्चको विवरण:</label>
+                                <input type="text" id="exp_details" placeholder="खर्चको शीर्षक वा कारण लेख्नुहोस्" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>रसिद नं.:</label>
+                                <input type="text" id="exp_receipt_no" placeholder="रसिद वा बिल नम्बर" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>माध्यम (प्रकार):</label>
+                                <select id="exp_medium" required>
+                                    <option value="नगद (Cash)">नगद (Cash)</option>
+                                    <option value="बैंक ट्रान्सफर (Bank Transfer)">बैंक ट्रान्सफर (Bank Transfer)</option>
+                                    <option value="वालेट / इसेवा (Wallet/Esewa)">वालेट / इसेवा (Wallet/Esewa)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>रकम (रु.):</label>
+                                <input type="number" id="exp_amount" placeholder="खर्च भएको रकम" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>संस्थाको नाम (भुक्तानी गर्ने/लिएको):</label>
+                                <input type="text" id="exp_org_name" placeholder="संस्था वा पसलको नाम" required>
+                            </div>
+                        </div>
+                        <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">खर्च सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>खर्चको विवरण</th>
+                                <th>रसिद नं.</th>
+                                <th>माध्यम</th>
+                                <th>रकम (रु.)</th>
+                                <th>संस्थाको नाम</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dailyExpenseTableBody">
                             <!-- JS मार्फत डाटा भरिनेछ -->
                         </tbody>
                     </table>
@@ -1304,7 +1365,6 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
-            // प्रिन्ट गर्नका लागि सेक्सनलाई अनिवार्य खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
@@ -1331,11 +1391,9 @@
 
             window.print();
 
-            // प्रिन्ट बन्द भएपछि हेड हटाउने र पहिलाकै अवस्थामा फर्काउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
 
-            // यदि प्रिन्ट गर्नुभन्दा अगाडि यो सेक्सन बन्द थियो भने मात्र बन्द गर्ने, नत्र खुला नै राख्ने
             if (!wasOpen && sectionId !== 'levyContent') {
                 sectionContent.style.display = 'none';
             }
@@ -1375,7 +1433,6 @@
             document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
             messageDiv.innerText = '';
 
-            // लेवी सेक्सन स्वतः खुला राख्नका लागि
             const levyContent = document.getElementById('levyContent');
             levyContent.style.display = 'block';
             document.getElementById('levyToggleBtn').innerText = 'बन्द गर्नुहोस् ▴';
@@ -1384,6 +1441,7 @@
             loadIncomeData();
             loadMonthlyLevyIncomeData();
             loadGrantIncomeData();
+            loadDailyExpenseData(); // दैनिक खर्च लोड गर्ने फंक्सन थपियो
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1426,12 +1484,11 @@
             });
         }
 
-        // मासिक लेवी आम्दानी लोड गर्ने फंक्सन
         async function loadMonthlyLevyIncomeData() {
             const { data, error } = await supabaseClient
-                .from('levy_payments') // सुपाबेसको लेवी भुक्तानीसम्बन्धी टेबल
+                .from('levy_payments')
                 .select('*')
-                .eq('status', 'Approved') // प्रमाणित भइसकेका मात्र देखाउन
+                .eq('status', 'Approved')
                 .order('created_at', { ascending: false });
 
             const tbody = document.getElementById('monthlyLevyIncomeTableBody');
@@ -1483,12 +1540,11 @@
             }
         }
 
-        // अनुदान तथा सहयोग आम्दानी सेभ गर्ने फंक्सन (मिति स्वतः नेपालीमा बस्नेछ)
         async function saveGrantIncome(event) {
             event.preventDefault();
 
             const grantData = {
-                date: getCurrentNepaliDate(), // स्वतः हालको नेपाली मिति लिन्छ
+                date: getCurrentNepaliDate(),
                 donor_name: document.getElementById('grant_donor_name').value.trim(),
                 grant_title: document.getElementById('grant_title').value.trim(),
                 medium: document.getElementById('grant_medium').value,
@@ -1506,7 +1562,6 @@
             }
         }
 
-        // अनुदान तथ सहयोग आम्दानी लोड गर्ने फंक्सन
         async function loadGrantIncomeData() {
             const { data, error } = await supabaseClient
                 .from('grant_incomes')
@@ -1538,13 +1593,82 @@
             });
         }
 
-        // अनुदान रेकर्ड मेटाउने फंक्सन
         async function deleteGrantIncomeRecord(id) {
             if (confirm('के तपाईं यो अनुदान आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('grant_incomes').delete().eq('id', id);
                 if (!error) {
                     alert('अनुदान आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
                     loadGrantIncomeData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        // दैनिक खर्च सेभ गर्ने फंक्सन
+        async function saveDailyExpense(event) {
+            event.preventDefault();
+
+            const expenseData = {
+                date: getCurrentNepaliDate(),
+                expense_details: document.getElementById('exp_details').value.trim(),
+                receipt_no: document.getElementById('exp_receipt_no').value.trim(),
+                medium: document.getElementById('exp_medium').value,
+                amount: parseFloat(document.getElementById('exp_amount').value) || 0,
+                organization_name: document.getElementById('exp_org_name').value.trim()
+            };
+
+            const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
+
+            if (!error) {
+                alert('दैनिक खर्च विवरण सफलतापूर्वक सुरक्षित गरियो!');
+                document.getElementById('dailyExpenseForm').reset();
+                loadDailyExpenseData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        // दैनिक खर्च लोड गर्ने फंक्सन
+        async function loadDailyExpenseData() {
+            const { data, error } = await supabaseClient
+                .from('daily_expenses')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            const tbody = document.getElementById('dailyExpenseTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8">कुनै दैनिक खर्च रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.expense_details || '-'}</strong></td>
+                        <td>${item.receipt_no || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td>${item.organization_name || '-'}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteDailyExpenseRecord('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // दैनिक खर्च रेकर्ड मेटाउने फंक्सन
+        async function deleteDailyExpenseRecord(id) {
+            if (confirm('के तपाईं यो खर्चको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('daily_expenses').delete().eq('id', id);
+                if (!error) {
+                    alert('खर्चको रेकर्ड सफलतापूर्वक हटाइयो!');
+                    loadDailyExpenseData();
                 } else {
                     alert('त्रुटि: ' + error.message);
                 }
@@ -2264,7 +2388,6 @@
             }
         }
 
-        // लेवी दर सेभ गर्ने फंक्सन
         async function saveLevyRates(event) {
             event.preventDefault();
 
@@ -2277,7 +2400,6 @@
                 { committee_level: 'local', monthly_amount: parseFloat(document.getElementById('rate_local').value) || 0 }
             ];
 
-            // सुपाबेसको levy_rates टेबलमा डेटा पठाउने (committee_level लाई unique मान्दै upsert गर्ने)
             for (let rate of ratesData) {
                 const { error } = await supabaseClient
                     .from('levy_rates')
@@ -2290,7 +2412,7 @@
             }
 
             alert('लेवी दर सफलतापूर्वक सुपाबेस डाटाबेसमा सुरक्षित गरियो!');
-            loadLevyRates(); // सेभ भएपछि डाटा रिफ्रेस गर्न
+            loadLevyRates();
         }
 
         async function loadLevyRates() {
@@ -2307,7 +2429,6 @@
             }
         }
 
-        // एडमिन प्रमाणीकरण फंक्सन (अप्रुभ वा रिजेक्ट गर्ने)
         async function updatePaymentStatus(paymentId, status, reason = '') {
             if(status === 'Rejected' && !reason) {
                 reason = prompt("रिजेक्ट गर्नुको कारण लेख्नुहोस्:");
