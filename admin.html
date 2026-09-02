@@ -1265,308 +1265,139 @@
         </div>
     </div>
 
-       <!-- विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली -->
-<div class="section-header">
-    <h3>विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली</h3>
-    <div class="button-group">
-        <button class="print-btn" onclick="printSection('specialFundsContent', 'विशेष कोष तथा भौचर विवरण')">प्रिन्ट / PDF</button>
-        <button class="toggle-btn" onclick="toggleSection('specialFundsContent', this)">खोल्नुहोस् ▾</button>
-    </div>
-</div>
-
-<div id="specialFundsContent" class="collapsible-content">
-    <div style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px;">
-        <h4 style="margin-top: 0; color: var(--primary-color);">भौचर सिस्टम नियन्त्रण</h4>
-        <button onclick="toggleVoucherSystem(true)" class="btn-action btn-success">भौचर सिस्टम खोल्नुहोस्</button>
-        <button onclick="toggleVoucherSystem(false)" class="btn-action btn-danger">भौचर सिस्टम बन्द गर्नुहोस्</button>
-    </div>
-
-    <!-- कोष ड्यासबोर्ड कार्डहरू -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
-        <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid #3182ce;">
-            <h4 style="margin: 0 0 10px 0; color: #1a365d;">१) मानव बचाउ अभियान कोष</h4>
-            <p style="margin: 5px 0;">मौज्दात: <strong id="bal-manab" style="color: #2b6cb0;">रु. ०</strong></p>
-        </div>
-        <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid #d69e2e;">
-            <h4 style="margin: 0 0 10px 0; color: #1a365d;">२) आपतकालीन कोष</h4>
-            <p style="margin: 5px 0;">मौज्दात: <strong id="bal-aapat" style="color: #d69e2e;">रु. ०</strong></p>
-        </div>
-        <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid #38a169;">
-            <h4 style="margin: 0 0 10px 0; color: #1a365d;">३) उद्धार तथा राहत कोष</h4>
-            <p style="margin: 5px 0;">मौज्दात: <strong id="bal-uddhar" style="color: #38a169;">रु. ०</strong></p>
+    <!-- विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली -->
+    <div class="section-header">
+        <h3>विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली</h3>
+        <div class="button-group">
+            <button class="print-btn" onclick="printSection('specialFundsContent', 'विशेष कोष तथा भौचर विवरण')">प्रिन्ट / PDF</button>
+            <button class="toggle-btn" onclick="toggleSection('specialFundsContent', this)">खोल्नुहोस् ▾</button>
         </div>
     </div>
 
-    <!-- सहयोग/दाता थप्ने फारम (डिजिटल भौचर सहित) -->
-    <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px;" class="no-print">
-        <h4 style="margin-top: 0; color: var(--primary-color);">कोषहरूमा सहयोग वा दाता थप्ने (डिजिटल भौचर जारी)</h4>
-        <form id="fundIncomeForm" onsubmit="handleFundIncomeSubmit(event)">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>कोष छान्नुहोस्:</label>
-                    <select id="fi_fund_key" required>
-                        <option value="manab_bachau">मानव बचाउ अभियान कोष</option>
-                        <option value="aapatkaleen">आपतकालीन कोष</option>
-                        <option value="uddhar_rahat">उद्धार तथा राहत कोष</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>दाता/सहयोगीको नाम:</label>
-                    <input type="text" id="fi_donor_name" placeholder="नाम लेख्नुहोस्" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>रकम (रु.):</label>
-                    <input type="number" id="fi_amount" placeholder="रकम हाल्नुहोस्" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>विवरण / Remarks:</label>
-                    <input type="text" id="fi_remarks" placeholder="विवरण">
-                </div>
+    <div id="specialFundsContent" class="collapsible-content">
+        <div style="background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+            <h4 style="margin-top: 0; color: var(--primary-color);">भौचर सिस्टम नियन्त्रण</h4>
+            <button onclick="toggleVoucherSystem(true)" class="btn-action btn-success">भौचर सिस्टम खोल्नुहोस्</button>
+            <button onclick="toggleVoucherSystem(false)" class="btn-action btn-danger">भौचर सिस्टम बन्द गर्नुहोस्</button>
+        </div>
+
+        <!-- कोष ड्यासबोर्ड कार्डहरू -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
+            <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid #3182ce;">
+                <h4 style="margin: 0 0 10px 0; color: #1a365d;">१) मानव बचाउ अभियान कोष</h4>
+                <p style="margin: 5px 0;">मौज्दात: <strong id="bal-manab" style="color: #2b6cb0;">रु. ०</strong></p>
             </div>
-            <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px;">आम्दानी सेभ गरी भौचर बनाउनुहोस्</button>
-        </form>
-    </div>
-
-    <!-- कोष आम्दानी भौचर रेकर्ड टेबल -->
-    <div class="table-responsive" style="margin-bottom: 20px;">
-        <h4 style="color: var(--primary-color);">कोष आम्दानी तथा भौचर रेकर्डहरू</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>भौचर नं.</th>
-                    <th>मिति</th>
-                    <th>कोषको नाम</th>
-                    <th>दाताको नाम</th>
-                    <th>रकम (रु.)</th>
-                    <th class="no-print">कारवाही</th>
-                </tr>
-            </thead>
-            <tbody id="fundVouchersTableBody">
-                <tr><td colspan="6">कुनै रेकर्ड छैन</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- कोषबाट खर्च घटाउने फारम -->
-    <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px;" class="no-print">
-        <h4 style="margin-top: 0; color: var(--danger-color);">कोषबाट खर्च इन्ट्री गर्ने (सम्बन्धित कोषमा रकम स्वतः घट्ने)</h4>
-        <form id="fundExpenseForm" onsubmit="handleFundExpenseSubmit(event)">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>कुन कोषबाट खर्च गर्ने हो:</label>
-                    <select id="fe_fund_key" required>
-                        <option value="manab_bachau">मानव बचाउ अभियान कोष</option>
-                        <option value="aapatkaleen">आपतकालीन कोष</option>
-                        <option value="uddhar_rahat">उद्धार तथा राहत कोष</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>खर्चको शीर्षक / प्रयोजन:</label>
-                    <input type="text" id="fe_title" placeholder="खर्चको कारण" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>रकम (रु.):</label>
-                    <input type="number" id="fe_amount" placeholder="रकम" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>बिल/रसिद नं.:</label>
-                    <input type="text" id="fe_bill_no" placeholder="बिल नम्बर">
-                </div>
+            <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid #d69e2e;">
+                <h4 style="margin: 0 0 10px 0; color: #1a365d;">२) आपतकालीन कोष</h4>
+                <p style="margin: 5px 0;">मौज्दात: <strong id="bal-aapat" style="color: #d69e2e;">रु. ०</strong></p>
             </div>
-            <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--danger-color);">खर्च सुरक्षित गर्नुहोस्</button>
-        </form>
-    </div>
+            <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid #38a169;">
+                <h4 style="margin: 0 0 10px 0; color: #1a365d;">३) उद्धार तथा राहत कोष</h4>
+                <p style="margin: 5px 0;">मौज्दात: <strong id="bal-uddhar" style="color: #38a169;">रु. ०</strong></p>
+            </div>
+        </div>
 
-    <!-- कोष खर्च रेकर्ड टेबल -->
-    <div class="table-responsive">
-        <h4 style="color: var(--primary-color);">कोष खर्च रेकर्ड टेबल (कुन कोषबाट खर्च भएको प्रष्ट देखिने)</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>मिति</th>
-                    <th>खर्च गरिएको कोष</th>
-                    <th>प्रयोजन / विवरण</th>
-                    <th>बिल नं.</th>
-                    <th>रकम (रु.)</th>
-                    <th class="no-print">कारवाही</th>
-                </tr>
-            </thead>
-            <tbody id="fundExpensesTableBody">
-                <tr><td colspan="6">कुनै खर्च रेकर्ड छैन</td></tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    let fundSystemState = {
-        settings: { voucherSystemEnabled: true },
-        funds: {
-            manab_bachau: { name: "मानव बचाउ अभियान कोष", balance: 0 },
-            aapatkaleen: { name: "आपतकालीन कोष", balance: 0 },
-            uddhar_rahat: { name: "उद्धार तथा राहत कोष", balance: 0 }
-        },
-        vouchers: [],
-        expenses: []
-    };
-
-    function toggleVoucherSystem(status) {
-        fundSystemState.settings.voucherSystemEnabled = status;
-        alert(status ? "भौचर सिस्टम खुला गरिएको छ।" : "भौचर सिस्टम बन्द गरिएको छ।");
-    }
-
-    function handleFundIncomeSubmit(e) {
-        e.preventDefault();
-        if (!fundSystemState.settings.voucherSystemEnabled) {
-            alert("एडमिन प्यानलबाट भौचर सिस्टम बन्द गरिएको छ!");
-            return;
-        }
-
-        const fundKey = document.getElementById('fi_fund_key').value;
-        const donorName = document.getElementById('fi_donor_name').value.trim();
-        const amount = parseFloat(document.getElementById('fi_amount').value) || 0;
-        const remarks = document.getElementById('fi_remarks').value.trim();
-
-        const voucherNo = "VOU-" + new Date().getFullYear() + "-" + String(fundSystemState.vouchers.length + 1).padStart(3, '0');
-        const date = getCurrentNepaliDate();
-
-        const voucher = {
-            id: Date.now(),
-            voucherNo,
-            fundKey,
-            fundName: fundSystemState.funds[fundKey].name,
-            donorName,
-            amount,
-            date,
-            remarks
-        };
-
-        fundSystemState.vouchers.push(voucher);
-        fundSystemState.funds[fundKey].balance += amount;
-
-        updateFundUI();
-        document.getElementById('fundIncomeForm').reset();
-        generateDigitalVoucherHTML(voucher);
-    }
-
-    function handleFundExpenseSubmit(e) {
-        e.preventDefault();
-        const fundKey = document.getElementById('fe_fund_key').value;
-        const title = document.getElementById('fe_title').value.trim();
-        const amount = parseFloat(document.getElementById('fe_amount').value) || 0;
-        const billNo = document.getElementById('fe_bill_no').value.trim();
-
-        if (fundSystemState.funds[fundKey].balance < amount) {
-            alert("त्रुटि: यो कोषमा पर्याप्त मौज्दात उपलब्ध छैन!");
-            return;
-        }
-
-        const expense = {
-            id: Date.now(),
-            fundKey,
-            fundName: fundSystemState.funds[fundKey].name,
-            title,
-            amount,
-            billNo,
-            date: getCurrentNepaliDate()
-        };
-
-        fundSystemState.expenses.push(expense);
-        fundSystemState.funds[fundKey].balance -= amount;
-
-        updateFundUI();
-        document.getElementById('fundExpenseForm').reset();
-        alert("खर्च सफलताપूर्वक इन्ट्री भयो र सम्बन्धित कोषबाट रकम घटाइयो!");
-    }
-
-    function updateFundUI() {
-        document.getElementById('bal-manab').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.manab_bachau.balance);
-        document.getElementById('bal-aapat').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.aapatkaleen.balance);
-        document.getElementById('bal-uddhar').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.uddhar_rahat.balance);
-
-        const vTable = document.getElementById('fundVouchersTableBody');
-        vTable.innerHTML = '';
-        if (fundSystemState.vouchers.length === 0) {
-            vTable.innerHTML = '<tr><td colspan="6">कुनै रेकर्ड छैन</td></tr>';
-        } else {
-            fundSystemState.vouchers.forEach((v) => {
-                vTable.innerHTML += `
-                    <tr>
-                        <td><strong>${toNepaliNumber(v.voucherNo)}</strong></td>
-                        <td>${toNepaliNumber(v.date)}</td>
-                        <td>${v.fundName}</td>
-                        <td><strong>${v.donorName}</strong></td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(v.amount)}</strong></td>
-                        <td class="no-print">
-                            <button class="btn-action btn-view" onclick='generateDigitalVoucherHTML(${JSON.stringify(v)})'>भौचर हेर्ने</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        const eTable = document.getElementById('fundExpensesTableBody');
-        eTable.innerHTML = '';
-        if (fundSystemState.expenses.length === 0) {
-            eTable.innerHTML = '<tr><td colspan="6">कुनै खर्च रेकर्ड छैन</td></tr>';
-        } else {
-            fundSystemState.expenses.forEach((ex) => {
-                eTable.innerHTML += `
-                    <tr>
-                        <td>${toNepaliNumber(ex.date)}</td>
-                        <td><strong style="color: #1a365d;">${ex.fundName}</strong></td>
-                        <td>${ex.title}</td>
-                        <td>${ex.billNo || '-'}</td>
-                        <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(ex.amount)}</strong></td>
-                        <td class="no-print"><span>-</span></td>
-                    </tr>
-                `;
-            });
-        }
-    }
-
-    function generateDigitalVoucherHTML(v) {
-        let voucherWin = window.open('', '_blank');
-        voucherWin.document.write(`
-            <html>
-            <head>
-                <title>आम्दानी भौचर - ${v.voucherNo}</title>
-                <style>
-                    body { font-family: sans-serif; padding: 20px; }
-                    .voucher-box { border: 2px solid #1a365d; padding: 25px; max-width: 600px; margin: auto; border-radius: 8px; }
-                    .header { text-align: center; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
-                    .details { margin: 15px 0; font-size: 15px; line-height: 1.8; }
-                    .footer { margin-top: 40px; display: flex; justify-content: space-between; font-weight: bold; }
-                    @media print { .no-print { display: none; } }
-                </style>
-            </head>
-            <body>
-                <div class="voucher-box">
-                    <div class="header">
-                        <h2>दशौँदी समाज नेपाल</h2>
-                        <p style="margin: 2px; font-size: 13px; color: #555;">आधिकारिक डिजिटल आम्दानी भौचर</p>
-                        <p><b>भौचर नम्बर:</b> ${v.voucherNo}</p>
+        <!-- सहयोग/दाता थप्ने फारम (डिजिटल भौचर सहित) -->
+        <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px;" class="no-print">
+            <h4 style="margin-top: 0; color: var(--primary-color);">कोषहरूमा सहयोग वा दाता थप्ने (डिजिटल भौचर जारी)</h4>
+            <form id="fundIncomeForm" onsubmit="handleFundIncomeSubmit(event)">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>कोष छान्नुहोस्:</label>
+                        <select id="fi_fund_key" required>
+                            <option value="manab_bachau">मानव बचाउ अभियान कोष</option>
+                            <option value="aapatkaleen">आपतकालीन कोष</option>
+                            <option value="uddhar_rahat">उद्धार तथा राहत कोष</option>
+                        </select>
                     </div>
-                    <div class="details">
-                        <p><b>मिति:</b> ${v.date}</p>
-                        <p><b>जम्मा गरिएको कोष:</b> ${v.fundName}</p>
-                        <p><b>दाता/सहयोगीको नाम:</b> ${v.donorName}</p>
-                        <p><b>प्राप्त रकम:</b> रु. ${v.amount.toLocaleString()}</p>
-                        <p><b>विवरण:</b> ${v.remarks || 'विशेष सहयोग'}</p>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>दाता/सहयोगीको नाम:</label>
+                        <input type="text" id="fi_donor_name" placeholder="नाम लेख्नुहोस्" required>
                     </div>
-                    <div class="footer">
-                        <div>बुझाउनेको सही: ....................</div>
-                        <div>कार्यालयको सही: ....................</div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>रकम (रु.):</label>
+                        <input type="number" id="fi_amount" placeholder="रकम हाल्नुहोस्" required>
                     </div>
-                    <div style="text-align: center; margin-top: 25px;" class="no-print">
-                        <button onclick="window.print()" style="padding: 10px 20px; font-size: 15px; background: #008000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">प्रिन्ट / PDF गर्नुहोस्</button>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>विवरण / Remarks:</label>
+                        <input type="text" id="fi_remarks" placeholder="विवरण">
                     </div>
                 </div>
-            </body>
-            </html>
-        `);
-        voucherWin.document.close();
-    }
+                <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px;">आम्दानी सेभ गरी भौचर बनाउनुहोस्</button>
+            </form>
+        </div>
+
+        <!-- कोष आम्दानी भौचर रेकर्ड टेबल -->
+        <div class="table-responsive" style="margin-bottom: 20px;">
+            <h4 style="color: var(--primary-color);">कोष आम्दानी तथा भौचर रेकर्डहरू</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>भौचर नं.</th>
+                        <th>मिति</th>
+                        <th>कोषको नाम</th>
+                        <th>दाताको नाम</th>
+                        <th>रकम (रु.)</th>
+                        <th class="no-print">कारवाही</th>
+                    </tr>
+                </thead>
+                <tbody id="fundVouchersTableBody">
+                    <tr><td colspan="6">कुनै रेकर्ड छैन</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- कोषबाट खर्च घटाउने फारम -->
+        <div style="background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px;" class="no-print">
+            <h4 style="margin-top: 0; color: var(--danger-color);">कोषबाट खर्च इन्ट्री गर्ने (सम्बन्धित कोषमा रकम स्वतः घट्ने)</h4>
+            <form id="fundExpenseForm" onsubmit="handleFundExpenseSubmit(event)">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>कुन कोषबाट खर्च गर्ने हो:</label>
+                        <select id="fe_fund_key" required>
+                            <option value="manab_bachau">मानव बचाउ अभियान कोष</option>
+                            <option value="aapatkaleen">आपतकालीन कोष</option>
+                            <option value="uddhar_rahat">उद्धार तथा राहत कोष</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>खर्चको शीर्षक / प्रयोजन:</label>
+                        <input type="text" id="fe_title" placeholder="खर्चको कारण" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>रकम (रु.):</label>
+                        <input type="number" id="fe_amount" placeholder="रकम" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>बिल/रसिद नं.:</label>
+                        <input type="text" id="fe_bill_no" placeholder="बिल नम्बर">
+                    </div>
+                </div>
+                <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--danger-color);">खर्च सुरक्षित गर्नुहोस्</button>
+            </form>
+        </div>
+
+        <!-- कोष खर्च रेकर्ड टेबल -->
+        <div class="table-responsive">
+            <h4 style="color: var(--primary-color);">कोष खर्च रेकर्ड टेबल (कुन कोषबाट खर्च भएको प्रष्ट देखिने)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>मिति</th>
+                        <th>खर्च गरिएको कोष</th>
+                        <th>प्रयोजन / विवरण</th>
+                        <th>बिल नं.</th>
+                        <th>रकम (रु.)</th>
+                        <th class="no-print">कारवाही</th>
+                    </tr>
+                </thead>
+                <tbody id="fundExpensesTableBody">
+                    <tr><td colspan="6">कुनै खर्च रेकर्ड छैन</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
@@ -1574,6 +1405,175 @@
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
+
+        let fundSystemState = {
+            settings: { voucherSystemEnabled: true },
+            funds: {
+                manab_bachau: { name: "मानव बचाउ अभियान कोष", balance: 0 },
+                aapatkaleen: { name: "आपतकालीन कोष", balance: 0 },
+                uddhar_rahat: { name: "उद्धार तथा राहत कोष", balance: 0 }
+            },
+            vouchers: [],
+            expenses: []
+        };
+
+        function toggleVoucherSystem(status) {
+            fundSystemState.settings.voucherSystemEnabled = status;
+            alert(status ? "भौचर सिस्टम खुला गरिएको छ।" : "भौचर सिस्टम बन्द गरिएको छ।");
+        }
+
+        function handleFundIncomeSubmit(e) {
+            e.preventDefault();
+            if (!fundSystemState.settings.voucherSystemEnabled) {
+                alert("एडमिन प्यानलबाट भौचर सिस्टम बन्द गरिएको छ!");
+                return;
+            }
+
+            const fundKey = document.getElementById('fi_fund_key').value;
+            const donorName = document.getElementById('fi_donor_name').value.trim();
+            const amount = parseFloat(document.getElementById('fi_amount').value) || 0;
+            const remarks = document.getElementById('fi_remarks').value.trim();
+
+            const voucherNo = "VOU-" + new Date().getFullYear() + "-" + String(fundSystemState.vouchers.length + 1).padStart(3, '0');
+            const date = getCurrentNepaliDate();
+
+            const voucher = {
+                id: Date.now(),
+                voucherNo,
+                fundKey,
+                fundName: fundSystemState.funds[fundKey].name,
+                donorName,
+                amount,
+                date,
+                remarks
+            };
+
+            fundSystemState.vouchers.push(voucher);
+            fundSystemState.funds[fundKey].balance += amount;
+
+            updateFundUI();
+            document.getElementById('fundIncomeForm').reset();
+            generateDigitalVoucherHTML(voucher);
+        }
+
+        function handleFundExpenseSubmit(e) {
+            e.preventDefault();
+            const fundKey = document.getElementById('fe_fund_key').value;
+            const title = document.getElementById('fe_title').value.trim();
+            const amount = parseFloat(document.getElementById('fe_amount').value) || 0;
+            const billNo = document.getElementById('fe_bill_no').value.trim();
+
+            if (fundSystemState.funds[fundKey].balance < amount) {
+                alert("त्रुटि: यो कोषमा पर्याप्त मौज्दात उपलब्ध छैन!");
+                return;
+            }
+
+            const expense = {
+                id: Date.now(),
+                fundKey,
+                fundName: fundSystemState.funds[fundKey].name,
+                title,
+                amount,
+                billNo,
+                date: getCurrentNepaliDate()
+            };
+
+            fundSystemState.expenses.push(expense);
+            fundSystemState.funds[fundKey].balance -= amount;
+
+            updateFundUI();
+            document.getElementById('fundExpenseForm').reset();
+            alert("खर्च सफलतापूर्वक इन्ट्री भयो र सम्बन्धित कोषबाट रकम घटाइयो!");
+        }
+
+        function updateFundUI() {
+            document.getElementById('bal-manab').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.manab_bachau.balance);
+            document.getElementById('bal-aapat').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.aapatkaleen.balance);
+            document.getElementById('bal-uddhar').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.uddhar_rahat.balance);
+
+            const vTable = document.getElementById('fundVouchersTableBody');
+            vTable.innerHTML = '';
+            if (fundSystemState.vouchers.length === 0) {
+                vTable.innerHTML = '<tr><td colspan="6">कुनै रेकर्ड छैन</td></tr>';
+            } else {
+                fundSystemState.vouchers.forEach((v) => {
+                    vTable.innerHTML += `
+                        <tr>
+                            <td><strong>${toNepaliNumber(v.voucherNo)}</strong></td>
+                            <td>${toNepaliNumber(v.date)}</td>
+                            <td>${v.fundName}</td>
+                            <td><strong>${v.donorName}</strong></td>
+                            <td><strong style="color: #008000;">रु. ${toNepaliNumber(v.amount)}</strong></td>
+                            <td class="no-print">
+                                <button class="btn-action btn-view" onclick='generateDigitalVoucherHTML(${JSON.stringify(v)})'>भौचर हेर्ने</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            const eTable = document.getElementById('fundExpensesTableBody');
+            eTable.innerHTML = '';
+            if (fundSystemState.expenses.length === 0) {
+                eTable.innerHTML = '<tr><td colspan="6">कुनै खर्च रेकर्ड छैन</td></tr>';
+            } else {
+                fundSystemState.expenses.forEach((ex) => {
+                    eTable.innerHTML += `
+                        <tr>
+                            <td>${toNepaliNumber(ex.date)}</td>
+                            <td><strong style="color: #1a365d;">${ex.fundName}</strong></td>
+                            <td>${ex.title}</td>
+                            <td>${ex.billNo || '-'}</td>
+                            <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(ex.amount)}</strong></td>
+                            <td class="no-print"><span>-</span></td>
+                        </tr>
+                    `;
+                });
+            }
+        }
+
+        function generateDigitalVoucherHTML(v) {
+            let voucherWin = window.open('', '_blank');
+            voucherWin.document.write(`
+                <html>
+                <head>
+                    <title>आम्दानी भौचर - ${v.voucherNo}</title>
+                    <style>
+                        body { font-family: sans-serif; padding: 20px; }
+                        .voucher-box { border: 2px solid #1a365d; padding: 25px; max-width: 600px; margin: auto; border-radius: 8px; }
+                        .header { text-align: center; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+                        .details { margin: 15px 0; font-size: 15px; line-height: 1.8; }
+                        .footer { margin-top: 40px; display: flex; justify-content: space-between; font-weight: bold; }
+                        @media print { .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="voucher-box">
+                        <div class="header">
+                            <h2>दशौँदी समाज नेपाल</h2>
+                            <p style="margin: 2px; font-size: 13px; color: #555;">आधिकारिक डिजिटल आम्दानी भौचर</p>
+                            <p><b>भौचर नम्बर:</b> ${v.voucherNo}</p>
+                        </div>
+                        <div class="details">
+                            <p><b>मिति:</b> ${v.date}</p>
+                            <p><b>जम्मा गरिएको कोष:</b> ${v.fundName}</p>
+                            <p><b>दाता/सहयोगीको नाम:</b> ${v.donorName}</p>
+                            <p><b>प्राप्त रकम:</b> रु. ${v.amount.toLocaleString()}</p>
+                            <p><b>विवरण:</b> ${v.remarks || 'विशेष सहयोग'}</p>
+                        </div>
+                        <div class="footer">
+                            <div>बुझाउनेको सही: ....................</div>
+                            <div>कार्यालयको सही: ....................</div>
+                        </div>
+                        <div style="text-align: center; margin-top: 25px;" class="no-print">
+                            <button onclick="window.print()" style="padding: 10px 20px; font-size: 15px; background: #008000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">प्रिन्ट / PDF गर्नुहोस्</button>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+            voucherWin.document.close();
+        }
 
         function toNepaliNumber(input) {
             if (!input) return '';
@@ -1667,11 +1667,9 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
-            // प्रिन्ट गर्नका लागि सेक्सन खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
-            // फारम र बटनहरू प्रिन्टबाट लुकाउनको लागि 'no-print' क्लास थप्ने
             const adminPanelDiv = sectionContent.querySelector('.admin-panel');
             if (adminPanelDiv) {
                 adminPanelDiv.classList.add('no-print');
@@ -1700,7 +1698,6 @@
 
             window.print();
 
-            // प्रिन्ट बन्द भएपछि हेड हटाउने र फारमलाई फेरि देखाउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
             if (adminPanelDiv) {
@@ -1754,7 +1751,7 @@
             loadIncomeData();
             loadMonthlyLevyIncomeData();
             loadGrantIncomeData();
-            loadDailyExpenseData(); // दैनिक खर्च लोड गर्ने फंक्सन थपियो
+            loadDailyExpenseData();
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1918,7 +1915,6 @@
             }
         }
 
-        // दैनिक खर्च सेभ गर्ने फंक्सन
         async function saveDailyExpense(event) {
             event.preventDefault();
 
@@ -1942,7 +1938,6 @@
             }
         }
 
-        // दैनिक खर्च लोड गर्ने फंक्सन
         async function loadDailyExpenseData() {
             const { data, error } = await supabaseClient
                 .from('daily_expenses')
@@ -1975,7 +1970,6 @@
             });
         }
 
-        // दैनिक खर्च रेकर्ड मेटाउने फंक्सन
         async function deleteDailyExpenseRecord(id) {
             if (confirm('के तपाईं यो खर्चको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('daily_expenses').delete().eq('id', id);
@@ -2751,11 +2745,6 @@
             alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
             location.reload();
         }
-      function updateFundUI() {
-        document.getElementById('bal-manab').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.manab_bachau.balance);
-        document.getElementById('bal-aapat').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.aapatkaleen.balance);
-        document.getElementById('bal-uddhar').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.uddhar_rahat.balance);
-    }
     </script>
 </body>
 </html>
