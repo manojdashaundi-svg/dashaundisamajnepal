@@ -311,7 +311,7 @@
             padding: 10px; 
             overflow-y: auto; 
         }
-        
+
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
@@ -386,12 +386,12 @@
                 page-break-inside: avoid !important;
                 page-break-after: avoid !important;
             }
-            
+
             @page {
                 size: A4 landscape;
                 margin: 5mm;
             }
-            
+
             /* यहाँ टेबलको चौडाइ १००% र बायाँ-दायाँ पूरा फैलिने बनाइएको छ */
             .printable-section table {
                 width: 100% !important;
@@ -400,7 +400,7 @@
                 border-collapse: collapse !important;
                 font-size: 11px !important;
             }
-            
+
             /* टेबलभित्रका कन्टेनर र उत्तरदायी कक्षहरूलाई पूरा फैलाउन */
             .printable-section .table-responsive {
                 width: 100% !important;
@@ -421,21 +421,21 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
+
             .printable-section .table-avatar {
                 width: 35px !important;
                 height: 35px !important;
                 border-radius: 50% !important;
                 object-fit: cover !important;
             }
-            
+
             .printable-section .btn-action, .printable-section .print-btn {
                 display: none !important;
             }
 
             .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
             .print-header { display: block !important; width: 100% !important; text-align: center !important; }
-            
+
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -477,11 +477,11 @@
 
             <!-- लेवी व्यवस्थापन एडमिन प्यानल सेक्सन -->
             <div class="section-header">
-    <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
-    <div class="button-group">
-        <button id="levyToggleBtn" class="toggle-btn" onclick="toggleSection('levyContent', this)">खोल्नुहोस् ▾</button>
-    </div>
-</div>
+                <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
+                <div class="button-group">
+                    <button id="levyToggleBtn" class="toggle-btn" onclick="toggleSection('levyContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
 
             <div id="levyContent" class="collapsible-content" style="display: block;">
               <div class="admin-panel">
@@ -544,6 +544,36 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <!-- मासिक लेवीबाट प्राप्त आम्दानी सेक्सन -->
+            <div class="section-header">
+                <h3>मासिक लेवीबाट प्राप्त आम्दानी</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('monthlyLevyIncomeContent', 'मासिक लेवीबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('monthlyLevyIncomeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="monthlyLevyIncomeContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>पदाधिकारीको नाम</th>
+                                <th>कमिटी तह</th>
+                                <th>चुक्ता गरिएका महिनाहरू</th>
+                                <th>जम्मा रकम (रु.)</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyLevyIncomeTableBody">
+                            <!-- JS मार्फत डाटा भरिनेछ -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="section-header">
@@ -924,9 +954,9 @@
         <div class="app-edit-content" style="width: 400px;">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता स्वीकृत (Approve)</h3>
             <p style="font-size: 13px; font-weight: 600; color: #2d3748;">यो सदस्यलाई संस्थामा दिने पद छान्नुहोस् वा लेख्नुहोस्:</p>
-            
+
             <input type="hidden" id="pendingAppStr">
-            
+
             <div class="form-group">
                 <label>पद (Designation):</label>
                 <select id="selectPosition" class="form-control" onchange="checkCustomPosition(this)">
@@ -956,9 +986,9 @@
     <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
-            
+
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
-                
+
                 <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
 
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
@@ -977,7 +1007,7 @@
             </div>
 
             <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -70px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
-            
+
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 18px;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
@@ -991,7 +1021,7 @@
                     <div style="text-align: center; flex-shrink: 0; z-index: 1;">
                         <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 100px; height: 120px; border-radius: 8px; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
                     </div>
-                    
+
                     <div style="flex-grow: 1; font-size: 13px; color: #000000; line-height: 1.45; font-weight: 900; z-index: 1;">
                         <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">Manoj Kumar Dashaundi</div>
                         <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">सचिव</div>
@@ -1117,7 +1147,7 @@
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
-        
+
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
@@ -1191,7 +1221,7 @@
             document.getElementById('cardDistrict').innerText = user.district || '-';
             document.getElementById('cardMunicipality').innerText = user.municipality || '-';
             document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
-            
+
             const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
 
@@ -1213,7 +1243,7 @@
         async function printSection(sectionId, sectionTitle) {
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
-            
+
             // प्रिन्ट गर्नका लागि सेक्सनलाई अनिवार्य खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
@@ -1244,7 +1274,7 @@
             // प्रिन्ट बन्द भएपछि हेड हटाउने र पहिलाकै अवस्थामा फर्काउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
-            
+
             // यदि प्रिन्ट गर्नुभन्दा अगाडि यो सेक्सन बन्द थियो भने मात्र बन्द गर्ने, नत्र खुला नै राख्ने
             if (!wasOpen && sectionId !== 'levyContent') {
                 sectionContent.style.display = 'none';
@@ -1289,9 +1319,10 @@
             const levyContent = document.getElementById('levyContent');
             levyContent.style.display = 'block';
             document.getElementById('levyToggleBtn').innerText = 'बन्द गर्नुहोस् ▴';
-            
+
             loadAboutData();
             loadIncomeData();
+            loadMonthlyLevyIncomeData();
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1332,6 +1363,51 @@
                     </tr>
                 `;
             });
+        }
+
+        // मासिक लेवी आम्दानी लोड गर्ने फंक्सन
+        async function loadMonthlyLevyIncomeData() {
+            const { data, error } = await supabaseClient
+                .from('levy_payments') // सुपाबेसको लेवी भुक्तानीसम्बन्धी टेबल
+                .select('*')
+                .eq('status', 'Approved') // प्रमाणित भइसकेका मात्र देखाउन
+                .order('created_at', { ascending: false });
+
+            const tbody = document.getElementById('monthlyLevyIncomeTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">कुनै मासिक लेवी आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.member_name || '-'}</strong></td>
+                        <td>${item.committee_level || '-'}</td>
+                        <td>${item.paid_months || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteMonthlyLevyRecord('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteMonthlyLevyRecord(id) {
+            if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('levy_payments').delete().eq('id', id);
+                if(!error) {
+                    alert('लेवी आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
+                    loadMonthlyLevyIncomeData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
         }
 
         async function deleteIncomeRecord(id) {
@@ -1434,10 +1510,10 @@
         async function confirmApproveUser() {
             const appStr = document.getElementById('pendingAppStr').value;
             const app = JSON.parse(appStr);
-            
+
             let selectedVal = document.getElementById('selectPosition').value;
             let assignedPosition = '';
-            
+
             if(selectedVal === 'अन्य (Custom)') {
                 assignedPosition = document.getElementById('customPositionInput').value.trim();
                 if(!assignedPosition) {
@@ -1495,14 +1571,14 @@
             };
 
             const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
-            
+
             if(userError) {
                 alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
                 return;
             }
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
-            
+
             if(!appError) {
                 const incomeRecord = {
                     date: todayNepaliDate,
@@ -1972,10 +2048,10 @@
             document.getElementById('new_admin_user').value = username;
             document.getElementById('new_admin_pass').value = password;
             document.getElementById('new_admin_role').value = role;
-            
+
             document.getElementById('adminSubmitBtn').innerText = 'एडमिन अपडेट गर्नुहोस्';
             document.getElementById('adminFormTitle').innerText = 'एडमिन विवरण सम्पादन गर्ने';
-            
+
             document.getElementById('adminContent').style.display = 'block';
             window.scrollTo({ top: document.getElementById('adminContent').offsetTop - 50, behavior: 'smooth' });
         }
@@ -2016,7 +2092,7 @@
             const tbody = document.getElementById('noticesTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
-            
+
             data.forEach((item, index) => {
                 const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
 
@@ -2047,7 +2123,7 @@
             document.getElementById('notice_file_url').value = item.file_url || '';
             document.getElementById('notice_file_type').value = item.file_type || 'image';
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
-            
+
             document.getElementById('noticesContent').style.display = 'block';
             window.scrollTo({ top: document.getElementById('noticesContent').offsetTop - 50, behavior: 'smooth' });
         }
@@ -2062,7 +2138,7 @@
         // लेवी दर सेभ गर्ने फंक्सन
         async function saveLevyRates(event) {
             event.preventDefault();
-            
+
             const ratesData = [
                 { committee_level: 'founder', monthly_amount: parseFloat(document.getElementById('rate_founder').value) || 0 },
                 { committee_level: 'central', monthly_amount: parseFloat(document.getElementById('rate_central').value) || 0 },
@@ -2108,7 +2184,7 @@
                 reason = prompt("रिजेक्ट गर्नुको कारण लेख्नुहोस्:");
                 if(!reason) return;
             }
-            
+
             alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
             location.reload();
         }
