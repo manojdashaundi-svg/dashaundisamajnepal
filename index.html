@@ -160,7 +160,7 @@
         .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
         .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
 
-        /* Levy Portal Additional Styles */
+        /* Levy Portal Styles */
         .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
         .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
@@ -431,6 +431,7 @@
 
                                 <div class="summary-box">
                                     <p>चयन गरिएका महिनाहरू: <span id="selectedCount">0</span></p>
+                                    <p>पद: <span id="memberPositionLabel">-</span> | प्रति महिना दर: रू. <span id="monthlyRateLabel">0</span></p>
                                     <p>मूल लेवी रकम: रू. <span id="baseTotal">0.00</span></p>
                                     <p class="fine-text">जरिवाना (१०%): रू. <span id="fineTotal">0.00</span></p>
                                     <hr>
@@ -564,14 +565,14 @@
                         <label>१. नागरिकता अगाडि:</label>
                         <input type="file" id="citizenshipFront" accept="image/*">
                         <small id="citFrontNotice" style="color: #e53e3e; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">* नयाँ सदस्यताको लागि नागरिकता अगाडिको फोटो अनिवार्य छ।</small>
-                        <small id="citFrontNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
+                        <small id="citFrontNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ।</small>
                     </div>
 
                     <div class="form-group">
                         <label>२. नागरिकता पछाडि:</label>
                         <input type="file" id="citizenshipBack" accept="image/*">
                         <small id="citBackNotice" style="color: #e53e3e; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">* नयाँ सदस्यताको लागि नागरिकता पछाडिको फोटो अनिवार्य छ।</small>
-                        <small id="citBackNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
+                        <small id="citBackNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ।</small>
                     </div>
 
                     <div class="qr-box">
@@ -589,102 +590,53 @@
     </div>
 
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
-        <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; display: flex; flex-direction: column; justify-content: space-between;">
             
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
-                
-                <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
-
+                <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1;">&times;</span>
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
                 </svg>
-
-                <div style="width: 74px; height: 74px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.25); border: 3px solid #ffffff; position: relative; z-index: 10;">
+                <div style="width: 74px; height: 74px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; border: 3px solid #ffffff; position: relative; z-index: 10;">
                     <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;">
                 </div>
-
                 <div style="position: relative; z-index: 2;">
-                    <h3 style="margin: 0; font-size: 25px; font-weight: 950; letter-spacing: 0.8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">दशौँदी समाज नेपाल</h3>
-                    <p style="margin: 3px 0 0 0; font-size: 12.5px; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
-                    <p style="margin: 2px 0 0 0; font-size: 11px; font-weight: 900; color: #f7fafc; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">स्थापना - २०८०</p>
+                    <h3 style="margin: 0; font-size: 25px; font-weight: 950;">दशाैँदी समाज नेपाल</h3>
+                    <p style="margin: 3px 0 0 0; font-size: 12.5px; font-weight: 800;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
                 </div>
             </div>
 
-            <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -70px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
+            <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; width: 160px; margin: -70px auto 8px auto; border-radius: 24px; position: relative; z-index: 20;">परिचय पत्र</div>
             
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: center; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 18px;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 8px; position: relative; overflow: hidden;">
-                    <div style="position: absolute; right: 35px; top: 50%; transform: translateY(-50%); opacity: 0.12; pointer-events: none; z-index: 0;">
-                        <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 140px; height: 140px; object-fit: contain;">
+                <div style="display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 8px;">
+                    <div style="text-align: center; flex-shrink: 0;">
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 100px; height: 120px; border-radius: 8px; object-fit: cover; border: 2.5px solid #1a365d;">
                     </div>
-
-                    <div style="text-align: center; flex-shrink: 0; z-index: 1;">
-                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 100px; height: 120px; border-radius: 8px; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-                    </div>
-                    
-                    <div style="flex-grow: 1; font-size: 13px; color: #000000; line-height: 1.45; font-weight: 900; z-index: 1;">
-                        <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">-</div>
-                        <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">-</div>
-                        <div style="font-size: 11.5px; color: #111111; margin-top: 4px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000; font-weight: 950;">-</span></div>
-                        <div style="font-size: 11.5px; color: #c53030; margin-top: 2px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 950;">-</span></div>
-                    </div>
-                </div>
-
-                <div style="width: 100%; background: #fff; border-radius: 8px; border: 1px solid #cbd5e0; font-size: 13px; font-weight: 900; overflow: hidden; display: flex;">
-                    <div style="width: 36px; background: #1a365d; display: flex; flex-direction: column;">
-                        <div style="height: 25.5px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-                        <div style="height: 25.5px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
-                        <div style="height: 25.5px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4M8 6h8M8 10h8M8 14h8"></path></svg></div>
-                        <div style="height: 25.5px; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
-                    </div>
-                    <div style="flex-grow: 1; padding: 2px 6px;">
-                        <table style="width: 100%; background: transparent; margin: 0;">
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px;"><span id="cardProvince">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 4px 2px; width: 32%; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 4px 2px; color: #000000; font-weight: 950; font-size: 12.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
-                        </table>
+                    <div style="flex-grow: 1; font-size: 13px; color: #000; font-weight: 900;">
+                        <div style="font-size: 19px; font-weight: 950;" id="cardName">-</div>
+                        <div style="color: #006600; font-weight: 950; font-size: 14.5px;" id="cardPosition">-</div>
+                        <div style="font-size: 11.5px; margin-top: 4px;">जारी मिति: <span id="cardIssueDate">-</span></div>
+                        <div style="font-size: 11.5px; color: #c53030; margin-top: 2px;">म्याद समाप्त: <span id="cardExpiryDate">-</span></div>
                     </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1.5px dashed #cbd5e0; margin-bottom: 4px;">
-                    <div>
-                        <img id="cardQrCode" src="" alt="QR Code" title="स्क्यान गरी भेरिफाइड गर्नुहोस्" style="width: 66px; height: 66px; border: 1.5px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff; cursor: pointer;">
-                    </div>
-                    <div style="text-align: center; font-size: 12px; font-weight: 950; color: #000000; display: flex; justify-content: space-between; width: 230px;">
-                        <div style="text-align: center; position: relative; flex: 1;">
-                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिवको हस्ताक्षर" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 125px; height: 50px; object-fit: contain;">
-                            <div style="width: 85px; border-top: 1.8px solid #000; margin: 26px auto 3px;"></div>
-                            <span style="font-size: 12.5px; font-weight: 950; color: #000000; letter-spacing: 0.3px;">सचिव</span>
-                        </div>
-                        <div style="text-align: center; position: relative; flex: 1; margin-left: 15px;">
-                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्षको हस्ताक्षर" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 125px; height: 50px; object-fit: contain;">
-                            <div style="width: 85px; border-top: 1.8px solid #000; margin: 26px auto 3px;"></div>
-                            <span style="font-size: 12.5px; font-weight: 950; color: #000000; letter-spacing: 0.3px;">अध्यक्ष</span>
-                        </div>
+                    <img id="cardQrCode" src="" alt="QR" style="width: 66px; height: 66px; border: 1.5px solid #1a365d; padding: 2px; border-radius: 4px;">
+                    <div style="text-align: center; font-size: 12px; font-weight: 950; display: flex; justify-content: space-between; width: 230px;">
+                        <div>सचिव</div>
+                        <div>अध्यक्ष</div>
                     </div>
                 </div>
             </div>
-
-            <div style="background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 9.5px; font-weight: 700; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; display: flex; flex-direction: column; gap: 3px;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 4px;">
-                        <img src="https://i.postimg.cc/QMJ9j9vH/vecteezy-whatsapp-logo-png-whatsapp-logo-transparent-png-whatsapp-23986631.png" alt="WhatsApp" style="width: 14px; height: 14px; object-fit: contain;">
-                        <span>9765240652</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 4px;">
-                        <img src="https://i.postimg.cc/Hsb76h3r/gmail.png" alt="Gmail" style="width: 14px; height: 14px; object-fit: contain;">
-                        <span>dashaundisamajnepal@gmail.com</span>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 5px;">
-                    <span>🌐</span> <span>www.dashaundisamajnepal.com</span>
-                </div>
-                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 3px 12px; border-radius: 4px; color: #fff; display: inline-block; font-size: 9px; font-weight: bold; margin-top: 2px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+            
+            <div style="background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 9.5px; font-weight: 700;">
+                <span>🌐 www.dashaundisamajnepal.com | 📞 9765240652</span><br>
+                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 3px 12px; border-radius: 4px; color: #fff; display: inline-block; margin-top: 3px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
             </div>
         </div>
     </div>
@@ -694,7 +646,6 @@
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
-        
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -739,8 +690,24 @@
             }
         }
 
-        let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
+        let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '', position: 'साधारण सदस्य' };
         let currentApplication = null;
+        let committeeRate = 500; // डिफल्ट दर
+
+        async function fetchUserPositionAndRate() {
+            if (!currentUserProfile || !currentUserProfile.email) return;
+            const { data } = await supabaseClient.from('membership_applications').select('position, full_name').eq('identifier', currentUserProfile.email).single();
+            let pos = (data && data.position) ? data.position : 'साधारण सदस्य';
+            currentUserProfile.position = pos;
+
+            // Supabase को levy_rates टेबलबाट पद अनुसारको दर तान्ने
+            const { data: rateData } = await supabaseClient.from('levy_rates').select('rate').eq('position', pos).single();
+            if (rateData && rateData.rate) {
+                committeeRate = rateData.rate;
+            } else {
+                committeeRate = 500; // टेबलमा नभेटिएमा ५००
+            }
+        }
 
         function toNepaliNumber(num) {
             if (!num) return '';
@@ -748,9 +715,7 @@
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
 
-        function getNepaliDate() {
-            return "२०८३-०५-१२";
-        }
+        function getNepaliDate() { return "२०८३-०५-१२"; }
 
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '२०८४-०५-१२';
@@ -758,10 +723,7 @@
             let parts = cleaned.split('-');
             if(parts.length === 3) {
                 let yearPart = parseInt(parts[0]);
-                if (!isNaN(yearPart)) {
-                    let nextYear = yearPart + 1;
-                    return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
-                }
+                if (!isNaN(yearPart)) { return toNepaliNumber(`${yearPart + 1}-${parts[1]}-${parts[2]}`); }
             }
             return '२०८४-०५-१२';
         }
@@ -786,11 +748,8 @@
                 document.getElementById('db_reg_no').innerText = data.reg_no || '';
                 document.getElementById('db_introduction').innerText = data.introduction || '';
                 document.getElementById('db_description').innerText = data.description || '';
-
-                const introEl = document.getElementById('homeIntroduction');
-                const aboutEl = document.getElementById('homeAboutText');
-                if(introEl) introEl.innerText = data.introduction || '';
-                if(aboutEl) aboutEl.innerText = data.description || '';
+                document.getElementById('homeIntroduction').innerText = data.introduction || '';
+                document.getElementById('homeAboutText').innerText = data.description || '';
             }
         }
         fetchAboutData();
@@ -798,8 +757,7 @@
         async function fetchFounderCommittee() {
             const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
             const container = document.getElementById('founder_container');
-            if(container) {
-                if(!data || data.length === 0) { container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>'; return; }
+            if(container && data) {
                 container.innerHTML = '';
                 data.forEach(item => {
                     container.innerHTML += `
@@ -816,30 +774,23 @@
 
         async function fetchCentralCommittee() {
             const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
-            
             const container = document.getElementById('central_container');
             const homeContainer = document.getElementById('home_central_container');
-
-            if(!data || data.length === 0) {
-                if(container) container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
-                if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
-                return;
+            if(data) {
+                let htmlContent = '';
+                data.forEach(item => {
+                    htmlContent += `
+                        <div class="committee-card">
+                            <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
+                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
+                            <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
+                            <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                        </div>
+                    `;
+                });
+                if(container) container.innerHTML = htmlContent;
+                if(homeContainer) homeContainer.innerHTML = htmlContent;
             }
-
-            let htmlContent = '';
-            data.forEach(item => {
-                htmlContent += `
-                    <div class="committee-card">
-                        <img src="${item.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="committee-avatar">
-                        <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
-                        <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                        <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
-                    </div>
-                `;
-            });
-
-            if(container) container.innerHTML = htmlContent;
-            if(homeContainer) homeContainer.innerHTML = htmlContent;
         }
 
         fetchFounderCommittee();
@@ -886,7 +837,6 @@
             currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
             await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentGeneratedOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
-
             emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentGeneratedOtp, time: "१ मिनेट" })
                 .then(() => { document.getElementById('emailStatusInfo').innerText = '✔ इमेलमा कोड पठाइयो!'; });
 
@@ -907,91 +857,55 @@
             e.preventDefault();
             const email = document.getElementById('login_email').value.trim();
             const password = document.getElementById('login_password').value.trim();
-
             const { data } = await supabaseClient.from('users').select('*').eq('email', email).eq('password', password);
             if(!data || data.length === 0) { alert('गलत इमेल वा पासवर्ड!'); return; }
 
             currentUserProfile = data[0];
+            await fetchUserPositionAndRate();
             alert('लगइन सफल भयो!');
             loadDashboard();
         }
 
         let currentForgotOtp = '';
-
         function showForgotPasswordStep() {
             showSubSection('forgotPasswordStep');
             document.getElementById('forgotOtpSection').style.display = 'none';
-            document.getElementById('forgot_email').value = '';
-            document.getElementById('forgot_otp_code').value = '';
-            document.getElementById('new_password').value = '';
         }
 
         async function sendForgotPasswordOtp() {
             const email = document.getElementById('forgot_email').value.trim();
-            if(!email) { alert('कृपया इमेल ठेगाना लेख्नुहोस्!'); return; }
-
-            const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).single();
-            if(!data) { alert('यो इमेलबाट कुनै पनि खाता दर्ता गरिएको छैन!'); return; }
+            if(!email) { alert('कृपया इमेल लेख्नुहोस्!'); return; }
+            const { data } = await supabaseClient.from('users').select('*').eq('email', email).single();
+            if(!data) { alert('यो इमेल दर्ता छैन!'); return; }
 
             currentForgotOtp = Math.floor(100000 + Math.random() * 900000).toString();
-
             await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentForgotOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
-
             emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentForgotOtp, time: "१ मिनेट" })
-                .then(() => { 
-                    alert('✔ पासवर्ड रिसेट गर्ने कोड इमेलमा पठाइयो!');
-                    document.getElementById('forgotOtpSection').style.display = 'block';
-                }).catch(err => {
-                    alert('इमेल पठाउन असफल: JSON त्रुटि');
-                });
+                .then(() => { alert('✔ कोड पठाइयो!'); document.getElementById('forgotOtpSection').style.display = 'block'; });
         }
 
         async function verifyAndResetPassword() {
             const email = document.getElementById('forgot_email').value.trim();
             const enteredOtp = document.getElementById('forgot_otp_code').value.trim();
             const newPassword = document.getElementById('new_password').value.trim();
-
-            if(enteredOtp !== currentForgotOtp) {
-                alert('गलत OTP कोड!');
-                return;
-            }
-
-            if(!newPassword || newPassword.length < 4) {
-                alert('कृपया कम्तिमा ४ अंक/अक्षरको नयाँ पासवर्ड राख्नुहोस्!');
-                return;
-            }
-
-            const { error } = await supabaseClient.from('users').update({ password: newPassword }).eq('email', email);
-
-            if(error) {
-                alert('पासवर्ड अपडेट गर्न असफल: ' + error.message);
-            } else {
-                alert('✔ पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डमार्फत लगइन गर्नुहोस्।');
-                showSubSection('loginStep');
-            }
+            if(enteredOtp !== currentForgotOtp) { alert('गलत OTP!'); return; }
+            
+            await supabaseClient.from('users').update({ password: newPassword }).eq('email', email);
+            alert('✔ पासवर्ड परिवर्तन भयो!');
+            showSubSection('loginStep');
         }
 
         function toggleEditProfile() {
             const viewMode = document.getElementById('profileViewMode');
             const editMode = document.getElementById('profileEditMode');
             const editBtn = document.getElementById('btnEditToggle');
-
             if (editMode.style.display === 'none') {
-                editMode.style.display = 'block';
-                viewMode.style.display = 'none';
-                editBtn.innerText = '✕ बन्द गर्नुहोस्';
-
+                editMode.style.display = 'block'; viewMode.style.display = 'none'; editBtn.innerText = '✕ बन्द गर्नुहोस्';
                 document.getElementById('edit_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
                 document.getElementById('edit_phone').value = currentUserProfile.phone || '';
                 document.getElementById('edit_dob').value = currentUserProfile.dob || '';
-                document.getElementById('edit_password').value = '';
-                if(currentUserProfile.avatar) {
-                    document.getElementById('edit_avatar_preview').src = currentUserProfile.avatar;
-                }
             } else {
-                editMode.style.display = 'none';
-                viewMode.style.display = 'flex';
-                editBtn.innerText = '✏ प्रोफाइल एडिट गर्नुहोस्';
+                editMode.style.display = 'none'; viewMode.style.display = 'flex'; editBtn.innerText = '✏ प्रोफाइल एडिट गर्नुहोस्';
             }
         }
 
@@ -999,9 +913,7 @@
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('edit_avatar_preview').src = e.target.result;
-                }
+                reader.onload = (e) => { document.getElementById('edit_avatar_preview').src = e.target.result; }
                 reader.readAsDataURL(file);
             }
         }
@@ -1013,54 +925,22 @@
             const newPassword = document.getElementById('edit_password').value.trim();
             const avatarFile = document.getElementById('edit_avatar_file').files[0];
 
-            if (!newName) {
-                alert('कृपया पूरा नाम लेख्नुहोस्!');
-                return;
-            }
-
-            alert('प्रोफाइल अपडेट हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
-
             let avatarUrl = currentUserProfile.avatar;
-            if (avatarFile) {
-                avatarUrl = await uploadFileToSupabase(avatarFile, 'avatars');
-            }
+            if (avatarFile) { avatarUrl = await uploadFileToSupabase(avatarFile, 'avatars'); }
 
-            let updateData = {
-                full_name: newName,
-                name: newName,
-                phone: newPhone,
-                dob: newDob,
-                avatar: avatarUrl
-            };
+            let updateData = { full_name: newName, name: newName, phone: newPhone, dob: newDob, avatar: avatarUrl };
+            if (newPassword) updateData.password = newPassword;
 
-            if (newPassword) {
-                updateData.password = newPassword;
-            }
-
-            const { error } = await supabaseClient.from('users').update(updateData).eq('email', currentUserProfile.email);
-
-            if (error) {
-                alert('प्रोफाइल अपडेट गर्न असफल: ' + error.message);
-            } else {
-                alert('✔ प्रोफाइल सफलतापूर्वक अपडेट भयो!');
-                currentUserProfile.full_name = newName;
-                currentUserProfile.name = newName;
-                currentUserProfile.phone = newPhone;
-                currentUserProfile.dob = newDob;
-                currentUserProfile.avatar = avatarUrl;
-                if(newPassword) currentUserProfile.password = newPassword;
-
-                loadDashboard();
-                toggleEditProfile();
-            }
+            await supabaseClient.from('users').update(updateData).eq('email', currentUserProfile.email);
+            alert('✔ प्रोफाइल अपडेट भयो!');
+            currentUserProfile = { ...currentUserProfile, ...updateData };
+            loadDashboard();
+            toggleEditProfile();
         }
 
         async function loadDashboard() {
+            await fetchUserPositionAndRate();
             showSubSection('dashboardStep');
-            document.getElementById('profileEditMode').style.display = 'none';
-            document.getElementById('profileViewMode').style.display = 'flex';
-            document.getElementById('btnEditToggle').innerText = '✏ प्रोफाइल एडिट गर्नुहोस्';
-
             document.getElementById('userDashboardName').innerText = currentUserProfile.full_name || currentUserProfile.name;
             document.getElementById('lbl_name').innerText = currentUserProfile.full_name || currentUserProfile.name;
             document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
@@ -1069,137 +949,16 @@
             if(currentUserProfile.avatar) document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
 
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
-            const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-            
-            const alertBox = document.getElementById('applicationStatusAlert');
-            const noticeBanner = document.getElementById('formNoticeBanner');
-            const btnOpenForm = document.getElementById('btnOpenForm');
-            
-            if(data && data.length > 0) {
-                currentApplication = data[0];
-                let isExpired = userData && isMembershipExpired(userData.reg_date);
-                let isRemoved = currentApplication.status === 'Removed';
-                let isRejected = currentApplication.status === 'Rejected';
-                let isApprovedActive = currentApplication.status === 'Approved' && !isExpired;
-
-                if (isApprovedActive) {
-                    alertBox.innerHTML = "✅ तपाईंको सदस्यता स्वीकृत (Approved) छ र हाल चालु अवस्थामा छ।";
-                    alertBox.style.color = "#276749";
-
-                    btnOpenForm.innerHTML = "📝 सदस्यता विवरण हेर्नुहोस् (चालु)";
-                    btnOpenForm.style.background = "#718096";
-                    btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
-                } 
-                else if (isExpired || isRejected || isRemoved) {
-                    let reasonText = isExpired ? "⏳ तपाईंको परिचय पत्रको म्याद समाप्त भएको छ।" : (isRejected ? "❌ तपाईंको आवेदन एडमिनबाट अस्वीकृत (Rejected) भएको छ।" : "⚠️ तपाईंको सदस्यता हटाइएको (Removed) छ।");
-                    alertBox.innerHTML = reasonText + " कृपया नवीकरण फारम भरी पुनः पेस गर्नुहोस्।";
-                    alertBox.style.color = "#e53e3e";
-
-                    btnOpenForm.innerHTML = "🔄 सदस्यता नवीकरण फारम";
-                    btnOpenForm.style.background = "var(--accent-gradient)";
-                    btnOpenForm.setAttribute("onclick", "toggleForm('नवीकरण')");
-                } 
-                else {
-                    alertBox.innerHTML = "⏳ तपाईंको आवेदन समीक्षाको क्रममा (Pending) रहेको छ।";
-                    alertBox.style.color = "#d69e2e";
-
-                    noticeBanner.style.display = 'block';
-                    noticeBanner.style.backgroundColor = '#feebc8';
-                    noticeBanner.style.color = '#744210';
-                    noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर परिवर्तन गर्न मिल्दैन।";
-                    
-                    btnOpenForm.innerHTML = "📝 आवेदन विवरण हेर्नुहोस्";
-                    btnOpenForm.style.background = "#718096";
-                    btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
-                }
-            } else {
-                alertBox.innerHTML = "तपाईंले अझै सदस्यता फारम भर्नु भएको छैन।";
-                btnOpenForm.innerHTML = "📝 नयाँ सदस्यता फारम";
-                btnOpenForm.style.background = "var(--primary-gradient)";
-                btnOpenForm.setAttribute("onclick", "toggleForm('नयाँ सदस्यता')");
-            }
-        }
-
-        function lockFormFields() {
-            const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
-            inputs.forEach(input => input.disabled = true);
-            document.getElementById('btnGoToPayment').style.display = 'none';
-            document.getElementById('passportBoxClick').removeAttribute('onclick');
-            document.getElementById('photoUploadText').style.display = 'none';
+            if(data && data.length > 0) { currentApplication = data[0]; }
         }
 
         let currentFormType = 'नयाँ सदस्यता';
-        
         function toggleForm(type) {
             currentFormType = type;
-            const formBox = document.getElementById('officialFormBox');
-            const step3Box = document.getElementById('step3');
-
-            if (formBox.style.display === 'block' || step3Box.style.display === 'block') {
-                hideOfficialForm();
-                return;
-            }
-
-            step3Box.style.display = 'none';
-            formBox.style.display = 'block';
-            document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : (type === 'विवरण मात्र' ? 'सदस्यता विवरण' : 'सदस्यता नवीकरण गरिपाउँ');
-            
+            document.getElementById('officialFormBox').style.display = 'block';
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : 'सदस्यता नवीकरण गरिपाउँ';
             document.getElementById('formDateDisplay').innerText = "आवेदन मिति: " + getNepaliDate();
-
-            if (type === 'नवीकरण') {
-                document.getElementById('citFrontNotice').style.display = 'none';
-                document.getElementById('citFrontNoticeRenew').style.display = 'block';
-                document.getElementById('citBackNotice').style.display = 'none';
-                document.getElementById('citBackNoticeRenew').style.display = 'block';
-            } else {
-                document.getElementById('citFrontNotice').style.display = 'block';
-                document.getElementById('citFrontNoticeRenew').style.display = 'none';
-                document.getElementById('citBackNotice').style.display = 'block';
-                document.getElementById('citBackNoticeRenew').style.display = 'none';
-            }
-
-            if(currentApplication) {
-                document.getElementById('f_name').value = currentApplication.full_name || '';
-                document.getElementById('f_phone').value = currentApplication.phone || currentUserProfile.phone || '';
-                document.getElementById('f_dob').value = currentApplication.dob || currentUserProfile.dob || '';
-                document.getElementById('f_citizenship').value = currentApplication.citizenship_no || '';
-                document.getElementById('f_spouse').value = currentApplication.spouse_name || '';
-                document.getElementById('f_father').value = currentApplication.father_name || '';
-                document.getElementById('f_mother').value = currentApplication.mother_name || '';
-                document.getElementById('f_grandfather').value = currentApplication.grandfather_name || '';
-                document.getElementById('f_province').value = currentApplication.province || '';
-                
-                if(currentApplication.province) {
-                    loadDistricts();
-                    document.getElementById('f_district').value = currentApplication.district || '';
-                }
-                if(currentApplication.district) {
-                    loadMunicipalities();
-                    document.getElementById('f_municipality').value = currentApplication.municipality || '';
-                }
-
-                document.getElementById('f_ward').value = currentApplication.ward || '';
-                document.getElementById('f_tole').value = currentApplication.tole || '';
-                if(currentApplication.photo_url) {
-                    document.getElementById('form_photo_preview').src = currentApplication.photo_url;
-                    currentUserProfile.avatar = currentApplication.photo_url;
-                }
-
-                if (type === 'नवीकरण' || type === 'नयाँ सदस्यता') {
-                    const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
-                    inputs.forEach(input => input.disabled = false);
-                    document.getElementById('btnGoToPayment').style.display = 'block';
-                    document.getElementById('passportBoxClick').setAttribute('onclick', 'triggerPhotoUpload()');
-                    document.getElementById('photoUploadText').style.display = 'block';
-                } else if (type === 'विवरण मात्र') {
-                    lockFormFields();
-                }
-            } else {
-                document.getElementById('f_name').value = currentUserProfile.full_name || currentUserProfile.name || '';
-                document.getElementById('f_phone').value = currentUserProfile.phone || '';
-                document.getElementById('f_dob').value = currentUserProfile.dob || '';
-            }
-            formBox.scrollIntoView({ behavior: 'smooth' });
         }
 
         function hideOfficialForm() {
@@ -1207,9 +966,7 @@
             document.getElementById('step3').style.display = 'none';
         }
 
-        function triggerPhotoUpload() {
-            document.getElementById('form_passport_photo').click();
-        }
+        function triggerPhotoUpload() { document.getElementById('form_passport_photo').click(); }
 
         function previewFormPhoto(event) {
             const file = event.target.files[0];
@@ -1226,50 +983,27 @@
         function goToPaymentStep() {
             const name = document.getElementById('f_name').value.trim();
             const citizenship = document.getElementById('f_citizenship').value.trim();
-            if(!name || !citizenship) { alert('कृपया अनिवार्य विवरणहरू (नाम, नागरिकता) भर्नुहोस्!'); return; }
+            if(!name || !citizenship) { alert('कृपया अनिवार्य विवरण भर्नुहोस्!'); return; }
             document.getElementById('officialFormBox').style.display = 'none';
             document.getElementById('step3').style.display = 'block';
-            document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function uploadFileToSupabase(file, folderName) {
             if (!file) return '';
             const fileExt = file.name.split('.').pop();
             const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
-            const filePath = `${folderName}/${fileName}`;
-
-            const { data, error } = await supabaseClient.storage.from('documents').upload(filePath, file);
-            if (error) {
-                console.error('Upload Error:', error.message);
-                return '';
-            }
-
-            const { data: publicUrlData } = supabaseClient.storage.from('documents').getPublicUrl(filePath);
+            const { error } = await supabaseClient.storage.from('documents').upload(`${folderName}/${fileName}`, file);
+            if (error) return '';
+            const { data: publicUrlData } = supabaseClient.storage.from('documents').getPublicUrl(`${folderName}/${fileName}`);
             return publicUrlData ? publicUrlData.publicUrl : '';
         }
 
         async function finalSubmit() {
-            const citFrontFile = document.getElementById('citizenshipFront').files[0];
-            const citBackFile = document.getElementById('citizenshipBack').files[0];
             const paySlipFile = document.getElementById('paymentSlip').files[0];
-
-            if (currentFormType === 'नयाँ सदस्यता' && (!citFrontFile || !citBackFile)) {
-                alert('कृपया नयाँ सदस्यताको लागि नागरिकताको अगाडि र पछाडिको फोटो अनिवार्य अपलोड गर्नुहोस्!');
-                return;
-            }
-
-            if(!paySlipFile) {
-                alert('कृपया भुक्तानी भौचर/स्क्रीनसट अनिवार्य अपलोड गर्नुहोस्!');
-                return;
-            }
-
-            alert('फाइलहरू अपलोड हुँदैछन्, कृपया केही सेकेन्ड पर्खनुहोस्...');
+            if(!paySlipFile) { alert('कृपया भौचर अपलोड गर्नुहोस्!'); return; }
 
             let citFrontUrl = currentApplication ? currentApplication.citizenship_front : '';
             let citBackUrl = currentApplication ? currentApplication.citizenship_back : '';
-
-            if (citFrontFile) { citFrontUrl = await uploadFileToSupabase(citFrontFile, 'citizenship'); }
-            if (citBackFile) { citBackUrl = await uploadFileToSupabase(citBackFile, 'citizenship'); }
             const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
 
             const formData = {
@@ -1279,15 +1013,10 @@
                 phone: document.getElementById('f_phone').value.trim(),
                 dob: document.getElementById('f_dob').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
-                spouse_name: document.getElementById('f_spouse').value.trim(),
-                father_name: document.getElementById('f_father').value.trim(),
-                mother_name: document.getElementById('f_mother').value.trim(),
-                grandfather_name: document.getElementById('f_grandfather').value.trim(),
                 province: document.getElementById('f_province').value,
                 district: document.getElementById('f_district').value,
                 municipality: document.getElementById('f_municipality').value,
                 ward: document.getElementById('f_ward').value.trim(),
-                tole: document.getElementById('f_tole').value.trim(),
                 photo_url: currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
                 citizenship_front: citFrontUrl,
                 citizenship_back: citBackUrl,
@@ -1295,153 +1024,80 @@
                 status: 'Pending'
             };
 
-            const { error } = await supabaseClient.from('membership_applications').insert([formData]);
-            if(error) { alert('त्रुटि: ' + error.message); } 
-            else { 
-                alert('आवेदन सफलतापूर्वक सबमिट भयो!');
-                location.reload(); 
-            }
+            await supabaseClient.from('membership_applications').insert([formData]);
+            alert('आवेदन सफलतापूर्वक सबमिट भयो!');
+            location.reload();
         }
 
         async function openMyCard() {
-            if(!currentApplication) {
-                alert('तपाईंले हालसम्म कुनै पनि सदस्यता फारम पेस गर्नुभएको छैन।');
-                return;
-            }
-
-            if(currentApplication.status === 'Pending') {
-                alert('तपाईंको आवेदन समीक्षामा (Pending) रहेको छ। स्वीकृत भएपछि मात्र कार्ड हेर्न मिल्नेछ।');
-                return;
-            }
-
-            if(currentApplication.status === 'Rejected' || currentApplication.status === 'Removed') {
-                alert('तपाईंको आवेदन अस्वीकृत वा हटाइएको छ। कृपया नवीकरण/नयाँ फारम पेस गर्नुहोस्।');
-                return;
-            }
-
+            if(!currentApplication) { alert('फारम पेस भएको छैन।'); return; }
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
             
-            const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-            const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-
-            const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
-
             document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-            document.getElementById('cardIssueDate').innerText = regDate;
-            document.getElementById('cardExpiryDate').innerText = expiryDate;
-            document.getElementById('cardName').innerText = fullName;
-            document.getElementById('cardPosition').innerText = (userData && userData.position) ? userData.position : 'साधारण सदस्य';
+            document.getElementById('cardIssueDate').innerText = toNepaliNumber(userData?.reg_date || getNepaliDate());
+            document.getElementById('cardExpiryDate').innerText = getExpiryDate(userData?.reg_date);
+            document.getElementById('cardName').innerText = currentApplication.full_name;
+            document.getElementById('cardPosition').innerText = currentUserProfile.position;
             document.getElementById('cardProvince').innerText = currentApplication.province || '-';
             document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
             document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
             document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
-            
-            const photo = currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-            document.getElementById('cardPhoto').src = photo;
+            document.getElementById('cardPhoto').src = currentApplication.photo_url || currentUserProfile.avatar;
 
-            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-            document.getElementById('cardQrCode').src = qrApiUrl;
-
+            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(currentApplication.full_name)}`;
+            document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
             document.getElementById('idCardModal').style.display = 'flex';
         }
 
-        function closeMyCard() {
-            document.getElementById('idCardModal').style.display = 'none';
-        }
-
-        function resetMembershipFlow() {
-            showSubSection('mainChoiceStep');
-            document.getElementById('officialFormBox').style.display = 'none';
-            document.getElementById('step3').style.display = 'none';
-        }
+        function closeMyCard() { document.getElementById('idCardModal').style.display = 'none'; }
+        function resetMembershipFlow() { showSubSection('mainChoiceStep'); }
 
         async function loadPublicNotices() {
-            const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
-            
-            const containers = [
-                document.getElementById('publicNoticesContainer'),
-                document.getElementById('homeNoticesContainer')
-            ];
-
-            containers.forEach(container => {
-                if(!container) return;
-                if (error || !data || data.length === 0) {
-                    container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
-                    return;
-                }
-
-                container.innerHTML = '';
+            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            const container = document.getElementById('publicNoticesContainer');
+            const homeContainer = document.getElementById('homeNoticesContainer');
+            if(data && data.length > 0) {
+                let html = '';
                 data.forEach(item => {
-                    let fileContent = '';
-                    if (item.file_type === 'pdf' || (item.file_url && item.file_url.endsWith('.pdf'))) {
-                        fileContent = `
-                            <div style="margin-top: 15px; text-align: center;">
-                                <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
-                            </div>
-                        `;
-                    } else if (item.file_url) {
-                        fileContent = `
-                            <div style="margin-top: 15px; text-align: center;">
-                                <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;">
-                            </div>
-                        `;
-                    }
-
-                    container.innerHTML += `
-                        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
-                            <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                            <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
-                            ${fileContent}
-                        </div>
-                    `;
+                    html += `<div style="background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
+                        <div style="font-size: 12px; color: #718096; font-weight: bold;">📅 मिति: ${toNepaliNumber(item.date)}</div>
+                        <p style="font-size: 16px; font-weight: 600;">${item.title}</p>
+                    </div>`;
                 });
-            });
+                if(container) container.innerHTML = html;
+                if(homeContainer) homeContainer.innerHTML = html;
+            }
         }
 
-        // --- Complete Levy Portal Logic ---
+        // --- Levy Portal Script ---
         let selectedMonths = [];
-        const committeeRate = 500; // प्रति महिना लेवी दर
 
-        function openLevyModal() {
+        async function openLevyModal() {
+            await fetchUserPositionAndRate();
             document.getElementById('levyModal').style.display = 'flex';
-            // युजरको हालसम्म भुक्तान भइसकेको महिनाहरूको सूची (उदाहरणका लागि ['01', '02'])
+            document.getElementById('memberPositionLabel').innerText = currentUserProfile.position;
+            document.getElementById('monthlyRateLabel').innerText = committeeRate;
             renderMonths(['01', '02'], committeeRate); 
         }
 
-        function closeLevyModal() {
-            document.getElementById('levyModal').style.display = 'none';
-        }
+        function closeLevyModal() { document.getElementById('levyModal').style.display = 'none'; }
 
-        function checkIfLate(monthVal) {
-            // हालको महिनासँग तुलना गरी ढिलाइ (Late) भए नभएको छुट्याउने लजिक
-            let currentMonthNum = 5; // हाल भदौ (०५) महिना भएकोले
-            return parseInt(monthVal) < currentMonthNum; 
-        }
+        function checkIfLate(monthVal) { return parseInt(monthVal) < 5; }
 
-        function toggleMonth(monthVal, rate, isLate) {
+        function toggleMonth(monthVal, rate) {
             let index = selectedMonths.indexOf(monthVal);
-            if (index > -1) {
-                selectedMonths.splice(index, 1);
-            } else {
-                selectedMonths.push(monthVal);
-            }
+            if (index > -1) { selectedMonths.splice(index, 1); } 
+            else { selectedMonths.push(monthVal); }
             updateLevySummary(rate);
-            renderMonths(['01', '02'], rate); // रिफ्रेस गर्न
+            renderMonths(['01', '02'], rate);
         }
 
         function updateLevySummary(rate) {
             let count = selectedMonths.length;
             let baseTotal = count * rate;
             let fineTotal = 0;
-
-            selectedMonths.forEach(m => {
-                if (checkIfLate(m)) {
-                    fineTotal += (rate * 0.10); // १०% जरिवाना
-                }
-            });
-
+            selectedMonths.forEach(m => { if (checkIfLate(m)) { fineTotal += (rate * 0.10); } });
             let grandTotal = baseTotal + fineTotal;
 
             document.getElementById('selectedCount').innerText = count;
@@ -1453,7 +1109,6 @@
         function renderMonths(userHistory, rate) {
             const grid = document.getElementById('monthsGrid');
             grid.innerHTML = '';
-            
             const monthsList = [
                 {name: 'वैशाख', val: '01'}, {name: 'जेठ', val: '02'}, {name: 'असार', val: '03'},
                 {name: 'साउन', val: '04'}, {name: 'भदौ', val: '05'}, {name: 'असोज', val: '06'},
@@ -1465,15 +1120,13 @@
                 let isPaid = userHistory.includes(m.val);
                 let isLate = checkIfLate(m.val);
                 let isSelected = selectedMonths.includes(m.val);
-                
                 let boxClass = isPaid ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
-                let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate}, ${isLate})"`;
-                let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ (जरिवाना)' : 'बाँकी'));
-                
+                let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
+                let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट ✓' : (isLate ? 'जरिवाना' : 'बाँकी'));
+
                 grid.innerHTML += `
                     <div class="month-box ${boxClass}" ${clickAction}>
-                        <span>${m.name}</span><br>
-                        <small style="font-size:10px;">${statusText}</small>
+                        <span>${m.name}</span><br><small style="font-size:10px;">${statusText}</small>
                     </div>
                 `;
             });
@@ -1481,22 +1134,13 @@
         }
 
         function submitLevyPayment() {
-            const fileInput = document.getElementById('voucherFile');
-            if(selectedMonths.length === 0) {
-                alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!');
-                return;
-            }
-            if(fileInput.files.length === 0) {
-                alert('कृपया भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्!');
-                return;
-            }
+            if(selectedMonths.length === 0) { alert('कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); return; }
+            if(document.getElementById('voucherFile').files.length === 0) { alert('भौचर अपलोड गर्नुहोस्!'); return; }
             alert('लेवी भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
             closeLevyModal();
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadPublicNotices();
-        });
+        window.addEventListener('DOMContentLoaded', () => { loadPublicNotices(); });
     </script>
 </body>
 </html>
