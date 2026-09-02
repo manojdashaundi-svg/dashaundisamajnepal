@@ -576,6 +576,66 @@
                 </div>
             </div>
 
+            <!-- अनुदान तथा सहयोगबाट प्राप्त आम्दानी सेक्सन -->
+            <div class="section-header">
+                <h3>अनुदान तथा सहयोगबाट प्राप्त आम्दानी</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('grantIncomeContent', 'अनुदान तथा सहयोगबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('grantIncomeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            
+            <div id="grantIncomeContent" class="collapsible-content">
+                <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ सहयोग वा अनुदान थप्ने</h3>
+                    <form id="grantIncomeForm" onsubmit="saveGrantIncome(event)">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>सहयोगदाताको नाम:</label>
+                                <input type="text" id="grant_donor_name" placeholder="सहयोगदाताको नाम लेख्नुहोस्" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>सहयोगको शीर्षक:</label>
+                                <input type="text" id="grant_title" placeholder="जस्तै: भवन निर्माण सहयोग, राहत आदि" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>माध्यम (प्रकार):</label>
+                                <select id="grant_medium" required>
+                                    <option value="नगद (Cash)">नगद (Cash)</option>
+                                    <option value="बैंक ट्रान्सफर (Bank Transfer)">बैंक ट्रान्सफर (Bank Transfer)</option>
+                                    <option value="वालेट / इसेवा (Wallet/Esewa)">वालेट / इसेवा (Wallet/Esewa)</option>
+                                    <option value="जिन्सी (In-kind)">जिन्सी (In-kind)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>रकम (रु.):</label>
+                                <input type="number" id="grant_amount" placeholder="रकम हाल्नुहोस्" required>
+                            </div>
+                        </div>
+                        <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>सहयोगदाताको नाम</th>
+                                <th>सहयोगको शीर्षक</th>
+                                <th>माध्यम</th>
+                                <th>रकम (रु.)</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grantIncomeTableBody">
+                            <!-- JS मार्फत डाटा भरिनेछ -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="section-header">
                 <h3>नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी</h3>
                 <div class="button-group">
@@ -1323,6 +1383,7 @@
             loadAboutData();
             loadIncomeData();
             loadMonthlyLevyIncomeData();
+            loadGrantIncomeData();
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1416,6 +1477,74 @@
                 if(!error) {
                     alert('आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
                     loadIncomeData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        // अनुदान तथा सहयोग आम्दानी सेभ गर्ने फंक्सन (मिति स्वतः नेपालीमा बस्नेछ)
+        async function saveGrantIncome(event) {
+            event.preventDefault();
+
+            const grantData = {
+                date: getCurrentNepaliDate(), // स्वतः हालको नेपाली मिति लिन्छ
+                donor_name: document.getElementById('grant_donor_name').value.trim(),
+                grant_title: document.getElementById('grant_title').value.trim(),
+                medium: document.getElementById('grant_medium').value,
+                amount: parseFloat(document.getElementById('grant_amount').value) || 0
+            };
+
+            const { error } = await supabaseClient.from('grant_incomes').insert([grantData]);
+
+            if (!error) {
+                alert('अनुदान तथा सहयोग रकम सफलतापूर्वक सुरक्षित गरियो!');
+                document.getElementById('grantIncomeForm').reset();
+                loadGrantIncomeData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        // अनुदान तथ सहयोग आम्दानी लोड गर्ने फंक्सन
+        async function loadGrantIncomeData() {
+            const { data, error } = await supabaseClient
+                .from('grant_incomes')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            const tbody = document.getElementById('grantIncomeTableBody');
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">कुनै अनुदान तथा सहयोग आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.donor_name || '-'}</strong></td>
+                        <td>${item.grant_title || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteGrantIncomeRecord('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // अनुदान रेकर्ड मेटाउने फंक्सन
+        async function deleteGrantIncomeRecord(id) {
+            if (confirm('के तपाईं यो अनुदान आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('grant_incomes').delete().eq('id', id);
+                if (!error) {
+                    alert('अनुदान आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
+                    loadGrantIncomeData();
                 } else {
                     alert('त्रुटि: ' + error.message);
                 }
