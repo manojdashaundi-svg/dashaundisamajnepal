@@ -315,7 +315,6 @@
         .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
         .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
 
-        /* लेवी प्यानलको लागि थपिएको CSS शैलीहरू */
         .admin-panel { background: #fff; padding: 0; border-radius: 8px; margin-top: 20px; }
         .rate-setup-section, .approval-section, .reports-section { margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
         .rate-setup-section h3, .approval-section h3, .reports-section h3 { margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
@@ -1273,6 +1272,126 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
+        // कोषहरू र भौचर सेटिङ्सको डाटा संरचना (LocalStorage वा Backend Database को लागि)
+        let fundData = {
+            settings: {
+                voucherSystemEnabled: true // एडमिन प्यानलबाट बन्द वा खोल्न मिल्ने
+            },
+            funds: {
+                manab_bachau: { name: "मानव बचाउ अभियान कोष", balance: 0, totalIncome: 0, totalExpense: 0 },
+                aapatkaleen: { name: "आकस्मिक कोष", balance: 0, totalIncome: 0, totalExpense: 0 },
+                uddhar_rahat: { name: "उद्धार तथा राहत कोष", balance: 0, totalIncome: 0, totalExpense: 0 }
+            },
+            vouchers: [], // आम्दानी भौचरहरूको रेकर्ड
+            expenses: []  // खर्चहरूको रेकर्ड
+        };
+
+        // नयाँ आम्दानी तथा डिजिटल भौचर थप्ने फंक्सन
+        function addIncomeWithVoucher(fundKey, donorName, amount, remarks) {
+            if (!fundData.settings.voucherSystemEnabled) {
+                alert("हाल एडमिन प्यानलबाट भौचर सिस्टम बन्द गरिएको छ!");
+                return;
+            }
+
+            // अटोमेटिक भौचर नम्बर सिर्जना (जस्तै: VOU-2026-001)
+            let voucherNo = "VOU-" + new Date().getFullYear() + "-" + String(fundData.vouchers.length + 1).padStart(3, '0');
+            let date = new Date().toISOString().split('T')[0];
+
+            let voucher = {
+                voucherNo: voucherNo,
+                fundKey: fundKey,
+                fundName: fundData.funds[fundKey].name,
+                donorName: donorName,
+                amount: amount,
+                date: date,
+                remarks: remarks
+            };
+
+            // भौचर र कोषको ब्यालेन्स अपडेट गर्ने
+            fundData.vouchers.push(voucher);
+            fundData.funds[fundKey].balance += amount;
+            fundData.funds[fundKey].totalIncome += amount;
+
+            // डिजिटल भौचर प्रिन्ट वा पपअप गर्ने विन्डो देखाउने
+            generateDigitalVoucherHTML(voucher);
+        }
+
+        // डिजिटल भौचर प्रिन्ट/PDF गर्ने HTML टेम्पलेट
+        function generateDigitalVoucherHTML(v) {
+            let voucherWindow = window.open('', '_blank');
+            voucherWindow.document.write(`
+                <html>
+                <head>
+                    <title>आम्दानी भौचर - ${v.voucherNo}</title>
+                    <style>
+                        body { font-family: sans-serif; padding: 20px; }
+                        .voucher-box { border: 2px solid #333; padding: 20px; max-width: 600px; margin: auto; }
+                        .header { text-align: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+                        .details { margin: 20px 0; font-size: 16px; }
+                        .footer { margin-top: 40px; display: flex; justify-content: space-between; }
+                        @media print { .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="voucher-box">
+                        <div class="header">
+                            <h2>आधिकारिक आम्दानी भौचर (Digital Voucher)</h2>
+                            <p><b>भौचर नम्बर:</b> ${v.voucherNo}</p>
+                        </div>
+                        <div class="details">
+                            <p><b>मिति:</b> ${v.date}</p>
+                            <p><b>कोषको नाम:</b> ${v.fundName}</p>
+                            <p><b>दाता/सहयोगीको नाम:</b> ${v.donorName}</p>
+                            <p><b>رقم (Amount):</b> रू. ${v.amount.toLocaleString()}</p>
+                            <p><b>विवरण:</b> ${v.remarks}</p>
+                        </div>
+                        <div class="footer">
+                            <p>----------------<br>बुझाउनेको सही</p>
+                            <p>----------------<br>कार्यालयको सही</p>
+                        </div>
+                        <div style="text-align: center; margin-top: 20px;" class="no-print">
+                            <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">प्रिन्ट / PDF गर्नुहोस्</button>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+            voucherWindow.document.close();
+        }
+
+        // खर्च इन्ट्रि गर्ने फंक्सन
+        function addExpense(fundKey, expenseTitle, amount, billNo) {
+            if (fundData.funds[fundKey].balance < amount) {
+                alert("त्रुटि: यो कोषमा αρκεट मौज्दात (Balance) छैन!");
+                return;
+            }
+
+            let date = new Date().toISOString().split('T')[0];
+
+            let expense = {
+                date: date,
+                fundKey: fundKey,
+                fundName: fundData.funds[fundKey].name,
+                title: expenseTitle,
+                amount: amount,
+                billNo: billNo
+            };
+
+            // खर्च रेकर्ड थप्ने र सम्बन्धित कोषको ब्यालेन्स घटाउने
+            fundData.expenses.push(expense);
+            fundData.funds[fundKey].balance -= amount;
+            fundData.funds[fundKey].totalExpense += amount;
+
+            alert("खर्च सफलतापूर्वक सुरक्षित भयो र सम्बन्धित कोषबाट रकम घटाइयो!");
+        }
+
+        // एडमिनले भौचर सिस्टम अन/अफ गर्ने फंक्सन
+        function toggleVoucherSystem(status) {
+            fundData.settings.voucherSystemEnabled = status; // true वा false
+            let statusText = status ? "खुलेको छ" : "बन्द गरिएको छ";
+            alert(`सफलतापूर्वक! भौचर सिस्टम अब ${statusText} छ।`);
+        }
+
         function toNepaliNumber(input) {
             if (!input) return '';
             const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
@@ -1365,11 +1484,9 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
-            // प्रिन्ट गर्नका लागि सेक्सन खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
-            // फारम र बटनहरू प्रिन्टबाट लुकाउनको लागि 'no-print' क्लास थप्ने
             const adminPanelDiv = sectionContent.querySelector('.admin-panel');
             if (adminPanelDiv) {
                 adminPanelDiv.classList.add('no-print');
@@ -1398,7 +1515,6 @@
 
             window.print();
 
-            // प्रिन्ट बन्द भएपछि हेड हटाउने र फारमलाई फेरि देखाउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
             if (adminPanelDiv) {
@@ -1452,7 +1568,7 @@
             loadIncomeData();
             loadMonthlyLevyIncomeData();
             loadGrantIncomeData();
-            loadDailyExpenseData(); // दैनिक खर्च लोड गर्ने फंक्सन थपियो
+            loadDailyExpenseData();
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1616,7 +1732,6 @@
             }
         }
 
-        // दैनिक खर्च सेभ गर्ने फंक्सन
         async function saveDailyExpense(event) {
             event.preventDefault();
 
@@ -1640,7 +1755,6 @@
             }
         }
 
-        // दैनिक खर्च लोड गर्ने फंक्सन
         async function loadDailyExpenseData() {
             const { data, error } = await supabaseClient
                 .from('daily_expenses')
@@ -1673,7 +1787,6 @@
             });
         }
 
-        // दैनिक खर्च रेकर्ड मेटाउने फंक्सन
         async function deleteDailyExpenseRecord(id) {
             if (confirm('के तपाईं यो खर्चको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('daily_expenses').delete().eq('id', id);
