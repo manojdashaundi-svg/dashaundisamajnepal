@@ -573,6 +573,64 @@
                 </div>
             </div>
 
+             <!-- नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी सेक्सन -->
+            <div class="section-header">
+                <h3>नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('incomeContent', 'नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('incomeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="incomeContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>सदस्यको नाम</th>
+                                <th>शीर्षक (Category)</th>
+                                <th>विवरण / प्रकार</th>
+                                <th>रकम (रु.)</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incomeTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- मासिक लेवीबाट प्राप्त आम्दानी सेक्सन (थप गरिएको) -->
+            <div class="section-header">
+                <h3>मासिक लेवीबाट प्राप्त आम्दानी</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('monthlyLevyIncomeContent', 'मासिक लेवीबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('monthlyLevyIncomeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+
+            <div id="monthlyLevyIncomeContent" class="collapsible-content">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>पदाधिकारीको नाम</th>
+                                <th>कमिटी तह</th>
+                                <th>चुक्ता गरिएका महिनाहरू</th>
+                                <th>जम्मा रकम (रु.)</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyLevyIncomeTableBody">
+                            <!-- JS मार्फत डाटा भरिनेछ -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
             <div class="section-header">
                 <h3>सूचना तथा प्रेस विज्ञप्ति व्यवस्थापन</h3>
                 <div class="button-group"><button class="toggle-btn" onclick="toggleSection('noticesContent', this)">खोल्नुहोस् ▾</button></div>
