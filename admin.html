@@ -2751,6 +2751,11 @@
             alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
             location.reload();
         }
+      function updateFundUI() {
+        document.getElementById('bal-manab').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.manab_bachau.balance);
+        document.getElementById('bal-aapat').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.aapatkaleen.balance);
+        document.getElementById('bal-uddhar').innerText = "रु. " + toNepaliNumber(fundSystemState.funds.uddhar_rahat.balance);
+    }
     </script>
 </body>
 </html>
