@@ -2170,6 +2170,50 @@
             alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
             location.reload();
         }
+
+        async function loadMonthlyLevyIncomeData() {
+    const { data, error } = await supabaseClient
+        .from('levy_payments')
+        .select('*')
+        .eq('status', 'Approved')
+        .order('created_at', { ascending: false });
+
+    const tbody = document.getElementById('monthlyLevyIncomeTableBody');
+    tbody.innerHTML = '';
+
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7">कुनै मासिक लेवी आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
+        return;
+    }
+
+    data.forEach((item, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${item.member_name || '-'}</strong></td>
+                <td>${item.committee_level || '-'}</td>
+                <td>${item.paid_months || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
+                <td class="no-print">
+                    <button class="btn-action btn-danger" onclick="deleteMonthlyLevyRecord('${item.id}')">रिमुभ</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+async function deleteMonthlyLevyRecord(id) {
+    if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+        const { error } = await supabaseClient.from('levy_payments').delete().eq('id', id);
+        if(!error) {
+            alert('लेवी आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
+            loadMonthlyLevyIncomeData();
+        } else {
+            alert('त्रुटि: ' + error.message);
+        }
+    }
+}
     </script>
 </body>
 </html>
