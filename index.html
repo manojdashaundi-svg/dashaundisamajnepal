@@ -173,11 +173,12 @@
         .bg-green { background: #c6f6d5; color: #22543d; border-color: #9ae6b4; }
         .bg-red { background: #fed7d7; color: #742a2a; border-color: #feb2b2; }
         .bg-normal { background: #edf2f7; color: #2d3748; border-color: #cbd5e0; }
+        .bg-selected { background: #bee3f8 !important; color: #2b6cb0 !important; border-color: #3182ce !important; }
         .summary-box { background: #f7fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin: 15px 0; font-size: 14px; font-weight: 600; }
         .summary-box p { margin: 5px 0; }
         .fine-text { color: #e53e3e; }
 
-        <footer>text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600;</footer>
+        footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -426,8 +427,7 @@
                                 <span onclick="closeLevyModal()" class="close">&times;</span>
                                 <h4>महिना अनुसार लेवी छनोट गर्नुहोस्</h4>
                                 
-                                <div id="monthsGrid" class="months-grid">
-                                    </div>
+                                <div id="monthsGrid" class="months-grid"></div>
 
                                 <div class="summary-box">
                                     <p>चयन गरिएका महिनाहरू: <span id="selectedCount">0</span></p>
@@ -1400,11 +1400,14 @@
             });
         }
 
-        // Levy Modal JavaScript Functions
+        // --- Complete Levy Portal Logic ---
+        let selectedMonths = [];
+        const committeeRate = 500; // प्रति महिना लेवी दर
+
         function openLevyModal() {
             document.getElementById('levyModal').style.display = 'flex';
-            // Sample call to renderMonths with dummy data (can be replaced with user's actual database history and rate)
-            renderMonths(['01', '02'], 500); 
+            // युजरको हालसम्म भुक्तान भइसकेको महिनाहरूको सूची (उदाहरणका लागि ['01', '02'])
+            renderMonths(['01', '02'], committeeRate); 
         }
 
         function closeLevyModal() {
@@ -1412,27 +1415,42 @@
         }
 
         function checkIfLate(monthVal) {
-            // उदाहरणका लागि समय नाघेको जाँच्ने साधारण लजिक (तपाईंको आवश्यकता अनुसार बदल्न सकिन्छ)
-            return parseInt(monthVal) < 5; 
+            // हालको महिनासँग तुलना गरी ढिलाइ (Late) भए नभएको छुट्याउने लजिक
+            let currentMonthNum = 5; // हाल भदौ (०५) महिना भएकोले
+            return parseInt(monthVal) < currentMonthNum; 
         }
 
-        function toggleMonth(val, rate, isLate) {
-            // महिना छनोट र कुल रकम गणना गर्ने फंक्सनको आधार
-            alert(m.name + ' महिना छनोट गरियो।');
-        }
-
-        function submitLevyPayment() {
-            const fileInput = document.getElementById('voucherFile');
-            if(fileInput.files.length === 0) {
-                alert('कृपया भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्!');
-                return;
+        function toggleMonth(monthVal, rate, isLate) {
+            let index = selectedMonths.indexOf(monthVal);
+            if (index > -1) {
+                selectedMonths.splice(index, 1);
+            } else {
+                selectedMonths.push(monthVal);
             }
-            alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
-            closeLevyModal();
+            updateLevySummary(rate);
+            renderMonths(['01', '02'], rate); // रिफ्रेस गर्न
         }
 
-        // महिनाहरूको स्थिति र रङ जनरेट गर्ने फंक्सन (समय नाघेपछि रातो र १०% जरिवाना जोडिने)
-        function renderMonths(userHistory, committeeRate) {
+        function updateLevySummary(rate) {
+            let count = selectedMonths.length;
+            let baseTotal = count * rate;
+            let fineTotal = 0;
+
+            selectedMonths.forEach(m => {
+                if (checkIfLate(m)) {
+                    fineTotal += (rate * 0.10); // १०% जरिवाना
+                }
+            });
+
+            let grandTotal = baseTotal + fineTotal;
+
+            document.getElementById('selectedCount').innerText = count;
+            document.getElementById('baseTotal').innerText = baseTotal.toFixed(2);
+            document.getElementById('fineTotal').innerText = fineTotal.toFixed(2);
+            document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
+        }
+
+        function renderMonths(userHistory, rate) {
             const grid = document.getElementById('monthsGrid');
             grid.innerHTML = '';
             
@@ -1445,17 +1463,35 @@
 
             monthsList.forEach(m => {
                 let isPaid = userHistory.includes(m.val);
-                let isLate = checkIfLate(m.val); // १ दिन ढिला भए पनि जाँच्ने लजिक
+                let isLate = checkIfLate(m.val);
+                let isSelected = selectedMonths.includes(m.val);
                 
-                let boxClass = isPaid ? 'bg-green' : (isLate ? 'bg-red' : 'bg-normal');
+                let boxClass = isPaid ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
+                let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate}, ${isLate})"`;
+                let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ (जरिवाना)' : 'बाँकी'));
                 
                 grid.innerHTML += `
-                    <div class="month-box ${boxClass}" onclick="toggleMonth('${m.val}', ${committeeRate}, ${isLate})">
-                        <span>${m.name}</span>
-                        <small>${isPaid ? 'तिरिसकिएको' : (isLate ? 'ढिलाइ (जरिवाना)' : 'बाँकी')}</small>
+                    <div class="month-box ${boxClass}" ${clickAction}>
+                        <span>${m.name}</span><br>
+                        <small style="font-size:10px;">${statusText}</small>
                     </div>
                 `;
             });
+            updateLevySummary(rate);
+        }
+
+        function submitLevyPayment() {
+            const fileInput = document.getElementById('voucherFile');
+            if(selectedMonths.length === 0) {
+                alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!');
+                return;
+            }
+            if(fileInput.files.length === 0) {
+                alert('कृपया भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्!');
+                return;
+            }
+            alert('लेवी भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
+            closeLevyModal();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
