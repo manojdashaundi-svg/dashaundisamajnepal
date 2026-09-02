@@ -91,438 +91,6 @@
             gap: 8px;
         }
 
-        .toggle-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            width: auto;
-        }
-
-        .toggle-btn:hover {
-            background-color: #2b6cb0;
-        }
-
-        .print-btn {
-            background-color: var(--print-color);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            width: auto;
-        }
-
-        .print-btn:hover {
-            background-color: #004d00;
-        }
-
-        .collapsible-content {
-            display: none;
-            margin-top: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #2d3748;
-            font-size: 13px;
-        }
-
-        input[type="text"],
-        input[type="password"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-            background-color: #fff;
-        }
-
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="number"]:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
-        }
-
-        textarea {
-            height: 90px;
-            resize: vertical;
-        }
-
-        button[type="submit"] {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #006600;
-        }
-
-        .btn-action {
-            padding: 4px 6px;
-            font-size: 10px;
-            border-radius: 4px;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin: 1px;
-            font-weight: bold;
-        }
-        .btn-edit { background-color: var(--edit-color); }
-        .btn-edit:hover { background-color: #2b6cb0; }
-        .btn-danger { background-color: var(--danger-color); }
-        .btn-danger:hover { background-color: #c53030; }
-        .btn-success { background-color: #38a169; }
-        .btn-success:hover { background-color: #2f855a; }
-        .btn-view { background-color: #d69e2e; }
-        .btn-view:hover { background-color: #b7791f; }
-        .btn-idcard { background-color: #805ad5; }
-        .btn-idcard:hover { background-color: #6b46c1; }
-
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #e2e8f0;
-            padding: 12px 20px;
-            border-radius: 6px;
-            margin-bottom: 25px;
-        }
-
-        .welcome-text {
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 15px;
-        }
-
-        .logout-btn {
-            background: #4a5568;
-            color: white;
-            border: none;
-            width: auto;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .logout-btn:hover {
-            background: #2d3748;
-        }
-
-        #message {
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 15px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 6px 4px;
-            text-align: center;
-            font-size: 10px;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-
-        .table-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid #1a365d;
-        }
-
-        hr {
-            margin: 40px 0;
-            border: 0;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .img-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; }
-        .img-modal-content { max-width: 90%; max-height: 90%; position: relative; }
-        .img-modal-content img { width: 100%; height: auto; max-height: 85vh; border-radius: 8px; border: 3px solid #fff; }
-        .close-modal { position: absolute; top: -35px; right: 0; color: #fff; font-size: 28px; font-weight: bold; cursor: pointer; }
-
-        .idcard-modal { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.75); 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 4000; 
-            padding: 10px; 
-            overflow-y: auto; 
-        }
-
-        .app-edit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 3000; }
-        .app-edit-content { background: #fff; width: 500px; max-width: 90%; padding: 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
-
-        /* लेवी प्यानलको लागि थपिएको CSS शैलीहरू */
-        .admin-panel { background: #fff; padding: 0; border-radius: 8px; margin-top: 20px; }
-        .rate-setup-section, .approval-section, .reports-section { margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
-        .rate-setup-section h3, .approval-section h3, .reports-section h3 { margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-        #levyRateForm { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
-        .reports-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .list-box { background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); position: relative; }
-        .list-box-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; }
-        .list-box-header h3 { margin: 0; border-bottom: none; padding-bottom: 0; }
-        @media (max-width: 768px) { .reports-section { grid-template-columns: 1fr; } }
-
-        .print-header {
-            display: none;
-            text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-            padding-top: 10mm;
-        }
-        .print-logo {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 5px;
-            border: 2px solid #1a365d;
-        }
-        .print-title-1 { font-size: 22px; font-weight: 900; color: #1a365d; margin: 2px 0; }
-        .print-meta { font-size: 12px; font-weight: 600; color: #333; margin: 2px 0; }
-        .print-date { 
-            position: absolute; 
-            top: 10mm;
-            right: 20mm;
-            font-size: 11px; 
-            font-weight: bold; 
-            color: #000; 
-        }
-        .print-section-title { font-size: 16px; font-weight: 800; text-align: center; margin: 10px 0; color: #1a365d; text-decoration: underline; }
-
-        @media print {
-            body * { visibility: hidden !important; }
-            #idCardModal.active-card-modal, #idCardModal.active-card-modal * { visibility: visible !important; }
-            #idCardModal.active-card-modal { 
-                position: fixed !important; 
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 100% !important; 
-                height: 100vh !important; 
-                background: #fff !important; 
-                display: flex !important; 
-                align-items: center !important;
-                justify-content: center !important;
-                padding: 0 !important; 
-                margin: 0 !important;
-                z-index: 9999 !important;
-                transform: scale(0.85);
-                transform-origin: center;
-            }
-            .printable-section, .printable-section * { visibility: visible !important; }
-            .printable-section { 
-                position: absolute !important; 
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 100% !important; 
-                height: auto !important;
-                max-height: 100vh !important;
-                overflow: hidden !important;
-                background: #fff !important;
-                display: block !important; 
-                page-break-inside: avoid !important;
-                page-break-after: avoid !important;
-            }
-
-            @page {
-                size: A4 landscape;
-                margin: 5mm;
-            }
-
-            .printable-section table {
-                width: 100% !important;
-                max-width: 100% !important;
-                table-layout: auto !important;
-                border-collapse: collapse !important;
-                font-size: 11px !important;
-            }
-
-            .printable-section .table-responsive {
-                width: 100% !important;
-                overflow: visible !important;
-            }
-
-            .printable-section th, 
-            .printable-section td {
-                border: 1.5px solid #000000 !important;
-                padding: 6px 8px !important;
-                word-wrap: break-word !important;
-                white-space: normal !important;
-                font-size: 11px !important;
-            }
-            .printable-section th {
-                background-color: #1a365d !important;
-                color: #ffffff !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            .printable-section .table-avatar {
-                width: 35px !important;
-                height: 35px !important;
-                border-radius: 50% !important;
-                object-fit: cover !important;
-            }
-
-            .printable-section .btn-action, .printable-section .print-btn {
-                display: none !important;
-            }
-
-            .no-print, .top-header, .section-header, .no-print-card, .idcard-close-btn { display: none !important; }
-            .print-header { display: block !important; width: 100% !important; text-align: center !important; }
-
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-        }
-
-        :root {
-            --primary-color: #1a365d;
-            --accent-color: #008000;
-            --danger-color: #e53e3e;
-            --edit-color: #3182ce;
-            --print-color: #006400;
-            --bg-color: #edf2f7;
-            --card-bg: #ffffff;
-            --text-color: #1a202c;
-            --border-color: #cbd5e0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .admin-container {
-            max-width: 1400px;
-            background: var(--card-bg);
-            padding: 30px;
-            margin: 20px auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-logo-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .login-logo {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .main-header-box {
-            background: linear-gradient(135deg, #1a365d, #2b6cb0);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 10px rgba(26, 54, 93, 0.2);
-        }
-
-        .main-header-box h2 {
-            margin: 0;
-            font-size: 28px;
-            letter-spacing: 0.5px;
-            color: white;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f7fafc;
-            padding: 10px 15px;
-            border-left: 5px solid var(--accent-color);
-            border-radius: 0 6px 6px 0;
-            margin-top: 35px;
-            margin-bottom: 15px;
-        }
-
-        .section-header h3 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 20px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 8px;
-        }
-
         .toggle-btn, .print-btn {
             background-color: var(--primary-color);
             color: white;
@@ -563,6 +131,17 @@
             font-size: 14px;
             box-sizing: border-box;
             background-color: #fff;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+        }
+
+        textarea {
+            height: 90px;
+            resize: vertical;
         }
 
         button[type="submit"] {
@@ -699,7 +278,6 @@
             background: #fff; width: 600px; max-width: 100%; padding: 30px; border-radius: 12px; border: 3px solid #1a365d; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative;
         }
 
-        /* प्रिन्ट सेटिङ: फर्म र इनपुटबक्सहरू पूर्ण लुकाउने */
         @media print {
             body * { visibility: hidden !important; }
             
@@ -773,7 +351,6 @@
 
             <div id="levyContent" class="collapsible-content" style="display: block;">
               <div class="admin-panel">
-                <!-- तह अनुसार लेवी दर निर्धारण गर्ने सेक्सन -->
                 <div class="rate-setup-section">
                   <h3>विभिन्न ६ तहका कमिटीहरूको लेवी दर तोक्नुहोस्</h3>
                   <form id="levyRateForm" onsubmit="saveLevyRates(event)">
@@ -787,7 +364,6 @@
                   </form>
                 </div>
 
-                <!-- अनुमोदन (Approval) सेक्सन -->
                 <div class="approval-section">
                   <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
                   <table id="pendingTable">
@@ -801,13 +377,10 @@
                         <th>कार्य</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <!-- JS मार्फत डाटा भरिनेछ -->
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
 
-                <!-- लेवी तिरेका र नतिरेकाहरूको छुट्टाछुट्टै लिस्ट -->
                 <div class="reports-section">
                   <div class="list-box" id="paidBoxContainer">
                     <div class="list-box-header">
@@ -834,6 +407,99 @@
               </div>
             </div>
 
+            <!-- १) मानव बचाउ अभियान कोष सेक्सन -->
+            <div class="section-header">
+                <h3>मानव बचाउ अभियान कोष</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('humanFundContent', 'मानव बचाउ अभियान कोष विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('humanFundContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="humanFundContent" class="collapsible-content">
+                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">मानव बचाउ अभियान कोषमा दाता/सहयोग थप्ने</h4>
+                    <form id="humanFundForm" onsubmit="saveFundIncome(event, 'human_fund', 'मानव बचाउ अभियान कोष')">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="human_donor" required></div>
+                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="human_title" value="मानव बचाउ अभियान सहयोग" required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="human_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="human_amount" required></div>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="humanFundTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- २) आपत्कालीन कोष सेक्सन -->
+            <div class="section-header">
+                <h3>आपत्कालीन कोष</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('emergencyFundContent', 'आपत्कालीन कोष विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('emergencyFundContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="emergencyFundContent" class="collapsible-content">
+                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">आपत्कालीन कोषमा दाता/सहयोग थप्ने</h4>
+                    <form id="emergencyFundForm" onsubmit="saveFundIncome(event, 'emergency_fund', 'आपत्कालीन कोष')">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="emergency_donor" required></div>
+                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="emergency_title" value="आपत्कालीन कोष सहयोग" required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="emergency_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="emergency_amount" required></div>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="emergencyFundTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ३) उद्धार तथा राहत कोष सेक्सन -->
+            <div class="section-header">
+                <h3>उद्धार तथा राहत कोष</h3>
+                <div class="button-group">
+                    <button class="print-btn" onclick="printSection('reliefFundContent', 'उद्धार तथा राहत कोष विवरण')">प्रिन्ट / PDF</button>
+                    <button class="toggle-btn" onclick="toggleSection('reliefFundContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
+            <div id="reliefFundContent" class="collapsible-content">
+                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color);">उद्धार तथा राहत कोषमा दाता/सहयोग थप्ने</h4>
+                    <form id="reliefFundForm" onsubmit="saveFundIncome(event, 'relief_fund', 'उद्धार तथा राहत कोष')">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="relief_donor" required></div>
+                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="relief_title" value="उद्धार तथा राहत सहयोग" required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="relief_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
+                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="relief_amount" required></div>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="reliefFundTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- मासिक लेवीबाट प्राप्त आम्दानी सेक्सन -->
             <div class="section-header">
                 <h3>मासिक लेवीबाट प्राप्त आम्दानी</h3>
@@ -857,9 +523,7 @@
                                 <th class="no-print">कारवाही</th>
                             </tr>
                         </thead>
-                        <tbody id="monthlyLevyIncomeTableBody">
-                            <!-- JS मार्फत डाटा भरिनेछ -->
-                        </tbody>
+                        <tbody id="monthlyLevyIncomeTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -917,16 +581,14 @@
                                 <th class="no-print">कारवाही</th>
                             </tr>
                         </thead>
-                        <tbody id="grantIncomeTableBody">
-                            <!-- JS मार्फत डाटा भरिनेछ -->
-                        </tbody>
+                        <tbody id="grantIncomeTableBody"></tbody>
                     </table>
                 </div>
             </div>
 
             <!-- दैनिक खर्चको विवरण सेक्सन -->
             <div class="section-header">
-                <h3>दैनिक खर्चको विवरण</h3>
+                <h3>दैनिक खर्चको विवरण (कोष कटौतीसहित)</h3>
                 <div class="button-group">
                     <button class="print-btn" onclick="printSection('dailyExpenseContent', 'दैनिक खर्चको विवरण')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('dailyExpenseContent', this)">खोल्नुहोस् ▾</button>
@@ -934,55 +596,33 @@
             </div>
             <div id="dailyExpenseContent" class="collapsible-content">
                 <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
-                    <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ खर्च प्रविष्टि गर्ने</h3>
+                    <h4 style="margin-top: 0; color: var(--primary-color);">नयाँ खर्च प्रविष्टि गर्ने (कुनै कोष वा साधारण आम्दानीबाट)</h4>
                     <form id="dailyExpenseForm" onsubmit="saveDailyExpense(event)">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>खर्चको विवरण:</label>
-                                <input type="text" id="exp_details" placeholder="खर्चको शीर्षक वा कारण लेख्नुहोस्" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>रसिद नं.:</label>
-                                <input type="text" id="exp_receipt_no" placeholder="रसिद वा बिल नम्बर" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>माध्यम (प्रकार):</label>
-                                <select id="exp_medium" required>
-                                    <option value="नगद (Cash)">नगद (Cash)</option>
-                                    <option value="बैंक ट्रान्सफर (Bank Transfer)">बैंक ट्रान्सफर (Bank Transfer)</option>
-                                    <option value="वालेट / इसेवा (Wallet/Esewa)">वालेट / इसेवा (Wallet/Esewa)</option>
+                            <div class="form-group">
+                                <label>कुन कोष वा आम्दानीबाट खर्च गर्ने?:</label>
+                                <select id="exp_source_fund" required>
+                                    <option value="साधारण आम्दानी / सामान्य कोष">साधारण आम्दानी / सामान्य कोष</option>
+                                    <option value="मानव बचाउ अभियान कोष">मानव बचाउ अभियान कोष</option>
+                                    <option value="आपत्कालीन कोष">आपत्कालीन कोष</option>
+                                    <option value="उद्धार तथा राहत कोष">उद्धार तथा राहत कोष</option>
                                 </select>
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>रकम (रु.):</label>
-                                <input type="number" id="exp_amount" placeholder="खर्च भएको रकम" required>
+                            <div class="form-group"><label>खर्चको विवरण:</label><input type="text" id="exp_details" placeholder="शीर्षक वा कारण" required></div>
+                            <div class="form-group"><label>रसिद नं.:</label><input type="text" id="exp_receipt_no" placeholder="बिल नं." required></div>
+                            <div class="form-group"><label>माध्यम:</label>
+                                <select id="exp_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="वालेट / इसेवा">वालेट / इसेवा</option></select>
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>संस्थाको नाम (भुक्तानी गर्ने/लिएको):</label>
-                                <input type="text" id="exp_org_name" placeholder="संस्था वा पसलको नाम" required>
-                            </div>
+                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="exp_amount" required></div>
+                            <div class="form-group"><label>संस्था/पसलको नाम:</label><input type="text" id="exp_org_name" required></div>
                         </div>
                         <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">खर्च सुरक्षित गर्नुहोस्</button>
                     </form>
                 </div>
-
                 <div class="table-responsive">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>क्र.सं.</th>
-                                <th>मिति</th>
-                                <th>खर्चको विवरण</th>
-                                <th>रसिद नं.</th>
-                                <th>माध्यम</th>
-                                <th>रकम (रु.)</th>
-                                <th>संस्थाको नाम</th>
-                                <th class="no-print">कारवाही</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dailyExpenseTableBody">
-                            <!-- JS मार्फत डाटा भरिनेछ -->
-                        </tbody>
+                        <thead><tr><th>क्र.सं.</th><th>मिति</th><th>खर्च गरिएको कोष/स्रोत</th><th>खर्चको विवरण</th><th>रसिद नं.</th><th>माध्यम</th><th>रकम (रु.)</th><th>संस्थाको नाम</th><th class="no-print">कारवाही</th></tr></thead>
+                        <tbody id="dailyExpenseTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -1555,173 +1195,6 @@
         </div>
     </div>
 
-     <div class="admin-container">
-        <div class="login-logo-container">
-            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
-        </div>
-
-        <div class="main-header-box">
-            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
-        </div>
-
-        <div id="loginSection">
-            <h3 style="text-align: center; border-left: none; padding-left: 0;">प्रशासन लगइन</h3>
-            <form id="loginForm" style="max-width: 400px; margin: 0 auto;">
-                <div class="form-group">
-                    <label>युजरनेम (Username):</label>
-                    <input type="text" id="username" placeholder="युजरनेम हाल्नुहोस्" required>
-                </div>
-                <div class="form-group">
-                    <label>पासवर्ड (Password):</label>
-                    <input type="password" id="password" placeholder="पासवर्ड हाल्नुहोस्" required>
-                </div>
-                <button type="submit">लगइन गर्नुहोस्</button>
-            </form>
-        </div>
-
-        <div id="dashboardSection" class="hidden">
-            <div class="top-header">
-                <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
-                <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
-            </div>
-
-            <!-- १) मानव बचाउ अभियान कोष सेक्सन -->
-            <div class="section-header">
-                <h3>मानव बचाउ अभियान कोष</h3>
-                <div class="button-group">
-                    <button class="print-btn" onclick="printSection('humanFundContent', 'मानव बचाउ अभियान कोष विवरण')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('humanFundContent', this)">खोल्नुहोस् ▾</button>
-                </div>
-            </div>
-            <div id="humanFundContent" class="collapsible-content">
-                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
-                    <h4 style="margin-top: 0; color: var(--primary-color);">मानव बचाउ अभियान कोषमा दाता/सहयोग थप्ने</h4>
-                    <form id="humanFundForm" onsubmit="saveFundIncome(event, 'human_fund', 'मानव बचाउ अभियान कोष')">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="human_donor" required></div>
-                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="human_title" value="मानव बचाउ अभियान सहयोग" required></div>
-                            <div class="form-group"><label>माध्यम:</label>
-                                <select id="human_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
-                            </div>
-                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="human_amount" required></div>
-                        </div>
-                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
-                    </form>
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
-                        <tbody id="humanFundTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- २) आपत्कालीन कोष सेक्सन -->
-            <div class="section-header">
-                <h3>आपत्कालीन कोष</h3>
-                <div class="button-group">
-                    <button class="print-btn" onclick="printSection('emergencyFundContent', 'आपत्कालीन कोष विवरण')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('emergencyFundContent', this)">खोल्नुहोस् ▾</button>
-                </div>
-            </div>
-            <div id="emergencyFundContent" class="collapsible-content">
-                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
-                    <h4 style="margin-top: 0; color: var(--primary-color);">आपत्कालीन कोषमा दाता/सहयोग थप्ने</h4>
-                    <form id="emergencyFundForm" onsubmit="saveFundIncome(event, 'emergency_fund', 'आपत्कालीन कोष')">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="emergency_donor" required></div>
-                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="emergency_title" value="आपत्कालीन कोष सहयोग" required></div>
-                            <div class="form-group"><label>माध्यम:</label>
-                                <select id="emergency_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
-                            </div>
-                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="emergency_amount" required></div>
-                        </div>
-                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
-                    </form>
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
-                        <tbody id="emergencyFundTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- ३) उद्धार तथा राहत कोष सेक्सन -->
-            <div class="section-header">
-                <h3>उद्धार तथा राहत कोष</h3>
-                <div class="button-group">
-                    <button class="print-btn" onclick="printSection('reliefFundContent', 'उद्धार तथा राहत कोष विवरण')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('reliefFundContent', this)">खोल्नुहोस् ▾</button>
-                </div>
-            </div>
-            <div id="reliefFundContent" class="collapsible-content">
-                <div class="admin-panel" style="padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 15px;">
-                    <h4 style="margin-top: 0; color: var(--primary-color);">उद्धार तथा राहत कोषमा दाता/सहयोग थप्ने</h4>
-                    <form id="reliefFundForm" onsubmit="saveFundIncome(event, 'relief_fund', 'उद्धार तथा राहत कोष')">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group"><label>दाताको नाम:</label><input type="text" id="relief_donor" required></div>
-                            <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="relief_title" value="उद्धार तथा राहत सहयोग" required></div>
-                            <div class="form-group"><label>माध्यम:</label>
-                                <select id="relief_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="इसेवा/वालेट">इसेवा/वालेट</option></select>
-                            </div>
-                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="relief_amount" required></div>
-                        </div>
-                        <button type="submit" style="width: auto; padding: 8px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
-                    </form>
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>क्र.सं.</th><th>भौचर नं.</th><th>मिति</th><th>दाताको नाम</th><th>शीर्षक</th><th>माध्यम</th><th>रकम (रु.)</th><th class="no-print">कारवाही</th></tr></thead>
-                        <tbody id="reliefFundTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- दैनिक खर्चको विवरण सेक्सन -->
-            <div class="section-header">
-                <h3>दैनिक खर्चको विवरण (कोष कटौतीसहित)</h3>
-                <div class="button-group">
-                    <button class="print-btn" onclick="printSection('dailyExpenseContent', 'दैनिक खर्चको विवरण')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('dailyExpenseContent', this)">खोल्नुहोस् ▾</button>
-                </div>
-            </div>
-            <div id="dailyExpenseContent" class="collapsible-content">
-                <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
-                    <h4 style="margin-top: 0; color: var(--primary-color);">नयाँ खर्च प्रविष्टि गर्ने (कुनै कोष वा साधारण आम्दानीबाट)</h4>
-                    <form id="dailyExpenseForm" onsubmit="saveDailyExpense(event)">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group">
-                                <label>कुन कोष वा आम्दानीबाट खर्च गर्ने?:</label>
-                                <select id="exp_source_fund" required>
-                                    <option value="साधारण आम्दानी / सामान्य कोष">साधारण आम्दानी / सामान्य कोष</option>
-                                    <option value="मानव बचाउ अभियान कोष">मानव बचाउ अभियान कोष</option>
-                                    <option value="आपत्कालीन कोष">आपत्कालीन कोष</option>
-                                    <option value="उद्धार तथा राहत कोष">उद्धार तथा राहत कोष</option>
-                                </select>
-                            </div>
-                            <div class="form-group"><label>खर्चको विवरण:</label><input type="text" id="exp_details" placeholder="शीर्षक वा कारण" required></div>
-                            <div class="form-group"><label>रसिद नं.:</label><input type="text" id="exp_receipt_no" placeholder="बिल नं." required></div>
-                            <div class="form-group"><label>माध्यम:</label>
-                                <select id="exp_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="वालेट / इसेवा">वालेट / इसेवा</option></select>
-                            </div>
-                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="exp_amount" required></div>
-                            <div class="form-group"><label>संस्था/पसलको नाम:</label><input type="text" id="exp_org_name" required></div>
-                        </div>
-                        <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">खर्च सुरक्षित गर्नुहोस्</button>
-                    </form>
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>क्र.सं.</th><th>मिति</th><th>खर्च गरिएको कोष/स्रोत</th><th>खर्चको विवरण</th><th>रसिद नं.</th><th>माध्यम</th><th>रकम (रु.)</th><th>संस्थाको नाम</th><th class="no-print">कारवाही</th></tr></thead>
-                        <tbody id="dailyExpenseTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
     <!-- डिजिटल भौचर हेर्ने मोडल -->
     <div id="voucherModal" class="voucher-modal" onclick="if(event.target === this) closeVoucherModal()">
         <div class="voucher-box" id="printableVoucherBox">
@@ -1758,6 +1231,7 @@
             </div>
         </div>
     </div>
+
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
@@ -1858,11 +1332,9 @@
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
-            // प्रिन्ट गर्नका लागि सेक्सन खोल्ने
             sectionContent.style.display = 'block';
             sectionContent.classList.add('printable-section');
 
-            // फारम र बटनहरू प्रिन्टबाट लुकाउनको लागि 'no-print' क्लास थप्ने
             const adminPanelDiv = sectionContent.querySelector('.admin-panel');
             if (adminPanelDiv) {
                 adminPanelDiv.classList.add('no-print');
@@ -1891,7 +1363,6 @@
 
             window.print();
 
-            // प्रिन्ट बन्द भएपछि हेड हटाउने र फारमलाई फेरि देखाउने
             headerDiv.remove();
             sectionContent.classList.remove('printable-section');
             if (adminPanelDiv) {
@@ -1924,8 +1395,7 @@
                 localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
                 showDashboard();
             } else {
-                messageDiv.style.color = 'red';
-                messageDiv.innerText = 'गलत युजरनेम वा पासवर्ड!';
+                alert('गलत युजरनेम वा पासवर्ड!');
             }
         });
 
@@ -1945,7 +1415,10 @@
             loadIncomeData();
             loadMonthlyLevyIncomeData();
             loadGrantIncomeData();
-            loadDailyExpenseData(); // दैनिक खर्च लोड गर्ने फंक्सन थपियो
+            loadFundData('human_fund', 'humanFundTableBody');
+            loadFundData('emergency_fund', 'emergencyFundTableBody');
+            loadFundData('relief_fund', 'reliefFundTableBody');
+            loadDailyExpenseData();
             loadCommitteeData();
             loadCentralCommitteeData();
             loadAdvisorCommitteeData();
@@ -1989,7 +1462,7 @@
         }
 
         async function loadMonthlyLevyIncomeData() {
-            const { data, error } = await supabaseClient
+            const { data } = await supabaseClient
                 .from('levy_payments')
                 .select('*')
                 .eq('status', 'Approved')
@@ -2067,7 +1540,7 @@
         }
 
         async function loadGrantIncomeData() {
-            const { data, error } = await supabaseClient
+            const { data } = await supabaseClient
                 .from('grant_incomes')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -2109,12 +1582,92 @@
             }
         }
 
-        // दैनिक खर्च सेभ गर्ने फंक्सन
-        async function saveDailyExpense(event) {
-            event.preventDefault();
+        async function saveFundIncome(e, tableName, fundTitle) {
+            e.preventDefault();
+            const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
+            const voucherNo = 'VOU-' + Math.floor(1000 + Math.random() * 9000);
+            
+            const incomeData = {
+                voucher_no: voucherNo,
+                date: getCurrentNepaliDate(),
+                donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
+                title: document.getElementById(`${prefix}_title`).value.trim(),
+                medium: document.getElementById(`${prefix}_medium`).value,
+                amount: parseFloat(document.getElementById(`${prefix}_amount`).value) || 0,
+                fund_category: fundTitle
+            };
 
+            const { error } = await supabaseClient.from(tableName).insert([incomeData]);
+            if (!error) {
+                alert(`${fundTitle}मा सफलतासाथ रकम थपियो र भौचर जारी भयो!`);
+                document.getElementById(`${prefix}FundForm`).reset();
+                loadFundData(tableName, `${prefix}FundTableBody`);
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function loadFundData(tableName, tbodyId) {
+            const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8">कुनै रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+            data.forEach((item, index) => {
+                const itemStr = encodeURIComponent(JSON.stringify(item));
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.donor_name || '-'}</strong></td>
+                        <td>${item.title || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')">भौचर</button>
+                            <button class="btn-action btn-danger" onclick="deleteFundRecord('${tableName}', '${item.id}', '${tbodyId}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteFundRecord(tableName, id, tbodyId) {
+            if(confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from(tableName).delete().eq('id', id);
+                loadFundData(tableName, tbodyId);
+            }
+        }
+
+        function openVoucherModal(itemStr) {
+            const item = JSON.parse(decodeURIComponent(itemStr));
+            document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
+            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
+            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
+            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
+            document.getElementById('vouchTitle').innerText = item.title || '-';
+            document.getElementById('vouchMedium').innerText = item.medium || '-';
+            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
+
+            const modal = document.getElementById('voucherModal');
+            modal.classList.add('active-voucher');
+            modal.style.display = 'flex';
+        }
+
+        function closeVoucherModal() {
+            const modal = document.getElementById('voucherModal');
+            modal.classList.remove('active-voucher');
+            modal.style.display = 'none';
+        }
+
+        async function saveDailyExpense(e) {
+            e.preventDefault();
             const expenseData = {
                 date: getCurrentNepaliDate(),
+                source_fund: document.getElementById('exp_source_fund').value,
                 expense_details: document.getElementById('exp_details').value.trim(),
                 receipt_no: document.getElementById('exp_receipt_no').value.trim(),
                 medium: document.getElementById('exp_medium').value,
@@ -2123,9 +1676,8 @@
             };
 
             const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
-
             if (!error) {
-                alert('दैनिक खर्च विवरण सफलतापूर्वक सुरक्षित गरियो!');
+                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान गरियो!');
                 document.getElementById('dailyExpenseForm').reset();
                 loadDailyExpenseData();
             } else {
@@ -2133,49 +1685,37 @@
             }
         }
 
-        // दैनिक खर्च लोड गर्ने फंक्सन
         async function loadDailyExpenseData() {
-            const { data, error } = await supabaseClient
-                .from('daily_expenses')
-                .select('*')
-                .order('created_at', { ascending: false });
-
+            const { data } = await supabaseClient.from('daily_expenses').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('dailyExpenseTableBody');
             tbody.innerHTML = '';
-
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8">कुनै दैनिक खर्च रेकर्ड उपलब्ध छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9">कुनै दैनिक खर्च रेकर्ड छैन</td></tr>';
                 return;
             }
-
             data.forEach((item, index) => {
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
                         <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><span style="background: #ebf8ff; color: #2b6cb0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${item.source_fund || 'साधारण आम्दानी'}</span></td>
                         <td><strong>${item.expense_details || '-'}</strong></td>
                         <td>${item.receipt_no || '-'}</td>
                         <td>${item.medium || '-'}</td>
                         <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
                         <td>${item.organization_name || '-'}</td>
                         <td class="no-print">
-                            <button class="btn-action btn-danger" onclick="deleteDailyExpenseRecord('${item.id}')">रिमुभ</button>
+                            <button class="btn-action btn-danger" onclick="deleteExpense('${item.id}')">रिमुभ</button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        // दैनिक खर्च रेकर्ड मेटाउने फंक्सन
-        async function deleteDailyExpenseRecord(id) {
-            if (confirm('के तपाईं यो खर्चको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-                const { error } = await supabaseClient.from('daily_expenses').delete().eq('id', id);
-                if (!error) {
-                    alert('खर्चको रेकर्ड सफलतापूर्वक हटाइयो!');
-                    loadDailyExpenseData();
-                } else {
-                    alert('त्रुटि: ' + error.message);
-                }
+        async function deleteExpense(id) {
+            if(confirm('के तपाईं यो खर्च रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('daily_expenses').delete().eq('id', id);
+                loadDailyExpenseData();
             }
         }
 
@@ -2191,7 +1731,6 @@
 
             data.forEach((app, index) => {
                 let statusBadge = '<span style="color: #d69e2e; font-weight: bold;">Pending</span>';
-
                 let appTypeBadge = (app.application_type === 'नवीकरण') 
                     ? '<span style="color: #b7791f; font-weight: bold;">नवीकरण</span>' 
                     : '<span style="color: #3182ce; font-weight: bold;">नयाँ सदस्यता</span>';
@@ -2200,7 +1739,6 @@
                 const citFront = app.citizenship_front || app.citizenship_front_url || '';
                 const citBack = app.citizenship_back || app.citizenship_back_url || '';
                 const paySlip = app.payment_slip || app.payment_slip_url || '';
-
                 const appJson = encodeURIComponent(JSON.stringify(app));
 
                 tbody.innerHTML += `
@@ -2285,7 +1823,6 @@
 
             const todayNepaliDate = getCurrentNepaliDate();
             let formattedMemberNo = '';
-
             const isRenewal = app.application_type === 'नवीकरण';
 
             if (isRenewal) {
@@ -2920,7 +2457,7 @@
         }
 
         async function loadLevyRates() {
-            const { data, error } = await supabaseClient.from('levy_rates').select('*');
+            const { data } = await supabaseClient.from('levy_rates').select('*');
             if (data && data.length > 0) {
                 data.forEach(item => {
                     if (item.committee_level === 'founder') document.getElementById('rate_founder').value = item.monthly_amount;
@@ -2930,274 +2467,6 @@
                     if (item.committee_level === 'district') document.getElementById('rate_district').value = item.monthly_amount;
                     if (item.committee_level === 'local') document.getElementById('rate_local').value = item.monthly_amount;
                 });
-            }
-        }
-
-        async function updatePaymentStatus(paymentId, status, reason = '') {
-            if(status === 'Rejected' && !reason) {
-                reason = prompt("रिजेक्ट गर्नुको कारण लेख्नुहोस्:");
-                if(!reason) return;
-            }
-
-            alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
-            location.reload();
-        }
-
-        const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
-
-        const { createClient } = window.supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const messageDiv = document.getElementById('message');
-
-        function toNepaliNumber(input) {
-            if (!input) return '';
-            const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
-            return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
-        }
-
-        function getCurrentNepaliDate() {
-            try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                return `${year}-${month}-${day}`;
-            } catch (e) {
-                return "२०८३-०५-१५";
-            }
-        }
-
-        function toggleSection(contentId, btn) {
-            const content = document.getElementById(contentId);
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                btn.innerText = 'खोल्नुहोस् ▾';
-            } else {
-                content.style.display = 'block';
-                btn.innerText = 'बन्द गर्नुहोस् ▴';
-            }
-        }
-
-        async function printSection(sectionId, sectionTitle) {
-            const sectionContent = document.getElementById(sectionId);
-            const wasOpen = sectionContent.style.display === 'block';
-
-            sectionContent.style.display = 'block';
-            sectionContent.classList.add('printable-section');
-
-            const adminPanelDiv = sectionContent.querySelector('.admin-panel');
-            if (adminPanelDiv) {
-                adminPanelDiv.classList.add('no-print');
-            }
-
-            let headerDiv = document.getElementById('dynamicPrintHeader');
-            if (!headerDiv) {
-                headerDiv = document.createElement('div');
-                headerDiv.id = 'dynamicPrintHeader';
-                headerDiv.className = 'print-header';
-                sectionContent.prepend(headerDiv);
-            }
-
-            headerDiv.innerHTML = `
-                <div class="print-date">मिति: ${getCurrentNepaliDate()}</div>
-                <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="print-logo" alt="लोगो" crossorigin="anonymous">
-                <div class="print-title-1">दशौँदी समाज नेपाल</div>
-                <div class="print-meta">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</div>
-                <div class="print-meta" style="font-weight: 800; margin-top: 1px;">स्थापना - २०८०</div>
-                <div class="print-section-title">${sectionTitle}</div>
-            `;
-
-            window.print();
-
-            headerDiv.remove();
-            sectionContent.classList.remove('printable-section');
-            if (adminPanelDiv) {
-                adminPanelDiv.classList.remove('no-print');
-            }
-
-            if (!wasOpen) {
-                sectionContent.style.display = 'none';
-            }
-        }
-
-        window.onload = function() {
-            if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
-                document.getElementById('loginSection').classList.remove('hidden');
-                document.getElementById('dashboardSection').classList.add('hidden');
-            } else {
-                showDashboard();
-            }
-        };
-
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value.trim();
-
-            const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
-            if (data) {
-                localStorage.setItem('isAdminLoggedIn', 'true');
-                localStorage.setItem('currentAdmin', user);
-                localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
-                showDashboard();
-            } else {
-                alert('गलत युजरनेम वा पासवर्ड!');
-            }
-        });
-
-        function showDashboard() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('dashboardSection').classList.remove('hidden');
-            loadFundData('human_fund', 'humanFundTableBody');
-            loadFundData('emergency_fund', 'emergencyFundTableBody');
-            loadFundData('relief_fund', 'reliefFundTableBody');
-            loadDailyExpenseData();
-        }
-
-        function logout() {
-            localStorage.clear();
-            location.reload();
-        }
-
-        // कोष आम्दानी सेभ र भौचर नं. जेनेरेट गर्ने
-        async function saveFundIncome(e, tableName, fundTitle) {
-            e.preventDefault();
-            const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
-            const voucherNo = 'VOU-' + Math.floor(1000 + Math.random() * 9000);
-            
-            const incomeData = {
-                voucher_no: voucherNo,
-                date: getCurrentNepaliDate(),
-                donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
-                title: document.getElementById(`${prefix}_title`).value.trim(),
-                medium: document.getElementById(`${prefix}_medium`).value,
-                amount: parseFloat(document.getElementById(`${prefix}_amount`).value) || 0,
-                fund_category: fundTitle
-            };
-
-            const { error } = await supabaseClient.from(tableName).insert([incomeData]);
-            if (!error) {
-                alert(`${fundTitle}मा सफलतासाथ रकम थपियो र भौचर जारी भयो!`);
-                document.getElementById(`${prefix}FundForm`).reset();
-                loadFundData(tableName, `${prefix}FundTableBody`);
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
-
-        // कोषहरूको डाटा लोड गर्ने
-        async function loadFundData(tableName, tbodyId) {
-            const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: false });
-            const tbody = document.getElementById(tbodyId);
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8">कुनै रेकर्ड उपलब्ध छैन</td></tr>';
-                return;
-            }
-            data.forEach((item, index) => {
-                const itemStr = encodeURIComponent(JSON.stringify(item));
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><strong>${item.donor_name || '-'}</strong></td>
-                        <td>${item.title || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                        <td class="no-print">
-                            <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')">भौचर</button>
-                            <button class="btn-action btn-danger" onclick="deleteFundRecord('${tableName}', '${item.id}', '${tbodyId}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function deleteFundRecord(tableName, id, tbodyId) {
-            if(confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from(tableName).delete().eq('id', id);
-                loadFundData(tableName, tbodyId);
-            }
-        }
-
-        // डिजिटल भौचर मोडल खोल्ने
-        function openVoucherModal(itemStr) {
-            const item = JSON.parse(decodeURIComponent(itemStr));
-            document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
-            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
-            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
-            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
-            document.getElementById('vouchTitle').innerText = item.title || '-';
-            document.getElementById('vouchMedium').innerText = item.medium || '-';
-            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
-
-            const modal = document.getElementById('voucherModal');
-            modal.classList.add('active-voucher');
-            modal.style.display = 'flex';
-        }
-
-        function closeVoucherModal() {
-            const modal = document.getElementById('voucherModal');
-            modal.classList.remove('active-voucher');
-            modal.style.display = 'none';
-        }
-
-        // कोष छानी खर्च सेभ गर्ने (स्वतः कोष घट्ने)
-        async function saveDailyExpense(e) {
-            e.preventDefault();
-            const expenseData = {
-                date: getCurrentNepaliDate(),
-                source_fund: document.getElementById('exp_source_fund').value,
-                expense_details: document.getElementById('exp_details').value.trim(),
-                receipt_no: document.getElementById('exp_receipt_no').value.trim(),
-                medium: document.getElementById('exp_medium').value,
-                amount: parseFloat(document.getElementById('exp_amount').value) || 0,
-                organization_name: document.getElementById('exp_org_name').value.trim()
-            };
-
-            const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
-            if (!error) {
-                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान गरियो!');
-                document.getElementById('dailyExpenseForm').reset();
-                loadDailyExpenseData();
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
-
-        async function loadDailyExpenseData() {
-            const { data } = await supabaseClient.from('daily_expenses').select('*').order('created_at', { ascending: false });
-            const tbody = document.getElementById('dailyExpenseTableBody');
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9">कुनै दैनिक खर्च रेकर्ड छैन</td></tr>';
-                return;
-            }
-            data.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><span style="background: #ebf8ff; color: #2b6cb0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${item.source_fund || 'साधारण आम्दानी'}</span></td>
-                        <td><strong>${item.expense_details || '-'}</strong></td>
-                        <td>${item.receipt_no || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                        <td>${item.organization_name || '-'}</td>
-                        <td class="no-print">
-                            <button class="btn-action btn-danger" onclick="deleteExpense('${item.id}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function deleteExpense(id) {
-            if(confirm('के तपाईं यो खर्च रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from('daily_expenses').delete().eq('id', id);
-                loadDailyExpenseData();
             }
         }
     </script>
