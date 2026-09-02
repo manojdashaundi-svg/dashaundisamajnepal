@@ -582,7 +582,7 @@
                     <button class="toggle-btn" onclick="toggleSection('grantIncomeContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
-
+            
             <div id="grantIncomeContent" class="collapsible-content">
                 <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
                     <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ सहयोग वा अनुदान थप्ने</h3>
@@ -1272,126 +1272,6 @@
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
-
-        // कोषहरू र भौचर सेटिङ्सको डाटा संरचना (LocalStorage वा Backend Database को लागि)
-        let fundData = {
-            settings: {
-                voucherSystemEnabled: true // एडमिन प्यानलबाट बन्द वा खोल्न मिल्ने
-            },
-            funds: {
-                manab_bachau: { name: "मानव बचाउ अभियान कोष", balance: 0, totalIncome: 0, totalExpense: 0 },
-                aapatkaleen: { name: "आकस्मिक कोष", balance: 0, totalIncome: 0, totalExpense: 0 },
-                uddhar_rahat: { name: "उद्धार तथा राहत कोष", balance: 0, totalIncome: 0, totalExpense: 0 }
-            },
-            vouchers: [], // आम्दानी भौचरहरूको रेकर्ड
-            expenses: []  // खर्चहरूको रेकर्ड
-        };
-
-        // नयाँ आम्दानी तथा डिजिटल भौचर थप्ने फंक्सन
-        function addIncomeWithVoucher(fundKey, donorName, amount, remarks) {
-            if (!fundData.settings.voucherSystemEnabled) {
-                alert("हाल एडमिन प्यानलबाट भौचर सिस्टम बन्द गरिएको छ!");
-                return;
-            }
-
-            // अटोमेटिक भौचर नम्बर सिर्जना (जस्तै: VOU-2026-001)
-            let voucherNo = "VOU-" + new Date().getFullYear() + "-" + String(fundData.vouchers.length + 1).padStart(3, '0');
-            let date = new Date().toISOString().split('T')[0];
-
-            let voucher = {
-                voucherNo: voucherNo,
-                fundKey: fundKey,
-                fundName: fundData.funds[fundKey].name,
-                donorName: donorName,
-                amount: amount,
-                date: date,
-                remarks: remarks
-            };
-
-            // भौचर र कोषको ब्यालेन्स अपडेट गर्ने
-            fundData.vouchers.push(voucher);
-            fundData.funds[fundKey].balance += amount;
-            fundData.funds[fundKey].totalIncome += amount;
-
-            // डिजिटल भौचर प्रिन्ट वा पपअप गर्ने विन्डो देखाउने
-            generateDigitalVoucherHTML(voucher);
-        }
-
-        // डिजिटल भौचर प्रिन्ट/PDF गर्ने HTML टेम्पलेट
-        function generateDigitalVoucherHTML(v) {
-            let voucherWindow = window.open('', '_blank');
-            voucherWindow.document.write(`
-                <html>
-                <head>
-                    <title>आम्दानी भौचर - ${v.voucherNo}</title>
-                    <style>
-                        body { font-family: sans-serif; padding: 20px; }
-                        .voucher-box { border: 2px solid #333; padding: 20px; max-width: 600px; margin: auto; }
-                        .header { text-align: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-                        .details { margin: 20px 0; font-size: 16px; }
-                        .footer { margin-top: 40px; display: flex; justify-content: space-between; }
-                        @media print { .no-print { display: none; } }
-                    </style>
-                </head>
-                <body>
-                    <div class="voucher-box">
-                        <div class="header">
-                            <h2>आधिकारिक आम्दानी भौचर (Digital Voucher)</h2>
-                            <p><b>भौचर नम्बर:</b> ${v.voucherNo}</p>
-                        </div>
-                        <div class="details">
-                            <p><b>मिति:</b> ${v.date}</p>
-                            <p><b>कोषको नाम:</b> ${v.fundName}</p>
-                            <p><b>दाता/सहयोगीको नाम:</b> ${v.donorName}</p>
-                            <p><b>रकम (Amount):</b> रू. ${v.amount.toLocaleString()}</p>
-                            <p><b>विवरण:</b> ${v.remarks}</p>
-                        </div>
-                        <div class="footer">
-                            <p>----------------<br>बुझाउनेको सही</p>
-                            <p>----------------<br>कार्यालयको सही</p>
-                        </div>
-                        <div style="text-align: center; margin-top: 20px;" class="no-print">
-                            <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">प्रिन्ट / PDF गर्नुहोस्</button>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `);
-            voucherWindow.document.close();
-        }
-
-        // खर्च इन्ट्रि गर्ने फंक्सन
-        function addExpense(fundKey, expenseTitle, amount, billNo) {
-            if (fundData.funds[fundKey].balance < amount) {
-                alert("त्रुटि: यो कोषमा पर्याप्त मौज्दात (Balance) छैन!");
-                return;
-            }
-
-            let date = new Date().toISOString().split('T')[0];
-
-            let expense = {
-                date: date,
-                fundKey: fundKey,
-                fundName: fundData.funds[fundKey].name,
-                title: expenseTitle,
-                amount: amount,
-                billNo: billNo
-            };
-
-            // खर्च रेकर्ड थप्ने र सम्बन्धित कोषको ब्यालेन्स घटाउने
-            fundData.expenses.push(expense);
-            fundData.funds[fundKey].balance -= amount;
-            fundData.funds[fundKey].totalExpense += amount;
-
-            alert("खर्च सफलतापूर्वक सुरक्षित भयो र सम्बन्धित कोषबाट रकम घटाइयो!");
-        }
-
-        // एडमिनले भौचर सिस्टम अन/अफ गर्ने फंक्सन
-        function toggleVoucherSystem(status) {
-            fundData.settings.voucherSystemEnabled = status; // true वा false
-            let statusText = status ? "खुलेको छ" : "बन्द गरिएको छ";
-            alert(`सफलतापूर्वक! भौचर सिस्टम अब ${statusText} छ।`);
-        }
 
         function toNepaliNumber(input) {
             if (!input) return '';
