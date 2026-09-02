@@ -449,7 +449,7 @@
         </div>
 
         <div class="main-header-box">
-            <h2>दशाैँदी समाज नेपाल - एडमिन प्यानल</h2>
+            <h2>दशौँदी समाज नेपाल - एडमिन प्यानल</h2>
         </div>
 
         <div id="loginSection">
@@ -471,66 +471,6 @@
             <div class="top-header">
                 <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
                 <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
-            </div>
-
-            <!-- विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली (पुनः थपिएको सेक्सन) -->
-            <div class="section-header">
-                <h3>विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली</h3>
-                <div class="button-group">
-                    <button class="print-btn" onclick="printSection('specialFundContent', 'विशेष कोष तथा डिजिटल भौचर व्यवस्थापन प्रणाली')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('specialFundContent', this)">खोल्नुहोस् ▾</button>
-                </div>
-            </div>
-
-            <div id="specialFundContent" class="collapsible-content">
-                <div class="admin-panel" style="margin-bottom: 20px; padding: 20px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px;">
-                    <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ डिजिटल भौचर तथा सहयोग रसिद जारी गर्ने</h3>
-                    <form id="specialFundForm" onsubmit="issueDigitalVoucher(event)">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>दाता/सहयोगीको नाम:</label>
-                                <input type="text" id="sf_donor_name" placeholder="नाम लेख्नुहोस्" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>जम्मा गरिएको कोष:</label>
-                                <select id="sf_fund_type" required>
-                                    <option value="मानव बचाउ अभियान कोष">मानव बचाउ अभियान कोष</option>
-                                    <option value="आपतकालीन कोष">आपतकालीन कोष</option>
-                                    <option value="उद्धार तथा राहत कोष">उद्धार तथा राहत कोष</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>रकम (रु.):</label>
-                                <input type="number" id="sf_amount" placeholder="रकम हाल्नुहोस्" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label>विवरण / प्रयोजन:</label>
-                                <input type="text" id="sf_remarks" placeholder="जस्तै: विशेष सहयोग" required>
-                            </div>
-                        </div>
-                        <button type="submit" style="margin-top: 15px; width: auto; padding: 10px 25px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचर जारी गर्नुहोस्</button>
-                    </form>
-                </div>
-
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>क्र.सं.</th>
-                                <th>भौचर नं.</th>
-                                <th>मिति</th>
-                                <th>दाताको नाम</th>
-                                <th>कोषको नाम</th>
-                                <th>रकम (रु.)</th>
-                                <th>विवरण</th>
-                                <th class="no-print">कारवाही</th>
-                            </tr>
-                        </thead>
-                        <tbody id="specialFundTableBody">
-                            <!-- JS मार्फत डाटा भरिनेछ -->
-                        </tbody>
-                    </table>
-                </div>
             </div>
 
             <!-- लेवी व्यवस्थापन एडमिन प्यानल सेक्सन -->
@@ -1266,11 +1206,72 @@
         </div>
     </div>
 
-    <!-- डिजिटल भौचर मोडल -->
-    <div class="voucher-modal-overlay" id="voucherModalOverlay" style="display: none;">
+    <div id="imageModal" class="img-modal" onclick="closeImageModal()">
+        <div class="img-modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="प्रिभ्यू">
+        </div>
+    </div>
+
+    <div id="appEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
+            <input type="hidden" id="edit_app_id">
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_app_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_app_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedApplication()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeAppEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="userEditModal" class="app-edit-modal">
+        <div class="app-edit-content">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
+            <input type="hidden" id="edit_user_id">
+            <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
+            <div class="form-group"><label>पद (Designation):</label><input type="text" id="edit_user_position"></div>
+            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date"></div>
+            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
+            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
+            <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
+            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_user_dob"></div>
+            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_user_citizenship"></div>
+            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_user_spouse"></div>
+            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_user_father"></div>
+            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_user_mother"></div>
+            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
+            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
+            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
+            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_user_municipality"></div>
+            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
+            <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
+                <button type="button" onclick="closeUserEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- थपिएको डिजिटल भौचर मोडल सेक्सन -->
+    <div class="voucher-modal-overlay" style="display: none;">
         <div class="voucher-container">
+            <!-- बन्द गर्ने इन्टु (X) बटन -->
             <button class="close-btn" onclick="closeVoucher()" title="बन्द गर्नुहोस्">&times;</button>
 
+            <!-- संस्थाको विवरण (Header) -->
             <div class="voucher-header">
                 <h2>दशौँदी समाज नेपाल</h2>
                 <p class="sub-title">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
@@ -1278,32 +1279,34 @@
                 <hr class="header-divider">
                 <h3 class="voucher-title">आधिकारिक डिजिटल आम्दानी भौचर</h3>
                 <div class="voucher-meta">
-                    <span>भौचर नम्बर: <strong id="voucherNoText">VOU-2026-001</strong></span>
+                    <span>भौचर नम्बर: <strong>VOU-2026-001</strong></span>
                     <span>मिति: <strong id="real-nepali-date">२०८३-०५-१५</strong></span>
                 </div>
             </div>
 
+            <!-- भौचरको मुख्य विवरण (Body) -->
             <div class="voucher-body">
                 <table class="voucher-table">
                     <tr>
                         <td class="label">दाता/सहयोगीको नाम:</td>
-                        <td class="value" id="voucherDonorName">-</td>
+                        <td class="value">राजन</td>
                     </tr>
                     <tr>
                         <td class="label">जम्मा गरिएको कोष:</td>
-                        <td class="value" id="voucherFundName">-</td>
+                        <td class="value">आपातकालीन कोष</td>
                     </tr>
                     <tr>
                         <td class="label">प्राप्त रकम:</td>
-                        <td class="value amount-highlight" id="voucherAmount">-</td>
+                        <td class="value amount-highlight">रु. ९/-</td>
                     </tr>
                     <tr>
                         <td class="label">विवरण / प्रयोजन:</td>
-                        <td class="value" id="voucherRemarks">-</td>
+                        <td class="value">सहयोग</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- सहीछाप र हस्ताक्षर (Footer) -->
             <div class="voucher-footer">
                 <div class="signature-box">
                     <p>बुझाउनेको सही: ...........................</p>
@@ -1313,6 +1316,7 @@
                 </div>
             </div>
 
+            <!-- प्रिन्ट बटन -->
             <div class="voucher-actions">
                 <button class="print-btn" onclick="window.print()">🖨️ प्रिन्ट / PDF गर्नुहोहोस्</button>
             </div>
@@ -1320,6 +1324,7 @@
     </div>
 
     <style>
+    /* भौचरको व्यावसायिक डिजाइन स्टाइल्स */
     .voucher-modal-overlay {
         position: fixed;
         top: 0;
@@ -1330,7 +1335,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 5000;
+        z-index: 1000;
         font-family: 'Kalimati', 'Mukta', sans-serif;
     }
 
@@ -1344,6 +1349,7 @@
         border: 2px solid #1b5e20;
     }
 
+    /* इन्टु (X) बटनको डिजाइन */
     .close-btn {
         position: absolute;
         top: 15px;
@@ -1466,66 +1472,23 @@
     .voucher-actions {
         text-align: center;
     }
+
+    .voucher-container .print-btn {
+        background: #2e7d32;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.2s;
+    }
+
+    .voucher-container .print-btn:hover {
+        background: #1b5e20;
+    }
     </style>
-
-    <div id="imageModal" class="img-modal" onclick="closeImageModal()">
-        <div class="img-modal-content">
-            <span class="close-modal">&times;</span>
-            <img id="modalImage" src="" alt="प्रिभ्यू">
-        </div>
-    </div>
-
-    <div id="appEditModal" class="app-edit-modal">
-        <div class="app-edit-content">
-            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन सम्पादन</h3>
-            <input type="hidden" id="edit_app_id">
-            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_app_name"></div>
-            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_app_phone"></div>
-            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_app_dob"></div>
-            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_app_citizenship"></div>
-            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_app_spouse"></div>
-            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_app_father"></div>
-            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_app_mother"></div>
-            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_app_grandfather"></div>
-            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_app_province"></div>
-            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_app_district"></div>
-            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_app_municipality"></div>
-            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_app_ward"></div>
-            <div class="form-group"><label>टोल:</label><input type="text" id="edit_app_tole"></div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="button" onclick="saveEditedApplication()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
-                <button type="button" onclick="closeAppEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="userEditModal" class="app-edit-modal">
-        <div class="app-edit-content">
-            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्य विवरण सम्पादन</h3>
-            <input type="hidden" id="edit_user_id">
-            <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
-            <div class="form-group"><label>पद (Designation):</label><input type="text" id="edit_user_position"></div>
-            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date"></div>
-            <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
-            <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
-            <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
-            <div class="form-group"><label>जन्म मिति:</label><input type="text" id="edit_user_dob"></div>
-            <div class="form-group"><label>नागरिकता नं.:</label><input type="text" id="edit_user_citizenship"></div>
-            <div class="form-group"><label>पति/पत्नीको नाम:</label><input type="text" id="edit_user_spouse"></div>
-            <div class="form-group"><label>बुबाको नाम:</label><input type="text" id="edit_user_father"></div>
-            <div class="form-group"><label>आमाको नाम:</label><input type="text" id="edit_user_mother"></div>
-            <div class="form-group"><label>बाजेको नाम:</label><input type="text" id="edit_user_grandfather"></div>
-            <div class="form-group"><label>प्रदेश:</label><input type="text" id="edit_user_province"></div>
-            <div class="form-group"><label>जिल्ला:</label><input type="text" id="edit_user_district"></div>
-            <div class="form-group"><label>म.न.पा / न.पा / गा.पा:</label><input type="text" id="edit_user_municipality"></div>
-            <div class="form-group"><label>वडा नं.:</label><input type="text" id="edit_user_ward"></div>
-            <div class="form-group"><label>टोल:</label><input type="text" id="edit_user_tole"></div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="button" onclick="saveEditedUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">अपडेट गर्नुहोस्</button>
-                <button type="button" onclick="closeUserEditModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">बन्द गर्नुहोस्</button>
-            </div>
-        </div>
-    </div>
 
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
@@ -1536,109 +1499,9 @@
         const messageDiv = document.getElementById('message');
 
         function closeVoucher() {
-            const modal = document.getElementById('voucherModalOverlay');
+            const modal = document.querySelector('.voucher-modal-overlay');
             if (modal) {
                 modal.style.display = 'none';
-            }
-        }
-
-        async function issueDigitalVoucher(event) {
-            event.preventDefault();
-            const donorName = document.getElementById('sf_donor_name').value.trim();
-            const fundType = document.getElementById('sf_fund_type').value;
-            const amount = parseFloat(document.getElementById('sf_amount').value) || 0;
-            const remarks = document.getElementById('sf_remarks').value.trim();
-            const currentDate = getCurrentNepaliDate();
-
-            const voucherNo = 'VOU-' + Math.floor(1000 + Math.random() * 9000);
-
-            const voucherPayload = {
-                voucher_no: voucherNo,
-                date: currentDate,
-                donor_name: donorName,
-                fund_name: fundType,
-                amount: amount,
-                remarks: remarks
-            };
-
-            const { error } = await supabaseClient.from('special_fund_vouchers').insert([voucherPayload]);
-
-            if (!error) {
-                alert('डिजिटल भौचर सफलतापूर्वक जारी गरियो!');
-                document.getElementById('specialFundForm').reset();
-                loadSpecialFundVouchers();
-                
-                // भौचर मोडलमा डाटा भरेर देखाउने
-                generateDigitalVoucherHTML({
-                    voucherNo: voucherNo,
-                    date: currentDate,
-                    donorName: donorName,
-                    fundName: fundType,
-                    amount: amount,
-                    remarks: remarks
-                });
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
-
-        async function loadSpecialFundVouchers() {
-            const { data, error } = await supabaseClient
-                .from('special_fund_vouchers')
-                .select('*')
-                .order('created_at', { ascending: false });
-
-            const tbody = document.getElementById('specialFundTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8">कुनै डिजिटल भौचर जारी गरिएको छैन</td></tr>';
-                return;
-            }
-
-            data.forEach((v, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong style="color: #1a365d;">${toNepaliNumber(v.voucher_no || '-')}</strong></td>
-                        <td>${toNepaliNumber(v.date || '-')}</td>
-                        <td><strong>${v.donor_name || '-'}</strong></td>
-                        <td>${v.fund_name || '-'}</td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(v.amount || '०')}</strong></td>
-                        <td>${v.remarks || '-'}</td>
-                        <td class="no-print">
-                            <button class="btn-action btn-view" onclick="generateDigitalVoucherHTML({voucherNo: '${v.voucher_no}', date: '${v.date}', donorName: '${v.donor_name}', fundName: '${v.fund_name}', amount: '${v.amount}', remarks: '${v.remarks}'})">भौचर हेर्नुहोस्</button>
-                            <button class="btn-action btn-danger" onclick="deleteSpecialFundVoucher('${v.id}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function deleteSpecialFundVoucher(id) {
-            if (confirm('के तपाईं यो भौचर मेटाउन चाहनुहुन्छ?')) {
-                const { error } = await supabaseClient.from('special_fund_vouchers').delete().eq('id', id);
-                if (!error) {
-                    alert('भौचर सफलतापूर्वक हटाइयो!');
-                    loadSpecialFundVouchers();
-                } else {
-                    alert('त्रुटि: ' + error.message);
-                }
-            }
-        }
-
-        function generateDigitalVoucherHTML(v) {
-            document.getElementById('voucherNoText').innerText = toNepaliNumber(v.voucherNo);
-            document.getElementById('real-nepali-date').innerText = toNepaliNumber(v.date);
-            document.getElementById('voucherDonorName').innerText = v.donorName;
-            document.getElementById('voucherFundName').innerText = v.fundName;
-            document.getElementById('voucherAmount').innerText = "रु. " + toNepaliNumber(v.amount) + "/-";
-            document.getElementById('voucherRemarks').innerText = v.remarks || 'विशेष सहयोग';
-            
-            const modal = document.getElementById('voucherModalOverlay');
-            if(modal) {
-                modal.style.display = 'flex';
             }
         }
 
@@ -1783,6 +1646,10 @@
             } else {
                 showDashboard();
             }
+            const dateEl = document.getElementById('real-nepali-date');
+            if(dateEl) {
+                dateEl.innerText = getCurrentNepaliDate();
+            }
         };
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -1827,7 +1694,6 @@
             loadApplicationsData();
             loadNoticesData();
             loadLevyRates();
-            loadSpecialFundVouchers();
         }
 
         function logout() {
@@ -1838,7 +1704,6 @@
         async function loadIncomeData() {
             const { data } = await supabaseClient.from('income_records').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('incomeTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
@@ -1871,7 +1736,6 @@
                 .order('created_at', { ascending: false });
 
             const tbody = document.getElementById('monthlyLevyIncomeTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
@@ -1949,7 +1813,6 @@
                 .order('created_at', { ascending: false });
 
             const tbody = document.getElementById('grantIncomeTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
@@ -2016,7 +1879,6 @@
                 .order('created_at', { ascending: false });
 
             const tbody = document.getElementById('dailyExpenseTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
@@ -2057,7 +1919,6 @@
         async function loadApplicationsData() {
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('created_at', { ascending: true });
             const tbody = document.getElementById('applicationsTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
@@ -2307,7 +2168,6 @@
         async function loadUsersData() {
             const { data } = await supabaseClient.from('users').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('usersTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
@@ -2477,7 +2337,6 @@
         async function loadCommitteeData() {
             const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('committeeTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
             data.forEach((person, index) => {
@@ -2538,7 +2397,6 @@
         async function loadCentralCommitteeData() {
             const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('centralTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
             data.forEach((person, index) => {
@@ -2599,7 +2457,6 @@
         async function loadAdvisorCommitteeData() {
             const { data } = await supabaseClient.from('advisor_committee').select('*').order('member_no', { ascending: true });
             const tbody = document.getElementById('advisorTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
             data.forEach((person, index) => {
@@ -2662,7 +2519,6 @@
         async function loadAdminData() {
             const { data } = await supabaseClient.from('admins').select('*');
             const tbody = document.getElementById('adminTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै एडमिन छैन</td></tr>'; return; }
             data.forEach((adm, index) => {
@@ -2728,7 +2584,6 @@
         async function loadNoticesData() {
             const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
             const tbody = document.getElementById('noticesTableBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; return; }
 
