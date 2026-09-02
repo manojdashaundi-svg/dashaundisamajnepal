@@ -2655,6 +2655,165 @@
             alert(`भुक्तानी सफलतासाथ ${status === 'Approved' ? 'प्रमाणित' : 'रिजेक्ट'} गरियो।`);
             location.reload();
         }
+function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            loadFundData('human_fund', 'humanFundTableBody');
+            loadFundData('emergency_fund', 'emergencyFundTableBody');
+            loadFundData('relief_fund', 'reliefFundTableBody');
+            loadDailyExpenseData();
+        }
+
+        // कोष आम्दानी सेभ र भौचर नं. जेनेरेट गर्ने
+        async function saveFundIncome(e, tableName, fundTitle) {
+            e.preventDefault();
+            const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
+            const voucherNo = 'VOU-' + Math.floor(1000 + Math.random() * 9000);
+            
+            const incomeData = {
+                voucher_no: voucherNo,
+                date: getCurrentNepaliDate(),
+                donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
+                title: document.getElementById(`${prefix}_title`).value.trim(),
+                medium: document.getElementById(`${prefix}_medium`).value,
+                amount: parseFloat(document.getElementById(`${prefix}_amount`).value) || 0,
+                fund_category: fundTitle
+            };
+
+            const { error } = await supabaseClient.from(tableName).insert([incomeData]);
+            if (!error) {
+                alert(`${fundTitle}मा सफलतासाथ रकम थपियो र भौचर जारी भयो!`);
+                document.getElementById(`${prefix}FundForm`).reset();
+                loadFundData(tableName, `${prefix}FundTableBody`);
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        // कोषहरूको डाटा लोड गर्ने
+        async function loadFundData(tableName, tbodyId) {
+            const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8">कुनै रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+            data.forEach((item, index) => {
+                const itemStr = encodeURIComponent(JSON.stringify(item));
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.donor_name || '-'}</strong></td>
+                        <td>${item.title || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')">भौचर</button>
+                            <button class="btn-action btn-danger" onclick="deleteFundRecord('${tableName}', '${item.id}', '${tbodyId}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteFundRecord(tableName, id, tbodyId) {
+            if(confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from(tableName).delete().eq('id', id);
+                loadFundData(tableName, tbodyId);
+            }
+        }
+
+        // डिजिटल भौचर मोडल खोल्ने
+        function openVoucherModal(itemStr) {
+            const item = JSON.parse(decodeURIComponent(itemStr));
+            document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
+            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
+            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
+            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
+            document.getElementById('vouchTitle').innerText = item.title || '-';
+            document.getElementById('vouchMedium').innerText = item.medium || '-';
+            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
+
+            const modal = document.getElementById('voucherModal');
+            modal.classList.add('active-voucher');
+            modal.style.display = 'flex';
+        }
+
+        function closeVoucherModal() {
+            const modal = document.getElementById('voucherModal');
+            modal.classList.remove('active-voucher');
+            modal.style.display = 'none';
+        }
+
+        // कोष छानी खर्च सेभ गर्ने (स्वतः कोष घट्ने)
+        async function saveDailyExpense(e) {
+            e.preventDefault();
+            const expenseData = {
+                date: getCurrentNepaliDate(),
+                source_fund: document.getElementById('exp_source_fund').value,
+                expense_details: document.getElementById('exp_details').value.trim(),
+                receipt_no: document.getElementById('exp_receipt_no').value.trim(),
+                medium: document.getElementById('exp_medium').value,
+                amount: parseFloat(document.getElementById('exp_amount').value) || 0,
+                organization_name: document.getElementById('exp_org_name').value.trim()
+            };
+
+            const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
+            if (!error) {
+                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान गरियो!');
+                document.getElementById('dailyExpenseForm').reset();
+                loadDailyExpenseData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function loadDailyExpenseData() {
+            const { data } = await supabaseClient.from('daily_expenses').select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById('dailyExpenseTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9">कुनै दैनिक खर्च रेकर्ड छैन</td></tr>';
+                return;
+            }
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><span style="background: #ebf8ff; color: #2b6cb0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${item.source_fund || 'साधारण आम्दानी'}</span></td>
+                        <td><strong>${item.expense_details || '-'}</strong></td>
+                        <td>${item.receipt_no || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td>${item.organization_name || '-'}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteExpense('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteExpense(id) {
+            if(confirm('के तपाईं यो खर्च रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('daily_expenses').delete().eq('id', id);
+                loadDailyExpenseData();
+            }
+        }
+
+        async function printSection(sectionId, title) {
+            const sectionContent = document.getElementById(sectionId);
+            const wasOpen = sectionContent.style.display === 'block';
+            sectionContent.style.display = 'block';
+            sectionContent.classList.add('printable-section');
+            window.print();
+            sectionContent.classList.remove('printable-section');
+            if (!wasOpen) sectionContent.style.display = 'none';
+        }
     </script>
 </body>
 </html>
