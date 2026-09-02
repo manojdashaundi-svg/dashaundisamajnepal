@@ -351,7 +351,8 @@
         }
         .id-card-content {
             background: #fff;
-            width: 380px;
+            width: 420px;
+            max-width: 95%;
             padding: 25px;
             border-radius: 16px;
             text-align: center;
@@ -421,8 +422,8 @@
                 </div>
                 <div class="form-row">
                     <div class="form-col">
-                        <label>जन्म मिति:</label>
-                        <input type="date" id="reg_dob" required>
+                        <label>जन्म मिति (वि.सं. वा ईश्वरी):</label>
+                        <input type="text" id="reg_dob" placeholder="उदा. २०४९-०९-१०" required>
                     </div>
                     <div class="form-col">
                         <label>पासवर्ड:</label>
@@ -551,7 +552,7 @@
                         </div>
                         <div class="form-col">
                             <label>जन्म मिति:</label>
-                            <input type="date" id="edit_dob">
+                            <input type="text" id="edit_dob">
                         </div>
                     </div>
                     <button type="button" onclick="saveProfileChanges()" style="background: var(--accent-gradient); width: auto; padding: 10px 25px;">परिवर्तन सुरक्षित गर्नुहोस्</button>
@@ -576,7 +577,7 @@
             <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस् (लुकाउनुहोस्)</button>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                 <div>
-                    <h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१०</h4>
+                    <h4 style="margin: 0; color: #718096;">आवेदन मिति: २०८३/०५/१२</h4>
                 </div>
                 <!-- पासपोर्ट साइज फोटो बक्स -->
                 <div>
@@ -676,11 +677,11 @@
             <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
             
             <div class="form-group">
-                <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo) [क्यामेरा वा ग्यालरी]:</label>
+                <label>१. नागरिकताको अगाडिको भागको फोटो (Front Photo):</label>
                 <input type="file" id="citizenshipFront" accept="image/*" capture="environment" required>
             </div>
             <div class="form-group">
-                <label>२. नागरिकताको पछाडिको भागको फोटो (Back Photo) [क्यामेरा वा ग्यालरी]:</label>
+                <label>२. नागरिकताको पछाडिको भागको फोटो (Back Photo):</label>
                 <input type="file" id="citizenshipBack" accept="image/*" capture="environment" required>
             </div>
 
@@ -692,7 +693,7 @@
             </div>
 
             <div class="form-group">
-                <label>३. भुक्तानी भौचर वा स्क्रीनसट अपलोड गर्नुहोस् (Payment Slip) [क्यामेरा वा ग्यालरी]:</label>
+                <label>३. भुक्तानी भौचर वा स्क्रीनसट अपलोड गर्नुहोस् (Payment Slip):</label>
                 <input type="file" id="paymentSlip" accept="image/*" capture="environment" required>
             </div>
 
@@ -785,7 +786,6 @@
         }
 
         let countdownTimer;
-        let verifiedIdentifier = '';
         let currentGeneratedOtp = '';
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
         let resetOtpCodeVal = '';
@@ -856,7 +856,6 @@
 
             if(!email || !name) return;
 
-            verifiedIdentifier = email;
             currentUserProfile = { name, phone, email, dob, password, avatar: 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png' };
             currentGeneratedOtp = Math.floor(100000 + Math.random() * 900000).toString();
             const expiresAt = new Date(new Date().getTime() + 60000).toISOString();
@@ -1128,22 +1127,43 @@
             window.scrollTo({top: document.getElementById('step3').offsetTop, behavior: 'smooth'});
         }
 
-        async function finalSubmit() {
-            const front = document.getElementById('citizenshipFront').files[0];
-            const back = document.getElementById('citizenshipBack').files[0];
-            const slip = document.getElementById('paymentSlip').files[0];
+        async function uploadFileToSupabase(file, folderName) {
+            if (!file) return '';
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+            const filePath = `${folderName}/${fileName}`;
 
-            if(!front || !back || !slip) {
+            const { data, error } = await supabaseClient.storage.from('documents').upload(filePath, file);
+            if (error) {
+                console.error('Upload Error:', error.message);
+                return '';
+            }
+
+            const { data: publicUrlData } = supabaseClient.storage.from('documents').getPublicUrl(filePath);
+            return publicUrlData ? publicUrlData.publicUrl : '';
+        }
+
+        async function finalSubmit() {
+            const frontFile = document.getElementById('citizenshipFront').files[0];
+            const backFile = document.getElementById('citizenshipBack').files[0];
+            const slipFile = document.getElementById('paymentSlip').files[0];
+
+            if(!frontFile || !backFile || !slipFile) {
                 alert('कृपया नागरिकताका दुवै फोटो र भुक्तानी भौचर अनिवार्य अपलोड गर्नुहोस्!');
                 return;
             }
+
+            alert('फाइलहरू अपलोड हुँदैछन्, कृपया प्रतीक्षा गर्नुहोस्...');
+
+            const frontUrl = await uploadFileToSupabase(frontFile, 'citizenship');
+            const backUrl = await uploadFileToSupabase(backFile, 'citizenship');
+            const slipUrl = await uploadFileToSupabase(slipFile, 'payments');
 
             const formData = {
                 identifier: currentUserProfile.email || document.getElementById('login_email').value,
                 application_type: currentFormType,
                 full_name: document.getElementById('f_name').value.trim(),
                 family_code: document.getElementById('f_family_code').value.trim(),
-                citizens_no: document.getElementById('f_citizenship').value.trim(),
                 citizenship_no: document.getElementById('f_citizenship').value.trim(),
                 spouse_name: document.getElementById('f_spouse').value.trim(),
                 father_name: document.getElementById('f_father').value.trim(),
@@ -1154,6 +1174,10 @@
                 municipality: document.getElementById('f_municipality').value.trim(),
                 ward: document.getElementById('f_ward').value.trim(),
                 tole: document.getElementById('f_tole').value.trim(),
+                photo_url: currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
+                citizenship_front: frontUrl,
+                citizenship_back: backUrl,
+                payment_slip: slipUrl,
                 status: 'Pending'
             };
 
