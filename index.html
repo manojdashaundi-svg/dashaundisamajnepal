@@ -78,40 +78,14 @@
         .about-meta { font-size: 15px; color: #2d3748; font-weight: 700; margin: 6px 0; }
         .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
 
-        #home .content-section {
-            max-width: 900px;
-            margin: 0 auto 30px auto;
-            text-align: center;
-        }
-        #home .content-section p {
-            text-align: justify;
-            text-align-last: center;
-        }
+        #home .content-section { max-width: 900px; margin: 0 auto 30px auto; text-align: center; }
+        #home .content-section p { text-align: justify; text-align-last: center; }
 
-        .committee-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-            text-align: left;
-        }
-
+        .committee-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; text-align: left; }
         @media (max-width: 992px) { .committee-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .committee-grid { grid-template-columns: 1fr; } }
 
-        .committee-card {
-            background: #fff;
-            border: 1px solid #cbd5e0;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s ease;
-        }
-
+        .committee-card { background: #fff; border: 1px solid #cbd5e0; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s ease; }
         .committee-card:hover { transform: translateY(-3px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); }
         .committee-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 10px; }
 
@@ -160,21 +134,28 @@
         .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
         .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
 
-        /* Levy Portal Additional Styles - Height Reduced */
+        /* Levy Portal Additional Styles with Split Layout */
         .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
         .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
         .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 6px; }
+        
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 5000; padding: 10px; box-sizing: border-box; overflow-y: auto; }
-        .modal-content { background: #fff; padding: 12px 15px; border-radius: 12px; width: 100%; max-width: 400px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left; max-height: 90vh; overflow-y: auto; }
-        .modal-content h4 { margin: 0 0 8px 0; font-size: 15px; color: #1a365d; }
-        .close { position: absolute; top: 10px; right: 12px; font-size: 20px; font-weight: bold; cursor: pointer; color: #718096; }
+        .modal-content { background: #fff; padding: 15px; border-radius: 12px; width: 100%; max-width: 650px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left; max-height: 90vh; overflow-y: auto; }
+        .modal-content h4 { margin: 0 0 12px 0; font-size: 16px; color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
+        .close { position: absolute; top: 12px; right: 15px; font-size: 22px; font-weight: bold; cursor: pointer; color: #718096; }
+
+        .modal-grid-split { display: flex; gap: 15px; flex-wrap: wrap; }
+        .modal-left { flex: 1.6; min-width: 300px; }
+        .modal-right { flex: 1; min-width: 220px; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
+
         .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 6px 0; }
-        .month-box { padding: 5px 4px; border-radius: 5px; text-align: center; cursor: pointer; font-size: 11px; font-weight: 700; border: 1px solid #cbd5e0; transition: 0.2s; line-height: 1.2; }
+        .month-box { padding: 6px 4px; border-radius: 5px; text-align: center; cursor: pointer; font-size: 11px; font-weight: 700; border: 1px solid #cbd5e0; transition: 0.2s; line-height: 1.2; }
         .bg-green { background: #c6f6d5; color: #22543d; border-color: #9ae6b4; }
         .bg-red { background: #fed7d7; color: #742a2a; border-color: #feb2b2; }
         .bg-normal { background: #edf2f7; color: #2d3748; border-color: #cbd5e0; }
         .bg-selected { background: #bee3f8 !important; color: #2b6cb0 !important; border-color: #3182ce !important; }
+        
         .summary-box { background: #f7fafc; padding: 6px 10px; border-radius: 5px; border: 1px solid #e2e8f0; margin: 6px 0; font-size: 12px; font-weight: 600; }
         .summary-box p { margin: 2px 0; }
         .fine-text { color: #e53e3e; }
@@ -428,7 +409,16 @@
                                 <span onclick="closeLevyModal()" class="close">&times;</span>
                                 <h4>महिना अनुसार लेवी छनोट गर्नुहोस्</h4>
                                 
-                                <div id="monthsGrid" class="months-grid"></div>
+                                <div class="modal-grid-split">
+                                    <div class="modal-left">
+                                        <div id="monthsGrid" class="months-grid"></div>
+                                    </div>
+                                    <div class="modal-right">
+                                        <p style="margin: 0 0 6px 0; font-size: 13px; color: #1a365d; font-weight: 900;">समिति विवरण:</p>
+                                        <p style="margin: 3px 0; font-size: 12px; font-weight: 700;">समिति: <span id="modalCommitteeName" style="color: #2b6cb0;">केन्द्रीय समिति</span></p>
+                                        <p style="margin: 3px 0; font-size: 12px; font-weight: 700;">मासिक लेवी दर: रू. <span id="modalMonthlyRate" style="color: #006600;">200.00</span></p>
+                                    </div>
+                                </div>
 
                                 <div class="summary-box">
                                     <p>चयन गरिएका महिनाहरू: <span id="selectedCount">0</span></p>
@@ -747,6 +737,8 @@
 
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
         let currentApplication = null;
+        let committeeRate = 200; // डिफल्ट लेवी रेट
+        let userCommitteeKey = 'central'; // डिफल्ट समिति कुञ्जी
 
         function toNepaliNumber(num) {
             if (!num) return '';
@@ -1089,6 +1081,16 @@
             document.getElementById('lbl_issue_date').innerText = regDate;
             document.getElementById('lbl_expiry_date').innerText = expiryDate;
 
+            // समिति अनुसार लेवी रेट तान्ने (Supabase levy_rates टेबलबाट)
+            userCommitteeKey = (userData && userData.committee_key) ? userData.committee_key : 'central';
+            const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
+            if (rateData) {
+                committeeRate = parseFloat(rateData.monthly_amount);
+            }
+
+            document.getElementById('modalCommitteeName').innerText = committee;
+            document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
+
             const alertBox = document.getElementById('applicationStatusAlert');
             const noticeBanner = document.getElementById('formNoticeBanner');
             const btnOpenForm = document.getElementById('btnOpenForm');
@@ -1419,11 +1421,23 @@
         }
 
         let selectedMonths = [];
-        const committeeRate = 500;
 
-        function openLevyModal() {
+        async function openLevyModal() {
             document.getElementById('levyModal').style.display = 'flex';
-            // असार मसान्तसम्म (वैशाख, जेठ, असार, साउन) तिरिसकिएको मानिने
+            
+            // Supabase बाट सदस्यको लेवी रेट पुनस् कन्फर्म गर्ने
+            const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
+            if (userData) {
+                userCommitteeKey = userData.committee_key || 'central';
+                document.getElementById('modalCommitteeName').innerText = userData.committee || 'केन्द्रीय समिति';
+            }
+
+            const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
+            if (rateData) {
+                committeeRate = parseFloat(rateData.monthly_amount);
+                document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
+            }
+
             renderMonths(['01', '02', '03', '04'], committeeRate); 
         }
 
@@ -1433,7 +1447,6 @@
 
         function checkIfLate(monthVal) {
             // ४ महिना (वैशाख=01, जेठ=02, असार=03, साउन=04) सम्म कुनै जरिवाना लाग्दैन।
-            // भदौ (05) वा त्यसभन्दा पछिका महिनाहरूमा मात्र जरिवाना लाग्नेछ।
             let currentMonthNum = 5; // भाद्र
             return parseInt(monthVal) > 4 && parseInt(monthVal) < currentMonthNum; 
         }
