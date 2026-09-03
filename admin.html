@@ -1488,6 +1488,7 @@
         function showDashboard() {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
+            document.getElementById('dashboardSection').style.display = 'block';
             const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
             const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
             document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
