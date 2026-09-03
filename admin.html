@@ -2070,7 +2070,7 @@
         }
 
         async function loadUsersData() {
-            const { data } = await supabaseClient.from('users').select('*').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('member_no', { ascending: true });
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
