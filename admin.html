@@ -1296,33 +1296,38 @@
         }
 
         function openIdCardModal(userStr) {
-            const user = JSON.parse(userStr);
-            const memberNo = user.member_no || '-';
-            const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
-            const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
-            const fullName = user.full_name || user.name || '-';
+    const user = JSON.parse(userStr);
+    const memberNo = user.member_no || '-';
+    const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
+    const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
+    const fullName = user.full_name || user.name || '-';
 
-            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-            document.getElementById('cardIssueDate').innerText = regDate;
-            document.getElementById('cardExpiryDate').innerText = expiryDate;
-            document.getElementById('cardName').innerText = fullName;
-            document.getElementById('cardPosition').innerText = user.position || 'साधारण सदस्य';
-            document.getElementById('cardProvince').innerText = user.province || '-';
-            document.getElementById('cardDistrict').innerText = user.district || '-';
-            document.getElementById('cardMunicipality').innerText = user.municipality || '-';
-            document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+    document.getElementById('cardIssueDate').innerText = regDate;
+    document.getElementById('cardExpiryDate').innerText = expiryDate;
+    document.getElementById('cardName').innerText = fullName;
 
-            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-            document.getElementById('cardPhoto').src = photo;
+    // यहाँ पद र कमिटीको नाम मिलाउने (जस्तै: सचिव - केन्द्रीय समिति)
+    let rawPosition = user.position || 'साधारण सदस्य';
+    let committeeLabel = user.committee_level ? ` - ${user.committee_level}` : ' - केन्द्रीय समिति'; // आवश्यकता अनुसार मिलाउनुहोला
+    document.getElementById('cardPosition').innerText = rawPosition + committeeLabel;
 
-            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-            document.getElementById('cardQrCode').src = qrApiUrl;
+    document.getElementById('cardProvince').innerText = user.province || '-';
+    document.getElementById('cardDistrict').innerText = user.district || '-';
+    document.getElementById('cardMunicipality').innerText = user.municipality || '-';
+    document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
 
-            const modal = document.getElementById('idCardModal');
-            modal.classList.add('active-card-modal');
-            modal.style.display = 'flex';
-        }
+    const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+    document.getElementById('cardPhoto').src = photo;
+
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
+    document.getElementById('cardQrCode').src = qrApiUrl;
+
+    const modal = document.getElementById('idCardModal');
+    modal.classList.add('active-card-modal');
+    modal.style.display = 'flex';
+}
 
         function closeIdCardModal() {
             const modal = document.getElementById('idCardModal');
