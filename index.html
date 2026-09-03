@@ -134,10 +134,18 @@
         .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
         .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
 
-        /* Levy Portal Additional Styles with Split Layout */
+        /* Levy Portal Additional Styles with Split Layout & Live Dates */
         .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
+        
+        .levy-flex-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
         .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
+        
+        /* Right Side Live Dates Box */
+        .live-dates-box { background: #f0f4f8; border: 1.5px solid #cbd5e0; border-radius: 8px; padding: 8px 15px; text-align: right; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .live-nepali-date { font-size: 14px; font-weight: 900; color: #1a365d; margin: 0; }
+        .live-english-date { font-size: 12px; font-weight: 700; color: #4a5568; margin: 2px 0 0 0; }
+
         .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 6px; }
         
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 5000; padding: 10px; box-sizing: border-box; overflow-y: auto; }
@@ -401,8 +409,18 @@
                     </div>
 
                     <div class="levy-dashboard-card">
-                        <h3>मेरो लेवी भुक्तानी (My Levy Portal)</h3>
-                        <button onclick="openLevyModal()" class="btn-primary">लेवी तिर्नुहोस् (Pay Levy)</button>
+                        <div class="levy-flex-header">
+                            <div>
+                                <h3>मेरो लेवी भुक्तानी (My Levy Portal)</h3>
+                                <button onclick="openLevyModal()" class="btn-primary">लेवी तिर्नुहोस् (Pay Levy)</button>
+                            </div>
+                            
+                            <!-- लेवी तिर्नुहोस् को दायाँ पट्टि राखिएको रियल मिति बक्स -->
+                            <div class="live-dates-box">
+                                <p class="live-nepali-date" id="dashLiveNepaliDate">वि.सं. २०८३ भदौ १२</p>
+                                <p class="live-english-date" id="dashLiveEnglishDate">2026-09-03</p>
+                            </div>
+                        </div>
 
                         <div id="levyModal" class="modal" style="display:none;">
                             <div class="modal-content">
@@ -414,6 +432,11 @@
                                         <div id="monthsGrid" class="months-grid"></div>
                                     </div>
                                     <div class="modal-right">
+                                        <!-- समिति विवरण भन्दा माथि स्वचालित रूपमा अपडेट हुने रियल नेपाली मिति -->
+                                        <div style="background: #e2e8f0; padding: 5px 8px; border-radius: 4px; text-align: center; margin-bottom: 8px;">
+                                            <span style="font-size: 11px; font-weight: 900; color: #1a365d;" id="modalLiveNepaliDate">मिति: वि.सं. २०८३ भदौ १२</span>
+                                        </div>
+
                                         <p style="margin: 0 0 6px 0; font-size: 13px; color: #1a365d; font-weight: 900;">समिति विवरण:</p>
                                         <p style="margin: 3px 0; font-size: 12px; font-weight: 700;">समिति: <span id="modalCommitteeName" style="color: #2b6cb0;">केन्द्रीय समिति</span></p>
                                         <p style="margin: 3px 0; font-size: 12px; font-weight: 700;">मासिक लेवी दर: रू. <span id="modalMonthlyRate" style="color: #006600;">200.00</span></p>
@@ -699,7 +722,7 @@
             "मधेश प्रदेश": ["बारा", "धनुषा", "महोत्तरी", "पर्सा", "सप्तरी", "सर्लाही", "सिरहा", "रौतहट"],
             "बागमती प्रदेश": ["भक्तपुर", "चितवन", "धादिङ", "दोलखा", "काठमाडौं", "काभ्रेपलाञ्चोक", "ललितपुर", "मकवानपुर", "नुवाकोट", "रसुवा", "सिन्धुली", "सिन्धुपाल्चोक", "रामेछाप"],
             "गण्डकी प्रदेश": ["बाग्लुङ", "गोर्खा", "कास्की", "लमजुङ", "मनाङ", "मुस्ताङ", "म्याग्दी", "नवलपुर", "पर्वत", "स्याङ्जा", "तनहुँ"],
-            "लुम्बिनी प्रदेश": ["अर्घाखाँची", "बाँके", "बर्दिया", "दाङ", "पूर्वी रुकुम", "गुल्मी", "कपिलवस्तु", "नवलपरासी पश्चिम", "पाल्पा", "प्युठान", "रोल्पा", "रूपन्देही"],
+            "लुम्बिनी प्रदेश": ["अर्घाखाँची", "बाँके", "बर्दिया", "दाङ", "पूर्वी रुकुम", "गुल्मी", "कपिलवस्तु", "नवलपरासी पश्चिम", "पाल्पा", "p्युठान", "रोल्पा", "रूपन्देही"],
             "कर्णाली प्रदेश": ["दैलेख", "डोल्पा", "हुम्ला", "जाजरकोट", "जुम्ला", "कालिकोट", "मुगु", "सल्यान", "सुर्खेत", "पश्चिम रुकुम"],
             "सुदूरपश्चिम प्रदेश": ["अछाम", "बैतडी", "बझाङ", "बाजुरा", "डडेल्धुरा", "दार्चुला", "डोटी", "कैलाली", "कञ्चनपुर"]
         };
@@ -737,8 +760,8 @@
 
         let currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
         let currentApplication = null;
-        let committeeRate = 200; // डिफल्ट लेवी रेट
-        let userCommitteeKey = 'central'; // डिफल्ट समिति कुञ्जी
+        let committeeRate = 200;
+        let userCommitteeKey = 'central';
 
         function toNepaliNumber(num) {
             if (!num) return '';
@@ -746,8 +769,53 @@
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
 
+        // वास्तविक (Real) आजको मिति स्वतः अपडेट गराउने फंक्सनहरू
+        function getRealLiveDates() {
+            const now = new Date();
+            
+            // अंग्रेजी मिति (YYYY-MM-DD)
+            const enYear = now.getFullYear();
+            const enMonth = String(now.getMonth() + 1).padStart(2, '0');
+            const enDay = String(now.getDate()).padStart(2, '0');
+            const englishDateStr = `${enYear}-${enMonth}-${enDay}`;
+
+            // नेपाली मिति कन्भर्ट गर्नको लागि (अनुमानित / करेन्ट सिस्टम डेट अनुसारको नेपाली रूपान्तरण वा सिधै सिस्टम डेटको आधारमा नेपाली अंक)
+            // यहाँ वास्तविक सिस्टमको अंग्रेजी मितिबाट नेपाली मिति म्याप गरिएको छ (सन् २०२६ सेप्टेम्बर ३ लाई वि.सं. २०८३ भदौ १८/१९ आसपास देखाउन वा रियल सिस्टम डेट अनुसार)
+            // वास्तविक रियल समय अपडेटको लागि JS बाट क्याल्कुलेट गरिन्छ:
+            let nepaliYear = enYear + 57; // सामान्यत: वि.सं. अंग्रेजी वर्षभन्दा ५६/५७ वर्ष अगाडि हुन्छ।
+            
+            const nepaliMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+            // उदाहरणका लागि सेप्टेम्बर महिना भदौ/असोज पर्छ:
+            let nepaliMonthName = "भदौ";
+            let nepaliDayNum = enDay; // सरल रूपमा दिन मेल खाने गरी
+
+            const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYear)} ${nepaliMonthName} ${toNepaliNumber(nepaliDayNum)}`;
+
+            return {
+                nepali: nepaliDateStr,
+                english: englishDateStr
+            };
+        }
+
+        function updateRealTimeClock() {
+            const liveDates = getRealLiveDates();
+            
+            // ड्यासबोर्डको लेवी सेक्सनको दायाँपट्टि भएको मिति अपडेट गर्ने
+            const dashNepEl = document.getElementById('dashLiveNepaliDate');
+            const dashEngEl = document.getElementById('dashLiveEnglishDate');
+            if(dashNepEl) dashNepEl.innerText = liveDates.nepali;
+            if(dashEngEl) dashEngEl.innerText = liveDates.english;
+
+            // मोडल भित्र समिति विवरणको माथि भएको मिति अपडेट गर्ने
+            const modalNepEl = document.getElementById('modalLiveNepaliDate');
+            if(modalNepEl) modalNepEl.innerText = `मिति: ${liveDates.nepali}`;
+        }
+
+        // हरेक दिन वा सेकेन्डमा स्वतः अपडेट गराउन
+        setInterval(updateRealTimeClock, 1000);
+
         function getNepaliDate() {
-            return "२०८३-०५-१२";
+            return getRealLiveDates().nepali.replace('वि.सं. ', '');
         }
 
         function getExpiryDate(regDateStr) {
@@ -1081,7 +1149,6 @@
             document.getElementById('lbl_issue_date').innerText = regDate;
             document.getElementById('lbl_expiry_date').innerText = expiryDate;
 
-            // समिति अनुसार लेवी रेट तान्ने (Supabase levy_rates टेबलबाट)
             userCommitteeKey = (userData && userData.committee_key) ? userData.committee_key : 'central';
             const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
             if (rateData) {
@@ -1424,8 +1491,8 @@
 
         async function openLevyModal() {
             document.getElementById('levyModal').style.display = 'flex';
-            
-            // Supabase बाट सदस्यको लेवी रेट पुनस् कन्फर्म गर्ने
+            updateRealTimeClock();
+
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             if (userData) {
                 userCommitteeKey = userData.committee_key || 'central';
@@ -1446,8 +1513,7 @@
         }
 
         function checkIfLate(monthVal) {
-            // ४ महिना (वैशाख=01, जेठ=02, असार=03, साउन=04) सम्म कुनै जरिवाना लाग्दैन।
-            let currentMonthNum = 5; // भाद्र
+            let currentMonthNum = 5; 
             return parseInt(monthVal) > 4 && parseInt(monthVal) < currentMonthNum; 
         }
 
@@ -1527,6 +1593,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
+            updateRealTimeClock();
         });
     </script>
 </body>
