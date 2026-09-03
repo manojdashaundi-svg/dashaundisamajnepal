@@ -1077,7 +1077,6 @@
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             
-            // अटोमेटिक कार्ड डिटेलहरू प्रोफाइलमा अपडेट गर्ने लजिक
             const memberNo = (userData && userData.member_no) ? userData.member_no : '००१';
             const committee = (userData && userData.committee) ? userData.committee : 'केन्द्रीय समिति';
             const position = (userData && userData.position) ? userData.position : 'साधारण सदस्य';
@@ -1424,7 +1423,8 @@
 
         function openLevyModal() {
             document.getElementById('levyModal').style.display = 'flex';
-            renderMonths(['01', '02'], committeeRate); 
+            // असार मसान्तसम्म (वैशाख, जेठ, असार, साउन) तिरिसकिएको मानिने
+            renderMonths(['01', '02', '03', '04'], committeeRate); 
         }
 
         function closeLevyModal() {
@@ -1432,8 +1432,10 @@
         }
 
         function checkIfLate(monthVal) {
-            let currentMonthNum = 5;
-            return parseInt(monthVal) < currentMonthNum; 
+            // ४ महिना (वैशाख=01, जेठ=02, असार=03, साउन=04) सम्म कुनै जरिवाना लाग्दैन।
+            // भदौ (05) वा त्यसभन्दा पछिका महिनाहरूमा मात्र जरिवाना लाग्नेछ।
+            let currentMonthNum = 5; // भाद्र
+            return parseInt(monthVal) > 4 && parseInt(monthVal) < currentMonthNum; 
         }
 
         function toggleMonth(monthVal, rate, isLate) {
@@ -1444,7 +1446,7 @@
                 selectedMonths.push(monthVal);
             }
             updateLevySummary(rate);
-            renderMonths(['01', '02'], rate);
+            renderMonths(['01', '02', '03', '04'], rate);
         }
 
         function updateLevySummary(rate) {
