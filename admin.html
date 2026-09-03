@@ -1616,7 +1616,7 @@
                 <td>${item.committee_level || '-'}</td>
                 <td>${item.paid_months || item.months || '-'}</td>
                 <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
-                <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/vouchers/${item.payment_slip}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>
+               <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/vouchers/${encodeURIComponent(item.payment_slip)}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>: 'भैचर छैन'}</td>
                 <td class="no-print">
                     <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
                     <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
