@@ -952,7 +952,64 @@
                     </table>
                 </div>
             </div>
+       <!-- सूचना तथा सन्देश व्यवस्थापन सेक्सन -->
+            <div class="section-header">
+                <h3>सदस्य तथा पदाधिकारी सूचना व्यवस्थापन</h3>
+                <div class="button-group">
+                    <button class="toggle-btn" onclick="toggleSection('memberNoticeContent', this)">खोल्नुहोस् ▾</button>
+                </div>
+            </div>
 
+            <div id="memberNoticeContent" class="collapsible-content">
+                <!-- १. सदस्यहरूलाई सूचना पठाउने बक्स -->
+                <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यहरूलाई सूचना पठाउनुहोस्</h4>
+                    <form id="memberNoticeForm" onsubmit="sendMemberNotice(event)">
+                        <div class="form-group">
+                            <label>सूचनाको विषय (Subject):</label>
+                            <input type="text" id="m_notice_title" placeholder="विषय लेख्नुहोस्..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>सूचनाको विस्तृत विवरण:</label>
+                            <textarea id="m_notice_body" placeholder="सूचनाको पूर्ण विवरण यहाँ लेख्नुहोस्..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>कस्लाई पठाउने हो छान्नुहोस् (Target Audience):</label>
+                            <select id="m_notice_target" required>
+                                <option value="सबै">सबै (सम्पूर्ण सदस्य र पदाधिकारीहरू)</option>
+                                <option value="केन्द्रीय समिति">केन्द्रीय समिति मात्र</option>
+                                <option value="संस्थापक कमिटी">संस्थापक कमिटी मात्र</option>
+                                <option value="सल्लाहकार समिति">सल्लाहकार समिति मात्र</option>
+                                <option value="प्रदेश कमिटी">प्रदेश कमिटी मात्र</option>
+                                <option value="जिल्ला कमिटी">जिल्ला कमिटी मात्र</option>
+                                <option value="स्थानीय तह कमिटी">स्थानीय तह कमिटी मात्र</option>
+                                <option value="साधारण सदस्य">साधारण सदस्यहरू मात्र</option>
+                            </select>
+                        </div>
+                        <button type="submit" style="width: auto; padding: 10px 25px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">सूचना पठाउनुहोस्</button>
+                    </form>
+                </div>
+
+                <!-- २. सूचना हेर्नुहोस् र सम्पादन गर्नुहोस् सेक्सन -->
+                <div class="admin-panel" style="padding: 15px; background: #fff; border: 1px solid var(--border-color); border-radius: 6px;">
+                    <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पठाइएका सूचनाहरू हेर्नुहोस् र सम्पादन गर्नुहोस्</h4>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>क्र.सं.</th>
+                                    <th>मिति र समय</th>
+                                    <th>विषय</th>
+                                    <th>विवरण</th>
+                                    <th>लक्ष्य (Target)</th>
+                                    <th class="no-print">कारवाही</th>
+                                </tr>
+                            </thead>
+                            <tbody id="memberNoticesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <hr>
 
             <div class="section-header">
@@ -1254,65 +1311,6 @@
             </div>
         </div>
     </div>
-
-    <!-- सूचना तथा सन्देश व्यवस्थापन सेक्सन -->
-            <div class="section-header">
-                <h3>सदस्य तथा पदाधिकारी सूचना व्यवस्थापन</h3>
-                <div class="button-group">
-                    <button class="toggle-btn" onclick="toggleSection('memberNoticeContent', this)">खोल्नुहोस् ▾</button>
-                </div>
-            </div>
-
-            <div id="memberNoticeContent" class="collapsible-content">
-                <!-- १. सदस्यहरूलाई सूचना पठाउने बक्स -->
-                <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
-                    <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यहरूलाई सूचना पठाउनुहोस्</h4>
-                    <form id="memberNoticeForm" onsubmit="sendMemberNotice(event)">
-                        <div class="form-group">
-                            <label>सूचनाको विषय (Subject):</label>
-                            <input type="text" id="m_notice_title" placeholder="विषय लेख्नुहोस्..." required>
-                        </div>
-                        <div class="form-group">
-                            <label>सूचनाको विस्तृत विवरण:</label>
-                            <textarea id="m_notice_body" placeholder="सूचनाको पूर्ण विवरण यहाँ लेख्नुहोस्..." required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>कस्लाई पठाउने हो छान्नुहोस् (Target Audience):</label>
-                            <select id="m_notice_target" required>
-                                <option value="सबै">सबै (सम्पूर्ण सदस्य र पदाधिकारीहरू)</option>
-                                <option value="केन्द्रीय समिति">केन्द्रीय समिति मात्र</option>
-                                <option value="संस्थापक कमिटी">संस्थापक कमिटी मात्र</option>
-                                <option value="सल्लाहकार समिति">सल्लाहकार समिति मात्र</option>
-                                <option value="प्रदेश कमिटी">प्रदेश कमिटी मात्र</option>
-                                <option value="जिल्ला कमिटी">जिल्ला कमिटी मात्र</option>
-                                <option value="स्थानीय तह कमिटी">स्थानीय तह कमिटी मात्र</option>
-                                <option value="साधारण सदस्य">साधारण सदस्यहरू मात्र</option>
-                            </select>
-                        </div>
-                        <button type="submit" style="width: auto; padding: 10px 25px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">सूचना पठाउनुहोस्</button>
-                    </form>
-                </div>
-
-                <!-- २. सूचना हेर्नुहोस् र सम्पादन गर्नुहोस् सेक्सन -->
-                <div class="admin-panel" style="padding: 15px; background: #fff; border: 1px solid var(--border-color); border-radius: 6px;">
-                    <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पठाइएका सूचनाहरू हेर्नुहोस् र सम्पादन गर्नुहोस्</h4>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>क्र.सं.</th>
-                                    <th>मिति र समय</th>
-                                    <th>विषय</th>
-                                    <th>विवरण</th>
-                                    <th>लक्ष्य (Target)</th>
-                                    <th class="no-print">कारवाही</th>
-                                </tr>
-                            </thead>
-                            <tbody id="memberNoticesTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
