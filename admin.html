@@ -1004,38 +1004,59 @@
     </div>
 
     <div id="positionModal" class="app-edit-modal">
-        <div class="app-edit-content" style="width: 400px;">
-            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता स्वीकृत (Approve)</h3>
-            <p style="font-size: 13px; font-weight: 600; color: #2d3748;">यो सदस्यलाई संस्थामा दिने पद छान्नुहोस् वा लेख्नुहोस्:</p>
+        <div class="app-edit-content" style="width: 450px;">
+            <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन स्वीकृत (Approve)</h3>
+            <p style="font-size: 13px; font-weight: 600; color: #2d3748;">यो सदस्यको लागि श्रेणि छान्नुहोस्:</p>
 
             <input type="hidden" id="pendingAppStr">
 
             <div class="form-group">
-                <label>पद (Designation):</label>
-                <select id="selectPosition" class="form-control" onchange="checkCustomPosition(this)">
-                    <option value="साधारण सदस्य">साधारण सदस्य</option>
-                    <option value="अध्यक्ष">अध्यक्ष</option>
-                    <option value="उपाध्यक्ष">उपाध्यक्ष</option>
-                    <option value="सचिव">सचिव</option>
-                    <option value="सह-सचिव">सह-सचिव</option>
-                    <option value="कोषाध्यक्ष">कोषाध्यक्ष</option>
-                    <option value="सदस्य">सदस्य</option>
-                    <option value="अन्य (Custom)">अन्य (आफैं लेख्नुहोस्)</option>
+                <label>प्रकार छान्नुहोस्:</label>
+                <select id="membershipTypeSelect" class="form-control" onchange="handleMembershipTypeChange(this)">
+                    <option value="साधारण सदस्य">साधारण सदस्य (General Member)</option>
+                    <option value="समिति">समिति (Committee Member)</option>
                 </select>
             </div>
 
-            <div class="form-group hidden" id="customPositionBox">
-                <label>नयाँ पदको नाम लेख्नुहोस्:</label>
-                <input type="text" id="customPositionInput" placeholder="पदको नाम लेख्नुहोस्">
+            <!-- यदि समिति चयन गरेमा मात्र देखिने खण्ड -->
+            <div id="committeeOptionsBox" class="hidden" style="background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #cbd5e0; margin-bottom: 15px;">
+                <div class="form-group">
+                    <label>कमिटीको तह छान्नुहोस्:</label>
+                    <select id="selectCommitteeLevel" class="form-control">
+                        <option value="संस्थापक कमिटी">संस्थापक कमिटी</option>
+                        <option value="केन्द्रीय कमिटी">केन्द्रीय कमिटी</option>
+                        <option value="सल्लाहकार समिति">सल्लाहकार समिति</option>
+                        <option value="प्रदेश कमिटी">प्रदेश कमिटी</option>
+                        <option value="जिल्ला कमिटी">जिल्ला कमिटी</option>
+                        <option value="स्थानीय तह कमिटी">स्थानीय तह कमिटी</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>पद (Designation):</label>
+                    <select id="selectCommitteePosition" class="form-control" onchange="checkCustomPosition(this)">
+                        <option value="अध्यक्ष">अध्यक्ष</option>
+                        <option value="उपाध्यक्ष">उपाध्यक्ष</option>
+                        <option value="सचिव">सचिव</option>
+                        <option value="सह-सचिव">सह-सचिव</option>
+                        <option value="कोषाध्यक्ष">कोषाध्यक्ष</option>
+                        <option value="सदस्य">सदस्य</option>
+                        <option value="अन्य (Custom)">अन्य (आफैं लेख्नुहोस्)</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="customPositionBox" style="margin-top: 10px; margin-bottom: 0;">
+                    <label>नयाँ पदको नाम लेख्नुहोस्:</label>
+                    <input type="text" id="customPositionInput" placeholder="पदको नाम लेख्नुहोस्">
+                </div>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <div style="display: flex; gap: 8px; margin-top: 20px;">
                 <button type="button" onclick="confirmApproveUser()" style="background: var(--accent-color); color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">स्वीकृत गर्नुहोस्</button>
                 <button type="button" onclick="closePositionModal()" style="background: #718096; color: #fff; padding: 10px; border: none; border-radius: 6px; font-weight: bold; flex: 1; cursor: pointer;">रद्द गर्नुहोस्</button>
             </div>
         </div>
     </div>
-
     <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
