@@ -1551,7 +1551,6 @@
             const { data } = await supabaseClient
                 .from('levy_payments')
                 .select('*')
-                .eq('status', 'Approved')
                 .order('created_at', { ascending: false });
 
             const tbody = document.getElementById('monthlyLevyIncomeTableBody');
