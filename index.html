@@ -42,7 +42,7 @@
         .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
         .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
         .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 200px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 10; top: 100%; left: 0; }
+        .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 220px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 10; top: 100%; left: 0; }
         .dropdown-content a { color: white; padding: 10px 14px; text-decoration: none; display: block; font-weight: normal; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; }
         .dropdown-content a:hover { background-color: #3b5998; }
         .dropdown:hover .dropdown-content { display: block; }
@@ -76,7 +76,7 @@
         .about-title-ne { font-size: 26px; color: #1a365d; font-weight: 950; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3.5px solid #008000; padding-bottom: 6px; display: inline-block; }
         .about-title-en { font-size: 18px; color: #4a5568; font-weight: 800; margin: 0 0 15px 0; }
         .about-meta { font-size: 15px; color: #2d3748; font-weight: 700; margin: 6px 0; }
-        .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 15px; text-align: center; }
+        .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 15px; text-align: justify; }
 
         #home .content-section { max-width: 900px; margin: 0 auto 30px auto; text-align: center; }
         #home .content-section p { text-align: justify; text-align-last: center; }
@@ -151,7 +151,6 @@
         .live-nepali-date { font-size: 17px; font-weight: 950; color: #ffffff; margin: 0; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .live-english-date { font-size: 13px; font-weight: 800; color: #bee3f8; margin: 3px 0 0 0; }
 
-        /* Notification Bell Styles */
         .notif-container { position: relative; display: inline-block; cursor: pointer; }
         .notif-btn { background: #fff; border: 2px solid #cbd5e0; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; transition: 0.2s; }
         .notif-btn:hover { background: #edf2f7; }
@@ -212,10 +211,19 @@
         </div>
     </div>
 
+    <!-- नेभिगेसन बारमा नयाँ क्याटेगोरी थपिएको छ -->
     <div class="nav">
         <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
         <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
         
+        <div class="dropdown">
+            <a href="#">इतिहास र संस्कृति ▾</a>
+            <div class="dropdown-content">
+                <a onclick="switchPage('family-history', this)">दशौँदी परिवारको इतिहास</a>
+                <a onclick="switchPage('family-culture', this)">धर्म, संस्कृति र रितिरिवाज</a>
+            </div>
+        </div>
+
         <div class="dropdown">
             <a href="#">समिति ▾</a>
             <div class="dropdown-content">
@@ -288,6 +296,30 @@
                 <div class="about-section">
                     <h3>कामको व्याख्या तथा उद्देश्यहरू</h3>
                     <p id="db_description"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- नयाँ थपिएको पेज: दशौँदी परिवारको इतिहास -->
+        <div id="family-history" class="page-section">
+            <div class="card" style="text-align: left;">
+                <h2 style="display: block; text-align: center;">दशौँदी परिवारको इतिहास</h2>
+                <div class="about-section">
+                    <p><strong>१. पृष्ठभूमि र उत्पत्ति:</strong> नेपालको सामाजिक र सांस्कृतिक वंशावलीमा 'दशौँदी' परिवार एक विशिष्ट पहिचान बोकेको ऐतिहासिक वंशीय समुदाय हो। पुर्खादेखि नै समाजमा विभिन्न सामाजिक, प्रशासनिक तथा सांस्कृतिक क्षेत्रमा योगदान पुर्याउँदै आएका यस परिवारको ऐतिहासिक थातथलो र विकासक्रमको छुट्टै महत्त्व रहेको छ।</p>
+                    <p><strong>२. ऐतिहासिक विकास र फैलावट:</strong> समयको बग्दो क्रमसँगै कर्णाली प्रदेश लगायत देशका विभिन्न भू-भागहरूमा दशौँदी परिवार छरिएर बसोबास गर्दै आएका छन्। यस परिवारका पुर्खाहरूले परम्परागत पेसा, कृषि, शिक्षा र समाज सुधारका कार्यहरूमा नेतृत्वदायी भूमिका निर्वाह गरेका ऐतिहासिक जनश्रुति तथा वंशावलीहरूमा उल्लेख पाइन्छ।</p>
+                    <p><strong>३. संगठित रूपान्तरण:</strong> छरिएर रहेका दशौँदी वंशका दाजुभाई तथा दिदीबहिनीहरूलाई एक सूत्रमा बाँध्न, आपसी भाइचारा कायम गर्न र पुर्खाहरूले दिएको ऐतिहासिक थातिलाई जोगाइराख्न वि.सं. २०८० मा 'दशौँदी समाज नेपाल' को स्थापना गरिएको हो। यसले इतिहासको जगेर्ना र पुस्तान्तरणमा महत्त्वपूर्ण कडीको रूपमा काम गरिरहेको छ।</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- नयाँ थपिएको पेज: धर्म, संस्कृति र रितिरिवाज -->
+        <div id="family-culture" class="page-section">
+            <div class="card" style="text-align: left;">
+                <h2 style="display: block; text-align: center;">धर्म, संस्कृति र रितिरिवाज</h2>
+                <div class="about-section">
+                    <p><strong>१. धार्मिक आस्था र विश्वास:</strong> दशौँदी परिवारले सनातन वैदिक हिन्दू धर्म, संस्कृति र परम्परालाई निष्ठापूर्वक पालना गर्दै आएको छ। प्रकृतिको पूजा, कुलपूजा (मष्टो/देवाली), पितृकार्य तथा विभिन्न देवी-देवताहरूको आराधना यस समुदायका मुख्य धार्मिक विशेषताहरू हुन्।</p>
+                    <p><strong>२. चाडपर्व र उत्सवहरू:</strong> दशैं, तिहार, तीज, माघे संक्रान्ति, गौरा पर्व जस्ता राष्ट्रिय तथा क्षेत्रीय चाडपर्वहरू यस परिवारमा ठie उल्लासका साथ मनाइन्छन्। चाडपर्वका अवसरमा पारिवारिक जमघट, आपसी आदरभाव र सांस्कृतिक परम्पराहरूको आदानप्रदान हुने गर्दछ।</p>
+                    <p><strong>३. रितिरिवाज र संस्कार:</strong> जन्म, विवाह, ब्रतबन्ध र मृत्यु संस्कार जस्ता जीवनका महत्त्वपूर्ण पाटोहरूमा मौलिक सांस्कृतिक विधिहरू अवलम्बन गरिन्छन्। पारिवारिक मूल्यमान्यता, ठूलालाई आदर र सानालाई स्नेह गर्ने संस्कारलाई दशौँदी परिवारले आफ्नो प्रमुख पहिचानको रूपमा जोगाएर राखेको छ।</p>
                 </div>
             </div>
         </div>
@@ -423,7 +455,6 @@
                             <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px; font-weight: 700;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
                         </div>
                         
-                        <!-- सूचना घन्टी (Notification Bell) र लग आउट बटन -->
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <div class="notif-container">
                                 <div class="notif-btn" onclick="toggleNotificationDropdown()" title="सूचनाहरू">
@@ -1110,7 +1141,6 @@
             }
         }
 
-        // --- Notification System Logic ---
         function toggleNotificationDropdown() {
             const dropdown = document.getElementById('notifDropdown');
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
@@ -1166,25 +1196,6 @@
             loadUserNotifications();
         }
 
-        // एडमिनले सूचना पठाउँदा यो फंक्सन प्रयोग गर्न सक्नुहुन्छ (वा एडमिन प्यानलमा जोड्न सक्नुहुन्छ)
-        async function sendAdminNotificationToUser(userEmail, title, message) {
-            // १. Supabase मा नोटिफिकेसन सेभ गर्ने
-            await supabaseClient.from('notifications').insert([{
-                user_email: userEmail,
-                title: title,
-                message: message,
-                is_read: false
-            }]);
-
-            // २. EmailJS मार्फत इमेलमा जानकारी पठाउने
-            emailjs.send('service_v9c6kad', 'template_tkxmx5o', {
-                to_email: userEmail,
-                otp_code: title, // शीर्षक
-                time: message     // सन्देश
-            }).catch(err => console.log('Email notify error:', err));
-        }
-        // ---------------------------------
-
         async function loadDashboard() {
             showSubSection('dashboardStep');
             document.getElementById('profileEditMode').style.display = 'none';
@@ -1198,7 +1209,6 @@
             document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
             if(currentUserProfile.avatar) document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
 
-            // लगइन भएपछि युजरको सूचनाहरू लोड गर्ने
             loadUserNotifications();
 
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
