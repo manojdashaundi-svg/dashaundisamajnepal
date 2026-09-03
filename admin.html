@@ -1591,6 +1591,84 @@
             }
         }
 
+        async function loadPendingLevyPayments() {
+    const { data } = await supabaseClient
+        .from('levy_payments')
+        .select('*')
+        .eq('status', 'Pending') // वा status खाली भएकाहरूका लागि
+        .order('created_at', { ascending: false });
+
+    const tbody = document.querySelector('#pendingTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+        return;
+    }
+
+    data.forEach((item) => {
+        const itemStr = encodeURIComponent(JSON.stringify(item));
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${item.member_name || item.user_id}</strong></td>
+                <td>${item.committee_level || '-'}</td>
+                <td>${item.paid_months || item.months || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
+                <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('${item.payment_slip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
+                <td class="no-print">
+                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
+                    <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+async function approveLevyPayment(id, itemStr) {
+    if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
+        const item = JSON.parse(itemStr);
+        
+        // स्टेटस Approved बनाउने
+        const { error } = await supabaseClient
+            .from('levy_payments')
+            .update({ status: 'Approved' })
+            .eq('id', id);
+
+        if (!error) {
+            // आम्दानी रेकर्डमा पनि थप्ने
+            await supabaseClient.from('income_records').insert([{
+                date: getCurrentNepaliDate(),
+                name: item.member_name || 'सदस्य',
+                category: 'मासिक लेवी शुल्क',
+                description: `लेवी महिनाहरू: ${item.paid_months || item.months || ''}`,
+                amount: item.total_amount || 0
+            }]);
+
+            alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
+            loadPendingLevyPayments();
+            loadMonthlyLevyIncomeData();
+        } else {
+            alert('त्रुटि: ' + error.message);
+        }
+    }
+}
+
+async function rejectLevyPayment(id) {
+    if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकृत (Reject) गर्न चाहनुहुन्छ?')) {
+        const { error } = await supabaseClient
+            .from('levy_payments')
+            .update({ status: 'Rejected' })
+            .eq('id', id);
+
+        if (!error) {
+            alert('भुक्तानी अनुरोध अस्वीकृत गरियो!');
+            loadPendingLevyPayments();
+        } else {
+            alert('त्रुटि: ' + error.message);
+        }
+    }
+}
         async function deleteIncomeRecord(id) {
             if(confirm('के तपाईं यो आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('income_records').delete().eq('id', id);
