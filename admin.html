@@ -1989,6 +1989,7 @@
                 alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
+                loadUsersData();
                 loadIncomeData();
             } else {
                 alert('त्रुटि: ' + appError.message);
