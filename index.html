@@ -134,14 +134,12 @@
         .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
         .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
 
-        /* Levy Portal Additional Styles with Split Layout & Live Dates */
         .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
         
         .levy-flex-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
         .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
         
-        /* ठूलो, बोल्ड र आकर्षक चम्किलो रङ्गको दाँयापट्टि मिति बक्स */
         .live-dates-box { 
             background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); 
             border: 2px solid #3182ce; 
@@ -152,6 +150,18 @@
         }
         .live-nepali-date { font-size: 17px; font-weight: 950; color: #ffffff; margin: 0; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .live-english-date { font-size: 13px; font-weight: 800; color: #bee3f8; margin: 3px 0 0 0; }
+
+        /* Notification Bell Styles */
+        .notif-container { position: relative; display: inline-block; cursor: pointer; }
+        .notif-btn { background: #fff; border: 2px solid #cbd5e0; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; transition: 0.2s; }
+        .notif-btn:hover { background: #edf2f7; }
+        .notif-badge { position: absolute; top: -2px; right: -2px; background: #e53e3e; color: #fff; font-size: 10px; font-weight: 950; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
+        .notif-dropdown { display: none; position: absolute; right: 0; top: 45px; width: 300px; background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 1px solid #cbd5e0; z-index: 3000; text-align: left; overflow: hidden; }
+        .notif-header { background: #1a365d; color: #fff; padding: 10px 12px; font-size: 13px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
+        .notif-body { max-height: 250px; overflow-y: auto; padding: 5px; }
+        .notif-item { padding: 8px 10px; border-bottom: 1px solid #edf2f7; font-size: 12px; }
+        .notif-item.unread { background: #ebf8ff; font-weight: bold; }
+        .notif-item p { margin: 2px 0; color: #2d3748; }
 
         .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 6px; }
         
@@ -412,7 +422,27 @@
                             <h3 style="color: #234e52; margin: 0; font-size: 18px; font-weight: 900;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
                             <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px; font-weight: 700;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
                         </div>
-                        <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 6px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
+                        
+                        <!-- सूचना घन्टी (Notification Bell) र लग आउट बटन -->
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="notif-container">
+                                <div class="notif-btn" onclick="toggleNotificationDropdown()" title="सूचनाहरू">
+                                    🔔
+                                    <span id="notifBadge" class="notif-badge" style="display: none;">0</span>
+                                </div>
+                                <div id="notifDropdown" class="notif-dropdown">
+                                    <div class="notif-header">
+                                        <span>सूचना बक्स</span>
+                                        <span style="font-size: 11px; cursor: pointer; text-decoration: underline;" onclick="markAllNotificationsAsRead()">सबै पढेको रूपमा चिन्ह लगाउनुहोस्</span>
+                                    </div>
+                                    <div id="notifBody" class="notif-body">
+                                        <p style="text-align: center; color: #718096; padding: 10px;">कुनै नयाँ सूचना छैन।</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 8px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
+                        </div>
                     </div>
 
                     <div class="levy-dashboard-card">
@@ -422,7 +452,6 @@
                                 <button onclick="openLevyModal()" class="btn-primary">लेवी तिर्नुहोस् (Pay Levy)</button>
                             </div>
                             
-                            <!-- "मेरो लेवी भुक्तानी" जस्तै ठूलो, बोल्ड र आकर्षक चम्किलो रङ्गको दाँयापट्टि मिति बक्स -->
                             <div class="live-dates-box">
                                 <p class="live-nepali-date" id="dashLiveNepaliDate">वि.सं. २०८३ भदौ १८</p>
                                 <p class="live-english-date" id="dashLiveEnglishDate">2026-09-03</p>
@@ -439,7 +468,6 @@
                                         <div id="monthsGrid" class="months-grid"></div>
                                     </div>
                                     <div class="modal-right">
-                                        <!-- समिति विवरण भन्दा माथि स्वचालित रूपमा अपडेट हुने रियल नेपाली मिति -->
                                         <div style="background: #e2e8f0; padding: 5px 8px; border-radius: 4px; text-align: center; margin-bottom: 8px;">
                                             <span style="font-size: 11px; font-weight: 900; color: #1a365d;" id="modalLiveNepaliDate">मिति: वि.सं. २०८३ भदौ १८</span>
                                         </div>
@@ -776,10 +804,8 @@
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
 
-        // वास्तविक (Real) आजको मिति स्वतः अपडेट गराउने फंक्सन
         function getRealLiveDates() {
             const now = new Date();
-            
             const enYear = now.getFullYear();
             const enMonth = String(now.getMonth() + 1).padStart(2, '0');
             const enDay = String(now.getDate()).padStart(2, '0');
@@ -787,23 +813,14 @@
 
             let nepaliYear = 2083;
             let nepaliMonthName = "भदौ";
-            let nepaliDayNum = "१८"; // आजको वास्तविक मिति
-
-            if (enYear === 2026 && enMonth === "09" && enDay === "03") {
-                nepaliDayNum = "१८";
-            }
+            let nepaliDayNum = "१८";
 
             const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYear)} ${nepaliMonthName} ${toNepaliNumber(nepaliDayNum)}`;
-
-            return {
-                nepali: nepaliDateStr,
-                english: englishDateStr
-            };
+            return { nepali: nepaliDateStr, english: englishDateStr };
         }
 
         function updateRealTimeClock() {
             const liveDates = getRealLiveDates();
-            
             const topBarDateEl = document.getElementById('topBarDate');
             if(topBarDateEl) topBarDateEl.innerText = `${liveDates.nepali} | नेपाल संवत ११४६`;
 
@@ -886,7 +903,6 @@
 
         async function fetchCentralCommittee() {
             const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
-            
             const container = document.getElementById('central_container');
             const homeContainer = document.getElementById('home_central_container');
 
@@ -987,7 +1003,6 @@
         }
 
         let currentForgotOtp = '';
-
         function showForgotPasswordStep() {
             showSubSection('forgotPasswordStep');
             document.getElementById('forgotOtpSection').style.display = 'none';
@@ -1000,19 +1015,16 @@
             const email = document.getElementById('forgot_email').value.trim();
             if(!email) { alert('कृपया इमेल ठेगाना लेख्नुहोस्!'); return; }
 
-            const { data, error } = await supabaseClient.from('users').select('*').eq('email', email).single();
+            const { data } = await supabaseClient.from('users').select('*').eq('email', email).single();
             if(!data) { alert('यो इमेलबाट कुनै पनि खाता दर्ता गरिएको छैन!'); return; }
 
             currentForgotOtp = Math.floor(100000 + Math.random() * 900000).toString();
-
             await supabaseClient.from('otps').insert([{ identifier: email, otp_code: currentForgotOtp, expires_at: new Date(new Date().getTime() + 60000).toISOString() }]);
 
             emailjs.send('service_v9c6kad', 'template_tkxmx5o', { to_email: email, otp_code: currentForgotOtp, time: "१ मिनेट" })
                 .then(() => { 
                     alert('✔ पासवर्ड रिसेट गर्ने कोड इमेलमा पठाइयो!');
                     document.getElementById('forgotOtpSection').style.display = 'block';
-                }).catch(err => {
-                    alert('इमेल पठाउन असफल: JSON त्रुटि');
                 });
         }
 
@@ -1021,22 +1033,14 @@
             const enteredOtp = document.getElementById('forgot_otp_code').value.trim();
             const newPassword = document.getElementById('new_password').value.trim();
 
-            if(enteredOtp !== currentForgotOtp) {
-                alert('गलत OTP कोड!');
-                return;
-            }
-
-            if(!newPassword || newPassword.length < 4) {
-                alert('कृपया कम्तिमा ४ अंक/अक्षरको नयाँ पासवर्ड राख्नुहोस्!');
-                return;
-            }
+            if(enteredOtp !== currentForgotOtp) { alert('गलत OTP कोड!'); return; }
+            if(!newPassword || newPassword.length < 4) { alert('कृपया कम्तिमा ४ अंक/अक्षरको नयाँ पासवर्ड राख्नुहोस्!'); return; }
 
             const { error } = await supabaseClient.from('users').update({ password: newPassword }).eq('email', email);
-
             if(error) {
                 alert('पासवर्ड अपडेट गर्न असफल: ' + error.message);
             } else {
-                alert('✔ पासवर्ड सफलतापूर्वक परिवर्तन भयो! अब नयाँ पासवर्डमार्फत लगइन गर्नुहोस्।');
+                alert('✔ पासवर्ड सफलतापूर्वक परिवर्तन भयो!');
                 showSubSection('loginStep');
             }
         }
@@ -1069,9 +1073,7 @@
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('edit_avatar_preview').src = e.target.result;
-                }
+                reader.onload = (e) => { document.getElementById('edit_avatar_preview').src = e.target.result; }
                 reader.readAsDataURL(file);
             }
         }
@@ -1083,32 +1085,16 @@
             const newPassword = document.getElementById('edit_password').value.trim();
             const avatarFile = document.getElementById('edit_avatar_file').files[0];
 
-            if (!newName) {
-                alert('कृपया पूरा नाम लेख्नुहोस्!');
-                return;
-            }
-
-            alert('प्रोफाइल अपडेट हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
+            if (!newName) { alert('कृपया पूरा नाम लेख्नुहोस्!'); return; }
+            alert('प्रोफाइल अपडेट हुँदैछ...');
 
             let avatarUrl = currentUserProfile.avatar;
-            if (avatarFile) {
-                avatarUrl = await uploadFileToSupabase(avatarFile, 'avatars');
-            }
+            if (avatarFile) { avatarUrl = await uploadFileToSupabase(avatarFile, 'avatars'); }
 
-            let updateData = {
-                full_name: newName,
-                name: newName,
-                phone: newPhone,
-                dob: newDob,
-                avatar: avatarUrl
-            };
-
-            if (newPassword) {
-                updateData.password = newPassword;
-            }
+            let updateData = { full_name: newName, name: newName, phone: newPhone, dob: newDob, avatar: avatarUrl };
+            if (newPassword) { updateData.password = newPassword; }
 
             const { error } = await supabaseClient.from('users').update(updateData).eq('email', currentUserProfile.email);
-
             if (error) {
                 alert('प्रोफाइल अपडेट गर्न असफल: ' + error.message);
             } else {
@@ -1119,11 +1105,85 @@
                 currentUserProfile.dob = newDob;
                 currentUserProfile.avatar = avatarUrl;
                 if(newPassword) currentUserProfile.password = newPassword;
-
                 loadDashboard();
                 toggleEditProfile();
             }
         }
+
+        // --- Notification System Logic ---
+        function toggleNotificationDropdown() {
+            const dropdown = document.getElementById('notifDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            if (dropdown.style.display === 'block') {
+                loadUserNotifications();
+            }
+        }
+
+        async function loadUserNotifications() {
+            if (!currentUserProfile.email) return;
+            const { data, error } = await supabaseClient
+                .from('notifications')
+                .select('*')
+                .eq('user_email', currentUserProfile.email)
+                .order('created_at', { ascending: false });
+
+            const notifBody = document.getElementById('notifBody');
+            const notifBadge = document.getElementById('notifBadge');
+
+            if (error || !data || data.length === 0) {
+                notifBody.innerHTML = '<p style="text-align: center; color: #718096; padding: 10px; font-size:12px;">कुनै सूचना उपलब्ध छैन।</p>';
+                notifBadge.style.display = 'none';
+                return;
+            }
+
+            let unreadCount = 0;
+            notifBody.innerHTML = '';
+            data.forEach(item => {
+                if (!item.is_read) unreadCount++;
+                notifBody.innerHTML += `
+                    <div class="notif-item ${item.is_read ? '' : 'unread'}">
+                        <strong style="color: #1a365d; font-size: 13px;">${item.title}</strong>
+                        <p>${item.message}</p>
+                        <small style="color: #a0aec0; font-size: 10px;">${new Date(item.created_at).toLocaleString()}</small>
+                    </div>
+                `;
+            });
+
+            if (unreadCount > 0) {
+                notifBadge.innerText = unreadCount;
+                notifBadge.style.display = 'flex';
+            } else {
+                notifBadge.style.display = 'none';
+            }
+        }
+
+        async function markAllNotificationsAsRead() {
+            if (!currentUserProfile.email) return;
+            await supabaseClient
+                .from('notifications')
+                .update({ is_read: true })
+                .eq('user_email', currentUserProfile.email);
+            loadUserNotifications();
+        }
+
+        // एडमिनले सूचना पठाउँदा यो फंक्सन प्रयोग गर्न सक्नुहुन्छ (वा एडमिन प्यानलमा जोड्न सक्नुहुन्छ)
+        async function sendAdminNotificationToUser(userEmail, title, message) {
+            // १. Supabase मा नोटिफिकेसन सेभ गर्ने
+            await supabaseClient.from('notifications').insert([{
+                user_email: userEmail,
+                title: title,
+                message: message,
+                is_read: false
+            }]);
+
+            // २. EmailJS मार्फत इमेलमा जानकारी पठाउने
+            emailjs.send('service_v9c6kad', 'template_tkxmx5o', {
+                to_email: userEmail,
+                otp_code: title, // शीर्षक
+                time: message     // सन्देश
+            }).catch(err => console.log('Email notify error:', err));
+        }
+        // ---------------------------------
 
         async function loadDashboard() {
             showSubSection('dashboardStep');
@@ -1137,6 +1197,9 @@
             document.getElementById('lbl_email').innerText = currentUserProfile.email;
             document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
             if(currentUserProfile.avatar) document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
+
+            // लगइन भएपछि युजरको सूचनाहरू लोड गर्ने
+            loadUserNotifications();
 
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
@@ -1155,9 +1218,7 @@
 
             userCommitteeKey = (userData && userData.committee_key) ? userData.committee_key : 'central';
             const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
-            if (rateData) {
-                committeeRate = parseFloat(rateData.monthly_amount);
-            }
+            if (rateData) { committeeRate = parseFloat(rateData.monthly_amount); }
 
             document.getElementById('modalCommitteeName').innerText = committee;
             document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
@@ -1176,7 +1237,6 @@
                 if (isApprovedActive) {
                     alertBox.innerHTML = "✅ तपाईंको सदस्यता स्वीकृत (Approved) छ र हाल चालु अवस्थामा छ।";
                     alertBox.style.color = "#276749";
-
                     btnOpenForm.innerHTML = "📝 सदस्यता विवरण हेर्नुहोस् (चालु)";
                     btnOpenForm.style.background = "#718096";
                     btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
@@ -1185,7 +1245,6 @@
                     let reasonText = isExpired ? "⏳ तपाईंको परिचय पत्रको म्याद समाप्त भएको छ।" : (isRejected ? "❌ तपाईंको आवेदन एडमिनबाट अस्वीकृत (Rejected) भएको छ।" : "⚠️ तपाईंको सदस्यता हटाइएको (Removed) छ।");
                     alertBox.innerHTML = reasonText + " कृपया नवीकरण फारम भरी पुनः पेस गर्नुहोस्।";
                     alertBox.style.color = "#e53e3e";
-
                     btnOpenForm.innerHTML = "🔄 सदस्यता नवीकरण फारम";
                     btnOpenForm.style.background = "var(--accent-gradient)";
                     btnOpenForm.setAttribute("onclick", "toggleForm('नवीकरण')");
@@ -1193,12 +1252,10 @@
                 else {
                     alertBox.innerHTML = "⏳ तपाईंको आवेदन समीक्षाको क्रममा (Pending) रहेको छ।";
                     alertBox.style.color = "#d69e2e";
-
                     noticeBanner.style.display = 'block';
                     noticeBanner.style.backgroundColor = '#feebc8';
                     noticeBanner.style.color = '#744210';
                     noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर परिवर्तन गर्न मिल्दैन।";
-                    
                     btnOpenForm.innerHTML = "📝 आवेदन विवरण हेर्नुहोस्";
                     btnOpenForm.style.background = "#718096";
                     btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
@@ -1220,7 +1277,6 @@
         }
 
         let currentFormType = 'नयाँ सदस्यता';
-        
         function toggleForm(type) {
             currentFormType = type;
             const formBox = document.getElementById('officialFormBox');
@@ -1234,7 +1290,6 @@
             step3Box.style.display = 'none';
             formBox.style.display = 'block';
             document.getElementById('formSubjectType').innerText = type === 'नयाँ सदस्यता' ? 'सदस्यता पाउँ' : (type === 'विवरण मात्र' ? 'सदस्यता विवरण' : 'सदस्यता नवीकरण गरिपाउँ');
-            
             document.getElementById('formDateDisplay').innerText = "आवेदन मिति: " + getNepaliDate();
 
             if (type === 'नवीकरण') {
@@ -1298,9 +1353,7 @@
             document.getElementById('step3').style.display = 'none';
         }
 
-        function triggerPhotoUpload() {
-            document.getElementById('form_passport_photo').click();
-        }
+        function triggerPhotoUpload() { document.getElementById('form_passport_photo').click(); }
 
         function previewFormPhoto(event) {
             const file = event.target.files[0];
@@ -1330,10 +1383,7 @@
             const filePath = `${folderName}/${fileName}`;
 
             const { data, error } = await supabaseClient.storage.from('documents').upload(filePath, file);
-            if (error) {
-                console.error('Upload Error:', error.message);
-                return '';
-            }
+            if (error) return '';
 
             const { data: publicUrlData } = supabaseClient.storage.from('documents').getPublicUrl(filePath);
             return publicUrlData ? publicUrlData.publicUrl : '';
@@ -1349,12 +1399,8 @@
                 return;
             }
 
-            if(!paySlipFile) {
-                alert('कृपया भुक्तानी भौचर/स्क्रीनसट अनिवार्य अपलोड गर्नुहोस्!');
-                return;
-            }
-
-            alert('फाइलहरू अपलोड हुँदैछन्, कृपया केही सेकेन्ड पर्खनुहोस्...');
+            if(!paySlipFile) { alert('कृपया भुक्तानी भौचर/स्क्रीनसट अनिवार्य अपलोड गर्नुहोस्!'); return; }
+            alert('फाइलहरू अपलोड हुँदैछन्...');
 
             let citFrontUrl = currentApplication ? currentApplication.citizenship_front : '';
             let citBackUrl = currentApplication ? currentApplication.citizenship_back : '';
@@ -1395,27 +1441,15 @@
         }
 
         async function openMyCard() {
-            if(!currentApplication) {
-                alert('तपाईंले हालसम्म कुनै पनि सदस्यता फारम पेस गर्नुभएको छैन।');
-                return;
-            }
-
-            if(currentApplication.status === 'Pending') {
-                alert('तपाईंको आवेदन समीक्षामा (Pending) रहेको छ। स्वीकृत भएपछि मात्र कार्ड हेर्न मिल्नेछ।');
-                return;
-            }
-
-            if(currentApplication.status === 'Rejected' || currentApplication.status === 'Removed') {
-                alert('तपाईंको आवेदन अस्वीकृत वा हटाइएको छ। कृपया नवीकरण/नयाँ फारम पेस गर्नुहोस्।');
-                return;
-            }
+            if(!currentApplication) { alert('तपाईंले हालसम्म कुनै पनि सदस्यता फारम पेस गर्नुभएको छैन।'); return; }
+            if(currentApplication.status === 'Pending') { alert('तपाईंको आवेदन समीक्षामा (Pending) रहेको छ।'); return; }
+            if(currentApplication.status === 'Rejected' || currentApplication.status === 'Removed') { alert('तपाईंको आवेदन अस्वीकृत वा हटाइएको छ।'); return; }
 
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
             
             const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
             const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-
             const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
 
             document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
@@ -1432,54 +1466,28 @@
             document.getElementById('cardPhoto').src = photo;
 
             const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-            document.getElementById('cardQrCode').src = qrApiUrl;
+            document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
 
             document.getElementById('idCardModal').style.display = 'flex';
         }
 
-        function closeMyCard() {
-            document.getElementById('idCardModal').style.display = 'none';
-        }
-
-        function resetMembershipFlow() {
-            showSubSection('mainChoiceStep');
-            document.getElementById('officialFormBox').style.display = 'none';
-            document.getElementById('step3').style.display = 'none';
-        }
+        function closeMyCard() { document.getElementById('idCardModal').style.display = 'none'; }
+        function resetMembershipFlow() { showSubSection('mainChoiceStep'); document.getElementById('officialFormBox').style.display = 'none'; document.getElementById('step3').style.display = 'none'; }
 
         async function loadPublicNotices() {
-            const { data, error } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
-            
-            const containers = [
-                document.getElementById('publicNoticesContainer'),
-                document.getElementById('homeNoticesContainer')
-            ];
+            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            const containers = [document.getElementById('publicNoticesContainer'), document.getElementById('homeNoticesContainer')];
 
             containers.forEach(container => {
                 if(!container) return;
-                if (error || !data || data.length === 0) {
-                    container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>';
-                    return;
-                }
+                if (!data || data.length === 0) { container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>'; return; }
 
                 container.innerHTML = '';
                 data.forEach(item => {
                     let fileContent = '';
-                    if (item.file_type === 'pdf' || (item.file_url && item.file_url.endsWith('.pdf'))) {
-                        fileContent = `
-                            <div style="margin-top: 15px; text-align: center;">
-                                <a href="${item.file_url}" target="_blank" style="background: #e53e3e; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">📄 PDF फाइल हेर्नुहोस् / डाउनलोड गर्नुहोस्</a>
-                            </div>
-                        `;
-                    } else if (item.file_url) {
-                        fileContent = `
-                            <div style="margin-top: 15px; text-align: center;">
-                                <img src="${item.file_url}" alt="सूचना फोटो" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;">
-                            </div>
-                        `;
+                    if (item.file_url) {
+                        fileContent = `<div style="margin-top: 15px; text-align: center;"><img src="${item.file_url}" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0;"></div>`;
                     }
-
                     container.innerHTML += `
                         <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
                             <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
@@ -1492,7 +1500,6 @@
         }
 
         let selectedMonths = [];
-
         async function openLevyModal() {
             document.getElementById('levyModal').style.display = 'flex';
             updateRealTimeClock();
@@ -1508,26 +1515,15 @@
                 committeeRate = parseFloat(rateData.monthly_amount);
                 document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
             }
-
             renderMonths(['01', '02', '03', '04'], committeeRate); 
         }
 
-        function closeLevyModal() {
-            document.getElementById('levyModal').style.display = 'none';
-        }
+        function closeLevyModal() { document.getElementById('levyModal').style.display = 'none'; }
+        function checkIfLate(monthVal) { return parseInt(monthVal) > 4 && parseInt(monthVal) < 5; }
 
-        function checkIfLate(monthVal) {
-            let currentMonthNum = 5; 
-            return parseInt(monthVal) > 4 && parseInt(monthVal) < currentMonthNum; 
-        }
-
-        function toggleMonth(monthVal, rate, isLate) {
+        function toggleMonth(monthVal, rate) {
             let index = selectedMonths.indexOf(monthVal);
-            if (index > -1) {
-                selectedMonths.splice(index, 1);
-            } else {
-                selectedMonths.push(monthVal);
-            }
+            if (index > -1) { selectedMonths.splice(index, 1); } else { selectedMonths.push(monthVal); }
             updateLevySummary(rate);
             renderMonths(['01', '02', '03', '04'], rate);
         }
@@ -1536,13 +1532,7 @@
             let count = selectedMonths.length;
             let baseTotal = count * rate;
             let fineTotal = 0;
-
-            selectedMonths.forEach(m => {
-                if (checkIfLate(m)) {
-                    fineTotal += (rate * 0.10);
-                }
-            });
-
+            selectedMonths.forEach(m => { if (checkIfLate(m)) { fineTotal += (rate * 0.10); } });
             let grandTotal = baseTotal + fineTotal;
 
             document.getElementById('selectedCount').innerText = count;
@@ -1554,7 +1544,6 @@
         function renderMonths(userHistory, rate) {
             const grid = document.getElementById('monthsGrid');
             grid.innerHTML = '';
-            
             const monthsList = [
                 {name: 'वैशाख', val: '01'}, {name: 'जेठ', val: '02'}, {name: 'असार', val: '03'},
                 {name: 'साउन', val: '04'}, {name: 'भदौ', val: '05'}, {name: 'असोज', val: '06'},
@@ -1566,10 +1555,9 @@
                 let isPaid = userHistory.includes(m.val);
                 let isLate = checkIfLate(m.val);
                 let isSelected = selectedMonths.includes(m.val);
-                
                 let boxClass = isPaid ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
-                let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate}, ${isLate})"`;
-                let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ (जरिवाना)' : 'बाँकी'));
+                let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
+                let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ' : 'बाँकी'));
                 
                 grid.innerHTML += `
                     <div class="month-box ${boxClass}" ${clickAction}>
@@ -1583,15 +1571,9 @@
 
         function submitLevyPayment() {
             const fileInput = document.getElementById('voucherFile');
-            if(selectedMonths.length === 0) {
-                alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!');
-                return;
-            }
-            if(fileInput.files.length === 0) {
-                alert('कृपया भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्!');
-                return;
-            }
-            alert('लेवी भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
+            if(selectedMonths.length === 0) { alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); return; }
+            if(fileInput.files.length === 0) { alert('कृपया भौचर अपलोड गर्नुहोस्!'); return; }
+            alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
             closeLevyModal();
         }
 
