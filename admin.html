@@ -1810,14 +1810,23 @@
                 return;
             }
             document.getElementById('pendingAppStr').value = appStr;
-            document.getElementById('selectPosition').value = 'साधारण सदस्य';
-            document.getElementById('customPositionInput').value = '';
+            document.getElementById('membershipTypeSelect').value = 'साधारण सदस्य';
+            document.getElementById('committeeOptionsBox').classList.add('hidden');
             document.getElementById('customPositionBox').classList.add('hidden');
             document.getElementById('positionModal').style.display = 'flex';
         }
 
         function closePositionModal() {
             document.getElementById('positionModal').style.display = 'none';
+        }
+
+        function handleMembershipTypeChange(select) {
+            const committeeBox = document.getElementById('committeeOptionsBox');
+            if (select.value === 'समिति') {
+                committeeBox.classList.remove('hidden');
+            } else {
+                committeeBox.classList.add('hidden');
+            }
         }
 
         function checkCustomPosition(select) {
@@ -1834,17 +1843,25 @@
             const appStr = document.getElementById('pendingAppStr').value;
             const app = JSON.parse(appStr);
 
-            let selectedVal = document.getElementById('selectPosition').value;
-            let assignedPosition = '';
+            let memType = document.getElementById('membershipTypeSelect').value;
+            let assignedPosition = 'साधारण सदस्य';
 
-            if(selectedVal === 'अन्य (Custom)') {
-                assignedPosition = document.getElementById('customPositionInput').value.trim();
-                if(!assignedPosition) {
-                    alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
-                    return;
+            if (memType === 'समिति') {
+                let commLevel = document.getElementById('selectCommitteeLevel').value;
+                let commPos = document.getElementById('selectCommitteePosition').value;
+
+                if (commPos === 'अन्य (Custom)') {
+                    let customPos = document.getElementById('customPositionInput').value.trim();
+                    if (!customPos) {
+                        alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
+                        return;
+                    }
+                    assignedPosition = `${customPos} - ${commLevel}`;
+                } else {
+                    assignedPosition = `${commPos} - ${commLevel}`;
                 }
             } else {
-                assignedPosition = selectedVal;
+                assignedPosition = 'साधारण सदस्य';
             }
 
             closePositionModal();
