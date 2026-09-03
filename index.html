@@ -1650,7 +1650,6 @@
     if(fileInput.files.length === 0) { alert('कृपया भौचर अपलोड गर्नुहोस्!'); return; }
 
     try {
-        // लगइन भएको युजरको आईडी वा नाम यहाँबाट लिने (तपाईंको कोड अनुसारको रिएबल प्रयोग गर्नुहोस्)
         const activeUserId = (typeof currentUser !== 'undefined' && currentUser?.id) ? currentUser.id : ('1');
 
         const { error } = await supabaseClient
@@ -1660,7 +1659,7 @@
                     user_id: activeUserId,
                     committee_level: 'केन्द्रीय समिति',
                     year: 2083,
-                    months: selectedMonths.join(', '),
+                    months: selectedMonths, // यहाँ selectedMonths लाई सीधै Array को रूपमा पास गर्ने (join नगर्ने)
                     total_months: selectedMonths.length,
                     base_amount: selectedMonths.length * 200,
                     fine_amount: 0,
