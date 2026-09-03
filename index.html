@@ -1644,14 +1644,43 @@
             updateLevySummary(rate);
         }
 
-        function submitLevyPayment() {
-            const fileInput = document.getElementById('voucherFile');
-            if(selectedMonths.length === 0) { alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); return; }
-            if(fileInput.files.length === 0) { alert('कृपया भौचर अपलोड गर्नुहोस्!'); return; }
-            alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
-            closeLevyModal();
+       async function submitLevyPayment() {
+    const fileInput = document.getElementById('voucherFile');
+    if(selectedMonths.length === 0) { alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); return; }
+    if(fileInput.files.length === 0) { alert('कृपया भौचर अपलोड गर्नुहोस्!'); return; }
+
+    try {
+        // यहाँ Supabase मा डेटा इन्सर्ट गर्ने कोड थप्ने
+        const { error } = await supabaseClient
+            .from('levy_payments')
+            .insert([
+                {
+                    user_id: currentUser?.id || '1',
+                    committee_level: currentCommitteeLevel || 'केन्द्रीय समिति',
+                    year: currentYear || 2083,
+                    months: selectedMonths.join(', '),
+                    total_months: selectedMonths.length,
+                    base_amount: selectedMonths.length * 200,
+                    fine_amount: 0,
+                    total_amount: selectedMonths.length * 200,
+                    payment_slip: fileInput.files[0].name,
+                    status: 'Approved'
+                }
+            ]);
+
+        if (error) {
+            alert('त्रुटि: ' + error.message);
+            return;
         }
 
+        alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
+        closeLevyModal();
+        location.reload(); // पेज रिफ्रेस गर्नको लागि
+    } catch (err) {
+        console.error(err);
+        alert('डेटा सेभ गर्न असफल भयो!');
+    }
+}
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
             updateRealTimeClock();
