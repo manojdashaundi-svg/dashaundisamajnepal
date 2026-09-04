@@ -7,8 +7,6 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://nepalidateconverter.com/js/nepali-date-picker.min.js"></script>
-    <link href="https://nepalidateconverter.com/css/nepali-date-picker.min.css" rel="stylesheet" />
     <style>
         :root {
             --primary-color: #1a365d;
@@ -373,7 +371,7 @@
                       <tr>
                         <th>पदाधिकारी नाम</th>
                         <th>कमिटी तह</th>
-                        <th>मिनाहरू</th>
+                        <th>महिनाहरू</th>
                         <th>जम्मा रकम (जरिवानासहित)</th>
                         <th>भौचर</th>
                         <th>कार्य</th>
@@ -1340,15 +1338,7 @@
         }
 
         function getCurrentNepaliDate() {
-            try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                return `${year}-${month}-${day}`;
-            } catch (e) {
-                return "२०८३-०५-१५";
-            }
+            return "२०८३-०५-१८";
         }
 
         function getExpiryDate(regDateStr) {
@@ -1415,13 +1405,11 @@
             document.getElementById('cardQrCode').src = qrApiUrl;
 
             const modal = document.getElementById('idCardModal');
-            modal.classList.add('active-card-modal');
             modal.style.display = 'flex';
         }
 
         function closeIdCardModal() {
             const modal = document.getElementById('idCardModal');
-            modal.classList.remove('active-card-modal');
             modal.style.display = 'none';
         }
 
@@ -1514,24 +1502,6 @@
                 welcomeUser.innerText = `स्वागत छ, ${currentUser} (${currentRole})`;
             }
 
-            const messageDiv = document.getElementById('messageDiv');
-            if (messageDiv) {
-                messageDiv.innerText = '';
-            }
-
-            if (typeof loadPendingLevyPayments === 'function') {
-                loadPendingLevyPayments();
-            }
-
-            const levyContent = document.getElementById('levyContent');
-            if (levyContent) {
-                levyContent.style.display = 'block';
-            }
-            const levyToggleBtn = document.getElementById('levyToggleBtn');
-            if (levyToggleBtn) {
-                levyToggleBtn.innerText = 'बन्द गर्नुहोस् ▲';
-            }
-
             loadAboutData();
             loadIncomeData();
             loadMonthlyLevyIncomeData();
@@ -1585,12 +1555,18 @@
             });
         }
 
+        async function deleteIncomeRecord(id) {
+            if(confirm('के तपाईं यो आम्दानी रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('income_records').delete().eq('id', id);
+                loadIncomeData();
+            }
+        }
+
         async function loadMonthlyLevyIncomeData() {
             const { data } = await supabaseClient
                 .from('levy_payments')
-                .eq('status', 'Approved')
                 .select('*')
-                .order('created_at', { ascending: false });
+                .eq('status', 'Approved');
 
             const tbody = document.getElementById('monthlyLevyIncomeTableBody');
             if(!tbody) return;
@@ -1618,6 +1594,61 @@
             });
         }
 
+        async function loadGrantIncomeData() {
+            const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById('grantIncomeTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">कुनै अनुदान तथा सहयोग रेकर्ड उपलब्ध छैन</td></tr>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.donor_name || '-'}</strong></td>
+                        <td>${item.title || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function saveGrantIncome(e) {
+            e.preventDefault();
+            const grantData = {
+                date: getCurrentNepaliDate(),
+                donor_name: document.getElementById('grant_donor_name').value.trim(),
+                title: document.getElementById('grant_title').value.trim(),
+                medium: document.getElementById('grant_medium').value,
+                amount: parseFloat(document.getElementById('grant_amount').value) || 0
+            };
+
+            const { error } = await supabaseClient.from('grant_income').insert([grantData]);
+            if (!error) {
+                alert('अनुदान तथा सहयोग सफलतासाथ सुरक्षित भयो!');
+                document.getElementById('grantIncomeForm').reset();
+                loadGrantIncomeData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function deleteGrantRecord(id) {
+            if(confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from('grant_income').delete().eq('id', id);
+                loadGrantIncomeData();
+            }
+        }
+
         async function deleteMonthlyLevyRecord(id) {
             if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('levy_payments').delete().eq('id', id);
@@ -1637,10 +1668,7 @@
                     .select('*')
                     .eq('status', 'Pending');
 
-                let tbody = document.getElementById('pendingLevyTableBody') || 
-                            document.querySelector('#incomingLevyTableBody') || 
-                            document.querySelector('table tbody');
-
+                let tbody = document.getElementById('pendingLevyTableBody');
                 if (!tbody) return;
 
                 tbody.innerHTML = '';
@@ -1713,12 +1741,20 @@
                     }]);
 
                     alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
-                    location.reload();
+                    showDashboard();
 
                 } catch (err) {
                     console.error('Approval Error:', err);
                     alert('कारवाही असफल भयो!');
                 }
+            }
+        }
+
+        async function rejectLevyPayment(id) {
+            if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकृत (Reject) गर्न चाहनुहुन्छ?')) {
+                await supabaseClient.from('levy_payments').update({ status: 'Rejected' }).eq('id', id);
+                alert('भुक्तानी अनुरोध अस्वीकृत गरियो!');
+                loadPendingLevyPayments();
             }
         }
 
@@ -1776,6 +1812,33 @@
             });
         }
 
+        async function deleteFundRecord(tableName, id, tbodyId) {
+            if(confirm('के तपाईं यो कोष रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                await supabaseClient.from(tableName).delete().eq('id', id);
+                loadFundData(tableName, tbodyId);
+            }
+        }
+
+        function openVoucherModal(itemStr) {
+            const item = JSON.parse(decodeURIComponent(itemStr));
+            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
+            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
+            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
+            document.getElementById('vouchTitle').innerText = item.title || '-';
+            document.getElementById('vouchMedium').innerText = item.medium || '-';
+            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
+            
+            const voucherModal = document.getElementById('voucherModal');
+            voucherModal.classList.add('active-voucher');
+            voucherModal.style.display = 'flex';
+        }
+
+        function closeVoucherModal() {
+            const voucherModal = document.getElementById('voucherModal');
+            voucherModal.classList.remove('active-voucher');
+            voucherModal.style.display = 'none';
+        }
+
         function openDirectImageModal(imageUrl) {
             const modal = document.getElementById('levyVoucherModal');
             const modalImg = document.getElementById('levyVoucherImage');
@@ -1809,7 +1872,7 @@
 
             const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
             if (!error) {
-                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान गरियो!');
+                alert('खर्च सफलतासाथ इन्ट्री भयो!');
                 document.getElementById('dailyExpenseForm').reset();
                 loadDailyExpenseData();
             } else {
@@ -2035,7 +2098,7 @@
                 };
                 await supabaseClient.from('income_records').insert([incomeRecord]);
 
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!`);
                 loadApplicationsData();
                 loadUsersData();
                 loadIncomeData();
@@ -2629,24 +2692,7 @@
         }
 
         function getCurrentNepaliDateTime() {
-            try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                
-                let now = new Date();
-                let hours = now.getHours();
-                let minutes = now.getMinutes();
-                let ampm = hours >= 12 ? 'अपराह्न' : 'पूर्वाङ्ग';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                let timeStr = toNepaliNumber(`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`);
-                
-                return `${year}-${month}-${day} ${timeStr}`;
-            } catch (e) {
-                return "२०८३-०५-१८";
-            }
+            return "२०८३-०५-१८ ०१:२० अपराह्न";
         }
 
         async function sendMemberNotice(e) {
