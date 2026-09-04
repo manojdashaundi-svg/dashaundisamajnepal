@@ -1654,7 +1654,7 @@
                 <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
                 <td>${slipHtml}</td>
                 <td class="no-print">
-                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
+                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')">Approve</button>
                     <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
                 </td>
             </tr>
