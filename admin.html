@@ -1661,64 +1661,60 @@
         `;
     });
 }
-async function approveLevyPayment(id, itemStr) {
+async function approveLevyPayment(id) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
-        let item = {};
         try {
-            // itemStr लाई सुरक्षित रूपमा डिकोड र पार्स गर्ने
-            if (typeof itemStr === 'string') {
-                item = JSON.parse(decodeURIComponent(itemStr));
-            } else {
-                item = itemStr;
+            // १. पहिले यो ID को सम्पूर्ण विवरण डेटाबेसबाट तानेर ल्याउने
+            const { data: paymentData, error: fetchError } = await supabaseClient
+                .from('levy_payments')
+                .select('*')
+                .eq('id', id)
+                .single();
+
+            if (fetchError || !paymentData) {
+                alert('विवरण फेला परेन!');
+                return;
             }
-        } catch (e) {
-            console.error('JSON Parse Error:', e);
-        }
 
-        // १. डेटाबेसमा स्टेटस 'Approved' अपडेट गर्ने
-        const { error } = await supabaseClient
-            .from('levy_payments')
-            .update({ status: 'Approved' })
-            .eq('id', id);
+            // २. स्टेटस 'Approved' अपडेट गर्ने
+            const { error: updateError } = await supabaseClient
+                .from('levy_payments')
+                .update({ status: 'Approved' })
+                .eq('id', id);
 
-        if (!error) {
-            // २. आम्दानी रेकर्डमा पनि थप्ने
+            if (updateError) {
+                alert('त्रुटि: ' + updateError.message);
+                return;
+            }
+
+            // ३. आम्दानी रेकर्डमा थप्ने
             await supabaseClient.from('income_records').insert([{
                 date: getCurrentNepaliDate(),
-                name: item.member_name || item.user_id || 'सदस्य',
+                name: paymentData.member_name || paymentData.user_id || 'सदस्य',
                 category: 'मासिक लेवी शुल्क',
-                description: `लेवी महिनाहरू: ${item.paid_months || item.months || ''}`,
-                amount: item.total_amount || 0
+                description: `लेवी महिनाहरू: ${paymentData.paid_months || paymentData.months || ''}`,
+                amount: paymentData.total_amount || 0
             }]);
 
             alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
 
-            // ३. सिधै आधिकारिक डिजिटल भौचर मोडल खोल्ने
+            // ४. आधिकारिक डिजिटल भौचर मोडल खोल्ने (डेटालाई ठ्याक्कै मिल्ने गरी encode गरेर पठाउने)
             if (typeof openVoucherModal === 'function') {
-                openVoucherModal(itemStr);
+                const encodedItem = encodeURIComponent(JSON.stringify(paymentData));
+                openVoucherModal(encodedItem);
             }
 
-            // ४. टेबलहरू रिफ्रेस गर्ने (जसले गर्दा 'लेवी तिरेका' र 'नतिरेका' सूचीहरू स्वतः अपडेट हुन्छन्)
+            // ५. टेबलहरू रिफ्रेस गर्ने
             if (typeof loadPendingLevyPayments === 'function') loadPendingLevyPayments();
             if (typeof loadMonthlyLevyIncomeData === 'function') loadMonthlyLevyIncomeData();
             if (typeof loadLevySummaryTables === 'function') loadLevySummaryTables();
-        } else {
-            alert('त्रुटि: ' + error.message);
+
+        } catch (err) {
+            console.error('Approval Error:', err);
+            alert('कारवाही असफल भयो!');
         }
     }
 }
-        async function deleteIncomeRecord(id) {
-            if(confirm('के तपाईं यो आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-                const { error } = await supabaseClient.from('income_records').delete().eq('id', id);
-                if(!error) {
-                    alert('आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
-                    loadIncomeData();
-                } else {
-                    alert('त्रुटि: ' + error.message);
-                }
-            }
-        }
-
         async function saveGrantIncome(event) {
             event.preventDefault();
 
