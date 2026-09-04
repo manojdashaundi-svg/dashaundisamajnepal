@@ -1614,13 +1614,20 @@
         let slipHtml = 'भैचर छैन';
         if (item.payment_slip) {
             const trimmedSlip = item.payment_slip.trim();
-            
             let slipUrl = trimmedSlip;
+            
             if (!trimmedSlip.startsWith('http')) {
-                slipUrl = `https://yjfqlxohfyulzwkakclu.supabase.co/storage/v1/object/public/documents/${encodeURIComponent(trimmedSlip)}`;
+                // Supabase Storage बाट पब्लिक URL झिक्ने आधिकारिक तरिका
+                const { data: publicUrlData } = supabaseClient
+                    .storage
+                    .from('documents')
+                    .getPublicUrl(trimmedSlip);
+                
+                slipUrl = publicUrlData ? publicUrlData.publicUrl : trimmedSlip;
             }
             
-            slipHtml = `<button class="btn-action btn-view" onclick="showImage('${slipUrl}')">हेर्नुहोस्</button>`;
+            // नयाँ ट्याबमा सिधै ठूलो साइजमा खोल्ने बनाइएको (ताकि कुनैपनि बक्स वा मोडलको झन्झट नहोस्)
+            slipHtml = `<button class="btn-action btn-view" onclick="window.open('${slipUrl}', '_blank')">हेर्नुहोस्</button>`;
         }
 
         tbody.innerHTML += `
