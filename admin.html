@@ -1819,28 +1819,20 @@ async function rejectLevyPayment(id) {
             });
         }
 
-        async function deleteFundRecord(tableName, id, tbodyId) {
-            if(confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from(tableName).delete().eq('id', id);
-                loadFundData(tableName, tbodyId);
-            }
+        function openDirectImageModal(imageUrl) {
+    const modal = document.getElementById('voucherModal');
+    if (modal) {
+        // यदि मोडल भित्र भौचर इमेज देखाउने छुट्टै <img> ट्याग छ भने त्यसको ID राख्नुहोला (जस्तै modalVoucherImg)
+        const modalImg = document.getElementById('modalVoucherImg') || modal.querySelector('img');
+        if (modalImg) {
+            modalImg.src = imageUrl;
         }
-
-        function openVoucherModal(itemStr) {
-            const item = JSON.parse(decodeURIComponent(itemStr));
-            document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
-            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
-            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
-            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
-            document.getElementById('vouchTitle').innerText = item.title || '-';
-            document.getElementById('vouchMedium').innerText = item.medium || '-';
-            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
-
-            const modal = document.getElementById('voucherModal');
-            modal.classList.add('active-voucher');
-            modal.style.display = 'flex';
-        }
-
+        modal.classList.add('active-voucher');
+        modal.style.display = 'flex';
+    } else {
+        window.open(imageUrl, '_blank');
+    }
+}
         function closeVoucherModal() {
             const modal = document.getElementById('voucherModal');
             modal.classList.remove('active-voucher');
