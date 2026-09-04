@@ -1664,7 +1664,7 @@
 async function approveLevyPayment(id) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
         try {
-            // १. पहिले यो ID को सम्पूर्ण विवरण डेटाबेसबाट तानेर ल्याउने
+            // १. डेटाबेसबाट यो ID को सम्पूर्ण डेटा तानेर ल्याउने
             const { data: paymentData, error: fetchError } = await supabaseClient
                 .from('levy_payments')
                 .select('*')
@@ -1687,24 +1687,38 @@ async function approveLevyPayment(id) {
                 return;
             }
 
-            // ३. आम्दानी रेकर्डमा थप्ने
+            // ३. सहि डेटा निकाल्ने (user_id र months array बाट)
+            const memberName = paymentData.member_name || `सदस्य आईडी: ${paymentData.user_id}`;
+            const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : 'तपशील अनुसार';
+            const totalAmount = paymentData.total_amount || 0;
+
+            // ४. आम्दानी रेकर्डमा थप्ने
             await supabaseClient.from('income_records').insert([{
                 date: getCurrentNepaliDate(),
-                name: paymentData.member_name || paymentData.user_id || 'सदस्य',
+                name: memberName,
                 category: 'मासिक लेवी शुल्क',
-                description: `लेवी महिनाहरू: ${paymentData.paid_months || paymentData.months || ''}`,
-                amount: paymentData.total_amount || 0
+                description: `लेवी महिनाहरू: ${monthsList}`,
+                amount: totalAmount
             }]);
 
             alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
 
-            // ४. आधिकारिक डिजिटल भौचर मोडल खोल्ने (डेटालाई ठ्याक्कै मिल्ने गरी encode गरेर पठाउने)
+            // ५. आधिकारिक डिजिटल भौचर मोडल खोल्ने
             if (typeof openVoucherModal === 'function') {
-                const encodedItem = encodeURIComponent(JSON.stringify(paymentData));
-                openVoucherModal(encodedItem);
+                const voucherPayload = {
+                    member_name: memberName,
+                    committee_level: paymentData.committee_level || 'केन्द्रीय समिति',
+                    months: monthsList,
+                    total_amount: totalAmount,
+                    vouchNo: paymentData.id,
+                    vouchDate: getCurrentNepaliDate(),
+                    vouchTitle: 'मासिक लेवी शुल्क भुक्तानी',
+                    vouchMedium: 'अनलाइन भौचर / बैंक ट्रान्सफर'
+                };
+                openVoucherModal(encodeURIComponent(JSON.stringify(voucherPayload)));
             }
 
-            // ५. टेबलहरू रिफ्रेस गर्ने
+            // ६. एडमिन प्यानलका लिस्टहरू रिफ्रेस गर्ने
             if (typeof loadPendingLevyPayments === 'function') loadPendingLevyPayments();
             if (typeof loadMonthlyLevyIncomeData === 'function') loadMonthlyLevyIncomeData();
             if (typeof loadLevySummaryTables === 'function') loadLevySummaryTables();
