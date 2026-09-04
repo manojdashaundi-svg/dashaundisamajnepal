@@ -1608,15 +1608,22 @@
             }
         }
 
-        async function loadPendingLevyPayments() {
+       async function loadPendingLevyPayments() {
     try {
         const { data, error } = await supabaseClient
             .from('levy_payments')
             .select('*')
-            .eq('status', 'Pending'); // पेन्डिङ भएका मात्र तानेर ल्याउने
+            .eq('status', 'Pending');
 
-        const tbody = document.getElementById('pendingLevyTableBody'); // तपाईंको टेबलको ID अनुसार मिलाउनुहोला
-        if (!tbody) return;
+        // टेबलको tbody लाई जुनसुकै ID भए पनि फेला पार्ने तरिका
+        let tbody = document.getElementById('pendingLevyTableBody') || 
+                    document.querySelector('#incomingLevyTableBody') || 
+                    document.querySelector('table tbody');
+
+        if (!tbody) {
+            console.error('Table body element not found!');
+            return;
+        }
 
         tbody.innerHTML = '';
 
@@ -1650,7 +1657,6 @@
         console.error('Error loading pending payments:', err);
     }
 }
-
         async function approveLevyPayment(id) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
         try {
