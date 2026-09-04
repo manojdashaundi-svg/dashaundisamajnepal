@@ -1646,12 +1646,30 @@
 
        async function submitLevyPayment() {
     const fileInput = document.getElementById('voucherFile');
-    if(selectedMonths.length === 0) { alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); return; }
-    if(fileInput.files.length === 0) { alert('कृपया भौचर अपलोड गर्नुहोस्!'); return; }
+    if (selectedMonths.length === 0) { 
+        alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
+        return; 
+    }
+    if (fileInput.files.length === 0) { 
+        alert('कृपया भौचर अपलोड गर्नुहोस्!'); 
+        return; 
+    }
 
     try {
-        const activeUserId = (typeof currentUser !== 'undefined' && currentUser?.id) ? currentUser.id : ('1');
+        alert('भौचर अपलोड हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
+        
+        // १. Supabase Storage मा फाइल अपलोड गर्ने र त्यसको URL प्राप्त गर्ने
+        const paySlipFile = fileInput.files[0];
+        const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
 
+        if (!paySlipUrl) {
+            alert('फाइल अपलोड गर्न असफल भयो!');
+            return;
+        }
+
+        const activeUserId = (typeof currentUser !== 'undefined' && currentUser?.id) ? currentUser.id : '1';
+
+        // २. डेटाबेसमा सही URL सेभ गर्ने
         const { error } = await supabaseClient
             .from('levy_payments')
             .insert([
@@ -1659,12 +1677,12 @@
                     user_id: activeUserId,
                     committee_level: 'केन्द्रीय समिति',
                     year: 2083,
-                    months: selectedMonths, // यहाँ selectedMonths लाई सीधै Array को रूपमा पास गर्ने (join नगर्ने)
+                    months: selectedMonths, 
                     total_months: selectedMonths.length,
                     base_amount: selectedMonths.length * 200,
                     fine_amount: 0,
                     total_amount: selectedMonths.length * 200,
-                    payment_slip: fileInput.files[0].name,
+                    payment_slip: paySlipUrl, // यहाँ अब सही स्टोरेज URL जान्छ
                     status: 'Pending'
                 }
             ]);
