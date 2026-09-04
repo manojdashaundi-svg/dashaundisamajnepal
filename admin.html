@@ -1500,13 +1500,21 @@
         });
 
         function showDashboard() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('dashboardSection').classList.remove('hidden');
-            document.getElementById('dashboardSection').style.display = 'block';
-            const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
-            const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
-            document.getElementById('welcomeUser').innerText = `✔ स्वागत छ, ${currentUser} (${currentRole})!`;
-            messageDiv.innerText = '';
+    document.getElementById('loginSection').classList.add('hidden');
+    document.getElementById('dashboardSection').classList.remove('hidden');
+    document.getElementById('dashboardSection').style.display = 'block';
+    
+    const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
+    const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
+    
+    document.getElementById('welcomeUser').innerText = `स्वागत छ, ${currentUser} (${currentRole})`;
+    messageDiv.innerText = '';
+
+    // ड्याबोर्ड खुल्नेबित्तिकै लेवीका पेन्डिङ अनुरोधहरू लोड गर्ने
+    if (typeof loadPendingLevyPayments === 'function') {
+        loadPendingLevyPayments();
+    }
+}
 
             const levyContent = document.getElementById('levyContent');
             levyContent.style.display = 'block';
