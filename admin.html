@@ -1617,16 +1617,16 @@
             let slipUrl = trimmedSlip;
             
             if (!trimmedSlip.startsWith('http')) {
-                // Supabase Storage बाट पब्लिक URL झिक्ने आधिकारिक तरिका
+                const filePath = trimmedSlip.includes('/') ? trimmedSlip : `payments/${trimmedSlip}`;
+                
                 const { data: publicUrlData } = supabaseClient
                     .storage
                     .from('documents')
-                    .getPublicUrl(trimmedSlip);
+                    .getPublicUrl(filePath);
                 
                 slipUrl = publicUrlData ? publicUrlData.publicUrl : trimmedSlip;
             }
             
-            // नयाँ ट्याबमा सिधै ठूलो साइजमा खोल्ने बनाइएको (ताकि कुनैपनि बक्स वा मोडलको झन्झट नहोस्)
             slipHtml = `<button class="btn-action btn-view" onclick="window.open('${slipUrl}', '_blank')">हेर्नुहोस्</button>`;
         }
 
