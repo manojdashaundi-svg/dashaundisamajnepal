@@ -1665,12 +1665,17 @@ async function approveLevyPayment(id, itemStr) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
         let item = {};
         try {
-            item = JSON.parse(decodeURIComponent(itemStr));
+            // itemStr लाई सुरक्षित रूपमा डिकोड र पार्स गर्ने
+            if (typeof itemStr === 'string') {
+                item = JSON.parse(decodeURIComponent(itemStr));
+            } else {
+                item = itemStr;
+            }
         } catch (e) {
-            console.error(e);
+            console.error('JSON Parse Error:', e);
         }
 
-        // १. स्टेटस Approved बनाउने
+        // १. डेटाबेसमा स्टेटस 'Approved' अपडेट गर्ने
         const { error } = await supabaseClient
             .from('levy_payments')
             .update({ status: 'Approved' })
@@ -1680,7 +1685,7 @@ async function approveLevyPayment(id, itemStr) {
             // २. आम्दानी रेकर्डमा पनि थप्ने
             await supabaseClient.from('income_records').insert([{
                 date: getCurrentNepaliDate(),
-                name: item.member_name || 'सदस्य',
+                name: item.member_name || item.user_id || 'सदस्य',
                 category: 'मासिक लेवी शुल्क',
                 description: `लेवी महिनाहरू: ${item.paid_months || item.months || ''}`,
                 amount: item.total_amount || 0
@@ -1689,28 +1694,14 @@ async function approveLevyPayment(id, itemStr) {
             alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
 
             // ३. सिधै आधिकारिक डिजिटल भौचर मोडल खोल्ने
-            if (itemStr && typeof openVoucherModal === 'function') {
+            if (typeof openVoucherModal === 'function') {
                 openVoucherModal(itemStr);
             }
 
-            loadPendingLevyPayments();
-            loadMonthlyLevyIncomeData();
-        } else {
-            alert('त्रुटि: ' + error.message);
-        }
-    }
-}
-
-async function rejectLevyPayment(id) {
-    if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकृत (Reject) गर्न चाहनुहुन्छ?')) {
-        const { error } = await supabaseClient
-            .from('levy_payments')
-            .update({ status: 'Rejected' })
-            .eq('id', id);
-
-        if (!error) {
-            alert('भुक्तानी अनुरोध अस्वीकृत गरियो!');
-            loadPendingLevyPayments();
+            // ४. टेबलहरू रिफ्रेस गर्ने (जसले गर्दा 'लेवी तिरेका' र 'नतिरेका' सूचीहरू स्वतः अपडेट हुन्छन्)
+            if (typeof loadPendingLevyPayments === 'function') loadPendingLevyPayments();
+            if (typeof loadMonthlyLevyIncomeData === 'function') loadMonthlyLevyIncomeData();
+            if (typeof loadLevySummaryTables === 'function') loadLevySummaryTables();
         } else {
             alert('त्रुटि: ' + error.message);
         }
