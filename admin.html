@@ -1688,9 +1688,9 @@ async function approveLevyPayment(id, itemStr) {
 
             alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
 
-            // ३. स्वीकृत हुनेवित्तिकै सम्बन्धित भौचरको फोटो सिधै मोडलमा देखाउने
-            if (item.payment_slip && typeof openDirectImageModal === 'function') {
-                openDirectImageModal(item.payment_slip);
+            // ३. सिधै आधिकारिक डिजिटल भौचर मोडल खोल्ने
+            if (itemStr && typeof openVoucherModal === 'function') {
+                openVoucherModal(itemStr);
             }
 
             loadPendingLevyPayments();
