@@ -1593,39 +1593,51 @@
         }
 
         async function loadPendingLevyPayments() {
-    const { data } = await supabaseClient
-        .from('levy_payments')
-        .select('*')
-        .eq('status', 'Pending') // वा status खाली भएकाहरूका लागि
-        .order('created_at', { ascending: false });
+            const { data } = await supabaseClient
+                .from('levy_payments')
+                .select('*')
+                .eq('status', 'Pending')
+                .order('created_at', { ascending: false });
 
-    const tbody = document.querySelector('#pendingTable tbody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
+            const tbody = document.querySelector('#pendingTable tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
 
-    if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
-        return;
-    }
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+                return;
+            }
 
-    data.forEach((item) => {
-        const itemStr = encodeURIComponent(JSON.stringify(item));
-        tbody.innerHTML += `
-            <tr>
-                <td><strong>${item.member_name || item.user_id}</strong></td>
-                <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/vouchers/${encodeURIComponent(item.payment_slip)}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>
-                <td>${item.paid_months || item.months || '-'}</td>
-                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
-               <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/vouchers/${encodeURIComponent(item.payment_slip)}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>
-                <td class="no-print">
-                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
-                    <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
-                </td>
-            </tr>
-        `;
-    });
-}
+            data.forEach((item) => {
+                const itemStr = encodeURIComponent(JSON.stringify(item));
+                
+                // पूरा सुपाबेस स्टोरेज पब्लिक URL निर्माण गर्ने
+                let slipHtml = 'भैचर छैन';
+                if (item.payment_slip) {
+                    const trimmedSlip = item.payment_slip.trim();
+                    // यदि डेटाबेसमा पहिल्यै http बाट सुरु भएको पूरा URL छ भने त्यही प्रयोग गर्ने, नभए documents बकेटबाट URL बनाउने
+                    const slipUrl = trimmedSlip.startsWith('http') 
+                        ? trimmedSlip 
+                        : `https://yjfqlxohfyulzwkakclu.supabase.co/storage/v1/object/public/documents/${encodeURIComponent(trimmedSlip)}`;
+                    
+                    slipHtml = `<button class="btn-action btn-view" onclick="showImage('${slipUrl}')">हेर्नुहोस्</button>`;
+                }
 
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${item.member_name || item.user_id}</strong></td>
+                        <td>${item.committee_level || '-'}</td>
+                        <td>${item.paid_months || item.months || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
+                        <td>${slipHtml}</td>
+                        <td class="no-print">
+                            <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
+                            <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
 async function approveLevyPayment(id, itemStr) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
         const item = JSON.parse(itemStr);
