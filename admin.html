@@ -1663,16 +1663,21 @@
 }
 async function approveLevyPayment(id, itemStr) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
-        const item = JSON.parse(itemStr);
-        
-        // स्टेटस Approved बनाउने
+        let item = {};
+        try {
+            item = JSON.parse(decodeURIComponent(itemStr));
+        } catch (e) {
+            console.error(e);
+        }
+
+        // १. स्टेटस Approved बनाउने
         const { error } = await supabaseClient
             .from('levy_payments')
             .update({ status: 'Approved' })
             .eq('id', id);
 
         if (!error) {
-            // आम्दानी रेकर्डमा पनि थप्ने
+            // २. आम्दानी रेकर्डमा पनि थप्ने
             await supabaseClient.from('income_records').insert([{
                 date: getCurrentNepaliDate(),
                 name: item.member_name || 'सदस्य',
@@ -1682,6 +1687,12 @@ async function approveLevyPayment(id, itemStr) {
             }]);
 
             alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
+
+            // ३. स्वीकृत हुनेवित्तिकै सम्बन्धित भौचरको फोटो सिधै मोडलमा देखाउने
+            if (item.payment_slip && typeof openDirectImageModal === 'function') {
+                openDirectImageModal(item.payment_slip);
+            }
+
             loadPendingLevyPayments();
             loadMonthlyLevyIncomeData();
         } else {
