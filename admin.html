@@ -1824,14 +1824,13 @@ async function rejectLevyPayment(id) {
 
         function openDirectImageModal(imageUrl) {
     const modal = document.getElementById('voucherModal');
-    if (modal) {
-        // यदि मोडल भित्र भौचर इमेज देखाउने छुट्टै <img> ट्याग छ भने त्यसको ID राख्नुहोला (जस्तै modalVoucherImg)
-        const modalImg = document.getElementById('modalVoucherImg') || modal.querySelector('img');
-        if (modalImg) {
-            modalImg.src = imageUrl;
-        }
+    const modalImg = document.getElementById('popupVoucherImg');
+    
+    if (modal && modalImg) {
+        modalImg.src = imageUrl;
+        modalImg.style.display = 'block'; // भौचरको फोटो देखाउने
         modal.classList.add('active-voucher');
-        modal.style.display = 'flex';
+        modal.style.display = 'flex';     // मोडल खोल्ने
     } else {
         window.open(imageUrl, '_blank');
     }
