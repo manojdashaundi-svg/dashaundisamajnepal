@@ -1499,7 +1499,7 @@
             }
         });
 
-        function showDashboard() {
+       function showDashboard() {
     const loginSection = document.getElementById('loginSection');
     const dashboardSection = document.getElementById('dashboardSection');
     
@@ -1522,7 +1522,6 @@
         messageDiv.innerText = '';
     }
 
-    // लेवीका पेन्डिङ अनुरोधहरू सुरक्षित रूपमा लोड गर्ने
     if (typeof loadPendingLevyPayments === 'function') {
         loadPendingLevyPayments();
     }
