@@ -1687,12 +1687,11 @@ async function approveLevyPayment(id) {
                 return;
             }
 
-            // ३. सहि डेटा निकाल्ने (user_id र months array बाट)
-            const memberName = paymentData.member_name || `सदस्य आईडी: ${paymentData.user_id}`;
-            const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : 'तपशील अनुसार';
+            const memberName = paymentData.member_name || `सदस्य (ID: ${paymentData.user_id})`;
+            const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
             const totalAmount = paymentData.total_amount || 0;
 
-            // ४. आम्दानी रेकर्डमा थप्ने
+            // ३. आम्दानी रेकर्डमा थप्ने
             await supabaseClient.from('income_records').insert([{
                 date: getCurrentNepaliDate(),
                 name: memberName,
@@ -1703,7 +1702,7 @@ async function approveLevyPayment(id) {
 
             alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
 
-            // ५. आधिकारिक डिजिटल भौचर मोडल खोल्ने
+            // ४. आधिकारिक डिजिटल भौचर मोडल खोल्ने
             if (typeof openVoucherModal === 'function') {
                 const voucherPayload = {
                     member_name: memberName,
@@ -1718,12 +1717,17 @@ async function approveLevyPayment(id) {
                 openVoucherModal(encodeURIComponent(JSON.stringify(voucherPayload)));
             }
 
-            // ६. एडमिन प्यानलका लिस्टहरू रिफ्रेस गर्ने
+            // ५. एडमिन प्यानलका सबै लिस्टहरू रिफ्रेस गर्ने फंक्सनहरू कल गर्ने
             if (typeof loadPendingLevyPayments === 'function') loadPendingLevyPayments();
             if (typeof loadMonthlyLevyIncomeData === 'function') loadMonthlyLevyIncomeData();
             if (typeof loadLevySummaryTables === 'function') loadLevySummaryTables();
+            if (typeof loadPaidLevyMembers === 'function') loadPaidLevyMembers();
+            if (typeof loadUnpaidLevyMembers === 'function') loadUnpaidLevyMembers();
 
-        } catch (err) {
+            // यदि पेज पूर्ण रूपमा रिफ्रेस गर्न چاہनुहुन्छ भने तलको कमाण्ड खोल्न सक्नुहुन्छ:
+            // location.reload();
+
+        } `catch` (err) {
             console.error('Approval Error:', err);
             alert('कारवाही असफल भयो!');
         }
