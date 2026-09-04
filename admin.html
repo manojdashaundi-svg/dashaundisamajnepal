@@ -1822,24 +1822,24 @@ async function rejectLevyPayment(id) {
             });
         }
 
-        function openDirectImageModal(imageUrl) {
-    const modal = document.getElementById('voucherModal');
-    const modalImg = document.getElementById('popupVoucherImg');
+       function openDirectImageModal(imageUrl) {
+    const modal = document.getElementById('levyVoucherModal');
+    const modalImg = document.getElementById('levyVoucherImage');
     
     if (modal && modalImg) {
         modalImg.src = imageUrl;
-        modalImg.style.display = 'block'; // भौचरको फोटो देखाउने
-        modal.classList.add('active-voucher');
-        modal.style.display = 'flex';     // मोडल खोल्ने
+        modal.style.display = 'flex';
     } else {
         window.open(imageUrl, '_blank');
     }
 }
-        function closeVoucherModal() {
-            const modal = document.getElementById('voucherModal');
-            modal.classList.remove('active-voucher');
-            modal.style.display = 'none';
-        }
+
+function closeLevyVoucherModal() {
+    const modal = document.getElementById('levyVoucherModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
 
         async function saveDailyExpense(e) {
             e.preventDefault();
