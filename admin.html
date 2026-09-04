@@ -1627,7 +1627,7 @@
                 slipUrl = publicUrlData ? publicUrlData.publicUrl : trimmedSlip;
             }
             
-            slipHtml = `<button class="btn-action btn-view" onclick="window.open('${slipUrl}', '_blank')">हेर्नुहोस्</button>`;
+            slipHtml = `<button class="btn-action btn-view" onclick="openDirectImageModal('${slipUrl}')">हेर्नुहोस्</button>`;
         }
 
         tbody.innerHTML += `
