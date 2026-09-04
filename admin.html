@@ -1609,21 +1609,22 @@
     }
 
     data.forEach((item) => {
-    const itemStr = encodeURIComponent(JSON.stringify(item));
-    tbody.innerHTML += `
-        <tr>
-            <td><strong>${item.member_name || item.user_id}</strong></td>
-            <td>${item.committee_level || '-'}</td>
-            <td>${item.paid_months || item.months || '-'}</td>
-            <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
-            <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/documents/${encodeURIComponent(item.payment_slip.trim())}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>
-            <td class="no-print">
-                <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
-                <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
-            </td>
-        </tr>
-    `;
-});
+        const itemStr = encodeURIComponent(JSON.stringify(item));
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${item.member_name || item.user_id}</strong></td>
+                <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/vouchers/${encodeURIComponent(item.payment_slip)}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>
+                <td>${item.paid_months || item.months || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
+               <td>${item.payment_slip ? `<button class="btn-action btn-view" onclick="showImage('https://yjfqlxohfyluzwkakclu.supabase.co/storage/v1/object/public/vouchers/${encodeURIComponent(item.payment_slip)}')">हेर्नुहोस्</button>` : 'भैचर छैन'}</td>
+                <td class="no-print">
+                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}', decodeURIComponent('${itemStr}'))">Approve</button>
+                    <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')">Reject</button>
+                </td>
+            </tr>
+        `;
+    });
+}
 
 async function approveLevyPayment(id, itemStr) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
