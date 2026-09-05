@@ -1810,29 +1810,31 @@
         }
 
         async function saveFundIncome(e, tableName, fundTitle) {
-            e.preventDefault();
-            const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
-            const voucherNo = 'VOU-' + Math.floor(1000 + Math.random() * 9000);
-            
-            const incomeData = {
-                voucher_no: voucherNo,
-                date: getCurrentNepaliDate(),
-                donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
-                title: document.getElementById(`${prefix}_title`).value.trim(),
-                medium: document.getElementById(`${prefix}_medium`).value,
-                amount: parseFloat(document.getElementById(`${prefix}_amount`).value) || 0,
-                fund_category: fundTitle
-            };
+    e.preventDefault();
+    const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
+    
+    // 🔥 यो ठाउँमा राख्नुपर्छ (जसले गर्दा सेभ गर्दा अटोमेटिक VOU-01, VOU-02... नम्बर ल्याउँछ)
+    const voucherNo = await getNextVoucherNo();
+    
+    const incomeData = {
+        voucher_no: voucherNo, // यहाँ त्यो नम्बर प्रयोग हुन्छ
+        date: getCurrentNepaliDate(),
+        donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
+        title: document.getElementById(`${prefix}_title`).value.trim(),
+        medium: document.getElementById(`${prefix}_medium`).value,
+        amount: parseFloat(document.getElementById(`${prefix}_amount`).value) || 0,
+        fund_category: fundTitle
+    };
 
-            const { error } = await supabaseClient.from(tableName).insert([incomeData]);
-            if (!error) {
-                alert(`${fundTitle}मा सफलतासाथ रकम थपियो र भौचर जारी भयो!`);
-                document.getElementById(`${prefix}FundForm`).reset();
-                loadFundData(tableName, `${prefix}FundTableBody`);
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
+    const { error } = await supabaseClient.from(tableName).insert([incomeData]);
+    if (!error) {
+        alert(`${fundTitle}मा सफलतासाथ रकम थपियो र भौचर नं. ${voucherNo} जारी भयो!`);
+        document.getElementById(`${prefix}FundForm`).reset();
+        loadFundData(tableName, `${prefix}FundTableBody`);
+    } else {
+        alert('त्रुटि: ' + error.message);
+    }
+}
 
         async function loadFundData(tableName, tbodyId) {
             const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: false });
