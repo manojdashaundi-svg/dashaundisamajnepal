@@ -2341,8 +2341,11 @@ function viewNoticeFile(encodedItem) {
 
        async function loadLevyListsAndReports() {
     try {
-        const { data: payments } = await supabaseClient.from('levy_payments').select('*');
-        const { data: users } = await supabaseClient.from('users').select('*');
+        const { data: payments, error: payErr } = await supabaseClient.from('levy_payments').select('*');
+        const { data: users, error: userErr } = await supabaseClient.from('users').select('*');
+
+        console.log("Payments fetched:", payments);
+        console.log("Users fetched:", users);
 
         const paidTbody = document.querySelector('#paidListTable tbody');
         const unpaidTbody = document.querySelector('#unpaidListTable tbody');
@@ -2363,36 +2366,29 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
-            // यो युजरका सबै भुक्तानी रेकर्डहरू छान्ने (जसको स्टेटस Approved, accept वा success छ)
             let userPayments = payments ? payments.filter(p => {
-                let st = (p.status || '').toLowerCase();
-                let isApproved = st === 'approved' || st === 'accept' || st === 'success';
                 let matchesUser = (String(p.user_id) === String(user.id)) || 
-                                  (p.member_name && user.full_name && p.member_name.trim().toLowerCase() === user.full_name.trim().toLowerCase());
-                return isApproved && matchesUser;
+                                  (p.member_name && user.full_name && p.member_name.trim().toLowerCase().includes(user.full_name.trim().toLowerCase()));
+                return matchesUser;
             }) : [];
             
             let paidMonthsSet = new Set();
             let latestSlip = '';
 
             userPayments.forEach(p => {
-                // भौचर वा स्लिपको लिङ्क सुरक्षित गर्ने
                 if (p.payment_slip || p.voucher_url || p.slip) {
                     latestSlip = p.payment_slip || p.voucher_url || p.slip;
                 }
                 
-                // महिनाहरूको डेटा स्ट्रिङ वा एरे जे भए पनि सही रूपमा छुट्याउने
                 if (p.months) {
                     let mArr = [];
                     if (Array.isArray(p.months)) {
                         mArr = p.months;
                     } else if (typeof p.months === 'string') {
                         try {
-                            // यदि JSON Array को रूपमा सेभ भएको छ भने
                             let parsed = JSON.parse(p.months);
                             mArr = Array.isArray(parsed) ? parsed : p.months.split(',');
                         } catch (e) {
-                            // साधारण कामा (,) सेपरेटेड स्ट्रिङ भएमा
                             mArr = p.months.split(',');
                         }
                     }
@@ -2406,7 +2402,6 @@ function viewNoticeFile(encodedItem) {
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
-            // क) यदि लेवी तिरेको छ भने 'लेवी तिरेका पदाधिकारीहरूको सूची' मा देखाउने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
                 let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
@@ -2420,7 +2415,6 @@ function viewNoticeFile(encodedItem) {
                 `;
             }
 
-            // ख) यदि केही महिना बाँकी छन् भने 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)' मा रातो रङमा देखाउने
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
