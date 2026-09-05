@@ -1835,25 +1835,23 @@
     }
 }
 
-        // ग्लोबल रूपमा डेटा सुरक्षित राख्ने變數
-window.grantRecords = [];
+        window.grantRecords = [];
 
 async function loadGrantIncomeData() {
     const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
+    window.grantRecords = data || [];
+    
     const tbody = document.getElementById('grantIncomeTableBody');
     if (!tbody) return;
     
     tbody.innerHTML = '';
-    if (!data || data.length === 0) {
+    if (!window.grantRecords || window.grantRecords.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
         return;
     }
     
-    data.forEach((item, index) => {
+    window.grantRecords.forEach((item, index) => {
         let vNo = item.voucher_no || 'VOU-01';
-        let dName = (item.donor_name || '').replace(/'/g, "\\'");
-        let title = (item.title || '').replace(/'/g, "\\'");
-        let medium = item.medium || 'नगद (Cash)';
         let amount = item.amount || 0;
         let date = item.date || '२०८३-०५-२०';
 
@@ -1864,10 +1862,10 @@ async function loadGrantIncomeData() {
                 <td>${toNepaliNumber(date)}</td>
                 <td><strong>${item.donor_name || '-'}</strong></td>
                 <td>${item.title || '-'}</td>
-                <td>${medium}</td>
+                <td>${item.medium || '-'}</td>
                 <td><strong style="color: #008000;">रु. ${toNepaliNumber(amount)}</strong></td>
                 <td class="no-print">
-                    <button type="button" onclick="openVoucherModal('${item.voucher_no || 'VOU-01'}', '${item.donor_name || ''}', '${item.title || ''}', '${item.medium || ''}', ${item.amount || 0}, '${item.date || '२०८३-०५-२०'}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
+                    <button type="button" onclick="openGrantVoucherModal(${index})" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
                     <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
                 </td>
             </tr>
@@ -1875,87 +1873,25 @@ async function loadGrantIncomeData() {
     });
 }
 
-// ग्लोबल एरे र सुरक्षित फंक्सन
-window.grantRecords = [];
-
 function openGrantVoucherModal(index) {
     const item = window.grantRecords[index];
     if (!item) return;
     
-    // सिधै मुख्य openVoucherModal लाई सही स्ट्रिङ डेटा पठाउने
-    openVoucherModal(
-        String(item.voucher_no || 'VOU-01'),
-        String(item.donor_name || ''),
-        String(item.title || ''),
-        String(item.medium || ''),
-        Number(item.amount || 0),
-        String(item.date || '२०८३-०५-२०'),
-        'अनुदान तथा सहयोग'
-    );
-}
-        async function deleteGrantRecord(id) {
-            if (confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-                await supabaseClient.from('grant_income').delete().eq('id', id);
-                loadGrantIncomeData();
-            }
-        }
-
-       async function saveFundIncome(e, tableName, fundTitle) {
-    e.preventDefault();
-    const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
-    
-    const voucherNo = await getNextVoucherNo();
-    
-    const incomeData = {
-        voucher_no: voucherNo,
-        
-        // 🌟 यो ठाउँमा राख्नुपर्छ (जसले गर्दा भौचरमा अटोमेटिक आजको वास्तविक मिति बस्छ)
-        date: getCurrentNepaliDate(), 
-        
-        donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
-        title: document.getElementById(`${prefix}_title`).value.trim(),
-        medium: document.getElementById(`${prefix}_medium`).value,
-        amount: parseFloat(document.getElementById(`${prefix}_amount`).value) || 0,
-        fund_category: fundTitle
-    };
-
-    const { error } = await supabaseClient.from(tableName).insert([incomeData]);
-    if (!error) {
-        alert(`${fundTitle}मा सफलतासाथ रकम थपियो र भौचर नं. ${voucherNo} जारी भयो!`);
-        document.getElementById(`${prefix}FundForm`).reset();
-        loadFundData(tableName, `${prefix}FundTableBody`);
+    // मुख्य भौचर मोडल फंक्सन कल गर्ने
+    if (typeof openVoucherModal === 'function') {
+        openVoucherModal(
+            String(item.voucher_no || 'VOU-01'),
+            String(item.donor_name || ''),
+            String(item.title || ''),
+            String(item.medium || ''),
+            Number(item.amount || 0),
+            String(item.date || '२०८३-०५-२०'),
+            'अनुदान तथा सहयोग'
+        );
     } else {
-        alert('त्रुटि: ' + error.message);
+        alert('मुख्य भौचर फंक्सन भेटिएन!');
     }
 }
-
-        async function loadFundData(tableName, tbodyId) {
-            const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: false });
-            const tbody = document.getElementById(tbodyId);
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8">कुनै रेकर्ड उपलब्ध छैन</td></tr>';
-                return;
-            }
-            data.forEach((item, index) => {
-                const itemStr = encodeURIComponent(JSON.stringify(item));
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><strong>${item.donor_name || '-'}</strong></td>
-                        <td>${item.title || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                        <td class="no-print">
-                            <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')">भौचर</button>
-                            <button class="btn-action btn-danger" onclick="deleteFundRecord('${tableName}', '${item.id}', '${tbodyId}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
 
         async function deleteFundRecord(tableName, id, tbodyId) {
             if (confirm('के तपाईं यो भौचर/रेकर्ड मेटाउन चाहनुहुन्छ?')) {
