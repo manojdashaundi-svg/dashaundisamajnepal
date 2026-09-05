@@ -1784,34 +1784,30 @@
 }
 
         async function loadGrantIncomeData() {
-    const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
-    const tbody = document.getElementById('grantIncomeTableBody');
-    tbody.innerHTML = '';
-    
-    if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
-        return;
-    }
-    
-    data.forEach((item, index) => {
-        const itemStr = encodeURIComponent(JSON.stringify(item));
-        tbody.innerHTML += `
-            <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
-                <td>${toNepaliNumber(item.date || '-')}</td>
-                <td><strong>${item.donor_name || '-'}</strong></td>
-                <td>${item.title || '-'}</td>
-                <td>${item.medium || '-'}</td>
-                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                <td class="no-print">
-                    <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')" style="background-color: #6f42c1; color: white; border: none; padding: 3px 8px; border-radius: 3px; margin-right: 4px; cursor: pointer;">भौचर</button>
-                    <button class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background-color: #dc3545; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer;">रिमुभ</button>
-                </td>
-            </tr>
-        `;
-    });
-}
+            const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById('grantIncomeTableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
+                return;
+            }
+            data.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.donor_name || '-'}</strong></td>
+                        <td>${item.title || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
         async function deleteGrantRecord(id) {
             if (confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 await supabaseClient.from('grant_income').delete().eq('id', id);
