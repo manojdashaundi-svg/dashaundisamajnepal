@@ -2239,113 +2239,13 @@ function viewNoticeFile(encodedItem) {
             document.getElementById('appEditModal').style.display = 'flex';
         }
 
-        function closeAppEditModal() {
-            document.getElementById('appEditModal').style.display = 'none';
-        }
-
-        async function saveEditedApplication() {
-            const id = document.getElementById('edit_app_id').value;
-            const updatedData = {
-                full_name: document.getElementById('edit_app_name').value,
-                phone: document.getElementById('edit_app_phone').value,
-                dob: document.getElementById('edit_app_dob').value,
-                citizenship_no: document.getElementById('edit_app_citizenship').value,
-                spouse_name: document.getElementById('edit_app_spouse').value,
-                father_name: document.getElementById('edit_app_father').value,
-                mother_name: document.getElementById('edit_app_mother').value,
-                grandfather_name: document.getElementById('edit_app_grandfather').value,
-                province: document.getElementById('edit_app_province').value,
-                district: document.getElementById('edit_app_district').value,
-                municipality: document.getElementById('edit_app_municipality').value,
-                ward: document.getElementById('edit_app_ward').value,
-                tole: document.getElementById('edit_app_tole').value
-            };
-
-            const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
-            if(!error) {
-                alert('आवेदन सफलतापूर्वक अपडेट भयो!');
-                closeAppEditModal();
-                loadApplicationsData();
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
-
-        async function updateAppStatus(id, status) {
-            const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
-            if(!error) {
-                alert('आवेदन ' + status + ' गरियो!');
-                loadApplicationsData();
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
-
-        async function deleteApplication(id) {
-            if(confirm('के तपाईं यो आवेदन स्थायी रूपमा मेटाउन (Remove) चाहनुहुन्छ?')) {
-                const { error } = await supabaseClient.from('membership_applications').delete().eq('id', id);
-                if(!error) {
-                    alert('आवेदन सफलतापूर्वक हटाइयो!');
-                    loadApplicationsData();
-                } else {
-                    alert('त्रुटि: ' + error.message);
-                }
-            }
-        }
-
-        async function loadUsersData() {
-            const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('member_no', { ascending: true });
-            const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
-            data.forEach((user, index) => {
-                const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-                const citFront = user.citizenship_front || user.citizenship_front_url || '';
-                const citBack = user.citizenship_back || user.citizenship_back_url || '';
-                const paySlip = user.payment_slip || user.payment_slip_url || '';
-                const userJson = encodeURIComponent(JSON.stringify(user));
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong style="color: #1a365d;">${toNepaliNumber(user.member_no || '-')}</strong></td>
-                        <td><span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${user.position || 'साधारण सदस्य'}</span></td>
-                        <td>${toNepaliNumber(user.reg_date || '-')}</td>
-                        <td><img src="${photoSrc}" class="table-avatar" alt="फोटो" onclick="showImage('${photoSrc}')" style="cursor: pointer;"></td>
-                        <td><strong>${user.full_name || user.name || '-'}</strong></td>
-                        <td>${toNepaliNumber(user.phone || '-')}</td>
-                        <td>${user.email || user.identifier || '-'}</td>
-                        <td>${toNepaliNumber(user.dob || '-')}</td>
-                        <td>${toNepaliNumber(user.citizenship_no || '-')}</td>
-                        <td>${citFront ? `<button class="btn-action btn-view" onclick="showImage('${citFront}')">हेर्नुहोस्</button>` : 'छैन'}</td>
-                        <td>${citBack ? `<button class="btn-action btn-view" onclick="showImage('${citBack}')">हेर्नुहोस्</button>` : 'छैन'}</td>
-                        <td>${paySlip ? `<button class="btn-action btn-view" onclick="showImage('${paySlip}')">हेर्नुहोस्</button>` : 'छैन'}</td>
-                        <td>${user.spouse_name || '-'}</td>
-                        <td>${user.father_name || '-'}</td>
-                        <td>${user.mother_name || '-'}</td>
-                        <td>${user.grandfather_name || '-'}</td>
-                        <td>${user.province || '-'}</td>
-                        <td>${user.district || '-'}</td>
-                        <td>${user.municipality || '-'}</td>
-                        <td>${toNepaliNumber(user.ward || '-')}</td>
-                        <td>${user.tole || '-'}</td>
-                        <td class="no-print">
-                            <button class="btn-action btn-idcard" onclick="openIdCardModal(decodeURIComponent('${userJson}'))">परिचय पत्र</button>
-                            <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
-                            <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-      async function loadLevyListsAndReports() {
+        async function loadLevyListsAndReports() {
     try {
-        const { data: payments, error: payErr } = await supabaseClient.from('levy_payments').select('*');
-        const { data: users, error: userErr } = await supabaseClient.from('users').select('*');
+        const { data: payments } = await supabaseClient.from('levy_payments').select('*');
+        const { data: users } = await supabaseClient.from('users').select('*');
 
-        console.log("Supabase Payments Data:", payments); // 👈 यहाँ चेक गर्नुहोस्
-        console.log("Supabase Users Data:", users);       // 👈 यहाँ चेक गर्नुहोस्
+        console.log("All Payments:", payments);
+        console.log("All Users:", users);
 
         const paidTbody = document.querySelector('#paidListTable tbody');
         const unpaidTbody = document.querySelector('#unpaidListTable tbody');
@@ -2366,12 +2266,19 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
+            // युजर आइडी वा नाम म्याच गराउने (Flexible Matching)
             let userPayments = payments ? payments.filter(p => {
-                let pId = String(p.user_id || '').trim();
+                let pUserId = String(p.user_id || '').trim();
                 let uId = String(user.id || '').trim();
-                return pId && uId && pId === uId;
+                let pName = String(p.member_name || '').trim().toLowerCase();
+                let uName = String(user.full_name || user.name || '').trim().toLowerCase();
+
+                let idMatch = (pUserId && uId && pUserId === uId);
+                let nameMatch = (pName && uName && (pName === uName || pName.includes(uName) || uName.includes(pName)));
+                
+                return idMatch || nameMatch;
             }) : [];
-            
+
             let paidMonthsSet = new Set();
             let latestSlip = '';
 
@@ -2402,7 +2309,7 @@ function viewNoticeFile(encodedItem) {
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
-            // यदि लेवी तिरेको महिना भेटियो भने
+            // क) यदि लेवी तिरेको महिना भेटियो भने 'लेवी तिरेका' मा देखाउने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
                 let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:3px 8px; border:none; border-radius:4px; cursor:pointer; margin-left:5px; font-weight:bold;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
@@ -2416,7 +2323,7 @@ function viewNoticeFile(encodedItem) {
                 `;
             }
 
-            // बाँकी महिनाहरू
+            // ख) बाँकी महिनाहरू 'नतिरेको सूची' मा रातो बक्समा देखाउने
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
