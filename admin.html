@@ -1950,16 +1950,16 @@ function viewNoticeFile(encodedItem) {
         }
 
         function openDirectImageModal(imageUrl) {
-            const modal = document.getElementById('levyVoucherModal');
-            const modalImg = document.getElementById('levyVoucherImage');
-            
-            if (modal && modalImg) {
-                modalImg.src = imageUrl;
-                modal.style.display = 'flex';
-            } else {
-                window.open(imageUrl, '_blank');
-            }
-        }
+    const modal = document.getElementById('levyVoucherModal');
+    const modalImg = document.getElementById('levyVoucherImage');
+    
+    if (modal && modalImg) {
+        modalImg.src = imageUrl;
+        modal.style.display = 'flex';
+    } else {
+        window.open(imageUrl, '_blank');
+    }
+}
 
         function closeLevyVoucherModal() {
             const modal = document.getElementById('levyVoucherModal');
