@@ -1837,46 +1837,40 @@
 
         window.grantRecords = [];
 
-async function loadGrantIncomeData() {
-    const { data, error } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
-    if (error) {
-        console.error('Error loading grant data:', error);
+// भौचर खोल्ने सुरक्षित फंक्सन
+function openGrantVoucherModal(index) {
+    const item = window.grantRecords[index];
+    if (!item) {
+        alert('डेटा फेला परेन!');
         return;
     }
     
-    window.grantRecords = data || [];
-    const tbody = document.getElementById('grantIncomeTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    if (window.grantRecords.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
-        return;
+    if (typeof openVoucherModal === 'function') {
+        openVoucherModal(
+            String(item.voucher_no || 'VOU-01'),
+            String(item.donor_name || ''),
+            String(item.title || ''),
+            String(item.medium || ''),
+            Number(item.amount || 0),
+            String(item.date || '२०८३-०५-२०'),
+            'अनुदान तथा सहयोग'
+        );
+    } else {
+        alert('मुख्य भौचर प्रिन्ट फंक्सन भेटिएन!');
     }
-    
-    window.grantRecords.forEach((item, index) => {
-        let vNo = item.voucher_no || 'VOU-01';
-        let amount = item.amount || 0;
-        let date = item.date || '२०८३-०५-२०';
-
-        tbody.innerHTML += `
-            <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td><strong>${vNo}</strong></td>
-                <td>${typeof toNepaliNumber === 'function' ? toNepaliNumber(date) : date}</td>
-                <td><strong>${item.donor_name || '-'}</strong></td>
-                <td>${item.title || '-'}</td>
-                <td>${item.medium || '-'}</td>
-                <td><strong style="color: #008000;">रु. ${typeof toNepaliNumber === 'function' ? toNepaliNumber(amount) : amount}</strong></td>
-                <td class="no-print">
-                    <button type="button" onclick="openGrantVoucherModal(${index})" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
-                    <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
-                </td>
-            </tr>
-        `;
-    });
 }
 
+// रेकर्ड मेटाउने फंक्सन
+async function deleteGrantRecord(id) {
+    if (confirm('के तपाईँ यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+        const { error } = await supabaseClient.from('grant_income').delete().eq('id', id);
+        if (!error) {
+            loadGrantIncomeData();
+        } else {
+            alert('त्रुटि: ' + error.message);
+        }
+    }
+}
 // भौचर खोल्ने सुरक्षित फंक्सन
 function openGrantVoucherModal(index) {
     const item = window.grantRecords[index];
