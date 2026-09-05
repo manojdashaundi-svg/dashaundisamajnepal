@@ -1882,13 +1882,14 @@ function openGrantVoucherModal(index) {
     const item = window.grantRecords[index];
     if (!item) return;
     
+    // सिधै मुख्य openVoucherModal लाई सही स्ट्रिङ डेटा पठाउने
     openVoucherModal(
-        item.voucher_no || 'VOU-01',
-        item.donor_name || '',
-        item.title || '',
-        item.medium || '',
-        item.amount || 0,
-        item.date || '२०८३-०५-२०',
+        String(item.voucher_no || 'VOU-01'),
+        String(item.donor_name || ''),
+        String(item.title || ''),
+        String(item.medium || ''),
+        Number(item.amount || 0),
+        String(item.date || '२०८३-०५-२०'),
         'अनुदान तथा सहयोग'
     );
 }
