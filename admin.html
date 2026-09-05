@@ -1397,7 +1397,6 @@
         }
 
         function openIdCardModal(userData) {
-    // यदि डेटा स्ट्रिङमा आएको छ भने JSON मा बदल्ने, होइन भने सिधै प्रयोग गर्ने
     const user = typeof userData === 'string' ? JSON.parse(userData) : userData;
     
     const memberNo = user.member_no || '-';
@@ -1431,7 +1430,6 @@
         modal.style.display = 'flex';
     }
 }
-
         function closeIdCardModal() {
             const modal = document.getElementById('idCardModal');
             modal.style.display = 'none';
