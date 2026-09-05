@@ -1363,30 +1363,17 @@
         }
 
         function getCurrentNepaliDate() {
-            try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                return `${year}-${month}-${day}`;
-            } catch (e) {
-                return "२०८३-०५-१५";
-            }
-        }
-
-        function getExpiryDate(regDateStr) {
-            if (!regDateStr) return '२०८४-०५-१५';
-            let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
-            let parts = cleaned.split('-');
-            if(parts.length === 3) {
-                let yearPart = parseInt(parts[0]);
-                if (!isNaN(yearPart)) {
-                    let nextYear = yearPart + 1;
-                    return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
-                }
-            }
-            return '२०८४-०५-१५';
-        }
+    try {
+        let currentDate = new NepaliDate();
+        let year = toNepaliNumber(currentDate.getYear());
+        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+        return `${year}-${month}-${day}`;
+    } catch (e) {
+        // यदि लाइब्रेरीमा समस्या आएमा आजको वास्तविक नेपाली मिति (२०८३-०५-२०) रहनेछ
+        return "२०८३-०५-२०"; 
+    }
+}
 
         function toggleSection(contentId, btn) {
             const content = document.getElementById(contentId);
