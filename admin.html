@@ -1837,33 +1837,33 @@
 }
 
         async function loadFundData(tableName, tbodyId) {
-            const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: false });
-            const tbody = document.getElementById(tbodyId);
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8">कुनै रेकर्ड उपलब्ध छैन</td></tr>';
-                return;
-            }
-            data.forEach((item, index) => {
-                const itemStr = encodeURIComponent(JSON.stringify(item));
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><strong>${item.donor_name || '-'}</strong></td>
-                        <td>${item.title || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                        <td class="no-print">
-                            <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')">भौचर</button>
-                            <button class="btn-action btn-danger" onclick="deleteFundRecord('${tableName}', '${item.id}', '${tbodyId}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
+    // ascending: true बनाएपछि पालोक्रम अनुसार क्र.सं. १, २, ३... मिल्छ
+    const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: true });
+    const tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = '';
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8">कुनै रेकर्ड उपलब्ध छैन</td></tr>';
+        return;
+    }
+    data.forEach((item, index) => {
+        const itemStr = encodeURIComponent(JSON.stringify(item));
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td><strong style="color: #b7791f;">${item.voucher_no || '-'}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${item.donor_name || '-'}</strong></td>
+                <td>${item.title || '-'}</td>
+                <td>${item.medium || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                <td class="no-print">
+                    <button class="btn-action btn-voucher" onclick="openVoucherModal('${itemStr}')">भौचर</button>
+                    <button class="btn-action btn-danger" onclick="deleteFundRecord('${tableName}', '${item.id}', '${tbodyId}')">रिमुभ</button>
+                </td>
+            </tr>
+        `;
+    });
+}
         async function deleteFundRecord(tableName, id, tbodyId) {
             if (confirm('के तपाईं यो भौचर/रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 await supabaseClient.from(tableName).delete().eq('id', id);
