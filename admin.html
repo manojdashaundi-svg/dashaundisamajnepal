@@ -1813,11 +1813,11 @@
     e.preventDefault();
     const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
     
-    // 🔥 यो ठाउँमा राख्नुपर्छ (जसले गर्दा सेभ गर्दा अटोमेटिक VOU-01, VOU-02... नम्बर ल्याउँछ)
-    const voucherNo = await getNextVoucherNo();
+    // यो लाइन अनिवार्य रूपमा हुनुपर्छ, जसले मुख्य काउन्टरबाट अर्को नयाँ नम्बर तान्छ
+    const voucherNo = await getNextVoucherNo(); 
     
     const incomeData = {
-        voucher_no: voucherNo, // यहाँ त्यो नम्बर प्रयोग हुन्छ
+        voucher_no: voucherNo,
         date: getCurrentNepaliDate(),
         donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
         title: document.getElementById(`${prefix}_title`).value.trim(),
