@@ -1785,45 +1785,40 @@
         window.grantRecords = [];
 
         async function loadGrantIncomeData() {
-            const { data, error } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
-            if (error) {
-                console.error('Error loading grant data:', error);
-                return;
-            }
-            
-            window.grantRecords = data || [];
-            const tbody = document.getElementById('grantIncomeTableBody');
-            if (!tbody) return;
-            
-            tbody.innerHTML = '';
-            if (window.grantRecords.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
-                return;
-            }
-            
-            window.grantRecords.forEach((item, index) => {
-                let vNo = item.voucher_no || 'VOU-01';
-                let amount = item.amount || 0;
-                let date = item.date || '२०८३-०५-२०';
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td><strong>${vNo}</strong></td>
-                        <td>${typeof toNepaliNumber === 'function' ? toNepaliNumber(date) : date}</td>
-                        <td><strong>${item.donor_name || '-'}</strong></td>
-                        <td>${item.title || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #008000;">रु. ${typeof toNepaliNumber === 'function' ? toNepaliNumber(amount) : amount}</strong></td>
-                        <td class="no-print">
-                            <button type="button" onclick="openGrantVoucherModal(${index})" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
-                            <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
+    const { data, error } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
+    if (error) {
+        console.error('Error loading grant data:', error);
+        return;
+    }
+    
+    const tbody = document.getElementById('grantIncomeTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
+        return;
+    }
+    
+    data.forEach((item, index) => {
+        let encoded = encodeURIComponent(JSON.stringify(item));
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td><strong>${item.voucher_no || '-'}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${item.donor_name || '-'}</strong></td>
+                <td>${item.title || '-'}</td>
+                <td>${item.medium || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                <td class="no-print">
+                    <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
+                    <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
+                </td>
+            </tr>
+        `;
+    });
+}
         function openGrantVoucherModal(index) {
             const item = window.grantRecords[index];
             if (!item) {
