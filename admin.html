@@ -2339,6 +2339,89 @@ function viewNoticeFile(encodedItem) {
             });
         }
 
+        async function loadLevyListsAndReports() {
+    try {
+        const { data: payments } = await supabaseClient
+            .from('levy_payments')
+            .select('*')
+            .eq('status', 'Approved');
+
+        const { data: users } = await supabaseClient
+            .from('users')
+            .select('*')
+            .eq('status', 'Approved');
+
+        const paidTbody = document.querySelector('#paidListTable tbody');
+        const unpaidTbody = document.querySelector('#unpaidListTable tbody');
+        if (!paidTbody || !unpaidTbody) return;
+
+        paidTbody.innerHTML = '';
+        unpaidTbody.innerHTML = '';
+
+        if (!users || users.length === 0) {
+            paidTbody.innerHTML = '<tr><td colspan="4">कुनै सदस्य छैनन्</td></tr>';
+            unpaidTbody.innerHTML = '<tr><td colspan="4">कुनै सदस्य छैनन्</td></tr>';
+            return;
+        }
+
+        const allMonths = ['वैशाख', 'जेठ', 'असार', 'साउन', 'भदौ', 'असोज', 'कार्तिक', 'मंसिर', 'पुष', 'माघ', 'फागुन', 'चैत'];
+
+        let paidCount = 0;
+        let unpaidCount = 0;
+
+        users.forEach(user => {
+            let userPayments = payments ? payments.filter(p => String(p.user_id) === String(user.id) || p.member_name === user.full_name) : [];
+            
+            let paidMonthsSet = new Set();
+            let latestSlip = '';
+
+            userPayments.forEach(p => {
+                if (p.payment_slip || p.voucher_url) {
+                    latestSlip = p.payment_slip || p.voucher_url;
+                }
+                if (p.months) {
+                    let mArr = Array.isArray(p.months) ? p.months : p.months.split(',').map(s => s.trim());
+                    mArr.forEach(m => paidMonthsSet.add(m));
+                }
+            });
+
+            let paidMonthsArr = Array.from(paidMonthsSet);
+            let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
+
+            if (paidMonthsArr.length > 0) {
+                paidCount++;
+                let slipBtn = latestSlip ? `<button class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '';
+                
+                paidTbody.innerHTML += `
+                    <tr>
+                        <td><strong>${user.full_name || '-'}</strong></td>
+                        <td>${user.committee_level || user.position || '-'}</td>
+                        <td>${paidMonthsArr.join(', ')} ${slipBtn}</td>
+                    </tr>
+                `;
+            }
+
+            if (unpaidMonthsArr.length > 0) {
+                unpaidCount++;
+                let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
+
+                unpaidTbody.innerHTML += `
+                    <tr>
+                        <td><strong>${user.full_name || '-'}</strong></td>
+                        <td>${user.committee_level || user.position || '-'}</td>
+                        <td>${unpaidHtml}</td>
+                    </tr>
+                `;
+            }
+        });
+
+        if (paidCount === 0) paidTbody.innerHTML = '<tr><td colspan="3">हाल कोही पनि लेवी नतिरेका छैनन्</td></tr>';
+        if (unpaidCount === 0) unpaidTbody.innerHTML = '<tr><td colspan="3">सबैले लेवी चुक्ता गरिसक्नुभएको छ!</td></tr>';
+
+    } catch (err) {
+        console.error('Error loading levy reports:', err);
+    }
+}
         function openUserEditModal(id, userDataStr) {
             const user = JSON.parse(userDataStr);
             document.getElementById('edit_user_id').value = id;
