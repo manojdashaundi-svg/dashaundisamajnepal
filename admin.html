@@ -1394,14 +1394,27 @@
         }
 
         function showImage(url) {
-            if(!url) { alert('फाइल उपलब्ध छैन!'); return; }
-            document.getElementById('modalImage').src = url;
-            document.getElementById('imageModal').style.display = 'flex';
-        }
+    if(!url) { alert('फाइल उपलब्ध छैन!'); return; }
+    document.getElementById('modalImage').src = url;
+    document.getElementById('imageModal').style.display = 'flex';
+}
 
-        function closeImageModal() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
+function closeImageModal() {
+    document.getElementById('imageModal').style.display = 'none';
+}
+
+// नयाँ थप्नुपर्ने फङ्सन यहाँ राख्नुहोस्:
+function viewNoticeFile(url, fileType) {
+    if (!url) { 
+        alert('फाइल उपलब्ध छैन!'); 
+        return; 
+    }
+    if (fileType === 'pdf' || url.toLowerCase().includes('.pdf')) {
+        window.open(url, '_blank');
+    } else {
+        showImage(url);
+    }
+}
 
         function openIdCardModal(userStr) {
     const user = JSON.parse(userStr);
