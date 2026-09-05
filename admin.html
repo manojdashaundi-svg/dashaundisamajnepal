@@ -531,14 +531,47 @@
             </div>
 
             <!-- अनुदान तथा सहयोगबाट प्राप्त आम्दानी सेक्सन -->
-            <div class="section-header">
-                <h3>अनुदान तथा सहयोगबाट प्राप्त आम्दानी</h3>
-                <div class="button-group">
-                    <button class="print-btn" onclick="printSection('grantIncomeContent', 'अनुदान तथा सहयोगबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
-                    <button class="toggle-btn" onclick="toggleSection('grantIncomeContent', this)">खोल्नुहोस् ▾</button>
+<div class="section-header">
+    <h3>अनुदान तथा सहयोगबाट प्राप्त आम्दानी</h3>
+    <div class="button-group">
+        <button class="print-btn" onclick="printSection('grantIncomeContent', 'अनुदान तथा सहयोगबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
+        <button class="toggle-btn" onclick="toggleSection('grantIncomeContent', this)">खोल्नुहोस् ▾</button>
+    </div>
+</div>
+
+<div id="grantIncomeContent" class="collapsible-content">
+    <!-- नयाँ सहयोग वा अनुदान थप्ने फारम -->
+    <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
+        <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ सहयोग वा अनुदान थप्ने</h3>
+        <form id="grantIncomeForm" onsubmit="saveGrantIncome(event)">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>सहयोगदाताको नाम:</label>
+                    <input type="text" id="grant_donor_name" placeholder="सहयोगदाताको नाम लेख्नुहोस्" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>सहयोगको शीर्षक:</label>
+                    <input type="text" id="grant_title" placeholder="जस्तै: भवन निर्माण सहयोग, राहत आदि" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>माध्यम (प्रकार):</label>
+                    <select id="grant_medium">
+                        <option value="नगद (Cash)">नगद (Cash)</option>
+                        <option value="बैंक ट्रान्सफर (Bank Transfer)">बैंक ट्रान्सफर (Bank Transfer)</option>
+                        <option value="चेक (Cheque)">चेक (Cheque)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>रकम (रु.):</label>
+                    <input type="number" id="grant_amount" placeholder="रकम हाल्नुहोस्" required>
                 </div>
             </div>
-            <table class="table">
+            <button type="submit" class="btn btn-success" style="margin-top: 15px; background: #16a34a; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">सुरक्षित गर्नुहोस्</button>
+        </form>
+    </div>
+
+    <!-- भौचर नम्बरसहितको मुख्य टेबल (फारमभन्दा तल) -->
+    <table class="table">
         <thead>
             <tr>
                 <th>क्र.सं.</th>
@@ -551,7 +584,9 @@
                 <th>कारवाही</th>
             </tr>
         </thead>
-        <tbody id="grantIncomeTableBody"></tbody>
+        <tbody id="grantIncomeTableBody">
+            <!-- डेटा जाभास्क्रिप्टबाट यहाँ लोड हुन्छ -->
+        </tbody>
     </table>
 </div>
             <div id="grantIncomeContent" class="collapsible-content">
