@@ -2339,13 +2339,11 @@ function viewNoticeFile(encodedItem) {
             });
         }
 
-       async function loadLevyListsAndReports() {
+      async function loadLevyListsAndReports() {
     try {
-        const { data: payments, error: payErr } = await supabaseClient.from('levy_payments').select('*');
-        const { data: users, error: userErr } = await supabaseClient.from('users').select('*');
-
-        console.log("Payments fetched:", payments);
-        console.log("Users fetched:", users);
+        // सबै payments र users रेकर्डहरू तान्ने (Status चेक हटाएर सबै रेकर्ड लिने)
+        const { data: payments } = await supabaseClient.from('levy_payments').select('*');
+        const { data: users } = await supabaseClient.from('users').select('*');
 
         const paidTbody = document.querySelector('#paidListTable tbody');
         const unpaidTbody = document.querySelector('#unpaidListTable tbody');
@@ -2366,6 +2364,7 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
+            // युजरको आइडी वा नामसँग मिल्ने भुक्तानीहरू छान्ने
             let userPayments = payments ? payments.filter(p => {
                 let matchesUser = (String(p.user_id) === String(user.id)) || 
                                   (p.member_name && user.full_name && p.member_name.trim().toLowerCase().includes(user.full_name.trim().toLowerCase()));
@@ -2376,6 +2375,7 @@ function viewNoticeFile(encodedItem) {
             let latestSlip = '';
 
             userPayments.forEach(p => {
+                // भौचर वा स्लिपको लिङ्क जुनसुकै स्तम्भबाट पनि तान्ने
                 if (p.payment_slip || p.voucher_url || p.slip) {
                     latestSlip = p.payment_slip || p.voucher_url || p.slip;
                 }
@@ -2402,9 +2402,10 @@ function viewNoticeFile(encodedItem) {
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
+            // क) यदि केही महिना तिरेको छ भने 'लेवी तिरेका' मा देखाउने र भौचर बटन राख्ने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
-                let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
+                let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:3px 8px; border:none; border-radius:4px; cursor:pointer; margin-left:5px; font-weight:bold;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
                 
                 paidTbody.innerHTML += `
                     <tr>
@@ -2415,6 +2416,7 @@ function viewNoticeFile(encodedItem) {
                 `;
             }
 
+            // ख) यदि बाँकी महिनाहरू छन् भने 'नतिरेका' मा रातो बक्समा देखाउने
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
