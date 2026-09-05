@@ -1758,24 +1758,30 @@
         }
 
         async function saveGrantIncome(e) {
-            e.preventDefault();
-            const grantData = {
-                date: getCurrentNepaliDate(),
-                donor_name: document.getElementById('grant_donor_name').value.trim(),
-                title: document.getElementById('grant_title').value.trim(),
-                medium: document.getElementById('grant_medium').value,
-                amount: parseFloat(document.getElementById('grant_amount').value) || 0
-            };
+    e.preventDefault();
+    
+    // नयाँ भौचर नम्बर स्वतः प्राप्त गर्ने
+    const voucherNo = await getNextVoucherNo();
 
-            const { error } = await supabaseClient.from('grant_income').insert([grantData]);
-            if (!error) {
-                alert('अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो!');
-                document.getElementById('grantIncomeForm').reset();
-                loadGrantIncomeData();
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
+    const grantData = {
+        voucher_no: voucherNo, // यहाँ भौचर नम्बर थपियो
+        date: getCurrentNepaliDate(),
+        donor_name: document.getElementById('grant_donor_name').value.trim(),
+        title: document.getElementById('grant_title').value.trim(),
+        medium: document.getElementById('grant_medium').value,
+        amount: parseFloat(document.getElementById('grant_amount').value) || 0,
+        fund_category: 'अनुदान तथा सहयोग'
+    };
+
+    const { error } = await supabaseClient.from('grant_income').insert([grantData]);
+    if (!error) {
+        alert(`अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
+        document.getElementById('grantIncomeForm').reset();
+        loadGrantIncomeData();
+    } else {
+        alert('त्रुटि: ' + error.message);
+    }
+}
 
         async function loadGrantIncomeData() {
             const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
