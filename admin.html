@@ -1676,50 +1676,64 @@ function viewNoticeFile(encodedItem) {
                 }
             }
         }
+async function loadPendingLevyPayments() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('levy_payments')
+            .select('*')
+            .eq('status', 'Pending');
 
-        async function loadPendingLevyPayments() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('levy_payments')
-                    .select('*')
-                    .eq('status', 'Pending');
+        let tbody = document.getElementById('pendingLevyTableBody');
+        if (!tbody) return;
 
-                let tbody = document.getElementById('pendingLevyTableBody');
-                if (!tbody) return;
+        tbody.innerHTML = '';
 
-                tbody.innerHTML = '';
-
-                if (error || !data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
-                    return;
-                }
-
-                data.forEach(item => {
-                    const memberName = item.member_name || `सदस्य ID: ${item.user_id}`;
-                    const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
-                    const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
-                    const totalAmount = item.total_amount || 0;
-                    const slipUrl = item.payment_slip || item.voucher_url || '#';
-
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${memberName}</td>
-                        <td>${committeeLevel}</td>
-                        <td>${months}</td>
-                        <td>रु. ${totalAmount}</td>
-                        <td><button class="btn-action" onclick="openDirectImageModal('${slipUrl}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
-                        <td>
-                            <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
-                            <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            } catch (err) {
-                console.error('Error loading pending payments:', err);
-            }
+        if (error || !data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+            return;
         }
 
+        for (let item of data) {
+            let memberName = item.member_name;
+
+            // यदि लेवी रेकर्डमा नाम छैन भने users टेबलबाट नाम पत्ता लगाउने
+            if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/)) {
+                const { data: userData } = await supabaseClient
+                    .from('users')
+                    .select('full_name, name')
+                    .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
+                    .single();
+                
+                if (userData) {
+                    memberName = userData.full_name || userData.name;
+                } else {
+                    memberName = `सदस्य नं: ${item.user_id}`;
+                }
+            }
+
+            const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
+            const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
+            const totalAmount = item.total_amount || 0;
+            const slipUrl = item.payment_slip || item.voucher_url || '#';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${memberName}</strong></td>
+                <td>${committeeLevel}</td>
+                <td>${months}</td>
+                <td>रु. ${toNepaliNumber(totalAmount)}</td>
+                <td><button class="btn-action" onclick="openDirectImageModal('${slipUrl}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
+                <td>
+                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
+                    <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+    } catch (err) {
+        console.error('Error loading pending payments:', err);
+    }
+}
         async function approveLevyPayment(id) {
             if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
                 try {
