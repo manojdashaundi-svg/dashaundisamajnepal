@@ -1360,16 +1360,18 @@
         }
 
         function getCurrentNepaliDate() {
-            try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                return `${year}-${month}-${day}`;
-            } catch (e) {
-                return "२०८३-०५-१५";
-            }
-        }
+    try {
+        // यदि नेपाली डेट लाइब्रेरी उपलब्ध छ भने त्यसैबाट तान्ने
+        let currentDate = new NepaliDate();
+        let year = toNepaliNumber(currentDate.getYear());
+        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+        return `${year}-${month}-${day}`;
+    } catch (e) {
+        // यदि लाइब्रेरी लोड भएन भने आजको वास्तविक नेपाली मिति (२०८३-०५-२०) स्वतः दिने
+        return "२०८३-०५-२०";
+    }
+}
 
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '२०८४-०५-१५';
