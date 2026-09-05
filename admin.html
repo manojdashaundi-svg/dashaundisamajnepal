@@ -2339,7 +2339,7 @@ function viewNoticeFile(encodedItem) {
             });
         }
 
-        async function loadLevyListsAndReports() {
+       async function loadLevyListsAndReports() {
     try {
         const { data: payments } = await supabaseClient
             .from('levy_payments')
@@ -2359,8 +2359,8 @@ function viewNoticeFile(encodedItem) {
         unpaidTbody.innerHTML = '';
 
         if (!users || users.length === 0) {
-            paidTbody.innerHTML = '<tr><td colspan="4">कुनै सदस्य छैनन्</td></tr>';
-            unpaidTbody.innerHTML = '<tr><td colspan="4">कुनै सदस्य छैनन्</td></tr>';
+            paidTbody.innerHTML = '<tr><td colspan="3">कुनै सदस्य छैनन्</td></tr>';
+            unpaidTbody.innerHTML = '<tr><td colspan="3">कुनै सदस्य छैनन्</td></tr>';
             return;
         }
 
@@ -2370,7 +2370,11 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
-            let userPayments = payments ? payments.filter(p => String(p.user_id) === String(user.id) || p.member_name === user.full_name) : [];
+            // प्रयोगकर्ताको आइडी वा नामसँग मिल्ने भुक्तानीहरू खोज्ने
+            let userPayments = payments ? payments.filter(p => 
+                String(p.user_id) === String(user.id) || 
+                (p.member_name && user.full_name && p.member_name.trim() === user.full_name.trim())
+            ) : [];
             
             let paidMonthsSet = new Set();
             let latestSlip = '';
@@ -2388,9 +2392,10 @@ function viewNoticeFile(encodedItem) {
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
+            // क) यदि केही महिना तिरेको छ भने 'लेवी तिरेका' मा देखाउने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
-                let slipBtn = latestSlip ? `<button class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '';
+                let slipBtn = latestSlip ? `<button class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
                 
                 paidTbody.innerHTML += `
                     <tr>
@@ -2401,6 +2406,7 @@ function viewNoticeFile(encodedItem) {
                 `;
             }
 
+            // ख) यदि सबै वा केही महिना बाँकी छन् भने 'बाँकी' मा देखाउने
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
@@ -2415,7 +2421,7 @@ function viewNoticeFile(encodedItem) {
             }
         });
 
-        if (paidCount === 0) paidTbody.innerHTML = '<tr><td colspan="3">हाल कोही पनि लेवी नतिरेका छैनन्</td></tr>';
+        if (paidCount === 0) paidTbody.innerHTML = '<tr><td colspan="3">हाल कोही पनि लेवी तिरेका छैनन्</td></tr>';
         if (unpaidCount === 0) unpaidTbody.innerHTML = '<tr><td colspan="3">सबैले लेवी चुक्ता गरिसक्नुभएको छ!</td></tr>';
 
     } catch (err) {
