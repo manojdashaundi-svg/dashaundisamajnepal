@@ -1875,7 +1875,9 @@ async function loadGrantIncomeData() {
     });
 }
 
-// भौचर खोल्ने सुरक्षित सहायक फंक्सन
+// ग्लोबल एरे र सुरक्षित फंक्सन
+window.grantRecords = [];
+
 function openGrantVoucherModal(index) {
     const item = window.grantRecords[index];
     if (!item) return;
