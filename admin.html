@@ -1335,23 +1335,35 @@
         const messageDiv = document.getElementById('message');
 
         async function getNextVoucherNo() {
-    let { data } = await supabaseClient
-        .from('voucher_counter')
-        .select('last_no')
-        .eq('id', 1)
-        .single();
-    
-    let nextNo = 1;
-    if (data && data.last_no !== undefined) {
-        nextNo = data.last_no + 1;
+    try {
+        // १. पहिले टेबलबाट हालको last_no तान्ने प्रयास गर्ने
+        let { data, error } = await supabaseClient
+            .from('voucher_counter')
+            .select('last_no')
+            .eq('id', 1)
+            .single();
+        
+        let nextNo = 1;
+        if (data && data.last_no !== null && data.last_no !== undefined) {
+            nextNo = Number(data.last_no) + 1;
+        }
+
+        // २. नयाँ बढेको नम्बरलाई सुपाबेसमा सुरक्षित गर्ने
+        let { error: upsertError } = await supabaseClient
+            .from('voucher_counter')
+            .upsert({ id: 1, last_no: nextNo });
+
+        if (upsertError) {
+            console.error('Counter update error:', upsertError);
+        }
+
+        return 'VOU-' + String(nextNo).padStart(2, '0');
+    } catch (err) {
+        console.error('Voucher generation error:', err);
+        // यदि कुनै कारणले काम गरेन भने समयको आधारमा रेन्डम तर फरक नम्बर दिने
+        return 'VOU-' + Math.floor(10 + Math.random() * 90);
     }
-
-    await supabaseClient
-        .from('voucher_counter')
-        .upsert({ id: 1, last_no: nextNo });
-
-    return 'VOU-' + String(nextNo).padStart(2, '0');
-} 
+}
         
         function toNepaliNumber(input) {
             if (!input) return '';
