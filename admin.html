@@ -2285,10 +2285,10 @@
                         <td>${toNepaliNumber(user.ward || '-')}</td>
                         <td>${user.tole || '-'}</td>
                         <td class="no-print">
-                            <button class="btn-action btn-idcard" onclick="openIdCardModal(decodeURIComponent('${userJson}'))">परिचय पत्र</button>
-                            <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
-                            <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
-                        </td>
+                     <button class="btn-action btn-idcard" onclick='openIdCardModal(${JSON.stringify(user)})'>परिचय पत्र</button>
+                     <button class="btn-action btn-edit" onclick="openUserEditModal('${user.id}', decodeURIComponent('${userJson}'))">सम्पादन</button>
+                     <button class="btn-action btn-danger" onclick="deleteUser('${user.id}')">रिमुभ</button>
+                     </td>
                     </tr>
                 `;
             });
