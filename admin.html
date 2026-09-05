@@ -1336,32 +1336,20 @@
 
         async function getNextVoucherNo() {
     try {
-        // १. पहिले टेबलबाट हालको last_no तान्ने प्रयास गर्ने
-        let { data, error } = await supabaseClient
-            .from('voucher_counter')
-            .select('last_no')
-            .eq('id', 1)
-            .single();
-        
-        let nextNo = 1;
-        if (data && data.last_no !== null && data.last_no !== undefined) {
-            nextNo = Number(data.last_no) + 1;
-        }
+        // सबै कोषहरूको टेबलबाट अहिलेसम्म जम्मा कति वटा भौचर बनेका छन्, तिनको कुल संख्या पत्ता लगाउने
+        let { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+        let { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+        let { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+        let { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
 
-        // २. नयाँ बढेको नम्बरलाई सुपाबेसमा सुरक्षित गर्ने
-        let { error: upsertError } = await supabaseClient
-            .from('voucher_counter')
-            .upsert({ id: 1, last_no: nextNo });
-
-        if (upsertError) {
-            console.error('Counter update error:', upsertError);
-        }
+        let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
+        let nextNo = totalCount + 1;
 
         return 'VOU-' + String(nextNo).padStart(2, '0');
     } catch (err) {
-        console.error('Voucher generation error:', err);
-        // यदि कुनै कारणले काम गरेन भने समयको आधारमा रेन्डम तर फरक नम्बर दिने
-        return 'VOU-' + Math.floor(10 + Math.random() * 90);
+        console.error('Error generating voucher:', err);
+        let randomNum = Math.floor(100 + Math.random() * 900);
+        return 'VOU-' + randomNum;
     }
 }
         
