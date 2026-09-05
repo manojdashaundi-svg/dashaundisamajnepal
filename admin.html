@@ -1404,19 +1404,22 @@ function closeImageModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-// नयाँ थप्नुपर्ने फङ्सन यहाँ राख्नुहोस्:
-function viewNoticeFile(url, fileType) {
+// 📌 यो नयाँ फङ्सनलाई यहाँ राख्नुहोस्:
+function viewNoticeFile(encodedItem) {
+    const item = JSON.parse(decodeURIComponent(escape(atob(encodedItem))));
+    const url = item.file_url || item.file || item.url || '';
+    
     if (!url) { 
-        alert('फाइल उपलब्ध छैन!'); 
+        alert('यो सूचनासँग कुनै फाइल संलग्न गरिएको छैन!'); 
         return; 
     }
-    if (fileType === 'pdf' || url.toLowerCase().includes('.pdf')) {
+    
+    if (item.file_type === 'pdf' || url.toLowerCase().includes('.pdf')) {
         window.open(url, '_blank');
     } else {
         showImage(url);
     }
 }
-
         function openIdCardModal(userStr) {
     const user = JSON.parse(userStr);
     const memberNo = user.member_no || '-';
