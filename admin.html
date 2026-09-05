@@ -2341,8 +2341,11 @@ function viewNoticeFile(encodedItem) {
 
       async function loadLevyListsAndReports() {
     try {
-        const { data: payments } = await supabaseClient.from('levy_payments').select('*');
-        const { data: users } = await supabaseClient.from('users').select('*');
+        const { data: payments, error: payErr } = await supabaseClient.from('levy_payments').select('*');
+        const { data: users, error: userErr } = await supabaseClient.from('users').select('*');
+
+        console.log("Supabase Payments Data:", payments); // 👈 यहाँ चेक गर्नुहोस्
+        console.log("Supabase Users Data:", users);       // 👈 यहाँ चेक गर्नुहोस्
 
         const paidTbody = document.querySelector('#paidListTable tbody');
         const unpaidTbody = document.querySelector('#unpaidListTable tbody');
@@ -2363,13 +2366,10 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
-            // नाम वा आईडी जस्तो सुकै भए पनि फ्लेक्सिबल तरिकाले म्याच गराउने
             let userPayments = payments ? payments.filter(p => {
-                let pName = (p.member_name || '').trim().toLowerCase();
-                let uName = (user.full_name || user.name || '').trim().toLowerCase();
-                let matchesId = (String(p.user_id) === String(user.id));
-                let matchesName = (pName && uName && (pName.includes(uName) || uName.includes(pName)));
-                return matchesId || matchesName;
+                let pId = String(p.user_id || '').trim();
+                let uId = String(user.id || '').trim();
+                return pId && uId && pId === uId;
             }) : [];
             
             let paidMonthsSet = new Set();
@@ -2402,7 +2402,7 @@ function viewNoticeFile(encodedItem) {
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
-            // क) यदि लेवी तिरेको छ भने 'लेवी तिरेका' मा देखाउने
+            // यदि लेवी तिरेको महिना भेटियो भने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
                 let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:3px 8px; border:none; border-radius:4px; cursor:pointer; margin-left:5px; font-weight:bold;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
@@ -2416,7 +2416,7 @@ function viewNoticeFile(encodedItem) {
                 `;
             }
 
-            // ख) यदि बाँकी महिनाहरू छन् भने 'बाँकी' मा देखाउने
+            // बाँकी महिनाहरू
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
