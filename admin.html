@@ -1689,28 +1689,29 @@ async function loadPendingLevyPayments() {
         tbody.innerHTML = '';
 
         if (error || !data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
             return;
         }
 
         for (let item of data) {
             let memberName = item.member_name;
+            let memberNo = item.member_no || item.user_id || '-';
+            let designation = item.designation || '-';
 
-            // यदि लेवी रेकर्डमा नाम छैन भने users टेबलबाट नाम पत्ता लगाउने
-            if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/)) {
-                const { data: userData } = await supabaseClient
-                    .from('users')
-                    .select('full_name, name')
-                    .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
-                    .single();
-                
-                if (userData) {
-                    memberName = userData.full_name || userData.name;
-                } else {
-                    memberName = `सदस्य नं: ${item.user_id}`;
-                }
+            // यदि लेवी रेकर्डमा नाम, नम्बर वा पद पूर्ण छैन भने users टेबलबाट ल्याउने
+            const { data: userData } = await supabaseClient
+                .from('users')
+                .select('full_name, name, member_no, designation, position')
+                .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
+                .single();
+            
+            if (userData) {
+                memberName = memberName && !memberName.startsWith('सदस्य') ? memberName : (userData.full_name || userData.name || memberName);
+                memberNo = userData.member_no || memberNo;
+                designation = userData.designation || userData.position || designation;
             }
 
+            const paymentDate = item.date || (item.created_at ? new Date(item.created_at).toLocaleDateString('ne-NP') : '-');
             const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
             const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
             const totalAmount = item.total_amount || 0;
@@ -1718,7 +1719,10 @@ async function loadPendingLevyPayments() {
 
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${paymentDate}</td>
+                <td>${memberNo}</td>
                 <td><strong>${memberName}</strong></td>
+                <td>${designation}</td>
                 <td>${committeeLevel}</td>
                 <td>${months}</td>
                 <td>रु. ${toNepaliNumber(totalAmount)}</td>
