@@ -1840,19 +1840,20 @@ window.grantRecords = [];
 
 async function loadGrantIncomeData() {
     const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
-    window.grantRecords = data || []; // डेटालाई ग्लोबल रूपमा सेभ गर्ने
-    
     const tbody = document.getElementById('grantIncomeTableBody');
     if (!tbody) return;
     
     tbody.innerHTML = '';
-    if (!window.grantRecords || window.grantRecords.length === 0) {
+    if (!data || data.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
         return;
     }
     
-    window.grantRecords.forEach((item, index) => {
+    data.forEach((item, index) => {
         let vNo = item.voucher_no || 'VOU-01';
+        let dName = (item.donor_name || '').replace(/'/g, "\\'");
+        let title = (item.title || '').replace(/'/g, "\\'");
+        let medium = item.medium || 'नगद (Cash)';
         let amount = item.amount || 0;
         let date = item.date || '२०८३-०५-२०';
 
@@ -1863,11 +1864,10 @@ async function loadGrantIncomeData() {
                 <td>${toNepaliNumber(date)}</td>
                 <td><strong>${item.donor_name || '-'}</strong></td>
                 <td>${item.title || '-'}</td>
-                <td>${item.medium || '-'}</td>
+                <td>${medium}</td>
                 <td><strong style="color: #008000;">रु. ${toNepaliNumber(amount)}</strong></td>
                 <td class="no-print">
-                    <!-- 🌟 इन्डेक्समार्फत सुरक्षित रूपमा भौचर खोल्ने फंक्सन कल गर्ने -->
-                    <button type="button" onclick="openGrantVoucherModal(${index})" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
+                    <button type="button" onclick="openVoucherModal('${vNo}', '${dName}', '${title}', '${medium}', ${amount}, '${date}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
                     <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
                 </td>
             </tr>
