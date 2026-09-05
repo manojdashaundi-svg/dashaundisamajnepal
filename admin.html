@@ -1817,16 +1817,18 @@
             }
         }
 
-        async function saveFundIncome(e, tableName, fundTitle) {
+       async function saveFundIncome(e, tableName, fundTitle) {
     e.preventDefault();
     const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
     
-    // यो महत्त्वपूर्ण लाइनले स्वतः नयाँ क्रमिक भौचर नम्बर ल्याउँछ
     const voucherNo = await getNextVoucherNo();
     
     const incomeData = {
-        voucher_no: voucherNo, // यहाँ नयाँ सिरिजको नम्बर बस्छ
-        date: getCurrentNepaliDate(),
+        voucher_no: voucherNo,
+        
+        // 🌟 यो ठाउँमा राख्नुपर्छ (जसले गर्दा भौचरमा अटोमेटिक आजको वास्तविक मिति बस्छ)
+        date: getCurrentNepaliDate(), 
+        
         donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
         title: document.getElementById(`${prefix}_title`).value.trim(),
         medium: document.getElementById(`${prefix}_medium`).value,
