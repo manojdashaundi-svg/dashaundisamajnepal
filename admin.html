@@ -1777,11 +1777,11 @@
         async function saveGrantIncome(e) {
     e.preventDefault();
     
-    // यहाँ पनि लगातारको सिरिज नम्बर तान्ने
-    const voucherNo = await getNextVoucherNo(); 
+    // 🌟 यहाँ भौचर नम्बर स्वतः तान्ने फंक्सन जोड्ने
+    const voucherNo = await getNextVoucherNo();
 
     const grantData = {
-        voucher_no: voucherNo, // यदि grant_income टेबलमा voucher_no स्तम्भ (column) छ भने
+        voucher_no: voucherNo,
         date: getCurrentNepaliDate(),
         donor_name: document.getElementById('grant_donor_name').value.trim(),
         title: document.getElementById('grant_title').value.trim(),
