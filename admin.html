@@ -1633,37 +1633,37 @@ function viewNoticeFile(encodedItem) {
         }
 
         async function loadMonthlyLevyIncomeData() {
-            const { data } = await supabaseClient
-                .from('levy_payments')
-                .eq('status', 'Approved')
-                .select('*')
-                .order('created_at', { ascending: false });
+    const { data } = await supabaseClient
+        .from('levy_payments')
+        .select('*') // 👈 यो .select('*') अनिवार्य हुनुपर्छ
+        .eq('status', 'Approved');
 
-            const tbody = document.getElementById('monthlyLevyIncomeTableBody');
-            tbody.innerHTML = '';
+    const tbody = document.getElementById('monthlyLevyIncomeTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7">कुनै मासिक लेवी आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
-                return;
-            }
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7">कुनै मासिक लेवी आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
+        return;
+    }
 
-            data.forEach((item, index) => {
-                const monthsStr = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '-');
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><strong>${item.member_name || '-'}</strong></td>
-                        <td>${item.committee_level || '-'}</td>
-                        <td>${monthsStr}</td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
-                        <td class="no-print">
-                            <button class="btn-action btn-danger" onclick="deleteMonthlyLevyRecord('${item.id}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
+    data.forEach((item, index) => {
+        const monthsStr = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '-');
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${item.member_name || '-'}</strong></td>
+                <td>${item.committee_level || '-'}</td>
+                <td>${monthsStr}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.total_amount || '०')}</strong></td>
+                <td class="no-print">
+                    <button class="btn-action btn-danger" onclick="deleteMonthlyLevyRecord('${item.id}')">रिमुभ</button>
+                </td>
+            </tr>
+        `;
+    });
+}
 
         async function deleteMonthlyLevyRecord(id) {
             if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
