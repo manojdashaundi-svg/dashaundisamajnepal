@@ -2283,7 +2283,7 @@ function viewNoticeFile(encodedItem) {
             document.getElementById('appEditModal').style.display = 'flex';
         }
 
-       async function loadLevyListsAndReports() {
+      async function loadLevyListsAndReports() {
     try {
         const { data: payments } = await supabaseClient.from('levy_payments').select('*');
         const { data: users } = await supabaseClient.from('users').select('*');
@@ -2307,21 +2307,21 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
-            // युजरको आइडी वा नामसँग मिल्ने पेमेन्टहरू खोज्ने
+            // स्टेटसको कुनै पनि बाधताबिना सबै पेमेन्टहरूलाई युजरसँग म्याच गराउने
             let userPayments = payments ? payments.filter(p => {
                 let pUserId = String(p.user_id || '').trim();
                 let uId = String(user.id || '').trim();
                 let pName = String(p.member_name || '').trim().toLowerCase();
                 let uName = String(user.full_name || user.name || '').trim().toLowerCase();
 
-                // यदि पेमेन्टमा आईडी वा नाम म्याच हुन्छ भने (वा पेमेन्टको नाम '1' जस्तो छ तर आईडी मिल्छ भने)
-                return (pUserId && uId && pUserId === uId) || (pName && uName && pName.includes(uName));
+                return (pUserId && uId && pUserId === uId) || (pName && uName && (pName === uName || pName.includes(uName) || uName === String(user.id)));
             }) : [];
             
             let paidMonthsSet = new Set();
             let latestSlip = '';
 
             userPayments.forEach(p => {
+                // भौचर वा स्लिपको लिङ्क तान्ने
                 if (p.payment_slip || p.voucher_url || p.slip) {
                     latestSlip = p.payment_slip || p.voucher_url || p.slip;
                 }
@@ -2348,7 +2348,7 @@ function viewNoticeFile(encodedItem) {
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
-            // क) यदि लेवी तिरेको महिना छ भने 'तिरेका पदाधिकारीहरूको सूची' मा राख्ने
+            // क) यदि महिनाहरू तिरेको रेकर्ड छ भने 'लेवी तिरेका पदाधिकारीहरूको सूची' मा देखाउने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
                 let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:3px 8px; border:none; border-radius:4px; cursor:pointer; margin-left:5px; font-weight:bold;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
@@ -2362,7 +2362,7 @@ function viewNoticeFile(encodedItem) {
                 `;
             }
 
-            // ख) यदि बाँकी महिनाहरू छन् भने 'नतिरेको सूची (बाँकी)' मा रातो बक्समा राख्ने
+            // ख) बाँकी महिनाहरू 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)' मा रातो बक्समा देखाउने
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
