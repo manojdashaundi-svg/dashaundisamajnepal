@@ -1408,36 +1408,44 @@
         }
 
         function openIdCardModal(userStr) {
-            const user = JSON.parse(userStr);
-            const memberNo = user.member_no || '-';
-            const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
-            const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
-            const fullName = user.full_name || user.name || '-';
+    const user = JSON.parse(userStr);
+    const memberNo = user.member_no || '-';
+    const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
+    const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
+    const fullName = user.full_name || user.name || '-';
 
-            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-            document.getElementById('cardIssueDate').innerText = regDate;
-            document.getElementById('cardExpiryDate').innerText = expiryDate;
-            document.getElementById('cardName').innerText = fullName;
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+    document.getElementById('cardIssueDate').innerText = regDate;
+    document.getElementById('cardExpiryDate').innerText = expiryDate;
+    document.getElementById('cardName').innerText = fullName;
 
-            let rawPosition = user.position || 'साधारण सदस्य';
-            let committeeLabel = user.committee_level ? ` - ${user.committee_level}` : '';
-            document.getElementById('cardPosition').innerText = rawPosition + committeeLabel;
+    // पद र सम्बन्धित समितिको नाम मिलाउने
+    let rawPosition = user.position || 'साधारण सदस्य';
+    let committeeLabel = '';
+    
+    if (user.committee_level && user.committee_level !== 'साधारण सदस्य') {
+        committeeLabel = ` (${user.committee_level})`;
+    } else if (rawPosition === 'अध्यक्ष' || rawPosition === 'सचिव' || rawPosition === 'कोषाध्यक्ष' || rawPosition === 'उपाध्यक्ष' || rawPosition === 'सह-सचिव' || rawPosition === 'सदस्य') {
+        committeeLabel = ` (केन्द्रीय समिति)`;
+    }
+    
+    document.getElementById('cardPosition').innerText = rawPosition + committeeLabel;
 
-            document.getElementById('cardProvince').innerText = user.province || '-';
-            document.getElementById('cardDistrict').innerText = user.district || '-';
-            document.getElementById('cardMunicipality').innerText = user.municipality || '-';
-            document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
+    document.getElementById('cardProvince').innerText = user.province || '-';
+    document.getElementById('cardDistrict').innerText = user.district || '-';
+    document.getElementById('cardMunicipality').innerText = user.municipality || '-';
+    document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
 
-            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-            document.getElementById('cardPhoto').src = photo;
+    const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+    document.getElementById('cardPhoto').src = photo;
 
-            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-            document.getElementById('cardQrCode').src = qrApiUrl;
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
+    document.getElementById('cardQrCode').src = qrApiUrl;
 
-            const modal = document.getElementById('idCardModal');
-            modal.style.display = 'flex';
-        }
+    const modal = document.getElementById('idCardModal');
+    modal.style.display = 'flex';
+}
 
         function closeIdCardModal() {
             const modal = document.getElementById('idCardModal');
