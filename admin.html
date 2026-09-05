@@ -1773,8 +1773,8 @@
     }
 }
 
-        async function loadGrantIncomeData() {
-    const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
+       async function loadGrantIncomeData() {
+    const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
     const tbody = document.getElementById('grantIncomeTableBody');
     tbody.innerHTML = '';
     
