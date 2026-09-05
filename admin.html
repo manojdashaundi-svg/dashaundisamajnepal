@@ -1593,6 +1593,41 @@ function viewNoticeFile(encodedItem) {
             location.reload();
         }
 
+        // 📌 यो फङ्सनलाई यहाँ राख्नुहोला:
+        async function loadUsersData() {
+            try {
+                const { data, error } = await supabaseClient.from('users').select('*');
+                if (error) {
+                    console.error('Error loading users:', error);
+                    return;
+                }
+                
+                const tbody = document.getElementById('usersTableBody');
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6">कुनै सदस्य छैनन्</td></tr>';
+                    return;
+                }
+
+                data.forEach((user, index) => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong>${index + 1}</strong></td>
+                            <td>${user.full_name || user.name || '-'}</td>
+                            <td>${user.committee_level || '-'}</td>
+                            <td>${user.phone || '-'}</td>
+                            <td>${user.email || '-'}</td>
+                            <td>${user.status || '-'}</td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error('loadUsersData error:', err);
+            }
+        }
+
         async function loadIncomeData() {
             const { data } = await supabaseClient.from('income_records').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('incomeTableBody');
