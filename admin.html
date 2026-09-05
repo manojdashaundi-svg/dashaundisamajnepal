@@ -1867,7 +1867,7 @@ async function loadGrantIncomeData() {
                 <td>${medium}</td>
                 <td><strong style="color: #008000;">रु. ${toNepaliNumber(amount)}</strong></td>
                 <td class="no-print">
-                    <button type="button" onclick="openVoucherModal('${vNo}', '${dName}', '${title}', '${medium}', ${amount}, '${date}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
+                    <button type="button" onclick="openVoucherModal('${item.voucher_no || 'VOU-01'}', '${item.donor_name || ''}', '${item.title || ''}', '${item.medium || ''}', ${item.amount || 0}, '${item.date || '२०८३-०५-२०'}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
                     <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
                 </td>
             </tr>
