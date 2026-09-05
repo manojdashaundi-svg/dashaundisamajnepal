@@ -1714,7 +1714,9 @@ async function loadPendingLevyPayments() {
             const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
             const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
             const totalAmount = item.total_amount || 0;
-            const slipUrl = item.payment_slip || item.voucher_url || '#';
+            
+            // भौचरमा डाटा पठाउनको लागि इन्कोड गरिएको
+            const encodedItem = encodeURIComponent(JSON.stringify(item));
 
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -1722,7 +1724,7 @@ async function loadPendingLevyPayments() {
                 <td>${committeeLevel}</td>
                 <td>${months}</td>
                 <td>रु. ${toNepaliNumber(totalAmount)}</td>
-                <td><button class="btn-action" onclick="openDirectImageModal('${slipUrl}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
+                <td><button class="btn-action" onclick="openLevyVoucherModal('${encodedItem}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
                 <td>
                     <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
                     <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
