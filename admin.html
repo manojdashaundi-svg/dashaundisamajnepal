@@ -542,7 +542,6 @@
             <div id="grantIncomeContent" class="collapsible-content">
                 <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
                     <h3 style="margin-top: 0; color: var(--primary-color); font-size: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">नयाँ सहयोग वा अनुदान थप्ने</h3>
-                    <!-- ध्यान দিন: onsubmit को सट्टा अब जाभास्क्रिप्टबाट बटन क्लिक ह्यान्डल हुन्छ वा फारममा यो राखिन्छ -->
                     <form id="grantIncomeForm" onsubmit="saveGrantIncome(event)">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
                             <div class="form-group" style="margin-bottom: 0;">
@@ -567,8 +566,7 @@
                                 <input type="number" id="grant_amount" placeholder="रकम हाल्नुहोस्" required>
                             </div>
                         </div>
-                        <!-- भौचरसहित सुरक्षित गर्ने बटन -->
-                        <button type="submit" class="btn btn-success" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: #008000; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">भौचरसहित सुरक्षित गर्नुहोस्</button>
+                        <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">सुरक्षित गर्नुहोस्</button>
                     </form>
                 </div>
 
@@ -577,7 +575,6 @@
                         <thead>
                             <tr>
                                 <th>क्र.सं.</th>
-                                <th>भौचर नं.</th> <!-- यो नयाँ स्तम्भ थपियो -->
                                 <th>मिति</th>
                                 <th>सहयोगदाताको नाम</th>
                                 <th>सहयोगको शीर्षक</th>
