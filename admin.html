@@ -1836,7 +1836,8 @@
 }
 
         async function loadGrantIncomeData() {
-    const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
+    // पुरानो रेकर्ड पहिले र नयाँ रेकर्ड पछि देखाउन वा मिलाउन 'ascending: true' राख्ने
+    const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
     const tbody = document.getElementById('grantIncomeTableBody');
     if (!tbody) return;
     
@@ -1864,8 +1865,8 @@
                 <td>${medium}</td>
                 <td><strong style="color: #008000;">रु. ${toNepaliNumber(amount)}</strong></td>
                 <td class="no-print">
-                    <button onclick="openVoucherModal('${vNo}', '${dName}', '${title}', '${medium}', '${amount}', '${date}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
-                    <button class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
+                    <button type="button" onclick="openVoucherModal('${vNo}', '${dName}', '${title}', '${medium}', '${amount}', '${date}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
+                    <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
                 </td>
             </tr>
         `;
