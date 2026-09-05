@@ -1801,29 +1801,34 @@
 }
 
         async function loadGrantIncomeData() {
-            const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
-            const tbody = document.getElementById('grantIncomeTableBody');
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
-                return;
-            }
-            data.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><strong>${item.donor_name || '-'}</strong></td>
-                        <td>${item.title || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                        <td class="no-print">
-                            <button class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
+    const { data } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: false });
+    const tbody = document.getElementById('grantIncomeTableBody');
+    tbody.innerHTML = '';
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
+        return;
+    }
+    data.forEach((item, index) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td><strong>${item.voucher_no || 'N/A'}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${item.donor_name || '-'}</strong></td>
+                <td>${item.title || '-'}</td>
+                <td>${item.medium || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '0')}</strong></td>
+                <td class="no-print">
+                    <!-- 🌟 यो भौचर प्रिन्ट गर्ने बटन थप्ने -->
+                    <button onclick="openVoucherModal('${item.voucher_no}', '${item.donor_name}', '${item.title}', '${item.medium}', '${item.amount}', '${item.date}', 'अनुदान तथा सहयोग')" class="btn btn-sm btn-primary" style="background: #6b46c1; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">भौचर</button>
+                    
+                    <!-- रिमुभ वा मेट्ने बटन -->
+                    <button class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')">रिमुभ</button>
+                </td>
+            </tr>
+        `;
+    });
+}
 
         async function deleteGrantRecord(id) {
             if (confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) {
