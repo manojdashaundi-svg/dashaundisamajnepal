@@ -1334,6 +1334,25 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
+        async function getNextVoucherNo() {
+    let { data } = await supabaseClient
+        .from('voucher_counter')
+        .select('last_no')
+        .eq('id', 1)
+        .single();
+    
+    let nextNo = 1;
+    if (data && data.last_no !== undefined) {
+        nextNo = data.last_no + 1;
+    }
+
+    await supabaseClient
+        .from('voucher_counter')
+        .upsert({ id: 1, last_no: nextNo });
+
+    return 'VOU-' + String(nextNo).padStart(2, '0');
+} 
+        
         function toNepaliNumber(input) {
             if (!input) return '';
             const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
