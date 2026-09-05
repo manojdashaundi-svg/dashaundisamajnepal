@@ -2341,15 +2341,9 @@ function viewNoticeFile(encodedItem) {
 
        async function loadLevyListsAndReports() {
     try {
-        const { data: payments } = await supabaseClient
-            .from('levy_payments')
-            .select('*')
-            .eq('status', 'Approved');
-
-        const { data: users } = await supabaseClient
-            .from('users')
-            .select('*')
-            .eq('status', 'Approved');
+        // सबै payments र users रेकर्डहरू तानेर ल्याउने
+        const { data: payments } = await supabaseClient.from('levy_payments').select('*');
+        const { data: users } = await supabaseClient.from('users').select('*');
 
         const paidTbody = document.querySelector('#paidListTable tbody');
         const unpaidTbody = document.querySelector('#unpaidListTable tbody');
@@ -2370,50 +2364,53 @@ function viewNoticeFile(encodedItem) {
         let unpaidCount = 0;
 
         users.forEach(user => {
-            // प्रयोगकर्ताको आइडी वा नामसँग मिल्ने भुक्तानीहरू खोज्ने
-            let userPayments = payments ? payments.filter(p => 
-                String(p.user_id) === String(user.id) || 
-                (p.member_name && user.full_name && p.member_name.trim() === user.full_name.trim())
-            ) : [];
+            // अप्रूव्ड भएका भुक्तानीहरू मात्र छान्ने (approved, Approved जस्तोसुकै भए पनि म्याच हुने गरी)
+            let userPayments = payments ? payments.filter(p => {
+                let st = (p.status || '').toLowerCase();
+                let isApproved = st === 'approved' || st === 'accept' || st === 'success';
+                let matchesUser = (String(p.user_id) === String(user.id)) || 
+                                  (p.member_name && user.full_name && p.member_name.trim().toLowerCase() === user.full_name.trim().toLowerCase());
+                return isApproved && matchesUser;
+            }) : [];
             
             let paidMonthsSet = new Set();
             let latestSlip = '';
 
             userPayments.forEach(p => {
-                if (p.payment_slip || p.voucher_url) {
-                    latestSlip = p.payment_slip || p.voucher_url;
+                if (p.payment_slip || p.voucher_url || p.slip) {
+                    latestSlip = p.payment_slip || p.voucher_url || p.slip;
                 }
                 if (p.months) {
-                    let mArr = Array.isArray(p.months) ? p.months : p.months.split(',').map(s => s.trim());
-                    mArr.forEach(m => paidMonthsSet.add(m));
+                    let mArr = Array.isArray(p.months) ? p.months : String(p.months).split(',').map(s => s.trim());
+                    mArr.forEach(m => { if(m) paidMonthsSet.add(m); });
                 }
             });
 
             let paidMonthsArr = Array.from(paidMonthsSet);
             let unpaidMonthsArr = allMonths.filter(m => !paidMonthsSet.has(m));
 
-            // क) यदि केही महिना तिरेको छ भने 'लेवी तिरेका' मा देखाउने
+            // क) लेवी तिरेको भए 'लेवी तिरेका पदाधिकारीहरूको सूची' मा देखाउने
             if (paidMonthsArr.length > 0) {
                 paidCount++;
-                let slipBtn = latestSlip ? `<button class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
+                let slipBtn = latestSlip ? `<button type="button" class="btn-action" onclick="openDirectImageModal('${latestSlip}')" style="background:#d69e2e; color:#fff; padding:2px 6px; border:none; border-radius:4px; cursor:pointer; margin-left:5px;">भौचर</button>` : '<span style="color:gray; font-size:10px;">(भौचर छैन)</span>';
                 
                 paidTbody.innerHTML += `
                     <tr>
-                        <td><strong>${user.full_name || '-'}</strong></td>
+                        <td><strong>${user.full_name || user.name || '-'}</strong></td>
                         <td>${user.committee_level || user.position || '-'}</td>
                         <td>${paidMonthsArr.join(', ')} ${slipBtn}</td>
                     </tr>
                 `;
             }
 
-            // ख) यदि सबै वा केही महिना बाँकी छन् भने 'बाँकी' मा देखाउने
+            // ख) बाँकी महिना भए 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)' मा रातो रङमा देखाउने
             if (unpaidMonthsArr.length > 0) {
                 unpaidCount++;
                 let unpaidHtml = unpaidMonthsArr.map(m => `<span style="color: #e53e3e; font-weight: bold; background: #fff5f5; padding: 2px 5px; border-radius: 4px; margin: 1px; display: inline-block; border: 1px solid #feb2b2;">${m}</span>`).join(' ');
 
                 unpaidTbody.innerHTML += `
                     <tr>
-                        <td><strong>${user.full_name || '-'}</strong></td>
+                        <td><strong>${user.full_name || user.name || '-'}</strong></td>
                         <td>${user.committee_level || user.position || '-'}</td>
                         <td>${unpaidHtml}</td>
                     </tr>
