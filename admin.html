@@ -2727,7 +2727,7 @@ function viewNoticeFile(url, fileType) {
             loadNoticesData();
         });
 
-        async function loadNoticesData() {
+       async function loadNoticesData() {
     const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
     const tbody = document.getElementById('noticesTableBody');
     if (!tbody) return;
@@ -2740,7 +2740,6 @@ function viewNoticeFile(url, fileType) {
 
     data.forEach((item, index) => {
         const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
-        const fileUrl = item.file_url || '';
         const fileType = item.file_type || 'image';
 
         tbody.innerHTML += `
@@ -2749,7 +2748,7 @@ function viewNoticeFile(url, fileType) {
                 <td>${toNepaliNumber(item.date || '-')}</td>
                 <td style="white-space: normal; text-align: left; max-width: 300px;">${item.title || ''}</td>
                 <td>${fileType === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
-                <td><button type="button" class="btn-action btn-view" onclick="viewNoticeFile('${fileUrl}', '${fileType}')" style="background: #d69e2e; color: #fff; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer;">हेर्नुहोस्</button></td>
+                <td><button type="button" class="btn-action btn-view" onclick="viewNoticeFile('${encodedItem}')" style="background: #d69e2e; color: #fff; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer;">हेर्नुहोस्</button></td>
                 <td class="no-print">
                     <button type="button" class="btn-action btn-edit" onclick="triggerEditNotice('${encodedItem}')">सम्पादन</button>
                     <button type="button" class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
