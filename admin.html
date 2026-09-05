@@ -1721,52 +1721,31 @@ function viewNoticeFile(encodedItem) {
         }
 
         async function approveLevyPayment(id) {
-            if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
-                try {
-                    const { data: paymentData, error: fetchError } = await supabaseClient
-                        .from('levy_payments')
-                        .select('*')
-                        .eq('id', id)
-                        .single();
+    if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
+        try {
+            const { error: updateError } = await supabaseClient
+                .from('levy_payments')
+                .update({ status: 'Approved' })
+                .eq('id', id);
 
-                    if (fetchError || !paymentData) {
-                        alert('विवरण फेला परेन!');
-                        return;
-                    }
-
-                    const { error: updateError } = await supabaseClient
-                        .from('levy_payments')
-                        .update({ status: 'Approved', date: getCurrentNepaliDate() })
-                        .eq('id', id);
-
-                    if (updateError) {
-                        alert('त्रुटि: ' + updateError.message);
-                        return;
-                    }
-
-                    const memberName = paymentData.member_name || `सदस्य (ID: ${paymentData.user_id})`;
-                    const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
-                    const totalAmount = paymentData.total_amount || 0;
-
-                    await supabaseClient.from('income_records').insert([{
-                        date: getCurrentNepaliDate(),
-                        name: memberName,
-                        category: 'मासिक लेवी शुल्क',
-                        description: `लेवी महिनाहरू: ${monthsList}`,
-                        amount: totalAmount
-                    }]);
-
-                    alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
-                    loadPendingLevyPayments();
-                    loadMonthlyLevyIncomeData();
-                    loadIncomeData();
-                } catch (err) {
-                    console.error('Approval Error:', err);
-                    alert('कारवाही असफल भयो!');
-                }
+            if (updateError) {
+                alert('त्रुटि: ' + updateError.message);
+                return;
             }
-        }
 
+            alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
+            
+            // तालिकाहरू तुरुन्त अपडेट गर्ने
+            loadPendingLevyPayments();
+            loadMonthlyLevyIncomeData();
+            loadLevyListsAndReports(); // 👈 यो थप्नुहोला
+
+        } catch (err) {
+            console.error('Approval Error:', err);
+            alert('कारवाही असफल भयो!');
+        }
+    }
+}
         async function rejectLevyPayment(id) {
             if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकार (Reject) गर्न चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('levy_payments').update({ status: 'Rejected' }).eq('id', id);
