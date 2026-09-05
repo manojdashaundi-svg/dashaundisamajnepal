@@ -1819,11 +1819,11 @@
     e.preventDefault();
     const prefix = tableName === 'human_fund' ? 'human' : tableName === 'emergency_fund' ? 'emergency' : 'relief';
     
-    // यो लाइन अनिवार्य रूपमा हुनुपर्छ, जसले मुख्य काउन्टरबाट अर्को नयाँ नम्बर तान्छ
-    const voucherNo = await getNextVoucherNo(); 
+    // यो महत्त्वपूर्ण लाइनले स्वतः नयाँ क्रमिक भौचर नम्बर ल्याउँछ
+    const voucherNo = await getNextVoucherNo();
     
     const incomeData = {
-        voucher_no: voucherNo,
+        voucher_no: voucherNo, // यहाँ नयाँ सिरिजको नम्बर बस्छ
         date: getCurrentNepaliDate(),
         donor_name: document.getElementById(`${prefix}_donor`).value.trim(),
         title: document.getElementById(`${prefix}_title`).value.trim(),
