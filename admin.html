@@ -2919,27 +2919,33 @@ async function loadPendingLevyPayments() {
             }
         }
 
-        // भौचर मोडल खोल्ने फंक्सन
+       // भौचर मोडल खोल्ने सही फंक्सन
 function openLevyVoucherModal(itemDataString) {
     const item = typeof itemDataString === 'string' ? JSON.parse(decodeURIComponent(itemDataString)) : itemDataString;
 
+    // भौचरभित्र डाटा भर्ने
     document.getElementById('vModalVoucherNo').innerText = item.voucher_no || `VOU-${item.id.toString().slice(-4)}`;
     document.getElementById('vModalDate').innerText = item.created_at ? new Date(item.created_at).toLocaleDateString('ne-NP') : '२०८३-०५-२०';
-    document.getElementById('vModalName').innerText = item.member_name || 'मनोज कुमार दशौँदी';
+    document.getElementById('vModalName').innerText = item.member_name || 'पदाधिकारी';
     document.getElementById('vModalCommittee').innerText = item.committee_level || 'केन्द्रीय समिति';
     document.getElementById('vModalMonths').innerText = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '-');
     document.getElementById('vModalAmount').innerText = `रु. ${toNepaliNumber(item.total_amount || 0)}`;
 
+    // यदि प्रयोगकर्ताले अपलोड गरेको भौचर स्लिप पनि छुट्टै हेर्न मन भएमा तलको बटन चलाउन सकिन्छ, 
+    // तर मुख्य रूपमा माथिको औपचारिक भौचर फर्म्याट नै देखाउने:
     const slipBtn = document.getElementById('viewSlipBtn');
-    if (item.payment_slip || item.voucher_url) {
-        slipBtn.style.display = 'inline-block';
-        slipBtn.onclick = function() {
-            openDirectImageModal(item.payment_slip || item.voucher_url);
-        };
-    } else {
-        slipBtn.style.display = 'none';
+    if (slipBtn) {
+        if (item.payment_slip || item.voucher_url) {
+            slipBtn.style.display = 'inline-block';
+            slipBtn.onclick = function() {
+                window.open(item.payment_slip || item.voucher_url, '_blank');
+            };
+        } else {
+            slipBtn.style.display = 'none';
+        }
     }
 
+    // मोडल खोल्ने
     document.getElementById('levyVoucherModal').style.display = 'flex';
 }
 
