@@ -1537,57 +1537,57 @@ function viewNoticeFile(encodedItem) {
         });
 
         function showDashboard() {
-            const loginSection = document.getElementById('loginSection');
-            const dashboardSection = document.getElementById('dashboardSection');
-            
-            if (loginSection) loginSection.classList.add('hidden');
-            if (dashboardSection) {
-                dashboardSection.classList.remove('hidden');
-                dashboardSection.style.display = 'block';
-            }
-            
-            const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
-            const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
-            
-            const welcomeUser = document.getElementById('welcomeUser');
-            if (welcomeUser) {
-                welcomeUser.innerText = `स्वागत छ, ${currentUser} (${currentRole})`;
-            }
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    
+    if (loginSection) loginSection.classList.add('hidden');
+    if (dashboardSection) {
+        dashboardSection.classList.remove('hidden');
+        dashboardSection.style.display = 'block';
+    }
+    
+    const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
+    const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
+    
+    const welcomeUser = document.getElementById('welcomeUser');
+    if (welcomeUser) {
+        welcomeUser.innerText = `स्वागत छ, ${currentUser} (${currentRole})`;
+    }
 
-            const messageDiv = document.getElementById('message');
-            if (messageDiv) {
-                messageDiv.innerText = '';
-            }
+    const messageDiv = document.getElementById('message');
+    if (messageDiv) {
+        messageDiv.innerText = '';
+    }
 
-            const levyContent = document.getElementById('levyContent');
-            if (levyContent) {
-                levyContent.style.display = 'block';
-            }
-            const levyToggleBtn = document.getElementById('levyToggleBtn');
-            if (levyToggleBtn) {
-                levyToggleBtn.innerText = 'बन्द गर्नुहोस् ▴';
-            }
+    const levyContent = document.getElementById('levyContent');
+    if (levyContent) {
+        levyContent.style.display = 'block';
+    }
+    const levyToggleBtn = document.getElementById('levyToggleBtn');
+    if (levyToggleBtn) {
+        levyToggleBtn.innerText = 'बन्द गर्नुहोस् ▴';
+    }
 
-            loadAboutData();
-            loadIncomeData();
-            loadMonthlyLevyIncomeData();
-            loadGrantIncomeData();
-            loadFundData('human_fund', 'humanFundTableBody');
-            loadFundData('emergency_fund', 'emergencyFundTableBody');
-            loadFundData('relief_fund', 'reliefFundTableBody');
-            loadDailyExpenseData();
-            loadCommitteeData();
-            loadCentralCommitteeData();
-            loadAdvisorCommitteeData();
-            loadAdminData();
-            loadUsersData();
-            loadApplicationsData();
-            loadNoticesData();
-            loadLevyRates();
-            loadMemberNoticesData();
-            loadPendingLevyPayments();
-        }
-
+    loadAboutData();
+    loadIncomeData();
+    loadMonthlyLevyIncomeData();
+    loadGrantIncomeData();
+    loadFundData('human_fund', 'humanFundTableBody');
+    loadFundData('emergency_fund', 'emergencyFundTableBody');
+    loadFundData('relief_fund', 'reliefFundTableBody');
+    loadDailyExpenseData();
+    loadCommitteeData();
+    loadCentralCommitteeData();
+    loadAdvisorCommitteeData();
+    loadAdminData();
+    loadUsersData();
+    loadApplicationsData();
+    loadNoticesData();
+    loadLevyRates();
+    loadMemberNoticesData();
+    loadPendingLevyPayments();
+    loadLevyListsAndReports(); // 👈 यहाँ थपिएको छ
+}
         function logout() {
             localStorage.clear();
             location.reload();
