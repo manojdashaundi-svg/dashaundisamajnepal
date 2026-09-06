@@ -1955,15 +1955,16 @@ async function loadPendingLevyPayments() {
 
         async function saveFundIncome(e, tableName, categoryName) {
     e.preventDefault();
-    
-    // सबै कोषहरूको भौचरमा HUM, EMG को सट्टा VCH राख्ने
     const prefix = 'VCH';
     
-    const { count, error: countError } = await supabaseClient
-        .from(tableName)
-        .select('*', { count: 'exact', head: true });
+    // सबै ३ वटै कोषहरूको जम्मा रेकर्ड संख्या एकैसाथ जोडेर सही साझा सिरियल निकाल्ने
+    const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+    const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+    const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
     
-    const nextNum = (count || 0) + 1;
+    const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0);
+    const nextNum = totalCount + 1;
+    
     const formattedNum = String(nextNum).padStart(3, '0');
     const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
 
