@@ -3093,59 +3093,65 @@ function closeVoucherModal() {
     loadPendingLevyPayments();  // यदि अन्य टेबलहरू पनि छन् भने सँगै राख्न सक्नुहुन्छ
 });
     </script>
-    <!-- आधिकारिक मासिक लेवी आम्दानी रसिद मोडल -->
+   <!-- आधिकारिक मासिक लेवी आम्दानी रसिद मोडल -->
 <div id="officialLevyReceiptModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); overflow:auto;">
     <div class="modal-content" style="background:#fff; margin:5% auto; padding:20px; width:90%; max-width:600px; border-radius:8px; position:relative;">
         <span onclick="closeOfficialLevyModal()" style="position:absolute; right:15px; top:10px; font-size:24px; cursor:pointer; font-weight:bold;">&times;</span>
         
         <div id="printableOfficialLevy" style="padding: 15px; font-family: sans-serif; text-align: center; background: #fff;">
-            <!-- संस्थाको सही लोगो फाइल नाम वा बाटो यहाँ राख्ने (जस्तै logo.png वा सही URL) -->
-            <img src="logo.png" alt="Logo" style="width: 60px; height: 60px; margin-bottom: 5px; object-fit: contain;" onerror="this.style.display='none';">
+            <!-- संस्थाको लोगो -->
+            <img src="logo.png" alt="Logo" style="width: 60px; height: 60px; margin-bottom: 5px; object-fit: contain;">
             
             <h2 style="margin: 0; color: #1e3a8a; font-size: 22px;">दशौँदी समाज नेपाल</h2>
             <p style="margin: 2px 0; font-size: 13px; color: #555;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
             <p style="margin: 2px 0 10px 0; font-size: 12px; color: #555;">स्थापना - २०८०</p>
             
-            <div style="display: inline-block; background: #e0f2fe; color: #0369a1; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin: 10px 0;">
+            <div style="display: inline-block; background: #2563eb; color: white; padding: 5px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; margin: 10px 0;">
                 मासिक लेवी आम्दानी रसिद
             </div>
 
-            <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 14px; font-weight: bold; border-bottom: 2px solid #ddd; padding-bottom: 5px;">
+            <div style="border-top: 1px dashed #9ca3af; margin: 10px 0 15px 0;"></div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; font-weight: bold;">
                 <span>भौचर नं.: <span id="officialVoucherNo" style="color: #b45309;">-</span></span>
                 <span>मिति: <span id="officialVoucherDate">-</span></span>
             </div>
 
             <table style="width: 100%; margin-top: 15px; border-collapse: collapse; text-align: left; font-size: 14px;">
-                <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; width: 35%; color: #333; background: #f8fafc;">पदाधिकारीको नाम:</th>
-                    <td id="officialMemberName" style="padding: 8px; color: #111;">-</td>
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <th style="padding: 10px; width: 38%; color: #374151; text-align: left;">पदाधिकारीको नाम:</th>
+                    <td id="officialMemberName" style="padding: 10px; color: #111827; text-align: left;">-</td>
                 </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; color: #333; background: #f8fafc;">कमिटी तह:</th>
-                    <td id="officialCommitteeType" style="padding: 8px; color: #111;">-</td>
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <th style="padding: 10px; color: #374151; text-align: left;">कमिटी तह:</th>
+                    <td id="officialCommitteeType" style="padding: 10px; color: #111827; text-align: left;">-</td>
                 </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; color: #333; background: #f8fafc;">चुक्ता गरिएका महिनाहरू:</th>
-                    <td id="officialMonthsPaid" style="padding: 8px; color: #111;">-</td>
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <th style="padding: 10px; color: #374151; text-align: left;">चुक्ता गरिएका महिनाहरू:</th>
+                    <td id="officialMonthsPaid" style="padding: 10px; color: #111827; text-align: left;">-</td>
                 </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; color: #333; background: #f8fafc;">भुक्तानी माध्यम:</th>
-                    <td style="padding: 8px; color: #111;">बैंक भौचर / अनलाइन भुक्तानी</td>
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <th style="padding: 10px; color: #374151; text-align: left;">भुक्तानी माध्यम:</th>
+                    <td style="padding: 10px; color: #111827; text-align: left;">बैंक भौचर / अनलाइन भुक्तानी</td>
                 </tr>
-                <tr style="border-bottom: 2px solid #ddd;">
-                    <th style="padding: 8px; color: #333; background: #f8fafc;">जम्मा रकम (अंकमा):</th>
-                    <td id="officialAmount" style="padding: 8px; font-weight: bold; color: #16a34a;">-</td>
+                <tr style="border-bottom: 2px solid #d1d5db;">
+                    <th style="padding: 10px; color: #374151; text-align: left;">जम्मा रकम (अंकमा):</th>
+                    <td id="officialAmount" style="padding: 10px; font-weight: bold; color: #16a34a; text-align: left;">-</td>
                 </tr>
             </table>
 
-            <div style="display: flex; justify-content: space-between; margin-top: 50px; font-size: 14px;">
-                <div style="border-top: 1px dashed #777; width: 150px; text-align: center; padding-top: 5px;">बुझाउनेको सही</div>
-                <div style="border-top: 1px dashed #777; width: 150px; text-align: center; padding-top: 5px;">कोषाध्यक्ष / सचिव</div>
+            <div style="display: flex; justify-content: space-between; margin-top: 60px; font-size: 14px; align-items: flex-end;">
+                <div style="border-top: 1px dashed #6b7280; width: 160px; text-align: center; padding-top: 5px;">बुझाउनेको सही</div>
+                <div style="width: 160px; text-align: center;">
+                    <!-- कोषाध्यक्ष/सचिवको हस्ताक्षर इमेज (यदि छ भने) -->
+                    <div style="height: 30px; margin-bottom: 2px; font-family: cursive; font-size: 12px; color: #555;">(हस्ताक्षर)</div>
+                    <div style="border-top: 1px dashed #6b7280; padding-top: 5px;">कोषाध्यक्ष / सचिव</div>
+                </div>
             </div>
         </div>
 
-        <div style="text-align: center; margin-top: 20px;">
-            <button onclick="printOfficialLevyReceipt()" style="background: #16a34a; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">🖨️ भौचर प्रिन्ट / PDF गर्नुहोस्</button>
+        <div style="text-align: center; margin-top: 25px;">
+            <button onclick="printOfficialLevyReceipt()" style="background: #16a34a; color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">🖨️ भौचर प्रिन्ट / PDF गर्नुहोस्</button>
         </div>
     </div>
 </div>
