@@ -1957,13 +1957,12 @@ async function loadPendingLevyPayments() {
     e.preventDefault();
     const prefix = tableName === 'human_fund' ? 'HUM' : (tableName === 'emergency_fund' ? 'EMG' : 'REL');
     
-    // डेटाबेстенटबाट हालसम्मको कुल रेकर्ड गनेर सही सिरियल नम्बर निकाल्ने
-    const { data: existingData, error: countError } = await supabaseClient
+    // Supabase बाट सही कुल रेकर्ड सङ्ख्या (Count) निकाल्ने तरिका
+    const { count, error: countError } = await supabaseClient
         .from(tableName)
         .select('*', { count: 'exact', head: true });
     
-    const nextNum = (existingData ? existingData.length : 0) + 1;
-    // ३ अंकको सिरियल बनाउने (जस्तै ०म०१, ०म०२ वा नेपाली अंकमा)
+    const nextNum = (count || 0) + 1;
     const formattedNum = String(nextNum).padStart(3, '0');
     const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
 
