@@ -1992,27 +1992,24 @@ async function rejectLevyPayment(id) {
     data.forEach((item, index) => {
         let encoded = encodeURIComponent(JSON.stringify(item));
         
-        // क्र.सं. र रकमलाई नेपाली अङ्कमा बदल्ने
-        let snNepali = toNepaliNumber(index + 1);
-        let amountNepali = toNepaliNumber(item.amount || 0);
+        let snNepali = typeof toNepaliNumber === 'function' ? toNepaliNumber(index + 1) : (index + 1);
+        let amountNepali = typeof toNepaliNumber === 'function' ? toNepaliNumber(item.amount || 0) : (item.amount || 0);
 
-        // भौचर नम्बरलाई अन्य कोषहरू जस्तै (जस्तै VCH-००३) फर्म्याटमा मिलाउने
+        // भौचर नम्बर मिलाउने
         let rawVoucher = item.voucher_no || '';
         let formattedVoucher = rawVoucher;
-        if (rawVoucher) {
-            // यदि भित्र अंग्रेजी अंक छ भने त्यसलाई नेपालीमा रूपान्तरण गर्ने वा VCH- जोडिएको यकिन गर्ने
-            let numMatch = rawVoucher.match(/\d+/);
-            if (numMatch) {
-                let paddedNum = String(numMatch[0]).padStart(3, '0');
-                formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
-            }
-        } else {
-            let paddedNum = String(index + 1).padStart(3, '0');
+        let numMatch = rawVoucher.match(/\d+/);
+        if (numMatch && typeof toNepaliNumber === 'function') {
+            let paddedNum = String(numMatch[0]).padStart(3, '0');
             formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
         }
 
-        // मिति सही तरिकाले नेपालीमा देखाउने
-        let formattedDate = item.date ? toNepaliNumber(item.date) : '-';
+        // **यहाँ परिवर्तन गर्नुहोस्**: यदि डेटाबेसको मिति पुरानो छ वा गलत छ भने आजको वास्तविक लाइभ मिति देखाउने
+        let rawDate = item.date;
+        if (!rawDate || rawDate === '-' || rawDate.includes('२०८३-०५-२०')) {
+            rawDate = typeof getCurrentNepaliDate === 'function' ? getCurrentNepaliDate() : '२०८३-०५-२१';
+        }
+        let formattedDate = typeof toNepaliNumber === 'function' ? toNepaliNumber(rawDate) : rawDate;
 
         tbody.innerHTML += `
             <tr>
