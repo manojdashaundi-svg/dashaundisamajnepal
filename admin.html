@@ -522,23 +522,20 @@
 
             <div id="monthlyLevyIncomeContent" class="collapsible-content">
                 <div class="table-responsive">
-                    <table class="w-full text-right border-collapse">
-  <thead>
-    <tr class="bg-slate-800 text-white text-sm">
-      <th class="p-2 border">क्र.सं.</th>
-      <th class="p-2 border">मिति</th>
-      <th class="p-2 border">पदाधिकारीको नाम</th>
-      <th class="p-2 border">कमिटी तह</th>
-      <th class="p-2 border">चुक्ता गरिएका महिनाहरू</th>
-      <th class="p-2 border">भौचर नं.</th> <!-- नयाँ थपिएको स्तम्भ -->
-      <th class="p-2 border">जम्मा रकम (रु.)</th>
-      <th class="p-2 border">कारवाही</th>
-    </tr>
-  </thead>
-  <tbody id="levyTableBody">
-    <!-- डेटा यहाँ जाभास्क्रिप्टमार्फत लोड हुन्छ -->
-  </tbody>
-</table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>क्र.सं.</th>
+                                <th>मिति</th>
+                                <th>पदाधिकारीको नाम</th>
+                                <th>कमिटी तह</th>
+                                <th>चुक्ता गरिएका महिनाहरू</th>
+                                <th>जम्मा रकम (रु.)</th>
+                                <th class="no-print">कारवाही</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyLevyIncomeTableBody"></tbody>
+                    </table>
                 </div>
             </div>
 
