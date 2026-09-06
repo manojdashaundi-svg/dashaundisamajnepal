@@ -1992,16 +1992,13 @@ async function loadPendingLevyPayments() {
             }
         }
 
-        function openVoucherModal(itemStr) {
+       function openVoucherModal(itemStr) {
     const item = JSON.parse(decodeURIComponent(itemStr));
     
-    // आजको वास्तविक लाइभ नेपाली मिति सेट गर्ने
-    const liveNepaliDate = "२०८३-०५-२१"; 
-
     document.getElementById('vouchNo').innerText = item.voucher_no || '-';
     
-    // यहाँ item.date को सट्टा सधैँ आजको लाइभ मिति देखाउने गरी मिलाइएको छ
-    document.getElementById('vouchDate').innerText = toNepaliNumber(liveNepaliDate); 
+    // यहाँ लाइभ मितिको सट्टा डेटाबेसमा सेभ भएको भौचरकै सही मिति (item.date) देखाइएको छ
+    document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-'); 
     
     document.getElementById('vouchDonor').innerText = item.donor_name || '-';
     document.getElementById('vouchTitle').innerText = item.title || '-';
