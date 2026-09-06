@@ -1795,7 +1795,7 @@ async function loadPendingLevyPayments() {
             const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
             const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
             const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
-            const { count: c4 } = await supabaseClient.from('monthly_levy_income').select('*', { count: 'exact', head: true });
+            const { count: c4 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
             
             const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
             const voucherNo = `${prefix}-${toNepaliNumber(String(totalCount + 1).padStart(3, '0'))}`;
@@ -1815,8 +1815,8 @@ async function loadPendingLevyPayments() {
             const totalAmount = paymentData.total_amount || 0;
             const committeeType = paymentData.committee_type || 'साधारण सदस्य';
 
-            // अब यो डेटा केवल 'monthly_levy_income' (मासिक लेवीबाट प्राप्त आम्दानी) टेबलमा मात्र जान्छ
-            await supabaseClient.from('monthly_levy_income').insert([{
+            // यहाँ सही टेबल नाम 'monthly_levy' प्रयोग गरिएको छ
+            await supabaseClient.from('monthly_levy').insert([{
                 voucher_no: voucherNo,
                 date: liveNepaliDate,
                 member_name: memberName,
@@ -1835,7 +1835,6 @@ async function loadPendingLevyPayments() {
         }
     }
 }
-
 async function rejectLevyPayment(id) {
     if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकार (Reject) गर्न चाहनुहुन्छ?')) {
         const { error } = await supabaseClient.from('levy_payments').update({ status: 'Rejected' }).eq('id', id);
