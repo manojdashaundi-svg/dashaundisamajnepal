@@ -366,35 +366,49 @@
                   </form>
                 </div>
 
-                <<div class="approval-section" style="margin-top: 20px;">
-    <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
-    
-    <!-- लेवी दर तोक्ने सेक्सन -->
-    <div class="levy-rate-section">
-        <!-- तपाईँको दर तोक्ने फर्म यहाँ हुन्छ -->
-    </div>
+                <div class="approval-section">
+                  <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
+                  <table id="pendingTable">
+                    <thead>
+                      <tr>
+                        <th>पदाधिकारी नाम</th>
+                        <th>कमिटी तह</th>
+                        <th>मिनाहरू</th>
+                        <th>जम्मा रकम (जरिवानासहित)</th>
+                        <th>भौचर</th>
+                        <th>कार्य</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pendingLevyTableBody"></tbody>
+                  </table>
+                </div>
 
-    <!-- आएको भौचर र भुक्तानी अनुरोधहरू -->
-    <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
-    <table id="pendingTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff;">
-        <thead>
-            <tr style="background: #1a365d; color: #fff; text-align: center; font-size: 13px;">
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">मिति</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">सदस्य नं.</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">पदाधिकारी नाम</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">पद</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">कमिटी तह</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">मिनाहरू</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">जम्मा रकम (जरिवानासहित)</th>
-                <th style="padding: 8px; border: 1px solid #cbd5e0;">भौचर</th>
-                <th style="padding: 85px; border: 1px solid #cbd5e0;">कार्य</th>
-            </tr>
-        </thead>
-        <tbody id="pendingLevyTableBody">
-            <!-- डाटा यहाँ लोड हुन्छ -->
-        </tbody>
-    </table>
-</div>
+                <div class="reports-section">
+                  <div class="list-box" id="paidBoxContainer">
+                    <div class="list-box-header">
+                      <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
+                      <button class="print-btn" onclick="printSection('paidBoxContainer', 'लेवी तिरेका पदाधिकारीहरूको सूची')">प्रिन्ट / PDF</button>
+                    </div>
+                    <table id="paidListTable">
+                      <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+
+                  <div class="list-box" id="unpaidBoxContainer">
+                    <div class="list-box-header">
+                      <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
+                      <button class="print-btn" onclick="printSection('unpaidBoxContainer', 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)')">प्रिन्ट / PDF</button>
+                    </div>
+                    <table id="unpaidListTable">
+                      <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- १) मानव बचाउ अभियान कोष सेक्सन -->
             <div class="section-header">
                 <h3>मानव बचाउ अभियान कोष</h3>
@@ -1674,31 +1688,29 @@ async function loadPendingLevyPayments() {
 
         tbody.innerHTML = '';
 
-        // डाटा नभएको बेла ९ वटै σtamp (colspan=9) मिलाउने
         if (error || !data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 15px; color: #718096;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
             return;
         }
 
         for (let item of data) {
             let memberName = item.member_name;
-            let memberNo = item.member_no || item.user_id || '-';
-            let designation = item.designation || '-';
 
-            // यदि लेवी रेकर्डमा नाम वा पद छैन भने users टेबलबाट ल्याउने
-            const { data: userData } = await supabaseClient
-                .from('users')
-                .select('full_name, name, member_no, designation, position')
-                .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
-                .single();
-            
-            if (userData) {
-                memberName = memberName && !memberName.startsWith('सदस्य') ? memberName : (userData.full_name || userData.name || memberName);
-                memberNo = userData.member_no || memberNo;
-                designation = userData.designation || userData.position || designation;
+            // यदि लेवी रेकर्डमा नाम छैन भने users टेबलबाट नाम पत्ता लगाउने
+            if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/)) {
+                const { data: userData } = await supabaseClient
+                    .from('users')
+                    .select('full_name, name')
+                    .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
+                    .single();
+                
+                if (userData) {
+                    memberName = userData.full_name || userData.name;
+                } else {
+                    memberName = `सदस्य नं: ${item.user_id}`;
+                }
             }
 
-            const paymentDate = item.date || (item.created_at ? new Date(item.created_at).toLocaleDateString('ne-NP') : '-');
             const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
             const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
             const totalAmount = item.total_amount || 0;
@@ -1706,14 +1718,11 @@ async function loadPendingLevyPayments() {
 
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${paymentDate}</td>
-                <td>${memberNo}</td>
                 <td><strong>${memberName}</strong></td>
-                <td>${designation}</td>
                 <td>${committeeLevel}</td>
                 <td>${months}</td>
                 <td>रु. ${toNepaliNumber(totalAmount)}</td>
-                <td><button class="btn-action" onclick="openDirectImageModal('${slipUrl}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">भुक्तानी स्लिप हेर्नुहोस्</button></td>
+                <td><button class="btn-action" onclick="openDirectImageModal('${slipUrl}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
                 <td>
                     <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
                     <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
@@ -1726,62 +1735,52 @@ async function loadPendingLevyPayments() {
     }
 }
         async function approveLevyPayment(id) {
-    if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
-        try {
-            const { data: paymentData, error: fetchError } = await supabaseClient
-                .from('levy_payments')
-                .select('*')
-                .eq('id', id)
-                .single();
+            if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
+                try {
+                    const { data: paymentData, error: fetchError } = await supabaseClient
+                        .from('levy_payments')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
 
-            if (fetchError || !paymentData) {
-                alert('विवरण फेला परेन!');
-                return;
+                    if (fetchError || !paymentData) {
+                        alert('विवरण फेला परेन!');
+                        return;
+                    }
+
+                    const { error: updateError } = await supabaseClient
+                        .from('levy_payments')
+                        .update({ status: 'Approved', date: getCurrentNepaliDate() })
+                        .eq('id', id);
+
+                    if (updateError) {
+                        alert('त्रुटि: ' + updateError.message);
+                        return;
+                    }
+
+                    const memberName = paymentData.member_name || `सदस्य (ID: ${paymentData.user_id})`;
+                    const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
+                    const totalAmount = paymentData.total_amount || 0;
+
+                    await supabaseClient.from('income_records').insert([{
+                        date: getCurrentNepaliDate(),
+                        name: memberName,
+                        category: 'मासिक लेवी शुल्क',
+                        description: `लेवी महिनाहरू: ${monthsList}`,
+                        amount: totalAmount
+                    }]);
+
+                    alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
+                    loadPendingLevyPayments();
+                    loadMonthlyLevyIncomeData();
+                    loadIncomeData();
+                } catch (err) {
+                    console.error('Approval Error:', err);
+                    alert('कारवाही असफल भयो!');
+                }
             }
-
-            const { data: updatedData, error: updateError } = await supabaseClient
-                .from('levy_payments')
-                .update({ status: 'Approved', date: getCurrentNepaliDate() })
-                .eq('id', id)
-                .select()
-                .single();
-
-            if (updateError) {
-                alert('त्रुटि: ' + updateError.message);
-                return;
-            }
-
-            const memberName = paymentData.member_name || `सदस्य (ID: ${paymentData.user_id})`;
-            const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
-            const totalAmount = paymentData.total_amount || 0;
-
-            await supabaseClient.from('income_records').insert([{
-                date: getCurrentNepaliDate(),
-                name: memberName,
-                category: 'मासिक लेवी शुल्क',
-                description: `लेवी महिनाहरू: ${monthsList}`,
-                amount: totalAmount
-            }]);
-
-            alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो!');
-            loadPendingLevyPayments();
-            if (typeof loadApprovedLevyPayments === 'function') {
-                loadApprovedLevyPayments();
-            }
-            loadMonthlyLevyIncomeData();
-            loadIncomeData();
-
-            // स्वीकृत भएपछि सानो पपअपमा भौचर देखाउने
-            if (updatedData) {
-                openLevyVoucherModal(updatedData);
-            }
-
-        } catch (err) {
-            console.error('Approval Error:', err);
-            alert('कारवाही असफल भयो!');
         }
-    }
-}
+
         async function rejectLevyPayment(id) {
             if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकार (Reject) गर्न चाहनुहुन्छ?')) {
                 const { error } = await supabaseClient.from('levy_payments').update({ status: 'Rejected' }).eq('id', id);
@@ -2917,102 +2916,6 @@ async function loadPendingLevyPayments() {
                 }
             }
         }
-
-       // भौचर मोडल खोल्ने सही फंक्सन
-function openLevyVoucherModal(itemDataString) {
-    const item = typeof itemDataString === 'string' ? JSON.parse(decodeURIComponent(itemDataString)) : itemDataString;
-
-    // भौचरभित्र डाटा भर्ने
-    document.getElementById('vModalVoucherNo').innerText = item.voucher_no || `VOU-${item.id.toString().slice(-4)}`;
-    document.getElementById('vModalDate').innerText = item.created_at ? new Date(item.created_at).toLocaleDateString('ne-NP') : '२०८३-०५-२०';
-    document.getElementById('vModalName').innerText = item.member_name || 'पदाधिकारी';
-    document.getElementById('vModalCommittee').innerText = item.committee_level || 'केन्द्रीय समिति';
-    document.getElementById('vModalMonths').innerText = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '-');
-    document.getElementById('vModalAmount').innerText = `रु. ${toNepaliNumber(item.total_amount || 0)}`;
-
-    // यदि प्रयोगकर्ताले अपलोड गरेको भौचर स्लिप पनि छुट्टै हेर्न मन भएमा तलको बटन चलाउन सकिन्छ, 
-    // तर मुख्य रूपमा माथिको औपचारिक भौचर फर्म्याट नै देखाउने:
-    const slipBtn = document.getElementById('viewSlipBtn');
-    if (slipBtn) {
-        if (item.payment_slip || item.voucher_url) {
-            slipBtn.style.display = 'inline-block';
-            slipBtn.onclick = function() {
-                window.open(item.payment_slip || item.voucher_url, '_blank');
-            };
-        } else {
-            slipBtn.style.display = 'none';
-        }
-    }
-
-    // मोडल खोल्ने
-    document.getElementById('levyVoucherModal').style.display = 'flex';
-}
-
-// भौचर मोडल बन्द गर्ने
-function closeLevyVoucherModal() {
-    document.getElementById('levyVoucherModal').style.display = 'none';
-}
-
-// प्रिन्ट गर्ने फंक्सन
-function printLevyVoucher() {
-    const printContent = document.getElementById('printableLevyVoucher').innerHTML;
-    const originalContent = document.body.innerHTML;
-    document.body.innerHTML = printContent;
-    window.print();
-    document.body.innerHTML = originalContent;
-    window.location.reload();
-}
     </script>
-    
-    <!-- लेवी भौचर प्रिन्ट/प्रदर्शनी मोडल -->
-<div id="levyVoucherModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
-    <div style="background:#fff; width:90%; max-width:650px; padding:20px; border-radius:8px; position:relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: sans-serif;">
-        <span onclick="closeLevyVoucherModal()" style="position:absolute; top:15px; right:20px; font-size:24px; cursor:pointer; font-weight:bold;">&times;</span>
-        
-        <!-- भौचरको भित्री डिजाइन -->
-        <div id="printableLevyVoucher" style="border: 1px solid #cbd5e0; padding: 20px; border-radius: 6px;">
-            <div style="text-align: center; margin-bottom: 15px;">
-                <h2 style="margin: 0; color: #1a365d; font-size: 20px;">दशौँदी समाज नेपाल</h2>
-                <p style="margin: 2px 0; font-size: 13px; color: #4a5568;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
-                <p style="margin: 2px 0; font-size: 12px; color: #718096;">स्थापना - २०८०</p>
-                <div style="margin-top: 8px; display: inline-block; background: #ebf8ff; color: #2b6cb0; padding: 3px 12px; border-radius: 12px; font-size: 13px; font-weight: bold;">मासिक लेवी भुक्तानी भौचर</div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">
-                <span>भौचर नं.: <strong id="vModalVoucherNo">-</strong></span>
-                <span>मिति: <strong id="vModalDate">-</strong></span>
-            </div>
-
-            <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px;">
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px; border: 1px solid #cbd5e0; width: 35%; background: #f7fafc;">पदाधिकारीको नाम:</td>
-                    <td style="padding: 8px; border: 1px solid #cbd5e0;" id="vModalName">-</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px; border: 1px solid #cbd5e0; background: #f7fafc;">कमिटी तह:</td>
-                    <td style="padding: 8px; border: 1px solid #cbd5e0;" id="vModalCommittee">-</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 8px; border: 1px solid #cbd5e0; background: #f7fafc;">चुक्ता महिनाहरू:</td>
-                    <td style="padding: 8px; border: 1px solid #cbd5e0;" id="vModalMonths">-</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #cbd5e0; background: #f7fafc;">जम्मा रकम (अंकमा):</td>
-                    <td style="padding: 8px; border: 1px solid #cbd5e0; color: #2f855a; font-weight: bold;" id="vModalAmount">-</td>
-                </tr>
-            </table>
-
-            <div style="display: flex; justify-content: space-between; margin-top: 40px; font-size: 13px;">
-                <div style="border-top: 1px dashed #a0aec0; width: 150px; text-align: center; padding-top: 5px;">बुझाउनेको सही</div>
-                <div style="border-top: 1px dashed #a0aec0; width: 150px; text-align: center; padding-top: 5px;">कोषाध्यक्ष / सचिव</div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-            <button onclick="printLevyVoucher()" style="background:#276749; color:#fff; border:none; padding:8px 20px; border-radius:4px; cursor:pointer; font-size: 14px;">भौचर प्रिन्ट / PDF गर्नुहोहोस्</button>
-            <button onclick="viewOriginalSlipModal()" id="viewSlipBtn" style="background:#3182ce; color:#fff; border:none; padding:8px 20px; border-radius:4px; cursor:pointer; font-size: 14px; margin-left: 10px; display:none;">अपलोड गरिएको भौचर स्लिप हेर्नुहोस्</button>
-        </div>
-    </div>
-</div>
 </body>
 </html>
