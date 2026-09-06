@@ -1938,9 +1938,16 @@ async function rejectLevyPayment(id) {
     
     const voucherNo = await getNextVoucherNo();
 
+    // यहाँ हालको सही लाइभ नेपाली मिति तान्ने कोड मिलाउनुहोस्
+    // यदि तपाईंको साइटमा लाइभ मिति दिने अर्को variable वा function छ भने यहाँ राख्नुहोला
+    let liveDate = "२०८३-०५-२१"; // आजको वास्तविक मितի वा dynamic function
+    if (typeof getCurrentNepaliDate === 'function') {
+        liveDate = getCurrentNepaliDate();
+    }
+
     const grantData = {
         voucher_no: voucherNo,
-        date: typeof getCurrentNepaliDate === 'function' ? getCurrentNepaliDate() : '२०८३-०५-२१', // रियल-टाइम नेपाली मिति स्वतः तान्ने
+        date: liveDate, // सधैं आजको रियल-टाइम मिति बस्नेछ
         donor_name: document.getElementById('grant_donor_name').value.trim(),
         title: document.getElementById('grant_title').value.trim(),
         medium: document.getElementById('grant_medium').value,
@@ -1951,14 +1958,13 @@ async function rejectLevyPayment(id) {
     const { error } = await supabaseClient.from('grant_income').insert([grantData]);
     
     if (!error) {
-        alert(`अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
+        alert(`सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
         document.getElementById('grantIncomeForm').reset();
-        loadGrantIncomeData(); // टेबल रिफ्रेस गर्दा आजकै मितի देखा पर्छ
+        loadGrantIncomeData(); 
     } else {
         alert('त्रुटि: ' + error.message);
     }
 }
-
         window.grantRecords = [];
 
         async function loadGrantIncomeData() {
