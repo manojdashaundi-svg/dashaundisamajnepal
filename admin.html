@@ -1701,14 +1701,23 @@ async function loadPendingLevyPayments() {
             let memberNo = item.member_no || '-';
             let memberPosition = item.position || '-';
             
-            // यहाँ वास्तविक (Real) मिति मिलाइएको छ (डेटाबेसमा भएको मिति वा सिर्जना भएको मिति लिने)
+            // वास्तविक (Real) मिति प्राप्त गर्ने (डेटाबेसमा भएको मिति वा सिर्जना भएको मिति)
             let rawDate = item.date || item.created_at;
             let paymentDate = '-';
+            
             if (rawDate) {
-                if (rawDate.includes('T')) {
-                    paymentDate = rawDate.split('T')[0];
+                let engDateStr = rawDate.includes('T') ? rawDate.split('T')[0] : rawDate.split(' ')[0];
+                
+                // अंग्रेजी मितिलाई नेपाली मितिमा रूपान्तरण गर्ने (यदि adToBs वा equivalent function उपलब्ध छ भने)
+                if (typeof adToBs === 'function') {
+                    paymentDate = adToBs(engDateStr);
+                } else if (typeof NepaliFunctions !== 'undefined' && NepaliFunctions.AD2BS) {
+                    // यदि NepaliFunctions लाइब्रेरी प्रयोग भएको छ भने
+                    let parts = engDateStr.split('-');
+                    let bsDate = NepaliFunctions.AD2BS({ year: parseInt(parts[0]), month: parseInt(parts[1]), day: parseInt(parts[2]) });
+                    paymentDate = `${bsDate.year}-${String(bsDate.month).padStart(2, '0')}-${String(bsDate.day).padStart(2, '0')}`;
                 } else {
-                    paymentDate = rawDate.split(' ')[0];
+                    paymentDate = engDateStr;
                 }
             }
 
@@ -1729,7 +1738,7 @@ async function loadPendingLevyPayments() {
 
             const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
             const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
-            const totalAmount = item.total_amount || 0;
+            const totalAmount = item.total_0amount || item.total_amount || 0;
             const slipUrl = item.payment_slip || item.voucher_url || '#';
 
             const row = document.createElement('tr');
