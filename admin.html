@@ -3011,6 +3011,11 @@ function closeVoucherModal() {
         
         setInterval(updateLiveNepaliCalendar, 1000);
         updateLiveNepaliCalendar();
+
+        document.addEventListener("DOMContentLoaded", function() {
+    loadMonthlyLevyIncomeData(); // पेज खुल्नेबित्तिकै लेवी आम्दानी लोड गर्ने
+    loadPendingLevyPayments();  // यदि अन्य टेबलहरू पनि छन् भने सँगै राख्न सक्नुहुन्छ
+});
     </script>
 </body>
 </html>
