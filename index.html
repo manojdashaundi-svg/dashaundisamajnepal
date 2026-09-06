@@ -1645,61 +1645,68 @@
         }
 
        async function submitLevyPayment() {
-    const fileInput = document.getElementById('voucherFile');
-    if (selectedMonths.length === 0) { 
-        alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
-        return; 
-    }
-    if (fileInput.files.length === 0) { 
-        alert('कृपया भौचर अपलोड गर्नुहोस्!'); 
-        return; 
-    }
+            const fileInput = document.getElementById('voucherFile');
+            if (selectedMonths.length === 0) { 
+                alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
+                return; 
+            }
+            if (fileInput.files.length === 0) { 
+                alert('कृपया भौचर अपलोड गर्नुहोस्!'); 
+                return; 
+            }
 
-    try {
-        alert('भौचर अपलोड हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
-        
-        // १. Supabase Storage मा फाइल अपलोड गर्ने र त्यसको URL प्राप्त गर्ने
-        const paySlipFile = fileInput.files[0];
-        const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
+            try {
+                alert('भौचर अपलोड हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
+                
+                // १. Supabase Storage मा फाइल अपलोड गर्ने र त्यसको URL प्राप्त गर्ने
+                const paySlipFile = fileInput.files[0];
+                const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
 
-        if (!paySlipUrl) {
-            alert('फाइल अपलोड गर्न असफल भयो!');
-            return;
-        }
-
-        const activeUserId = (typeof currentUser !== 'undefined' && currentUser?.id) ? currentUser.id : '1';
-
-        // २. डेटाबेसमा सही URL सेभ गर्ने
-        const { error } = await supabaseClient
-            .from('levy_payments')
-            .insert([
-                {
-                    user_id: activeUserId,
-                    committee_level: 'केन्द्रीय समिति',
-                    year: 2083,
-                    months: selectedMonths, 
-                    total_months: selectedMonths.length,
-                    base_amount: selectedMonths.length * 200,
-                    fine_amount: 0,
-                    total_amount: selectedMonths.length * 200,
-                    payment_slip: paySlipUrl, // यहाँ अब सही स्टोरेज URL जान्छ
-                    status: 'Pending'
+                if (!paySlipUrl) {
+                    alert('फाइल अपलोड गर्न असफल भयो!');
+                    return;
                 }
-            ]);
 
-        if (error) {
-            alert('त्रुटि: ' + error.message);
-            return;
+                const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : '1';
+
+                // २. वास्तविक नेपाली मिति प्राप्त गर्ने (जस्तै: २०८३-०५-१८)
+                const realNepaliDateStr = getNepaliDate(); 
+
+                // ३. डेटाबेसमा सही नेपाली मिति सहित सेभ गर्ने
+                const { error } = await supabaseClient
+                    .from('levy_payments')
+                    .insert([
+                        {
+                            user_id: activeUserId,
+                            member_name: currentUserProfile.full_name || currentUserProfile.name || 'सदस्य',
+                            member_no: currentUserProfile.member_no || '',
+                            position: currentUserProfile.position || 'साधारण सदस्य',
+                            committee_level: 'केन्द्रीय समिति',
+                            year: 2083,
+                            months: selectedMonths, 
+                            total_months: selectedMonths.length,
+                            base_amount: selectedMonths.length * committeeRate,
+                            fine_amount: 0,
+                            total_amount: selectedMonths.length * committeeRate,
+                            payment_slip: paySlipUrl, 
+                            date: realNepaliDateStr, // यहाँ अब अंग्रेजीको सट्टा '२०८३-०५-१८' जस्तो वास्तविक नेपाली मिति बस्नेछ
+                            status: 'Pending'
+                        }
+                    ]);
+
+                if (error) {
+                    alert('त्रुटि: ' + error.message);
+                    return;
+                }
+
+                alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
+                closeLevyModal();
+                location.reload();
+            } catch (err) {
+                console.error(err);
+                alert('डेटा सेभ गर्न असफल भयो!');
+            }
         }
-
-        alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
-        closeLevyModal();
-        location.reload();
-    } catch (err) {
-        console.error(err);
-        alert('डेटा सेभ गर्न असफल भयो!');
-    }
-}
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
             updateRealTimeClock();
