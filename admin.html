@@ -1977,15 +1977,38 @@ async function rejectLevyPayment(id) {
     
     data.forEach((item, index) => {
         let encoded = encodeURIComponent(JSON.stringify(item));
+        
+        // क्र.सं. र रकमलाई नेपाली अङ्कमा बदल्ने
+        let snNepali = toNepaliNumber(index + 1);
+        let amountNepali = toNepaliNumber(item.amount || 0);
+
+        // भौचर नम्बरलाई अन्य कोषहरू जस्तै (जस्तै VCH-००३) फर्म्याटमा मिलाउने
+        let rawVoucher = item.voucher_no || '';
+        let formattedVoucher = rawVoucher;
+        if (rawVoucher) {
+            // यदि भित्र अंग्रेजी अंक छ भने त्यसलाई नेपालीमा रूपान्तरण गर्ने वा VCH- जोडिएको यकिन गर्ने
+            let numMatch = rawVoucher.match(/\d+/);
+            if (numMatch) {
+                let paddedNum = String(numMatch[0]).padStart(3, '0');
+                formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
+            }
+        } else {
+            let paddedNum = String(index + 1).padStart(3, '0');
+            formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
+        }
+
+        // मिति सही तरिकाले नेपालीमा देखाउने
+        let formattedDate = item.date ? toNepaliNumber(item.date) : '-';
+
         tbody.innerHTML += `
             <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td><strong>${item.voucher_no || '-'}</strong></td>
-                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${snNepali}</strong></td>
+                <td><strong>${formattedVoucher}</strong></td>
+                <td>${formattedDate}</td>
                 <td><strong>${item.donor_name || '-'}</strong></td>
                 <td>${item.title || '-'}</td>
                 <td>${item.medium || '-'}</td>
-                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                <td><strong style="color: #008000;">रु. ${amountNepali}</strong></td>
                 <td class="no-print">
                     <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
                     <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
