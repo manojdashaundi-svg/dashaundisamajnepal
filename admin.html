@@ -2002,24 +2002,31 @@ data.forEach((item, index) => {
         </tr>
     `;
 });
-        function openGrantVoucherModal(index) {
-    const item = window.grantRecords[index];
-    if (!item) {
+            
+       // यो कोडलाई आफ्नो जाभास्क्रिप्ट फाइलको सबैभन्दा अन्तिममा राख्नुहोला
+function openGrantVoucherModal(index) {
+    if (!window.grantRecords || !window.grantRecords[index]) {
         alert('डेटा फेला परेन!');
         return;
     }
     
+    const item = window.grantRecords[index];
     let rawVoucher = item.voucher_no || 'VCH-00' + (index + 1);
-    let nepaliVoucher = toNepaliNumber ? toNepaliNumber(rawVoucher) : rawVoucher;
-    let nepaliDate = toNepaliNumber ? toNepaliNumber(item.date || '-') : (item.date || '-');
+    let nepaliVoucher = (typeof toNepaliNumber === 'function') ? toNepaliNumber(rawVoucher) : rawVoucher;
+    let nepaliDate = (typeof toNepaliNumber === 'function') ? toNepaliNumber(item.date || '-') : (item.date || '-');
 
-    document.getElementById('grantModalVoucherNo').innerText = nepaliVoucher;
-    document.getElementById('grantModalVoucherDate').innerText = nepaliDate;
-    document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
-    document.getElementById('grantModalTitle').innerText = item.title || '-';
-    document.getElementById('grantModalAmount').innerText = 'रु. ' + (toNepaliNumber ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
+    const vNoEl = document.getElementById('grantModalVoucherNo');
+    const vDateEl = document.getElementById('grantModalVoucherDate');
+    const vDonorEl = document.getElementById('grantModalDonorName');
+    const vTitleEl = document.getElementById('grantModalTitle');
+    const vAmountEl = document.getElementById('grantModalAmount');
+
+    if (vNoEl) vNoEl.innerText = nepaliVoucher;
+    if (vDateEl) vDateEl.innerText = nepaliDate;
+    if (vDonorEl) vDonorEl.innerText = item.donor_name || '-';
+    if (vTitleEl) vTitleEl.innerText = item.title || '-';
+    if (vAmountEl) vAmountEl.innerText = 'रु. ' + ((typeof toNepaliNumber === 'function') ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
     
-    // मोडल खोल्ने एलिमेन्ट (तपाईंको सिस्टम अनुसार मोडलको आईडी मिलाउनुहोला)
     const modal = document.getElementById('grantVoucherModal'); 
     if (modal) modal.style.display = 'block';
 }
