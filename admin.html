@@ -1687,33 +1687,32 @@ async function loadMonthlyLevyIncomeData() {
     }
 }
 
-// इन्डेक्स मार्फत आधिकारिक लेवी भौचर मोडल खोल्ने फंक्सन
+// नयाँ आधिकारिक रसिद मोडल खोल्ने फंक्सन
 function viewMonthlyLevyVoucherByIndex(index) {
     const item = window.monthlyLevyCache[index];
     if (!item) return;
 
-    // यदि भौचरको रूपमा सीधै इमेज/पेमेन्ट लिपको लिङ्क देखाउने हो भने र सिष्टममा अर्को मोडल छ भने त्यसलाई हेर्ने:
-    // तर यदि तपाईंलाई संस्थाको आधिकारिक रसिद मोडल नै देखाउनु छ भने तलका IDs हरूमा भर्ने:
-    
-    const voucherNoEl = document.getElementById('modalVoucherNo');
-    const dateEl = document.getElementById('modalVoucherDate');
-    const nameEl = document.getElementById('modalMemberName');
-    const committeeEl = document.getElementById('modalCommitteeType');
-    const monthsEl = document.getElementById('modalMonthsPaid');
-    const amountEl = document.getElementById('modalAmount');
+    document.getElementById('officialVoucherNo').innerText = item.voucher_no || '-';
+    document.getElementById('officialVoucherDate').innerText = toNepaliNumber(item.date || '-');
+    document.getElementById('officialMemberName').innerText = item.member_name || '-';
+    document.getElementById('officialCommitteeType').innerText = item.committee_type || '-';
+    document.getElementById('officialMonthsPaid').innerText = toNepaliNumber(item.months_paid || '-');
+    document.getElementById('officialAmount').innerText = 'रु. ' + toNepaliNumber(item.amount || 0);
 
-    if (voucherNoEl) voucherNoEl.innerText = item.voucher_no || '-';
-    if (dateEl) dateEl.innerText = toNepaliNumber(item.date || '-');
-    if (nameEl) nameEl.innerText = item.member_name || '-';
-    if (committeeEl) committeeEl.innerText = item.committee_type || '-';
-    if (monthsEl) monthsEl.innerText = toNepaliNumber(item.months_paid || '-');
-    if (amountEl) amountEl.innerText = 'रु. ' + toNepaliNumber(item.amount || 0);
+    document.getElementById('officialLevyReceiptModal').style.display = 'block';
+}
 
-    // मोडल खोल्ने (यदि आइडी 'levyVoucherModal' वा पेमेन्ट स्लिप देखाउने मोडल अर्कै छ भने मिलाउने)
-    const modal = document.getElementById('levyVoucherModal');
-    if (modal) {
-        modal.style.display = 'block';
-    }
+function closeOfficialLevyModal() {
+    document.getElementById('officialLevyReceiptModal').style.display = 'none';
+}
+
+function printOfficialLevyReceipt() {
+    const printContents = document.getElementById('printableOfficialLevy').innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload();
 }
 function closeLevyVoucherModal() {
     document.getElementById('levyVoucherModal').style.display = 'none';
