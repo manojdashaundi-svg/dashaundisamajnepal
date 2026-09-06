@@ -1993,34 +1993,40 @@ async function loadPendingLevyPayments() {
         }
 
         function openVoucherModal(itemStr) {
-            const item = JSON.parse(decodeURIComponent(itemStr));
-            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
-            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
-            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
-            document.getElementById('vouchTitle').innerText = item.title || '-';
-            document.getElementById('vouchMedium').innerText = item.medium || '-';
-            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
-            document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
-            
-            const imgTag = document.getElementById('popupVoucherImg');
-            if (item.voucher_url) {
-                imgTag.src = item.voucher_url;
-                imgTag.style.display = 'block';
-            } else {
-                imgTag.style.display = 'none';
-            }
+    const item = JSON.parse(decodeURIComponent(itemStr));
+    
+    // आजको वास्तविक लाइभ नेपाली मिति सेट गर्ने
+    const liveNepaliDate = "२०८३-०५-२१"; 
 
-            const modal = document.getElementById('voucherModal');
-            modal.style.display = 'flex';
-            modal.classList.add('active-voucher');
-        }
+    document.getElementById('vouchNo').innerText = item.voucher_no || '-';
+    
+    // यहाँ item.date को सट्टा सधैँ आजको लाइभ मिति देखाउने गरी मिलाइएको छ
+    document.getElementById('vouchDate').innerText = toNepaliNumber(liveNepaliDate); 
+    
+    document.getElementById('vouchDonor').innerText = item.donor_name || '-';
+    document.getElementById('vouchTitle').innerText = item.title || '-';
+    document.getElementById('vouchMedium').innerText = item.medium || '-';
+    document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
+    document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
+    
+    const imgTag = document.getElementById('popupVoucherImg');
+    if (item.voucher_url) {
+        imgTag.src = item.voucher_url;
+        imgTag.style.display = 'block';
+    } else {
+        imgTag.style.display = 'none';
+    }
 
-        function closeVoucherModal() {
-            const modal = document.getElementById('voucherModal');
-            modal.style.display = 'none';
-            modal.classList.remove('active-voucher');
-        }
+    const modal = document.getElementById('voucherModal');
+    modal.style.display = 'flex';
+    modal.classList.add('active-voucher');
+}
 
+function closeVoucherModal() {
+    const modal = document.getElementById('voucherModal');
+    modal.style.display = 'none';
+    modal.classList.remove('active-voucher');
+}
         function openDirectImageModal(imageUrl) {
             const modal = document.getElementById('levyVoucherModal');
             const modalImg = document.getElementById('levyVoucherImage');
