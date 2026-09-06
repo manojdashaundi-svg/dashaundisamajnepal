@@ -526,7 +526,6 @@
                         <thead>
                             <tr>
                                 <th>क्र.सं.</th>
-                                <th>भौचर नं.</th>
                                 <th>मिति</th>
                                 <th>पदाधिकारीको नाम</th>
                                 <th>कमिटी तह</th>
@@ -1337,71 +1336,11 @@
 
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
+        const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
 
-    const { createClient } = window.supabase;
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    window.onload = function() {
-        if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('dashboardSection').classList.add('hidden');
-        } else {
-            showDashboard();
-        }
-    };
-
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const user = document.getElementById('username').value.trim();
-        const pass = document.getElementById('password').value.trim();
-
-        const { data, error } = await supabaseClient
-            .from('admins')
-            .select('*')
-            .eq('username', user)
-            .eq('password', pass)
-            .maybeSingle();
-
-        if (error) {
-            console.error('Login Error:', error.message);
-            alert('लगइन गर्दा प्राविधिक समस्या आयो!');
-            return;
-        }
-
-        if (data) {
-            localStorage.setItem('isAdminLoggedIn', 'true');
-            localStorage.setItem('currentAdmin', user);
-            localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
-            showDashboard();
-        } else {
-            alert('गलत युजरनेम वा पासवर्ड!');
-        }
-    });
-
-    function showDashboard() {
-        const loginSection = document.getElementById('loginSection');
-        const dashboardSection = document.getElementById('dashboardSection');
-        
-        if (loginSection) loginSection.classList.add('hidden');
-        if (dashboardSection) {
-            dashboardSection.classList.remove('hidden');
-            dashboardSection.style.display = 'block';
-        }
-        
-        const currentUser = localStorage.getItem('currentAdmin') || 'एडमिन';
-        const currentRole = localStorage.getItem('currentAdminRole') || 'पद';
-        
-        const welcomeUser = document.getElementById('welcomeUser');
-        if (welcomeUser) {
-            welcomeUser.innerText = `स्वागत छ, ${currentUser} (${currentRole})`;
-        }
-    }
-
-    function logout() {
-        localStorage.clear();
-        location.reload();
-    }
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const messageDiv = document.getElementById('message');
 
         async function getNextVoucherNo() {
     try {
@@ -1591,32 +1530,20 @@ function viewNoticeFile(encodedItem) {
         };
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const user = document.getElementById('username').value.trim();
-    const pass = document.getElementById('password').value.trim();
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
-    const { data, error } = await supabaseClient
-        .from('admins')
-        .select('*')
-        .eq('username', user)
-        .eq('password', pass)
-        .maybeSingle();
-
-    if (error) {
-        console.error('Login Error:', error.message);
-        alert('लगइन गर्दा प्राविधिक समस्या आयो!');
-        return;
-    }
-
-    if (data) {
-        localStorage.setItem('isAdminLoggedIn', 'true');
-        localStorage.setItem('currentAdmin', user);
-        localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
-        showDashboard();
-    } else {
-        alert('गलत युजरनेम वा पासवर्ड!');
-    }
-});
+            const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
+            if (data) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                localStorage.setItem('currentAdmin', user);
+                localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
+                showDashboard();
+            } else {
+                alert('गलत युजरनेम वा पासवर्ड!');
+            }
+        });
 
         function showDashboard() {
             const loginSection = document.getElementById('loginSection');
@@ -1738,12 +1665,11 @@ async function loadMonthlyLevyIncomeData() {
         data.forEach((item, index) => {
             const row = document.createElement('tr');
             
-            // भौचर बटन
+            // इन्डेक्स पास गर्ने, जसले गर्दा स्ट्रिङ वा कोटको समस्या आउँदैन
             const voucherBtn = `<button onclick="viewMonthlyLevyVoucherByIndex(${index})" style="background:#4f46e5; color:white; padding:3px 8px; border-radius:4px; border:none; cursor:pointer; margin-right:5px;">भौचर</button>`;
 
             row.innerHTML = `
                 <td>${toNepaliNumber(index + 1)}</td>
-                <td>${toNepaliNumber(item.voucher_no || '-')}</td>
                 <td>${toNepaliNumber(item.date || '-')}</td>
                 <td>${item.member_name || '-'}</td>
                 <td>${item.committee_type || '-'}</td>
@@ -1757,9 +1683,10 @@ async function loadMonthlyLevyIncomeData() {
             tbody.appendChild(row);
         });
     } else {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center;">कुनै रेकर्ड फेला परेन।</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center;">कुनै रेकर्ड फेला परेन।</td></tr>`;
     }
 }
+
 // नयाँ आधिकारिक रसिद मोडल खोल्ने फंक्सन
 function viewMonthlyLevyVoucherByIndex(index) {
     const item = window.monthlyLevyCache[index];
@@ -2038,70 +1965,50 @@ async function rejectLevyPayment(id) {
     }
     
     const tbody = document.getElementById('grantIncomeTableBody');
-if (!tbody) return;
-
-tbody.innerHTML = '';
-if (!data || data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
-    return;
-}
-
-window.grantRecords = data; // मोडलको लागि क्यास सुरक्षित राख्ने
-
-data.forEach((item, index) => {
-    let encoded = encodeURIComponent(JSON.stringify(item));
+    if (!tbody) return;
     
-    // भौचर नम्बरलाई नेपालीमा र सहि फर्म्याटमा देखाउने
-    let rawVoucher = item.voucher_no || 'VCH-00' + (index + 1);
-    let nepaliVoucher = (typeof toNepaliNumber === 'function') ? toNepaliNumber(rawVoucher) : rawVoucher;
-    
-    // मितिलाई नेपालीमा रूपान्तरण गर्ने
-    let nepaliDate = (typeof toNepaliNumber === 'function') ? toNepaliNumber(item.date || '-') : (item.date || '-');
-
-    tbody.innerHTML += `
-        <tr>
-            <td><strong>${(typeof toNepaliNumber === 'function') ? toNepaliNumber(index + 1) : (index + 1)}</strong></td>
-            <td><strong style="color: #4f46e5;">${nepaliVoucher}</strong></td>
-            <td>${nepaliDate}</td>
-            <td><strong>${item.donor_name || '-'}</strong></td>
-            <td>${item.title || '-'}</td>
-            <td>${item.medium || '-'}</td>
-            <td><strong style="color: #008000;">रु. ${(typeof toNepaliNumber === 'function') ? toNepaliNumber(item.amount || '०') : (item.amount || '०')}</strong></td>
-            <td class="no-print">
-                <button type="button" class="btn-action btn-voucher" onclick="openGrantVoucherModal(${index})" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
-                <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
-            </td>
-        </tr>
-    `;
-});
-            
-       // यो कोडलाई आफ्नो जाभास्क्रिप्ट फाइलको सबैभन्दा अन्तिममा राख्नुहोला
-function openGrantVoucherModal(index) {
-    if (!window.grantRecords || !window.grantRecords[index]) {
-        alert('डेटा फेला परेन!');
+    tbody.innerHTML = '';
+    if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
         return;
     }
     
-    const item = window.grantRecords[index];
-    let rawVoucher = item.voucher_no || 'VCH-00' + (index + 1);
-    let nepaliVoucher = (typeof toNepaliNumber === 'function') ? toNepaliNumber(rawVoucher) : rawVoucher;
-    let nepaliDate = (typeof toNepaliNumber === 'function') ? toNepaliNumber(item.date || '-') : (item.date || '-');
-
-    const vNoEl = document.getElementById('grantModalVoucherNo');
-    const vDateEl = document.getElementById('grantModalVoucherDate');
-    const vDonorEl = document.getElementById('grantModalDonorName');
-    const vTitleEl = document.getElementById('grantModalTitle');
-    const vAmountEl = document.getElementById('grantModalAmount');
-
-    if (vNoEl) vNoEl.innerText = nepaliVoucher;
-    if (vDateEl) vDateEl.innerText = nepaliDate;
-    if (vDonorEl) vDonorEl.innerText = item.donor_name || '-';
-    if (vTitleEl) vTitleEl.innerText = item.title || '-';
-    if (vAmountEl) vAmountEl.innerText = 'रु. ' + ((typeof toNepaliNumber === 'function') ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
-    
-    const modal = document.getElementById('grantVoucherModal'); 
-    if (modal) modal.style.display = 'block';
+    data.forEach((item, index) => {
+        let encoded = encodeURIComponent(JSON.stringify(item));
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td><strong>${item.voucher_no || '-'}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
+                <td><strong>${item.donor_name || '-'}</strong></td>
+                <td>${item.title || '-'}</td>
+                <td>${item.medium || '-'}</td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                <td class="no-print">
+                    <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
+                    <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
+                </td>
+            </tr>
+        `;
+    });
 }
+        function openGrantVoucherModal(index) {
+            const item = window.grantRecords[index];
+            if (!item) {
+                alert('डेटा फेला परेन!');
+                return;
+            }
+            
+            // नयाँ छुट्टै मोडलका आइडीहरूमा डेटा भरेको
+            document.getElementById('grantModalVoucherNo').innerText = item.voucher_no || 'VOU-01';
+            document.getElementById('grantModalVoucherDate').innerText = toNepaliNumber ? toNepaliNumber(item.date || '२०८३-०५-२०') : (item.date || '२०८३-०५-२०');
+            document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
+            document.getElementById('grantModalTitle').innerText = item.title || '-';
+            document.getElementById('grantModalAmount').innerText = 'रु. ' + (toNepaliNumber ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
+
+            // अनुदान तथा सहयोगको छुट्टै मोडल देखाउने
+            document.getElementById('grantVoucherModal').style.display = 'block';
+        }
 
         function closeGrantVoucherModal() {
             document.getElementById('grantVoucherModal').style.display = 'none';
