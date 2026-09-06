@@ -1999,19 +1999,28 @@ async function rejectLevyPayment(id) {
                 return;
             }
             
-            if (typeof openVoucherModal === 'function') {
-                openVoucherModal(
-                    String(item.voucher_no || 'VOU-01'),
-                    String(item.donor_name || ''),
-                    String(item.title || ''),
-                    String(item.medium || ''),
-                    Number(item.amount || 0),
-                    String(item.date || '२०८३-०५-२०'),
-                    'अनुदान तथा सहयोग'
-                );
-            } else {
-                alert('मुख्य भौचर प्रिन्ट फंक्सन भेटिएन!');
-            }
+            // नयाँ छुट्टै मोडलका आइडीहरूमा डेटा भरेको
+            document.getElementById('grantModalVoucherNo').innerText = item.voucher_no || 'VOU-01';
+            document.getElementById('grantModalVoucherDate').innerText = toNepaliNumber ? toNepaliNumber(item.date || '२०८३-०५-२०') : (item.date || '२०८३-०५-२०');
+            document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
+            document.getElementById('grantModalTitle').innerText = item.title || '-';
+            document.getElementById('grantModalAmount').innerText = 'रु. ' + (toNepaliNumber ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
+
+            // अनुदान तथा सहयोगको छुट्टै मोडल देखाउने
+            document.getElementById('grantVoucherModal').style.display = 'block';
+        }
+
+        function closeGrantVoucherModal() {
+            document.getElementById('grantVoucherModal').style.display = 'none';
+        }
+
+        function printGrantVoucher() {
+            const printContents = document.getElementById('printableGrantVoucher').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
         }
 
         async function deleteGrantRecord(id) {
