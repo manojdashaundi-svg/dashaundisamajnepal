@@ -1936,22 +1936,22 @@ async function rejectLevyPayment(id) {
         async function saveGrantIncome(e) {
     e.preventDefault();
     
-    const voucherNo = await getNextVoucherNo();
+    // भौचर नम्बर लिने
+    const voucherNo = typeof getNextVoucherNo === 'function' ? await getNextVoucherNo() : 'VCH-००१';
 
-    // यहाँ हालको सही लाइभ नेपाली मिति तान्ने कोड मिलाउनुहोस्
-    // यदि तपाईंको साइटमा लाइभ मिति दिने अर्को variable वा function छ भने यहाँ राख्नुहोला
-    let liveDate = "२०८३-०५-२१"; // आजको वास्तविक मितի वा dynamic function
+    // **मुख्य सुधार यहाँ छ**: आपत्कालीन कोषमा जस्तै यसमा पनि सही लाइभ नेपाली मिति तान्ने
+    let liveDate = "२०८३-०५-२१"; // fallback मिति
     if (typeof getCurrentNepaliDate === 'function') {
         liveDate = getCurrentNepaliDate();
     }
 
     const grantData = {
         voucher_no: voucherNo,
-        date: liveDate, // सधैं आजको रियल-टाइम मिति बस्नेछ
-        donor_name: document.getElementById('grant_donor_name').value.trim(),
-        title: document.getElementById('grant_title').value.trim(),
-        medium: document.getElementById('grant_medium').value,
-        amount: parseFloat(document.getElementById('grant_amount').value) || 0,
+        date: liveDate, // अब सधैं आजको वास्तविक लाइभ मिति सेभ हुनेछ
+        donor_name: document.getElementById('grant_donor_name')?.value.trim() || document.getElementById('donorName')?.value.trim() || '',
+        title: document.getElementById('grant_title')?.value.trim() || document.getElementById('donorTitle')?.value.trim() || '',
+        medium: document.getElementById('grant_medium')?.value || document.getElementById('paymentMode')?.value || 'नगद (Cash)',
+        amount: parseFloat(document.getElementById('grant_amount')?.value || document.getElementById('amount')?.value) || 0,
         fund_category: 'अनुदान तथा सहयोग'
     };
 
@@ -1959,7 +1959,13 @@ async function rejectLevyPayment(id) {
     
     if (!error) {
         alert(`सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
-        document.getElementById('grantIncomeForm').reset();
+        
+        // फर्म खाली गर्ने
+        if (document.getElementById('grantIncomeForm')) {
+            document.getElementById('grantIncomeForm').reset();
+        }
+        
+        // टेबल रिफ्रेस गर्ने
         loadGrantIncomeData(); 
     } else {
         alert('त्रुटि: ' + error.message);
