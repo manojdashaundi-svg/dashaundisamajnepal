@@ -1700,7 +1700,17 @@ async function loadPendingLevyPayments() {
             let memberName = item.member_name;
             let memberNo = item.member_no || '-';
             let memberPosition = item.position || '-';
-            let paymentDate = item.date || item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : '-';
+            
+            // यहाँ वास्तविक (Real) मिति मिलाइएको छ (डेटाबेसमा भएको मिति वा सिर्जना भएको मिति लिने)
+            let rawDate = item.date || item.created_at;
+            let paymentDate = '-';
+            if (rawDate) {
+                if (rawDate.includes('T')) {
+                    paymentDate = rawDate.split('T')[0];
+                } else {
+                    paymentDate = rawDate.split(' ')[0];
+                }
+            }
 
             // यदि लेवी रेकर्डमा नाम, सदस्य नं वा पद छैन भने users टेबलबाट तानेर म्याच गर्ने
             if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/) || memberNo === '-') {
