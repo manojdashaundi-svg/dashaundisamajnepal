@@ -1745,6 +1745,33 @@ async function loadPendingLevyPayments() {
                 }
             }
 
+            // भौचर मोडल खोल्ने र डाटा भर्ने फंक्सन
+function viewMonthlyLevyVoucher(voucherNo, date, memberName, committeeType, monthsPaid, amount) {
+    document.getElementById('modalVoucherNo').innerText = voucherNo || '-';
+    document.getElementById('modalVoucherDate').innerText = toNepaliNumber(date || '-');
+    document.getElementById('modalMemberName').innerText = memberName || '-';
+    document.getElementById('modalCommitteeType').innerText = committeeType || '-';
+    document.getElementById('modalMonthsPaid').innerText = toNepaliNumber(monthsPaid || '-');
+    document.getElementById('modalAmount').innerText = 'रु. ' + toNepaliNumber(amount || 0);
+
+    document.getElementById('levyVoucherModal').style.display = 'block';
+}
+
+// मोडल बन्द गर्ने
+function closeLevyVoucherModal() {
+    document.getElementById('levyVoucherModal').style.display = 'none';
+}
+
+// भौचर प्रिन्ट गर्ने
+function printLevyVoucher() {
+    const printContents = document.getElementById('printableLevyVoucher').innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload(); // पेज रिफ्रेस गरेर पूर्ववत अवस्थामा ल्याउने
+}
+
             // यदि लेवी रेकर्डमा नाम, सदस्य नं वा पद छैन भने users टेबलबाट तानेर म्याच गर्ने
             if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/) || memberNo === '-') {
                 const { data: userData } = await supabaseClient
