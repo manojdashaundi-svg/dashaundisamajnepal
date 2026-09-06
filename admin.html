@@ -1645,9 +1645,10 @@ function viewNoticeFile(encodedItem) {
     const { data, error } = await supabaseClient
         .from('monthly_levy')
         .select('*')
-        .order('id', { ascending: true }); // यहाँ member_no वा अरू केही नराखी सिधै id राख्ने
+        .order('id', { ascending: true });
 
-    const tbody = document.getElementById('monthlyLevyTableBody');
+    // यहाँ HTML सँग मिल्ने सही ID राखिएको छ
+    const tbody = document.getElementById('monthlyLevyIncomeTableBody'); 
     if (!tbody) return;
     
     tbody.innerHTML = '';
