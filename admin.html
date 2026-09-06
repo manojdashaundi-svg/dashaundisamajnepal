@@ -1688,8 +1688,9 @@ async function loadPendingLevyPayments() {
 
         tbody.innerHTML = '';
 
+        // डाटा नभएको बेла ९ वटै σtamp (colspan=9) मिलाउने
         if (error || !data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 15px; color: #718096;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
             return;
         }
 
@@ -1698,7 +1699,7 @@ async function loadPendingLevyPayments() {
             let memberNo = item.member_no || item.user_id || '-';
             let designation = item.designation || '-';
 
-            // यदि लेवी रेकर्डमा नाम, नम्बर वा पद पूर्ण छैन भने users टेबलबाट ल्याउने
+            // यदि लेवी रेकर्डमा नाम वा पद छैन भने users टेबलबाट ल्याउने
             const { data: userData } = await supabaseClient
                 .from('users')
                 .select('full_name, name, member_no, designation, position')
