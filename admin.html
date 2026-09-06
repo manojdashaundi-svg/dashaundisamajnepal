@@ -1692,25 +1692,28 @@ async function loadPendingLevyPayments() {
         tbody.innerHTML = '';
 
         if (error || !data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
             return;
         }
 
         for (let item of data) {
             let memberName = item.member_name;
+            let memberNo = item.member_no || '-';
+            let memberPosition = item.position || '-';
+            let paymentDate = item.date || item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : '-';
 
-            // यदि लेवी रेकर्डमा नाम छैन भने users टेबलबाट नाम पत्ता लगाउने
-            if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/)) {
+            // यदि लेवी रेकर्डमा नाम, सदस्य नं वा पद छैन भने users टेबलबाट तानेर म्याच गर्ने
+            if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/) || memberNo === '-') {
                 const { data: userData } = await supabaseClient
                     .from('users')
-                    .select('full_name, name')
+                    .select('full_name, name, member_no, position')
                     .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
                     .single();
                 
                 if (userData) {
-                    memberName = userData.full_name || userData.name;
-                } else {
-                    memberName = `सदस्य नं: ${item.user_id}`;
+                    memberName = userData.full_name || userData.name || memberName;
+                    memberNo = userData.member_no || memberNo;
+                    memberPosition = userData.position || memberPosition;
                 }
             }
 
@@ -1721,11 +1724,14 @@ async function loadPendingLevyPayments() {
 
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${toNepaliNumber(paymentDate)}</td>
+                <td><strong>${toNepaliNumber(memberNo)}</strong></td>
                 <td><strong>${memberName}</strong></td>
+                <td>${memberPosition}</td>
                 <td>${committeeLevel}</td>
                 <td>${months}</td>
                 <td>रु. ${toNepaliNumber(totalAmount)}</td>
-                <td><button class="btn-action" onclick="openDirectImageModal('${slipUrl}')" style="background:#d69e2e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
+                <td><button class="btn-action btn-voucher" onclick="openDirectImageModal('${slipUrl}')" style="background:#805ad5; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
                 <td>
                     <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
                     <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
