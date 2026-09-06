@@ -3149,12 +3149,21 @@ setInterval(updateLiveNepaliCalendar, 1000);
 
 // पेज लोड हुँदा डाटा लोड गर्ने
 document.addEventListener("DOMContentLoaded", function() {
-    updateLiveNepaliCalendar();
+    // १. लाइभ घडी र लेवी डाटा लोड गर्ने पुरानो कोड
+    if (typeof updateLiveNepaliCalendar === 'function') {
+        updateLiveNepaliCalendar();
+    }
     if (typeof loadMonthlyLevyIncomeData === 'function') {
         loadMonthlyLevyIncomeData(); 
     }
     if (typeof loadPendingLevyPayments === 'function') {
         loadPendingLevyPayments();  
+    }
+
+    // २. अनुदान फारमको मितिमा आजको रियल-टाइम नेपाली मिति स्वतः राख्ने नयाँ कोड
+    const dateField = document.getElementById('grantDate') || document.getElementById('date');
+    if (dateField && typeof getCurrentNepaliDate === 'function') {
+        dateField.value = getCurrentNepaliDate();
     }
 });
 
