@@ -1955,9 +1955,10 @@ async function loadPendingLevyPayments() {
 
         async function saveFundIncome(e, tableName, categoryName) {
     e.preventDefault();
-    const prefix = tableName === 'human_fund' ? 'HUM' : (tableName === 'emergency_fund' ? 'EMG' : 'REL');
     
-    // Supabase बाट सही कुल रेकर्ड सङ्ख्या (Count) निकाल्ने तरिका
+    // सबै कोषहरूको भौचरमा HUM, EMG को सट्टा VCH राख्ने
+    const prefix = 'VCH';
+    
     const { count, error: countError } = await supabaseClient
         .from(tableName)
         .select('*', { count: 'exact', head: true });
