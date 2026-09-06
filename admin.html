@@ -1785,7 +1785,6 @@ async function loadPendingLevyPayments() {
                 return;
             }
 
-            // आजको वास्तविक लाइभ मिति सेट गर्ने
             const liveNepaliDate = "२०८३-०५-२१";
             const prefix = 'VCH';
 
@@ -1811,30 +1810,22 @@ async function loadPendingLevyPayments() {
             const memberName = paymentData.member_name || `सदस्य (ID: ${paymentData.user_id})`;
             const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
             const totalAmount = paymentData.total_amount || 0;
+            const committeeType = paymentData.committee_type || 'साधारण सदस्य';
 
-            // मासिक लेवी आम्दानी टेबलमा भौचर नम्बर र लाइभ मितिसहित सेभ गर्ने
+            // अब यो डेटा केवल 'monthly_levy_income' (मासिक लेवीबाट प्राप्त आम्दानी) टेबलमा मात्र जान्छ
             await supabaseClient.from('monthly_levy_income').insert([{
                 voucher_no: voucherNo,
                 date: liveNepaliDate,
                 member_name: memberName,
-                title: `लेवी महिनाहरू: ${monthsList}`,
+                committee_type: committeeType,
+                months_paid: monthsList,
                 amount: totalAmount,
                 voucher_url: paymentData.voucher_url || ''
             }]);
 
-            // वैकल्पिक रूपमा income_records मा पनि राख्ने यदि प्रयोग हुन्छ भने
-            await supabaseClient.from('income_records').insert([{
-                date: liveNepaliDate,
-                name: memberName,
-                category: 'मासिक लेवी शुल्क',
-                description: `लेवी महिनाहरू: ${monthsList}`,
-                amount: totalAmount
-            }]);
-
-            alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो र मासिक आम्दानी रेकर्डमा थपियो!');
+            alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो र मासिक लेवी आम्दानीमा थपियो!');
             loadPendingLevyPayments();
             loadMonthlyLevyIncomeData();
-            loadIncomeData();
         } catch (err) {
             console.error('Approval Error:', err);
             alert('कारवाही असफल भयो!');
