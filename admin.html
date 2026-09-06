@@ -2946,7 +2946,27 @@ async function loadPendingLevyPayments() {
                     alert('त्रुटि: ' + error.message);
                 }
             }
+        }function updateLiveNepaliCalendar() {
+            const liveNepaliDateString = "वि.सं. २०८३ भदौ २१, आइतबार";
+            
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '०' + minutes : minutes;
+            seconds = seconds < 10 ? '०' + seconds : seconds;
+            
+            let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+            
+            document.getElementById('nepali-live-date').innerHTML = `<i class="fa-regular fa-calendar-days text-amber-600 mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
         }
+        
+        setInterval(updateLiveNepaliCalendar, 1000);
+        updateLiveNepaliCalendar();
     </script>
 </body>
 </html>
