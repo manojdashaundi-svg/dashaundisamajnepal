@@ -1641,7 +1641,7 @@ function viewNoticeFile(encodedItem) {
             }
         }
 
-        async function loadMonthlyLevyIncomeData() {
+       async function loadMonthlyLevyIncomeData() {
     const { data, error } = await supabaseClient
         .from('monthly_levy')
         .select('*')
@@ -1661,9 +1661,13 @@ function viewNoticeFile(encodedItem) {
         data.forEach((item, index) => {
             const row = document.createElement('tr');
             
-            // भौचर URL छ भने हेर्ने बटन देखाउने, छैन भने डือस (- रखने)
-            const voucherBtn = item.voucher_url 
-                ? `<a href="${item.voucher_url}" target="_blank" class="btn-voucher" style="background:#4f46e5; color:white; padding:3px 8px; border-radius:4px; text-decoration:none; margin-right:5px; display:inline-block;">भौचर</a>` 
+            // ==========================================
+            // यो कोडलाई ठीक यहाँ राख्नुहोला
+            // ==========================================
+            const voucherLink = item.voucher_url || item.payment_slip;
+            
+            const voucherBtn = voucherLink 
+                ? `<a href="${voucherLink}" target="_blank" class="btn-voucher" style="background:#4f46e5; color:white; padding:3px 8px; border-radius:4px; text-decoration:none; margin-right:5px; display:inline-block;">भौचर</a>` 
                 : `<span style="color:gray; margin-right:5px;">भौचर छैन</span>`;
 
             row.innerHTML = `
