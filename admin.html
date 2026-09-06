@@ -2140,15 +2140,25 @@ async function rejectLevyPayment(id) {
        function openVoucherModal(itemStr) {
     const item = JSON.parse(decodeURIComponent(itemStr));
     
-    document.getElementById('vouchNo').innerText = item.voucher_no || '-';
+    // १. टेबलमा जस्तै भौचर नम्बरलाई फर्म्याट गर्ने (जस्तै VCH-००४)
+    let rawVoucher = item.voucher_no || '-';
+    let formattedVoucher = rawVoucher;
+    let numMatch = rawVoucher.match(/\d+/);
+    if (numMatch && typeof toNepaliNumber === 'function') {
+        let paddedNum = String(numMatch[0]).padStart(3, '0');
+        formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
+    }
+
+    // २. मोडलका एलिमेन्टहरूमा सहي विवरण राख्ने
+    document.getElementById('vouchNo').innerText = formattedVoucher;
     
-    // यहाँ लाइभ मितिको सट्टा डेटाबेसमा सेभ भएको भौचरकै सही मिति (item.date) देखाइएको छ
-    document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-'); 
+    // यहाँ डेटाबेसमा सेभ भएको भौचरकै सही मिति देखाइएको छ
+    document.getElementById('vouchDate').innerText = (typeof toNepaliNumber === 'function' && item.date) ? toNepaliNumber(item.date) : (item.date || '-'); 
     
     document.getElementById('vouchDonor').innerText = item.donor_name || '-';
     document.getElementById('vouchTitle').innerText = item.title || '-';
     document.getElementById('vouchMedium').innerText = item.medium || '-';
-    document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
+    document.getElementById('vouchAmount').innerText = 'रू. ' + (typeof toNepaliNumber === 'function' ? toNepaliNumber(item.amount || '०') : (item.amount || '०'));
     document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
     
     const imgTag = document.getElementById('popupVoucherImg');
@@ -2169,17 +2179,18 @@ function closeVoucherModal() {
     modal.style.display = 'none';
     modal.classList.remove('active-voucher');
 }
-        function openDirectImageModal(imageUrl) {
-            const modal = document.getElementById('levyVoucherModal');
-            const modalImg = document.getElementById('levyVoucherImage');
-            
-            if (modal && modalImg) {
-                modalImg.src = imageUrl;
-                modal.style.display = 'flex';
-            } else {
-                window.open(imageUrl, '_blank');
-            }
-        }
+
+function openDirectImageModal(imageUrl) {
+    const modal = document.getElementById('levyVoucherModal');
+    const modalImg = document.getElementById('levyVoucherImage');
+    
+    if (modal && modalImg) {
+        modalImg.src = imageUrl;
+        modal.style.display = 'flex';
+    } else {
+        window.open(imageUrl, '_blank');
+    }
+}
 
         function closeLevyVoucherModal() {
             const modal = document.getElementById('levyVoucherModal');
