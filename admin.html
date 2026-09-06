@@ -2003,22 +2003,26 @@ data.forEach((item, index) => {
     `;
 });
         function openGrantVoucherModal(index) {
-            const item = window.grantRecords[index];
-            if (!item) {
-                alert('डेटा फेला परेन!');
-                return;
-            }
-            
-            // नयाँ छुट्टै मोडलका आइडीहरूमा डेटा भरेको
-            document.getElementById('grantModalVoucherNo').innerText = item.voucher_no || 'VOU-01';
-            document.getElementById('grantModalVoucherDate').innerText = toNepaliNumber ? toNepaliNumber(item.date || '२०८३-०५-२०') : (item.date || '२०८३-०५-२०');
-            document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
-            document.getElementById('grantModalTitle').innerText = item.title || '-';
-            document.getElementById('grantModalAmount').innerText = 'रु. ' + (toNepaliNumber ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
+    const item = window.grantRecords[index];
+    if (!item) {
+        alert('डेटा फेला परेन!');
+        return;
+    }
+    
+    let rawVoucher = item.voucher_no || 'VCH-00' + (index + 1);
+    let nepaliVoucher = toNepaliNumber ? toNepaliNumber(rawVoucher) : rawVoucher;
+    let nepaliDate = toNepaliNumber ? toNepaliNumber(item.date || '-') : (item.date || '-');
 
-            // अनुदान तथा सहयोगको छुट्टै मोडल देखाउने
-            document.getElementById('grantVoucherModal').style.display = 'block';
-        }
+    document.getElementById('grantModalVoucherNo').innerText = nepaliVoucher;
+    document.getElementById('grantModalVoucherDate').innerText = nepaliDate;
+    document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
+    document.getElementById('grantModalTitle').innerText = item.title || '-';
+    document.getElementById('grantModalAmount').innerText = 'रु. ' + (toNepaliNumber ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
+    
+    // मोडल खोल्ने एलिमेन्ट (तपाईंको सिस्टम अनुसार मोडलको आईडी मिलाउनुहोला)
+    const modal = document.getElementById('grantVoucherModal'); 
+    if (modal) modal.style.display = 'block';
+}
 
         function closeGrantVoucherModal() {
             document.getElementById('grantVoucherModal').style.display = 'none';
