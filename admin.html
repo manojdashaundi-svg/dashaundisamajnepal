@@ -1979,22 +1979,22 @@ window.grantRecords = data; // मोडलको लागि क्यास �
 data.forEach((item, index) => {
     let encoded = encodeURIComponent(JSON.stringify(item));
     
-    // भौचर नम्बरलाई नेपालीमा र सहि फर्म्याटमा देखाउने (जस्तै VCH-००१)
+    // भौचर नम्बरलाई नेपालीमा र सहि फर्म्याटमा देखाउने
     let rawVoucher = item.voucher_no || 'VCH-00' + (index + 1);
-    let nepaliVoucher = toNepaliNumber ? toNepaliNumber(rawVoucher) : rawVoucher;
+    let nepaliVoucher = (typeof toNepaliNumber === 'function') ? toNepaliNumber(rawVoucher) : rawVoucher;
     
     // मितिलाई नेपालीमा रूपान्तरण गर्ने
-    let nepaliDate = toNepaliNumber ? toNepaliNumber(item.date || '-') : (item.date || '-');
+    let nepaliDate = (typeof toNepaliNumber === 'function') ? toNepaliNumber(item.date || '-') : (item.date || '-');
 
     tbody.innerHTML += `
         <tr>
-            <td><strong>${toNepaliNumber ? toNepaliNumber(index + 1) : (index + 1)}</strong></td>
+            <td><strong>${(typeof toNepaliNumber === 'function') ? toNepaliNumber(index + 1) : (index + 1)}</strong></td>
             <td><strong style="color: #4f46e5;">${nepaliVoucher}</strong></td>
             <td>${nepaliDate}</td>
             <td><strong>${item.donor_name || '-'}</strong></td>
             <td>${item.title || '-'}</td>
             <td>${item.medium || '-'}</td>
-            <td><strong style="color: #008000;">रु. ${toNepaliNumber ? toNepaliNumber(item.amount || '०') : (item.amount || '०')}</strong></td>
+            <td><strong style="color: #008000;">रु. ${(typeof toNepaliNumber === 'function') ? toNepaliNumber(item.amount || '०') : (item.amount || '०')}</strong></td>
             <td class="no-print">
                 <button type="button" class="btn-action btn-voucher" onclick="openGrantVoucherModal(${index})" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
                 <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
