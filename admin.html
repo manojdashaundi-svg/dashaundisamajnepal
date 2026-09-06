@@ -366,49 +366,27 @@
                   </form>
                 </div>
 
-                <div class="approval-section">
-                  <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
-                  <table id="pendingTable">
-                    <thead>
-                      <tr>
-                      <th>मिति</th>
-                      <th>सदस्य नं.</th>
-                      <th>पदाधिकारी नाम</th>
-                      <th>पद</th>
-                      <th>कमिटी तह</th>
-                     <th>मिनाहरू</th>
-                     <th>जम्मा रकम (जरिवानासहित)</th>
-                     <th>भौचर</th>
-                     <th>कार्य</th>
-                 </tr>
-              </thead>
-
-                <div class="reports-section">
-                  <div class="list-box" id="paidBoxContainer">
-                    <div class="list-box-header">
-                      <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
-                      <button class="print-btn" onclick="printSection('paidBoxContainer', 'लेवी तिरेका पदाधिकारीहरूको सूची')">प्रिन्ट / PDF</button>
-                    </div>
-                    <table id="paidListTable">
-                      <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-
-                  <div class="list-box" id="unpaidBoxContainer">
-                    <div class="list-box-header">
-                      <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
-                      <button class="print-btn" onclick="printSection('unpaidBoxContainer', 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)')">प्रिन्ट / PDF</button>
-                    </div>
-                    <table id="unpaidListTable">
-                      <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+                <div class="approval-section" style="margin-bottom: 20px;">
+    <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
+    <table id="pendingTable" style="width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff;">
+        <thead>
+            <tr style="background: #1a365d; color: #fff; text-align: center; font-size: 13px;">
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">मिति</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">सदस्य नं.</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">पदाधिकारी नाम</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">पद</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">कमिटी तह</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">मिनाहरू</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">जम्मा रकम (जरिवानासहित)</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">भौचर</th>
+                <th style="padding: 8px; border: 1px solid #cbd5e0;">कार्य</th>
+            </tr>
+        </thead>
+        <tbody id="pendingLevyTableBody">
+            <!-- डाटा यहाँ जावास्क्रिप्टबाट लोड हुन्छ -->
+        </tbody>
+    </table>
+</div>
             <!-- १) मानव बचाउ अभियान कोष सेक्सन -->
             <div class="section-header">
                 <h3>मानव बचाउ अभियान कोष</h3>
