@@ -1643,9 +1643,9 @@ function viewNoticeFile(encodedItem) {
 
         async function loadMonthlyLevyIncomeData() {
     const { data, error } = await supabaseClient
-        .from('monthly_levy') // यहाँ सही टेबल नाम 'monthly_levy' राखिएको छ
+        .from('monthly_levy')
         .select('*')
-        .order('id', { ascending: true });
+        .order('id', { ascending: true }); // यहाँ member_no वा अरू केही नराखी सिधै id राख्ने
 
     const tbody = document.getElementById('monthlyLevyTableBody');
     if (!tbody) return;
@@ -1677,7 +1677,6 @@ function viewNoticeFile(encodedItem) {
         tbody.innerHTML = `<tr><td colspan="7" style="text-align: center;">कुनै रेकर्ड फेला परेन।</td></tr>`;
     }
 }
-
 async function deleteMonthlyLevyRecord(id) {
     if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
         // यहाँ पनि सही टेबल नाम 'monthly_levy' राखिएको छ
