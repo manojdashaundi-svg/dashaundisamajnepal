@@ -3098,8 +3098,10 @@ function closeVoucherModal() {
     <div class="modal-content" style="background:#fff; margin:5% auto; padding:20px; width:90%; max-width:600px; border-radius:8px; position:relative;">
         <span onclick="closeOfficialLevyModal()" style="position:absolute; right:15px; top:10px; font-size:24px; cursor:pointer; font-weight:bold;">&times;</span>
         
-        <div id="printableOfficialLevy" style="padding: 15px; font-family: sans-serif; text-align: center;">
-            <img src="logo.png" alt="Logo" style="width: 60px; height: 60px; margin-bottom: 5px;">
+        <div id="printableOfficialLevy" style="padding: 15px; font-family: sans-serif; text-align: center; background: #fff;">
+            <!-- संस्थाको सही लोगो फाइल नाम वा बाटो यहाँ राख्ने (जस्तै logo.png वा सही URL) -->
+            <img src="logo.png" alt="Logo" style="width: 60px; height: 60px; margin-bottom: 5px; object-fit: contain;" onerror="this.style.display='none';">
+            
             <h2 style="margin: 0; color: #1e3a8a; font-size: 22px;">दशौँदी समाज नेपाल</h2>
             <p style="margin: 2px 0; font-size: 13px; color: #555;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
             <p style="margin: 2px 0 10px 0; font-size: 12px; color: #555;">स्थापना - २०८०</p>
@@ -3115,23 +3117,23 @@ function closeVoucherModal() {
 
             <table style="width: 100%; margin-top: 15px; border-collapse: collapse; text-align: left; font-size: 14px;">
                 <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; width: 35%; color: #333;">पदाधिकारीको नाम:</th>
+                    <th style="padding: 8px; width: 35%; color: #333; background: #f8fafc;">पदाधिकारीको नाम:</th>
                     <td id="officialMemberName" style="padding: 8px; color: #111;">-</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; color: #333;">कमिटी तह:</th>
+                    <th style="padding: 8px; color: #333; background: #f8fafc;">कमिटी तह:</th>
                     <td id="officialCommitteeType" style="padding: 8px; color: #111;">-</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; color: #333;">चुक्ता गरिएका महिनाहरू:</th>
+                    <th style="padding: 8px; color: #333; background: #f8fafc;">चुक्ता गरिएका महिनाहरू:</th>
                     <td id="officialMonthsPaid" style="padding: 8px; color: #111;">-</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #eee;">
-                    <th style="padding: 8px; color: #333;">भुक्तानी माध्यम:</th>
+                    <th style="padding: 8px; color: #333; background: #f8fafc;">भुक्तानी माध्यम:</th>
                     <td style="padding: 8px; color: #111;">बैंक भौचर / अनलाइन भुक्तानी</td>
                 </tr>
                 <tr style="border-bottom: 2px solid #ddd;">
-                    <th style="padding: 8px; color: #333;">जम्मा रकम (अंकमा):</th>
+                    <th style="padding: 8px; color: #333; background: #f8fafc;">जम्मा रकम (अंकमा):</th>
                     <td id="officialAmount" style="padding: 8px; font-weight: bold; color: #16a34a;">-</td>
                 </tr>
             </table>
