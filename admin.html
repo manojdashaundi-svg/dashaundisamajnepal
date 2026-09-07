@@ -1380,6 +1380,41 @@
     }
 }
 
+        async function getNextVoucherNo() {
+    try {
+        let { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+        let { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+        let { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+        let { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
+
+        let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
+        let nextNo = totalCount + 1;
+
+        return 'VOU-' + String(nextNo).padStart(2, '0');
+    } catch (err) {
+        console.error('Error generating voucher:', err);
+        let randomNum = Math.floor(100 + Math.random() * 900);
+        return 'VOU-' + randomNum;
+    }
+}
+
+// 📌 नयाँ ग्लोबल भौचर नम्बर निकाल्ने फंक्सन यहाँ राख्नुहोस्:
+async function getNextGlobalVoucherNo() {
+    const prefix = 'VCH';
+    
+    const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+    const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+    const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+    const { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
+    const { count: c5 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
+
+    const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0) + (c5 || 0);
+    const nextNum = totalCount + 1;
+    
+    const formattedNum = String(nextNum).padStart(3, '0');
+    return `${prefix}-${toNepaliNumber(formattedNum)}`;
+}  
+        
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '२०८४-०५-१५';
             let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
