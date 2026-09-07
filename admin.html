@@ -1367,16 +1367,33 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-        function getCurrentNepaliDate() {
-    try {
-        let currentDate = new NepaliDate();
-        let year = toNepaliNumber(currentDate.getYear());
-        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-        return `${year}-${month}-${day}`;
-    } catch (e) {
-        return "२०८३-०५-२०";
+       function getCurrentNepaliDate() {
+    const now = new Date();
+    // आधार मिति: ७ सेप्टेम्बर २०२६ = २०८३-०५-२२
+    const baseEng = new Date(2026, 8, 7); 
+    const diffTime = now.getTime() - baseEng.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    let baseYear = 2083;
+    let baseMonth = 5;
+    let baseDay = 22 + diffDays;
+    
+    // महिना परिवर्तनको सामान्य व्यवस्थापन (भदौ ३१ दिनको मान्दा)
+    if (baseMonth === 5 && baseDay > 31) {
+        baseDay -= 31;
+        baseMonth = 6; // असोज
     }
+    
+    let mStr = String(baseMonth).padStart(2, '0');
+    let dStr = String(baseDay).padStart(2, '0');
+    
+    let rawDate = `${baseYear}-${mStr}-${dStr}`;
+    
+    // यदि तपाईंको सिस्टममा नेपाली अङ्कमा बदल्ने फंक्सन छ भने प्रयोग गर्ने, नत्र अंग्रेजी नै फर्काउने
+    if (typeof toNepaliNumber === 'function') {
+        return toNepaliNumber(rawDate);
+    }
+    return rawDate;
 }
 
         function getExpiryDate(regDateStr) {
