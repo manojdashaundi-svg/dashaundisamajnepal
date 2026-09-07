@@ -1935,28 +1935,40 @@ async function rejectLevyPayment(id) {
     }
 }
         async function saveGrantIncome(e) {
-            e.preventDefault();
-            const voucherNo = await getNextVoucherNo();
+    e.preventDefault();
+    const prefix = 'VCH';
 
-            const grantData = {
-                voucher_no: voucherNo,
-                date: getCurrentNepaliDate(),
-                donor_name: document.getElementById('grant_donor_name').value.trim(),
-                title: document.getElementById('grant_title').value.trim(),
-                medium: document.getElementById('grant_medium').value,
-                amount: parseFloat(document.getElementById('grant_amount').value) || 0,
-                fund_category: 'अनुदान तथा सहयोग'
-            };
+    // सबै कोषहरू र अनुदानको जम्मा रेकर्ड संख्या एकैसाथ जोडेर सही साझा सिरियल निकाल्ने
+    const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+    const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+    const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+    const { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
+    
+    const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
+    const nextNum = totalCount + 1;
+    
+    const formattedNum = String(nextNum).padStart(3, '0');
+    const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
 
-            const { error } = await supabaseClient.from('grant_income').insert([grantData]);
-            if (!error) {
-                alert(`अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
-                document.getElementById('grantIncomeForm').reset();
-                loadGrantIncomeData();
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
-        }
+    const grantData = {
+        voucher_no: voucherNo,
+        date: getCurrentNepaliDate(),
+        donor_name: document.getElementById('grant_donor_name').value.trim(),
+        title: document.getElementById('grant_title').value.trim(),
+        medium: document.getElementById('grant_medium').value,
+        amount: parseFloat(document.getElementById('grant_amount').value) || 0,
+        fund_category: 'अनुदान तथा सहयोग'
+    };
+
+    const { error } = await supabaseClient.from('grant_income').insert([grantData]);
+    if (!error) {
+        alert(`अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
+        document.getElementById('grantIncomeForm').reset();
+        loadGrantIncomeData();
+    } else {
+        alert('त्रुटि: ' + error.message);
+    }
+}
 
         window.grantRecords = [];
 
