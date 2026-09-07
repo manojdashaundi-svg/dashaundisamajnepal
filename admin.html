@@ -2085,11 +2085,20 @@ async function rejectLevyPayment(id) {
     const mediumId = tableName === 'human_fund' ? 'human_medium' : (tableName === 'emergency_fund' ? 'emergency_medium' : 'relief_medium');
     const amountId = tableName === 'human_fund' ? 'human_amount' : (tableName === 'emergency_fund' ? 'emergency_amount' : 'relief_amount');
 
-    const liveNepaliDate = "२०८३-०५-२१";
+    // हेडरमा देखिएको आजको सही नेपाली मिति स्वतः तान्ने (यदि उपलब्ध छैन भने system date बाट लिने)
+    let liveNepaliDate = "२०८३-०५-२२";
+    const liveDateElement = document.getElementById('nepali-live-date');
+    if (liveDateElement) {
+        let text = liveDateElement.innerText;
+        // जस्तै "वि.सं. २०८३ भदौ २२, सोमवार | 6:25:02 अपराह्ह्न" बाट मिति मात्र वा स्ट्रिङ तान्ने वा तपाईंको getCurrentNepaliDate() प्रयोग गर्ने
+    }
+    
+    // सुरक्षित रूपमा आजको सही मिति लिन getCurrentNepaliDate() प्रयोग गर्ने जसले आजकै मिति फर्काउँछ
+    liveNepaliDate = getCurrentNepaliDate();
 
     const data = {
         voucher_no: voucherNo,
-        date: liveNepaliDate,
+        date: liveNepaliDate, // यहाँ अब आजकै सही नेपाली मिति बस्छ
         donor_name: document.getElementById(donorId).value.trim(),
         title: document.getElementById(titleId).value.trim(),
         medium: document.getElementById(mediumId).value,
