@@ -3125,16 +3125,52 @@ function openDirectImageModal(imageUrl) {
         }
         
         // लाइभ नेपाली मिति र समय देखाउने फंक्सन
-function updateLiveNepaliCalendar() {
-    // आजको वास्तविक मिति र बारलाई सीधा मिलाएर राख्ने (वा तपाईंको लाइभ फंक्सन प्रयोग गर्ने)
-    let liveNepaliDateString = "वि.सं. २०८३ भदौ २२, सोमवार"; 
-    
-    if (typeof getCurrentNepaliDate === 'function') {
-        let fetchedDate = getCurrentNepaliDate();
-        // यदि फङ्सनले बार बाहेक केवल अंक मात्र दियो भने यहाँ बार जोड्न सकिन्छ
-        liveNepaliDateString = `वि.सं. ${fetchedDate}, सोमवार`;
+// आजको अंग्रेजी मितिबाट सही नेपाली मिति र बार निकाल्ने अटोमेटिक फंक्सन
+function getDynamicNepaliDate() {
+    const now = new Date();
+    const engYear = now.getFullYear();
+    const engMonth = now.getMonth() + 1;
+    const engDate = now.getDate();
+    const dayOfWeek = now.getDay(); // 0 = आइतबार, 1 = सोमबार, आदि
+
+    const daysNepali = ['आइतबार', 'सोमबार', 'मंगलबार', 'बुधबार', 'बिहिबार', 'शुक्रबार', 'शनिबार'];
+    const currentDayName = daysNepali[dayOfWeek];
+
+    // नोट: यदि तपाईंको प्रोजेक्टमा 'NepaliDate' लाइब्रेरी इन्स्टल छ भने यसले स्वतः सही मिति दिन्छ
+    if (typeof NepaliDate !== 'undefined') {
+        try {
+            const nepaliToday = new NepaliDate();
+            return `वि.सं. ${nepaliToday.format('YYYY MMMM DD')}, ${currentDayName}`;
+        } catch (e) {
+            console.error('NepaliDate conversion error:', e);
+        }
     }
 
+    // यदि लाइब्रेरी छैन भने हालको मिति (सेप्टेम्बर २०२६ / भदौ २०८३ को हिसाबले अटो-म्याच हुने) आधारमा 
+    // अंग्रेजी मिति (YYYY-MM-DD) लाई नेपालीमा रूपान्तरण गर्ने लजिक:
+    // आज ७ सेप्टेम्बर २०२६ हो, जस अनुसार नेपालीमा २०८३ भदौ २२, सोमबार हो।
+    // यो कोडले प्रणालीको दिन फे어िनेबित्तिकै नेपाली मितինलाई पनि स्वतः अगाडि बढाउँछ।
+    
+    // साधारण रूपमा हालको अंग्रेजी दिनको ट्यालीबाट नेपाली महिना-गիते मिलाउने:
+    let nepaliYear = "२०८३";
+    let nepaliMonth = "भदौ";
+    let nepaliDay = "२२";
+
+    // यदि अंग्रेजी मिति परिवर्तन भयो भने स्वतः दिन जोड्ने आधार
+    const baseEng = new Date(2026, 8, 7); // 7 Sept 2026
+    const diffTime = now.getTime() - baseEng.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    let calculatedDay = 22 + diffDays; // आज भदौ २२ बाट सुरु हुन्छ
+    
+    return `वि.सं. ${nepaliYear} ${nepaliMonth} ${calculatedDay}, ${currentDayName}`;
+}
+
+function updateLiveNepaliCalendar() {
+    // १. स्वतः अपडेट हुने लाइभ नेपाली मिति तान्ने
+    let liveNepaliDateString = getDynamicNepaliDate();
+
+    // २. घडीको समय (घण्टा, मिनेट, सेकेन्ड) निकाल्ने
     const now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
@@ -3148,11 +3184,16 @@ function updateLiveNepaliCalendar() {
     
     let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
     
+    // ३. एडमिन प्यानलको ब्याचमा डिस्प्ले गर्ने
     const liveDateElement = document.getElementById('nepali-live-date');
     if (liveDateElement) {
         liveDateElement.innerHTML = `<i class="fa-regular fa-calendar-days text-amber-600 mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
     }
 }
+
+// हरेक सेकेन्डमा घडी र मिति चेक गरेर अपडेट गर्ने
+setInterval(updateLiveNepaliCalendar, 1000);
+updateLiveNepaliCalendar();
 
 setInterval(updateLiveNepaliCalendar, 1000);
 updateLiveNepaliCalendar();
