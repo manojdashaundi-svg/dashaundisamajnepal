@@ -1367,15 +1367,17 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-        function getCurrentNepaliDate() {
+       function getCurrentNepaliDate() {
     try {
+        // NepaliDate उपलब्ध छ भने आजको सही मिति लिनलाई:
         let currentDate = new NepaliDate();
         let year = toNepaliNumber(currentDate.getYear());
         let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
         let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
         return `${year}-${month}-${day}`;
     } catch (e) {
-        return "२०८३-०५-२०";
+        // यदि NepaliDate lib छैन भने प्रत्यक्ष आजको मिति स्ट्रिङ रिटर्न गराउने
+        return "२०८३-०५-२१"; // यहाँ आफ्नो आजको सही नेपाली मिति राख्नुहोला
     }
 }
 
