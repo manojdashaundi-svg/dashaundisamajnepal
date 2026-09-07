@@ -3064,21 +3064,8 @@ function closeVoucherModal() {
             });
         }
 
-        async function deleteMemberNotice(id) {
-            if (confirm('के तपाईं यो सूचना मेटाउन चाहनुहुन्छ?')) {
-                const { error } = await supabaseClient.from('member_notices').delete().eq('id', id);
-                if (!error) {
-                    alert('सूचना हटाइयो!');
-                    loadMemberNoticesData();
-                } else {
-                    alert('त्रुटि: ' + error.message);
-                }
-            }
-        }
-        
         function updateLiveNepaliCalendar() {
-    // getCurrentNepaliDate() लाई पूर्ण रूपमा छोडेर आजको सही मिति सिधै राख्ने
-    let liveNepaliDateString = "वि.सं. २०८३ भदौ २२, सोमवार"; 
+    let liveNepaliDateString = `वि.सं. ${getCurrentNepaliDate()}`; // स्वतः आजको सही मिति देखाउनेछ
 
     const now = new Date();
     let hours = now.getHours();
@@ -3091,7 +3078,7 @@ function closeVoucherModal() {
     minutes = minutes < 10 ? '०' + minutes : minutes;
     seconds = seconds < 10 ? '०' + seconds : seconds;
     
-    let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+    let timeString = toNepaliNumber(`${hours}:${minutes}:${seconds} ${ampm}`);
     
     const liveDateElement = document.getElementById('nepali-live-date');
     if (liveDateElement) {
@@ -3101,7 +3088,6 @@ function closeVoucherModal() {
 
 setInterval(updateLiveNepaliCalendar, 1000);
 updateLiveNepaliCalendar();
-
         document.addEventListener("DOMContentLoaded", function() {
     loadMonthlyLevyIncomeData(); // पेज खुल्नेबित्तिकै लेवी आम्दानी लोड गर्ने
     loadPendingLevyPayments();  // यदि अन्य टेबलहरू पनि छन् भने सँगै राख्न सक्नुहुन्छ
