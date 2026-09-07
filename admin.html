@@ -1345,15 +1345,23 @@
 
         async function getNextVoucherNo() {
     try {
+        const prefix = 'VCH';
+        
         let { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
         let { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
         let { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
         let { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
+        let { count: c5 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
 
-        let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
+        let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0) + (c5 || 0);
         let nextNo = totalCount + 1;
 
-        return 'VOU-' + String(nextNo).padStart(2, '0');
+        let formattedNum = String(nextNo).padStart(3, '0');
+        
+        // यदि तपाईंको प्रोजेक्टमा toNepaliNumber फंक्सन उपलब्ध छ भने प्रयोग गर्नुहोस्, 
+        // छैन भने सिधै formattedNum रिटर्न गर्न सक्नुहुन्छ।
+        return `${prefix}-${typeof toNepaliNumber === 'function' ? toNepaliNumber(formattedNum) : formattedNum}`;
+        
     } catch (err) {
         console.error('Error generating voucher:', err);
         let randomNum = Math.floor(100 + Math.random() * 900);
