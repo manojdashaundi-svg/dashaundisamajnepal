@@ -1367,27 +1367,16 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-      function getCurrentNepaliDate() {
-    const now = new Date();
-    // आधार मिति: ७ सेप्टेम्बर २०२६ = २०८३-०५-२२
-    const baseEng = new Date(2026, 8, 7); 
-    const diffTime = now.getTime() - baseEng.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    let baseYear = 2083;
-    let baseMonth = 5;
-    let baseDay = 22 + diffDays;
-    
-    if (baseMonth === 5 && baseDay > 31) {
-        baseDay -= 31;
-        baseMonth = 6;
+        function getCurrentNepaliDate() {
+    try {
+        let currentDate = new NepaliDate();
+        let year = toNepaliNumber(currentDate.getYear());
+        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+        return `${year}-${month}-${day}`;
+    } catch (e) {
+        return "२०८३-०५-२०";
     }
-    
-    let mStr = String(baseMonth).padStart(2, '0');
-    let dStr = String(baseDay).padStart(2, '0');
-    
-    let rawDate = `${baseYear}-${mStr}-${dStr}`;
-    return typeof toNepaliNumber === 'function' ? toNepaliNumber(rawDate) : rawDate;
 }
 
         function getExpiryDate(regDateStr) {
@@ -1944,41 +1933,30 @@ async function rejectLevyPayment(id) {
         }
     }
 }
-       async function saveGrantIncome(e) {
-    e.preventDefault();
-    
-    // भौचर नम्बर लिने
-    const voucherNo = typeof getNextVoucherNo === 'function' ? await getNextVoucherNo() : 'VCH-००१';
+        async function saveGrantIncome(e) {
+            e.preventDefault();
+            const voucherNo = await getNextVoucherNo();
 
-    // आजको वास्तविक लाइभ मिति स्वतः तानेर राख्ने
-    let liveDate = getCurrentNepaliDate(); 
+            const grantData = {
+                voucher_no: voucherNo,
+                date: getCurrentNepaliDate(),
+                donor_name: document.getElementById('grant_donor_name').value.trim(),
+                title: document.getElementById('grant_title').value.trim(),
+                medium: document.getElementById('grant_medium').value,
+                amount: parseFloat(document.getElementById('grant_amount').value) || 0,
+                fund_category: 'अनुदान तथा सहयोग'
+            };
 
-    const grantData = {
-        voucher_no: voucherNo,
-        date: liveDate, // अब सधैं आजको वास्तविक लाइभ मिति मात्र सेभ हुनेछ
-        donor_name: document.getElementById('grant_donor_name')?.value.trim() || document.getElementById('donorName')?.value.trim() || '',
-        title: document.getElementById('grant_title')?.value.trim() || document.getElementById('donorTitle')?.value.trim() || '',
-        medium: document.getElementById('grant_medium')?.value || document.getElementById('paymentMode')?.value || 'नगद (Cash)',
-        amount: parseFloat(document.getElementById('grant_amount')?.value || document.getElementById('amount')?.value) || 0,
-        fund_category: 'मानव बचाउ अभियान कोष'
-    };
-
-    const { error } = await supabaseClient.from('grant_income').insert([grantData]);
-    
-    if (!error) {
-        alert(`सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
-        
-        // फर्म खाली गर्ने
-        if (document.getElementById('grantIncomeForm')) {
-            document.getElementById('grantIncomeForm').reset();
+            const { error } = await supabaseClient.from('grant_income').insert([grantData]);
+            if (!error) {
+                alert(`अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
+                document.getElementById('grantIncomeForm').reset();
+                loadGrantIncomeData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
         }
-        
-        // टेबल रिफ्रेस गर्ने
-        loadGrantIncomeData(); 
-    } else {
-        alert('त्रुटि: ' + error.message);
-    }
-}
+
         window.grantRecords = [];
 
         async function loadGrantIncomeData() {
@@ -1999,35 +1977,15 @@ async function rejectLevyPayment(id) {
     
     data.forEach((item, index) => {
         let encoded = encodeURIComponent(JSON.stringify(item));
-        
-        let snNepali = typeof toNepaliNumber === 'function' ? toNepaliNumber(index + 1) : (index + 1);
-        let amountNepali = typeof toNepaliNumber === 'function' ? toNepaliNumber(item.amount || 0) : (item.amount || 0);
-
-        // भौचर नम्बर मिलाउने
-        let rawVoucher = item.voucher_no || '';
-        let formattedVoucher = rawVoucher;
-        let numMatch = rawVoucher.match(/\d+/);
-        if (numMatch && typeof toNepaliNumber === 'function') {
-            let paddedNum = String(numMatch[0]).padStart(3, '0');
-            formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
-        }
-
-        // **यहाँ परिवर्तन गर्नुहोस्**: यदि डेटाबेसको मिति पुरानो छ वा गलत छ भने आजको वास्तविक लाइभ मिति देखाउने
-        let rawDate = item.date;
-        if (!rawDate || rawDate === '-' || rawDate.includes('२०८३-०५-२०')) {
-          date: typeof getCurrentNepaliDate === 'function' ? getCurrentNepaliDate() : "२०८३-०५-२२",
-        }
-        let formattedDate = typeof toNepaliNumber === 'function' ? toNepaliNumber(rawDate) : rawDate;
-
         tbody.innerHTML += `
             <tr>
-                <td><strong>${snNepali}</strong></td>
-                <td><strong>${formattedVoucher}</strong></td>
-                <td>${formattedDate}</td>
+                <td><strong>${index + 1}</strong></td>
+                <td><strong>${item.voucher_no || '-'}</strong></td>
+                <td>${toNepaliNumber(item.date || '-')}</td>
                 <td><strong>${item.donor_name || '-'}</strong></td>
                 <td>${item.title || '-'}</td>
                 <td>${item.medium || '-'}</td>
-                <td><strong style="color: #008000;">रु. ${amountNepali}</strong></td>
+                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
                 <td class="no-print">
                     <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
                     <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
@@ -2159,25 +2117,15 @@ async function rejectLevyPayment(id) {
        function openVoucherModal(itemStr) {
     const item = JSON.parse(decodeURIComponent(itemStr));
     
-    // १. टेबलमा जस्तै भौचर नम्बरलाई फर्म्याट गर्ने (जस्तै VCH-००४)
-    let rawVoucher = item.voucher_no || '-';
-    let formattedVoucher = rawVoucher;
-    let numMatch = rawVoucher.match(/\d+/);
-    if (numMatch && typeof toNepaliNumber === 'function') {
-        let paddedNum = String(numMatch[0]).padStart(3, '0');
-        formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
-    }
-
-    // २. मोडलका एलिमेन्टहरूमा सहي विवरण राख्ने
-    document.getElementById('vouchNo').innerText = formattedVoucher;
+    document.getElementById('vouchNo').innerText = item.voucher_no || '-';
     
-    // यहाँ डेटाबेसमा सेभ भएको भौचरकै सही मिति देखाइएको छ
-    document.getElementById('vouchDate').innerText = (typeof toNepaliNumber === 'function' && item.date) ? toNepaliNumber(item.date) : (item.date || '-'); 
+    // यहाँ लाइभ मितिको सट्टा डेटाबेसमा सेभ भएको भौचरकै सही मिति (item.date) देखाइएको छ
+    document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-'); 
     
     document.getElementById('vouchDonor').innerText = item.donor_name || '-';
     document.getElementById('vouchTitle').innerText = item.title || '-';
     document.getElementById('vouchMedium').innerText = item.medium || '-';
-    document.getElementById('vouchAmount').innerText = 'रू. ' + (typeof toNepaliNumber === 'function' ? toNepaliNumber(item.amount || '०') : (item.amount || '०'));
+    document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
     document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
     
     const imgTag = document.getElementById('popupVoucherImg');
@@ -2198,18 +2146,17 @@ function closeVoucherModal() {
     modal.style.display = 'none';
     modal.classList.remove('active-voucher');
 }
-
-function openDirectImageModal(imageUrl) {
-    const modal = document.getElementById('levyVoucherModal');
-    const modalImg = document.getElementById('levyVoucherImage');
-    
-    if (modal && modalImg) {
-        modalImg.src = imageUrl;
-        modal.style.display = 'flex';
-    } else {
-        window.open(imageUrl, '_blank');
-    }
-}
+        function openDirectImageModal(imageUrl) {
+            const modal = document.getElementById('levyVoucherModal');
+            const modalImg = document.getElementById('levyVoucherImage');
+            
+            if (modal && modalImg) {
+                modalImg.src = imageUrl;
+                modal.style.display = 'flex';
+            } else {
+                window.open(imageUrl, '_blank');
+            }
+        }
 
         function closeLevyVoucherModal() {
             const modal = document.getElementById('levyVoucherModal');
@@ -3130,152 +3077,51 @@ function openDirectImageModal(imageUrl) {
                     alert('त्रुटि: ' + error.message);
                 }
             }
+        }function updateLiveNepaliCalendar() {
+            const liveNepaliDateString = "वि.सं. २०८३ भदौ २१, आइतबार";
+            
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '०' + minutes : minutes;
+            seconds = seconds < 10 ? '०' + seconds : seconds;
+            
+            let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+            
+            document.getElementById('nepali-live-date').innerHTML = `<i class="fa-regular fa-calendar-days text-amber-600 mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
         }
         
-        // लाइभ नेपाली मिति र समय देखाउने फंक्सन
-// आजको अंग्रेजी मितिबाट सही नेपाली मिति र बार निकाल्ने अटोमेटिक फंक्सन
-function getDynamicNepaliDate() {
-    const now = new Date();
-    const engYear = now.getFullYear();
-    const engMonth = now.getMonth() + 1;
-    const engDate = now.getDate();
-    const dayOfWeek = now.getDay(); // 0 = आइतबार, 1 = सोमबार, आदि
-
-    const daysNepali = ['आइतबार', 'सोमबार', 'मंगलबार', 'बुधबार', 'बिहिबार', 'शुक्रबार', 'शनिबार'];
-    const currentDayName = daysNepali[dayOfWeek];
-
-    // नोट: यदि तपाईंको प्रोजेक्टमा 'NepaliDate' लाइब्रेरी इन्स्टल छ भने यसले स्वतः सही मिति दिन्छ
-    if (typeof NepaliDate !== 'undefined') {
-        try {
-            const nepaliToday = new NepaliDate();
-            return `वि.सं. ${nepaliToday.format('YYYY MMMM DD')}, ${currentDayName}`;
-        } catch (e) {
-            console.error('NepaliDate conversion error:', e);
-        }
-    }
-
-    // यदि लाइब्रेरी छैन भने हालको मिति (सेप्टेम्बर २०२६ / भदौ २०८३ को हिसाबले अटो-म्याच हुने) आधारमा 
-    // अंग्रेजी मिति (YYYY-MM-DD) लाई नेपालीमा रूपान्तरण गर्ने लजिक:
-    // आज ७ सेप्टेम्बर २०२६ हो, जस अनुसार नेपालीमा २०८३ भदौ २२, सोमबार हो।
-    // यो कोडले प्रणालीको दिन फे어िनेबित्तिकै नेपाली मितինलाई पनि स्वतः अगाडि बढाउँछ।
-    
-    // साधारण रूपमा हालको अंग्रेजी दिनको ट्यालीबाट नेपाली महिना-गիते मिलाउने:
-    let nepaliYear = "२०८३";
-    let nepaliMonth = "भदौ";
-    let nepaliDay = "२२";
-
-    // यदि अंग्रेजी मिति परिवर्तन भयो भने स्वतः दिन जोड्ने आधार
-    const baseEng = new Date(2026, 8, 7); // 7 Sept 2026
-    const diffTime = now.getTime() - baseEng.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    let calculatedDay = 22 + diffDays; // आज भदौ २२ बाट सुरु हुन्छ
-    
-    return `वि.सं. ${nepaliYear} ${nepaliMonth} ${calculatedDay}, ${currentDayName}`;
-}
-
-function updateLiveNepaliCalendar() {
-    // १. स्वतः अपडेट हुने लाइभ नेपाली मिति तान्ने
-    let liveNepaliDateString = getDynamicNepaliDate();
-
-    // २. घडीको समय (घण्टा, मिनेट, सेकेन्ड) निकाल्ने
-    const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
-    let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
-    
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '०' + minutes : minutes;
-    seconds = seconds < 10 ? '०' + seconds : seconds;
-    
-    let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-    
-    // ३. एडमिन प्यानलको ब्याचमा डिस्प्ले गर्ने
-    const liveDateElement = document.getElementById('nepali-live-date');
-    if (liveDateElement) {
-        liveDateElement.innerHTML = `<i class="fa-regular fa-calendar-days text-amber-600 mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
-    }
-}
-
-// हरेक सेकेन्डमा घडी र मिति चेक गरेर अपडेट गर्ने
-setInterval(updateLiveNepaliCalendar, 1000);
-updateLiveNepaliCalendar();
-
-setInterval(updateLiveNepaliCalendar, 1000);
-updateLiveNepaliCalendar();
-// हरेक सेकेन्डमा घडी र मिति अपडेट गर्ने
-setInterval(updateLiveNepaliCalendar, 1000);
-updateLiveNepaliCalendar();
-// हरेक सेकेन्डमा घडी अपडेट गर्ने
-setInterval(updateLiveNepaliCalendar, 1000);
-
-// पेज लोड हुँदा डाटा लोड गर्ने
-document.addEventListener("DOMContentLoaded", function() {
-    // १. लाइभ घडी र लेवी डाटा लोड गर्ने पुरानो कोड
-    if (typeof updateLiveNepaliCalendar === 'function') {
+        setInterval(updateLiveNepaliCalendar, 1000);
         updateLiveNepaliCalendar();
-    }
-    if (typeof loadMonthlyLevyIncomeData === 'function') {
-        loadMonthlyLevyIncomeData(); 
-    }
-    if (typeof loadPendingLevyPayments === 'function') {
-        loadPendingLevyPayments();  
-    }
 
-    // २. अनुदान फारमको मितिमा आजको रियल-टाइम नेपाली मिति स्वतः राख्ने नयाँ कोड
-    const dateField = document.getElementById('grantDate') || document.getElementById('date');
-    if (dateField && typeof getCurrentNepaliDate === 'function') {
-        dateField.value = getCurrentNepaliDate();
-    }
+        document.addEventListener("DOMContentLoaded", function() {
+    loadMonthlyLevyIncomeData(); // पेज खुल्नेबित्तिकै लेवी आम्दानी लोड गर्ने
+    loadPendingLevyPayments();  // यदि अन्य टेबलहरू पनि छन् भने सँगै राख्न सक्नुहुन्छ
 });
+        function viewGrantVoucherByIndex(index) {
+            // grantRecords वा grantCache जुन भए पनि डेटा समात्ने गरी मिलाइएको
+            const records = window.grantRecords || window.grantCache;
+            const item = records ? records[index] : null;
+            
+            if (!item) {
+                alert('डेटा फेला परेन!');
+                return;
+            }
 
-// भौचर मोडल (Modal) मा डेटा देखाउने फंक्सन
-function viewGrantVoucherByIndex(index) {
-    const records = window.grantRecords || window.grantCache;
-    const item = records ? records[index] : null;
-    
-    if (!item) {
-        alert('डेटा फेला परेन!');
-        return;
-    }
+            document.getElementById('grantModalVoucherNo').innerText = item.voucher_no || '-';
+            document.getElementById('grantModalVoucherDate').innerText = typeof toNepaliNumber === 'function' ? toNepaliNumber(item.date || '-') : (item.date || '-');
+            document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
+            document.getElementById('grantModalTitle').innerText = item.title || '-';
+            document.getElementById('grantModalAmount').innerText = 'रु. ' + (typeof toNepaliNumber === 'function' ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
 
-    // भौचर नम्बरलाई अन्य कोषहरू जस्तै फर्म्याटमा मिलाउने (जस्तै VCH-००३)
-    let rawVoucher = item.voucher_no || '-';
-    let formattedVoucher = rawVoucher;
-    let numMatch = rawVoucher.match(/\d+/);
-    if (numMatch && typeof toNepaliNumber === 'function') {
-        let paddedNum = String(numMatch[0]).padStart(3, '0');
-        formattedVoucher = `VCH-${toNepaliNumber(paddedNum)}`;
-    }
+            document.getElementById('grantVoucherModal').style.display = 'block';
+        }
 
-    // मोडलका एलिमेन्टहरूमा डेटा राख्ने
-    const vchNoEl = document.getElementById('grantModalVoucherNo');
-    if (vchNoEl) vchNoEl.innerText = formattedVoucher;
-
-    const vchDateEl = document.getElementById('grantModalVoucherDate');
-    if (vchDateEl) {
-        vchDateEl.innerText = (typeof toNepaliNumber === 'function' && item.date) ? toNepaliNumber(item.date) : (item.date || '-');
-    }
-
-    const donorNameEl = document.getElementById('grantModalDonorName');
-    if (donorNameEl) donorNameEl.innerText = item.donor_name || '-';
-
-    const titleEl = document.getElementById('grantModalTitle');
-    if (titleEl) titleEl.innerText = item.title || '-';
-
-    const amountEl = document.getElementById('grantModalAmount');
-    if (amountEl) {
-        let formattedAmount = (typeof toNepaliNumber === 'function' && item.amount) ? toNepaliNumber(item.amount) : (item.amount || 0);
-        amountEl.innerText = 'रु. ' + formattedAmount;
-    }
-
-    // भौचर मोडल खोल्ने
-    const modal = document.getElementById('grantVoucherModal');
-    if (modal) modal.style.display = 'block';
-}
-        
         function closeGrantVoucherModal() {
             document.getElementById('grantVoucherModal').style.display = 'none';
         }
