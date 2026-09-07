@@ -1953,34 +1953,25 @@ async function rejectLevyPayment(id) {
         async function saveGrantIncome(e) {
     e.preventDefault();
     
-    // भौचर नम्बर लिने
-    const voucherNo = typeof getNextVoucherNo === 'function' ? await getNextVoucherNo() : 'VCH-००१';
+    const voucherNo = await getNextVoucherNo();
 
-    // **मुख्य सुधार यहाँ छ**: आपत्कालीन कोषमा जस्तै यसमा पनि सही लाइभ नेपाली मिति तान्ने
-    let liveDate = "२०८३-०५-२१"; // fallback मिति
-    if (typeof getCurrentNepaliDate === 'function') {
-        liveDate = getCurrentNepaliDate();
-    }
-
-    const grantData = {
+    // यो कोडलाई ठ्याक्कै यहाँ सेभ गर्ने फंक्सनभित्र राख्ने हो 👇
+    const entryData = {
         voucher_no: voucherNo,
-        date: liveDate, // अब सधैं आजको वास्तविक लाइभ मिति सेभ हुनेछ
-        donor_name: document.getElementById('grant_donor_name')?.value.trim() || document.getElementById('donorName')?.value.trim() || '',
-        title: document.getElementById('grant_title')?.value.trim() || document.getElementById('donorTitle')?.value.trim() || '',
-        medium: document.getElementById('grant_medium')?.value || document.getElementById('paymentMode')?.value || 'नगद (Cash)',
-        amount: parseFloat(document.getElementById('grant_amount')?.value || document.getElementById('amount')?.value) || 0,
-        fund_category: 'अनुदान तथा सहयोग'
+        date: getCurrentNepaliDate(), // सधैं आजको वास्तविक लाइभ मिति स्वतः बस्छ
+        donor_name: document.getElementById('donor_name').value.trim(),
+        title: document.getElementById('grant_title').value.trim(), // वा तपाईंको शीर्षकको इनपुट आईडी
+        medium: document.getElementById('paymentMode').value,     // वा माध्यमको इनपुट आईडी
+        amount: parseFloat(document.getElementById('amount').value) || 0,
+        fund_category: 'मानव बचाउ अभियान कोष'
     };
 
-    const { error } = await supabaseClient.from('grant_income').insert([grantData]);
+    // त्यसपछि यो डेटा Supabase मा इन्सर्ट हुन्छ
+    const { error } = await supabaseClient.from('grant_income').insert([entryData]);
     
     if (!error) {
-        alert(`सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
-        
-        // फर्म खाली गर्ने
-        if (document.getElementById('grantIncomeForm')) {
-            document.getElementById('grantIncomeForm').reset();
-        }
+        alert('सफलतापूर्वक सेभ भयो!');
+        document.getElementById('grantIncomeForm').reset();
         
         // टेबल रिफ्रेस गर्ने
         loadGrantIncomeData(); 
