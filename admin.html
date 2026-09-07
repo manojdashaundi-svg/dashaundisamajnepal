@@ -1369,13 +1369,20 @@
 
         function getCurrentNepaliDate() {
     try {
-        let currentDate = new NepaliDate();
-        let year = toNepaliNumber(currentDate.getYear());
-        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-        return `${year}-${month}-${day}`;
+        let currentDate = new NepaliDate(); // प्रणालीको आधारमा स्वतः आजको मिति लिन्छ
+        let y = currentDate.getYear();
+        let m = String(currentDate.getMonth() + 1).padStart(2, '0');
+        let d = String(currentDate.getDate()).padStart(2, '0');
+        
+        // यसले सधैँ देवनागरी (नेपाली) अङ्कमा मिति फर्काउँछ (जस्तै: २०८३-०५-२२)
+        return toNepaliNumber(`${y}-${m}-${d}`);
     } catch (e) {
-        return "२०८३-०५-२२"; // यदि लाइब्ररी लोड नभएमा हालको डिफलट मिति
+        // यदि कुनै कारणवश लाइब्रेरी लोड भएन भने मात्र सिस्टमको अङ्ग्रेजी मितिबाट कन्भर्ट गर्ने वा आजको मिति दिने
+        let today = new Date();
+        let y = today.getFullYear();
+        let m = String(today.getMonth() + 1).padStart(2, '0');
+        let d = String(today.getDate()).padStart(2, '0');
+        return toNepaliNumber(`${y}-${m}-${d}`);
     }
 }
 
