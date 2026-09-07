@@ -3126,8 +3126,22 @@ function openDirectImageModal(imageUrl) {
         
         // लाइभ नेपाली मिति र समय देखाउने फंक्सन
 function updateLiveNepaliCalendar() {
-    const liveNepaliDateString = "वि.सं. २०८३ भदौ २१, आइतबार";
+    // १. आजको वास्तविक लाइभ नेपाली मिति र बार स्वतः तान्ने
+    let liveNepaliDateString = "वि.सं. २०८३ भदौ २२, सोमवार"; // Fallback
+    if (typeof getCurrentNepaliDate === 'function') {
+        liveNepaliDateString = getCurrentNepaliDate(); 
+    } else if (typeof NepaliDate !== 'undefined') {
+        try {
+            const today = new NepaliDate();
+            const days = ['आइतबार', 'सोमबार', 'मंगलबार', 'बुधबार', 'बिहिबार', 'शुक्रबार', 'शनिबार'];
+            const dayName = days[today.getDay()];
+            liveNepaliDateString = `वि.सं. ${today.format('YYYY MMMM DD')}, ${dayName}`;
+        } catch (e) {
+            console.error('NepaliDate error:', e);
+        }
+    }
     
+    // २. घडीको समय निकाल्ने
     const now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
@@ -3141,12 +3155,16 @@ function updateLiveNepaliCalendar() {
     
     let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
     
+    // ३. एडमिन प्यानलमा अपडेट गर्ने
     const liveDateElement = document.getElementById('nepali-live-date');
     if (liveDateElement) {
         liveDateElement.innerHTML = `<i class="fa-regular fa-calendar-days text-amber-600 mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
     }
 }
 
+// हरेक सेकेन्डमा घडी र मिति अपडेट गर्ने
+setInterval(updateLiveNepaliCalendar, 1000);
+updateLiveNepaliCalendar();
 // हरेक सेकेन्डमा घडी अपडेट गर्ने
 setInterval(updateLiveNepaliCalendar, 1000);
 
