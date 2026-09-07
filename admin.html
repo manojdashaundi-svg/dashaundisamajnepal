@@ -2012,7 +2012,7 @@ async function rejectLevyPayment(id) {
         // **यहाँ परिवर्तन गर्नुहोस्**: यदि डेटाबेसको मिति पुरानो छ वा गलत छ भने आजको वास्तविक लाइभ मिति देखाउने
         let rawDate = item.date;
         if (!rawDate || rawDate === '-' || rawDate.includes('२०८३-०५-२०')) {
-            rawDate = typeof getCurrentNepaliDate === 'function' ? getCurrentNepaliDate() : '२०८३-०५-२१';
+          date: typeof getCurrentNepaliDate === 'function' ? getCurrentNepaliDate() : "२०८३-०५-२२",
         }
         let formattedDate = typeof toNepaliNumber === 'function' ? toNepaliNumber(rawDate) : rawDate;
 
