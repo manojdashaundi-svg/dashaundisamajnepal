@@ -1868,7 +1868,7 @@ function printLevyVoucher() {
                 return;
             }
 
-            const liveNepaliDate = "२०८३-०५-२१";
+            const liveNepaliDate = getCurrentNepaliDate(); // <--- यहाँ वास्तविक लाइभ मिति राखिएको छ
             const prefix = 'VCH';
 
             const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
@@ -1894,9 +1894,6 @@ function printLevyVoucher() {
             const totalAmount = paymentData.total_amount || 0;
             const committeeType = paymentData.committee_level || paymentData.committee_type || 'साधारण सदस्य';
 
-            // ==========================================
-            // यो कोडलाई ठ्याक्कै यहाँ राख्नुहोला
-            // ==========================================
             const { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
                 voucher_no: voucherNo,
                 date: liveNepaliDate,
