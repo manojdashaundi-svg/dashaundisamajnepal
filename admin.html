@@ -1369,20 +1369,13 @@
 
         function getCurrentNepaliDate() {
     try {
-        let currentDate = new NepaliDate(); // प्रणालीको आधारमा स्वतः आजको मिति लिन्छ
-        let y = currentDate.getYear();
-        let m = String(currentDate.getMonth() + 1).padStart(2, '0');
-        let d = String(currentDate.getDate()).padStart(2, '0');
-        
-        // यसले सधैँ देवनागरी (नेपाली) अङ्कमा मिति फर्काउँछ (जस्तै: २०८३-०५-२२)
-        return toNepaliNumber(`${y}-${m}-${d}`);
+        let currentDate = new NepaliDate();
+        let year = toNepaliNumber(currentDate.getYear());
+        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+        return `${year}-${month}-${day}`;
     } catch (e) {
-        // यदि कुनै कारणवश लाइब्रेरी लोड भएन भने मात्र सिस्टमको अङ्ग्रेजी मितिबाट कन्भर्ट गर्ने वा आजको मिति दिने
-        let today = new Date();
-        let y = today.getFullYear();
-        let m = String(today.getMonth() + 1).padStart(2, '0');
-        let d = String(today.getDate()).padStart(2, '0');
-        return toNepaliNumber(`${y}-${m}-${d}`);
+        return "२०८३-०५-२०";
     }
 }
 
@@ -1875,7 +1868,7 @@ function printLevyVoucher() {
                 return;
             }
 
-            const liveNepaliDate = getCurrentNepaliDate(); // <--- यहाँ वास्तविक लाइभ मिति राखिएको छ
+            const liveNepaliDate = "२०८३-०५-२१";
             const prefix = 'VCH';
 
             const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
@@ -1901,6 +1894,9 @@ function printLevyVoucher() {
             const totalAmount = paymentData.total_amount || 0;
             const committeeType = paymentData.committee_level || paymentData.committee_type || 'साधारण सदस्य';
 
+            // ==========================================
+            // यो कोडलाई ठ्याक्कै यहाँ राख्नुहोला
+            // ==========================================
             const { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
                 voucher_no: voucherNo,
                 date: liveNepaliDate,
@@ -3071,8 +3067,21 @@ function closeVoucherModal() {
             });
         }
 
+        async function deleteMemberNotice(id) {
+            if (confirm('के तपाईं यो सूचना मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('member_notices').delete().eq('id', id);
+                if (!error) {
+                    alert('सूचना हटाइयो!');
+                    loadMemberNoticesData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+        
         function updateLiveNepaliCalendar() {
-    let liveNepaliDateString = `वि.सं. ${getCurrentNepaliDate()}`; // स्वतः आजको सही मिति देखाउनेछ
+    // getCurrentNepaliDate() लाई पूर्ण रूपमा छोडेर आजको सही मिति सिधै राख्ने
+    let liveNepaliDateString = "वि.सं. २०८३ भदौ २२, सोमवार"; 
 
     const now = new Date();
     let hours = now.getHours();
@@ -3085,7 +3094,7 @@ function closeVoucherModal() {
     minutes = minutes < 10 ? '०' + minutes : minutes;
     seconds = seconds < 10 ? '०' + seconds : seconds;
     
-    let timeString = toNepaliNumber(`${hours}:${minutes}:${seconds} ${ampm}`);
+    let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
     
     const liveDateElement = document.getElementById('nepali-live-date');
     if (liveDateElement) {
@@ -3095,6 +3104,7 @@ function closeVoucherModal() {
 
 setInterval(updateLiveNepaliCalendar, 1000);
 updateLiveNepaliCalendar();
+
         document.addEventListener("DOMContentLoaded", function() {
     loadMonthlyLevyIncomeData(); // पेज खुल्नेबित्तिकै लेवी आम्दानी लोड गर्ने
     loadPendingLevyPayments();  // यदि अन्य टेबलहरू पनि छन् भने सँगै राख्न सक्नुहुन्छ
