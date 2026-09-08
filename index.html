@@ -849,31 +849,47 @@
 
         // वास्तविक अटो-अपडेट हुने नेपाली मिति र बार गणना गर्ने इन्जिन
         function getRealLiveDates() {
-            const now = new Date();
-            const enYear = now.getFullYear();
-            const enMonth = String(now.getMonth() + 1).padStart(2, '0');
-            const enDay = String(now.getDate()).padStart(2, '0');
-            const englishDateStr = `${enYear}-${enMonth}-${enDay}`;
+    const now = new Date();
+    const enYear = now.getFullYear();
+    const enMonth = String(now.getMonth() + 1).padStart(2, '0');
+    const enDay = String(now.getDate()).padStart(2, '0');
+    const englishDateStr = `${enYear}-${enMonth}-${enDay}`;
 
-            // विक्रम संवत अनुमानित वा म्यापिङ लजिक (इस्वी संवत ५६.७ वर्ष अगाडि हुन्छ)
-            // उदाहरणका लागि सटीक महिना र गते गणना:
-            const nepaliMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
-            const nepaliDays = ["आइतबार", "सोमबार", "मङ्गलवार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिबार"];
-            
-            // सरलीकृत तर स्वचालित नेपाली मिति रूपान्तरण (प्रत्येक दिन स्वतः बदलिने)
-            let diffDays = Math.floor((now - new Date(2026, 0, 1)) / (1000 * 60 * 60 * 24));
-            let nepaliDayNum = (17 + diffDays) % 30 + 1;
-            let nepaliMonthIdx = 4 + Math.floor(((17 + diffDays) / 30)); 
-            let nepaliYearNum = 2083;
-            if(nepaliMonthIdx > 11) { nepaliMonthIdx = nepaliMonthIdx % 12; nepaliYearNum++; }
+    const nepaliMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+    const nepaliDays = ["आइतवार", "सोमवार", "मङ्गलवार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिवार"];
+    
+    const baseEnglishEpoch = new Date('2026-09-08T00:00:00').getTime();
+    const currentEnglishTime = new Date(`${enYear}-${enMonth}-${enDay}T00:00:00`).getTime();
+    const diffDays = Math.round((currentEnglishTime - baseEnglishEpoch) / (1000 * 60 * 60 * 24));
+    
+    let nepaliYear = 2083;
+    let nepaliMonthIndex = 4; // भदौ
+    let nepaliDayNum = 23 + diffDays; 
+    
+    while (nepaliDayNum > 30) {
+        nepaliDayNum -= 30;
+        nepaliMonthIndex = (nepaliMonthIndex + 1) % 12;
+        if (nepaliMonthIndex === 0) nepaliYear++;
+    }
+    while (nepaliDayNum < 1) {
+        nepaliDayNum += 30;
+        nepaliMonthIndex = (nepaliMonthIndex - 1 + 12) % 12;
+        if (nepaliMonthIndex === 11) nepaliYear--;
+    }
 
-            const dayOfWeek = nepaliDays[now.getDay() === 0 ? 0 : now.getDay()];
-            const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYearNum)} ${nepaliMonths[nepaliMonthIdx]} ${toNepaliNumber(nepaliDayNum)}, ${dayOfWeek}`;
-            const shortNepaliDate = `${toNepaliNumber(nepaliYearNum)}-${String(nepaliMonthIdx+1).padStart(2,'0')}-${String(nepaliDayNum).padStart(2,'0')}`;
+    const nepaliMonthName = nepaliMonths[nepaliMonthIndex];
+    const dayOfWeek = nepaliDays[now.getDay()];
 
-            return { nepali: nepaliDateStr, shortNepali: shortNepaliDate, english: englishDateStr };
-        }
+    const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYear)} ${nepaliMonthName} ${toNepaliNumber(nepaliDayNum)}, ${dayOfWeek}`;
+    const formattedDate = `${nepaliYear}-${String(nepaliMonthIndex + 1).padStart(2, '0')}-${String(nepaliDayNum).padStart(2, '0')}`;
 
+    return { 
+        nepali: nepaliDateStr, 
+        english: englishDateStr, 
+        shortNepali: formattedDate,
+        rawNepali: formattedDate 
+    };
+}
         function updateRealTimeClock() {
             const liveDates = getRealLiveDates();
             
