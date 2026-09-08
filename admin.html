@@ -341,10 +341,10 @@
     <div class="top-header">
         <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
         
-        <!-- हम्रो पात्रो शैलीको लाइभ मिति र समय विजेट यहाँ राख्ने -->
+        <!-- लाइभ मिति र समय विजेट -->
         <div id="live-calendar-widget" style="background: #10b981; padding: 6px 15px; border-radius: 20px; border: 1px solid #059669; font-size: 14px; font-weight: 500; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-    <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
-</div>
+            <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
+        </div>
 
         <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
     </div>
@@ -386,8 +386,8 @@
                        <th>जम्मा रकम (जरिवानासहित)</th>
                        <th>भौचर</th>
                       <th>कार्य</th>
-                    </tr>
-                   </thead>
+                  </tr>
+                    </thead>
                      <tbody id="pendingLevyTableBody"></tbody>
                   </table>
                 </div>
@@ -1087,7 +1087,6 @@
                 </select>
             </div>
 
-            <!-- यदि समिति चयन गरेमा मात्र देखिने खण्ड -->
             <div id="committeeOptionsBox" class="hidden" style="background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #cbd5e0; margin-bottom: 15px;">
                 <div class="form-group">
                     <label>कमिटीको तह छान्नुहोस्:</label>
@@ -1126,11 +1125,11 @@
             </div>
         </div>
     </div>
+    
     <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 420px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between; max-height: 92vh;">
 
-            <!-- Header -->
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 8px 10px 75px 10px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
                 <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 6px; right: 12px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
 
@@ -1151,15 +1150,12 @@
 
             <div style="background: #008000; color: #ffffff; border: 2.5px solid #e53e3e; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 140px; margin: -55px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20;">परिचय पत्र</div>
 
-            <!-- Body Content -->
             <div style="padding: 0 12px 8px 12px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 
-                <!-- सदस्यता नं. (बीचमा राखिएको) -->
                 <div style="text-align: center; font-size: 12px; font-weight: 900; color: #1a365d; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 10px; width: fit-content; margin-left: auto; margin-right: auto;">
                     सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f; font-size: 13px;">-</strong>
                 </div>
 
-                <!-- Photo & Name Box -->
                 <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px; position: relative; overflow: hidden;">
                     <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); opacity: 0.1; pointer-events: none; z-index: 0;">
                         <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 110px; height: 110px; object-fit: contain;">
@@ -1177,7 +1173,6 @@
                     </div>
                 </div>
 
-                <!-- Address Table -->
                 <div style="width: 100%; background: #fff; border-radius: 6px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 900; margin-top: 6px; overflow: hidden; display: flex;">
                     <div style="width: 32px; background: #1a365d; display: flex; flex-direction: column;">
                         <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
@@ -1195,7 +1190,6 @@
                     </div>
                 </div>
 
-                <!-- QR & Signatures -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #cbd5e0; margin-top: 4px;">
                     <div>
                         <img id="cardQrCode" src="" alt="QR Code" style="width: 54px; height: 54px; border: 1px solid #1a365d; padding: 1px; border-radius: 4px; background: #fff;">
@@ -1215,7 +1209,6 @@
                 </div>
             </div>
 
-            <!-- Footer -->
             <div style="background: #1a365d; color: #fff; text-align: center; padding: 4px; font-size: 8.5px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
                 <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
                     <span>🌐 www.dashaundisamajnepal.com</span>
@@ -1225,6 +1218,7 @@
             </div>
         </div>
     </div>
+    
     <div id="imageModal" class="img-modal" onclick="closeImageModal()">
         <div class="img-modal-content">
             <span class="close-modal">&times;</span>
@@ -1284,7 +1278,6 @@
         </div>
     </div>
 
-    <!-- डिजिटल भौचर हेर्ने मोडल -->
     <div id="voucherModal" class="voucher-modal" onclick="if(event.target === this) closeVoucherModal()">
         <div class="voucher-box" id="printableVoucherBox">
             <span style="position: absolute; top: 12px; right: 18px; font-size: 26px; font-weight: bold; cursor: pointer;" onclick="closeVoucherModal()">&times;</span>
@@ -1324,7 +1317,7 @@
             </div>
         </div>
     </div>
-<!-- लेवी भौचर मात्र देखाउने छुट्टै मोडल -->
+
     <div id="levyVoucherModal" class="modal" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 6000;">
         <div style="background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
             <span onclick="closeLevyVoucherModal()" style="position: absolute; top: 10px; right: 15px; font-size: 26px; font-weight: bold; cursor: pointer; color: #333;">&times;</span>
@@ -1344,30 +1337,25 @@
         const messageDiv = document.getElementById('message');
 
         async function getNextVoucherNo() {
-    try {
-        const prefix = 'VCH';
-        
-        let { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
-        let { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
-        let { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
-        let { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
-        let { count: c5 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
+            try {
+                const prefix = 'VCH';
+                let { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+                let { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+                let { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+                let { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
+                let { count: c5 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
 
-        let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0) + (c5 || 0);
-        let nextNo = totalCount + 1;
-
-        let formattedNum = String(nextNo).padStart(3, '0');
-        
-        // यदि तपाईंको प्रोजेक्टमा toNepaliNumber फंक्सन उपलब्ध छ भने प्रयोग गर्नुहोस्, 
-        // छैन भने सिधै formattedNum रिटर्न गर्न सक्नुहुन्छ।
-        return `${prefix}-${typeof toNepaliNumber === 'function' ? toNepaliNumber(formattedNum) : formattedNum}`;
-        
-    } catch (err) {
-        console.error('Error generating voucher:', err);
-        let randomNum = Math.floor(100 + Math.random() * 900);
-        return 'VOU-' + randomNum;
-    }
-}
+                let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0) + (c5 || 0);
+                let nextNo = totalCount + 1;
+                let formattedNum = String(nextNo).padStart(3, '0');
+                
+                return `${prefix}-${typeof toNepaliNumber === 'function' ? toNepaliNumber(formattedNum) : formattedNum}`;
+            } catch (err) {
+                console.error('Error generating voucher:', err);
+                let randomNum = Math.floor(100 + Math.random() * 900);
+                return 'VOU-' + randomNum;
+            }
+        }
         
         function toNepaliNumber(input) {
             if (!input) return '';
@@ -1375,18 +1363,17 @@
             return input.toString().split('').map(char => numbers[char] !== undefined ? numbers[char] : char).join('');
         }
 
-       function getCurrentNepaliDate() {
-    try {
-        let currentDate = new NepaliDate();
-        let year = toNepaliNumber(currentDate.getYear());
-        let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-        let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-        return `${year}-${month}-${day}`;
-    } catch (e) {
-        // यहाँ आजको सही मिति राख्नुभएको छ
-        return "२०८३-०५-२२"; 
-    }
-}
+        function getCurrentNepaliDate() {
+            try {
+                let currentDate = new NepaliDate();
+                let year = toNepaliNumber(currentDate.getYear());
+                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
+                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
+                return `${year}-${month}-${day}`;
+            } catch (e) {
+                return "२०८३-०५-२३"; 
+            }
+        }
 
         function getExpiryDate(regDateStr) {
             if (!regDateStr) return '२०८४-०५-१५';
@@ -1414,70 +1401,68 @@
         }
 
         function showImage(url) {
-    if(!url) { alert('फाइल उपलब्ध छैन!'); return; }
-    document.getElementById('modalImage').src = url;
-    document.getElementById('imageModal').style.display = 'flex';
-}
+            if(!url) { alert('फाइल उपलब्ध छैन!'); return; }
+            document.getElementById('modalImage').src = url;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
 
-function closeImageModal() {
-    document.getElementById('imageModal').style.display = 'none';
-}
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
 
-// 📌 यो नयाँ फङ्सनलाई यहाँ राख्नुहोस्:
-function viewNoticeFile(encodedItem) {
-    const item = JSON.parse(decodeURIComponent(escape(atob(encodedItem))));
-    const url = item.file_url || item.file || item.url || '';
-    
-    if (!url) { 
-        alert('यो सूचनासँग कुनै फाइल संलग्न गरिएको छैन!'); 
-        return; 
-    }
-    
-    if (item.file_type === 'pdf' || url.toLowerCase().includes('.pdf')) {
-        window.open(url, '_blank');
-    } else {
-        showImage(url);
-    }
-}
+        function viewNoticeFile(encodedItem) {
+            const item = JSON.parse(decodeURIComponent(escape(atob(encodedItem))));
+            const url = item.file_url || item.file || item.url || '';
+            
+            if (!url) { 
+                alert('यो सूचनासँग कुनै फाइल संलग्न गरिएको छैन!'); 
+                return; 
+            }
+            
+            if (item.file_type === 'pdf' || url.toLowerCase().includes('.pdf')) {
+                window.open(url, '_blank');
+            } else {
+                showImage(url);
+            }
+        }
+
         function openIdCardModal(userStr) {
-    const user = JSON.parse(userStr);
-    const memberNo = user.member_no || '-';
-    const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
-    const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
-    const fullName = user.full_name || user.name || '-';
+            const user = JSON.parse(userStr);
+            const memberNo = user.member_no || '-';
+            const regDate = toNepaliNumber(user.reg_date || getCurrentNepaliDate());
+            const expiryDate = getExpiryDate(user.reg_date || getCurrentNepaliDate());
+            const fullName = user.full_name || user.name || '-';
 
-    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-    document.getElementById('cardIssueDate').innerText = regDate;
-    document.getElementById('cardExpiryDate').innerText = expiryDate;
-    document.getElementById('cardName').innerText = fullName;
+            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+            document.getElementById('cardIssueDate').innerText = regDate;
+            document.getElementById('cardExpiryDate').innerText = expiryDate;
+            document.getElementById('cardName').innerText = fullName;
 
-    // पद र सम्बन्धित समितिको नाम मिलाउने
-    let rawPosition = user.position || 'साधारण सदस्य';
-    let committeeLabel = '';
-    
-    if (user.committee_level && user.committee_level !== 'साधारण सदस्य') {
-        committeeLabel = ` (${user.committee_level})`;
-    } else if (rawPosition === 'अध्यक्ष' || rawPosition === 'सचिव' || rawPosition === 'कोषाध्यक्ष' || rawPosition === 'उपाध्यक्ष' || rawPosition === 'सह-सचिव' || rawPosition === 'सदस्य') {
-        committeeLabel = ` (केन्द्रीय समिति)`;
-    }
-    
-    document.getElementById('cardPosition').innerText = rawPosition + committeeLabel;
+            let rawPosition = user.position || 'साधारण सदस्य';
+            let committeeLabel = '';
+            
+            if (user.committee_level && user.committee_level !== 'साधारण सदस्य') {
+                committeeLabel = ` (${user.committee_level})`;
+            } else if (rawPosition === 'अध्यक्ष' || rawPosition === 'सचिव' || rawPosition === 'कोषाध्यक्ष' || rawPosition === 'उपाध्यक्ष' || rawPosition === 'सह-सचिव' || rawPosition === 'सदस्य') {
+                committeeLabel = ` (केन्द्रीय समिति)`;
+            }
+            
+            document.getElementById('cardPosition').innerText = rawPosition + committeeLabel;
+            document.getElementById('cardProvince').innerText = user.province || '-';
+            document.getElementById('cardDistrict').innerText = user.district || '-';
+            document.getElementById('cardMunicipality').innerText = user.municipality || '-';
+            document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
 
-    document.getElementById('cardProvince').innerText = user.province || '-';
-    document.getElementById('cardDistrict').innerText = user.district || '-';
-    document.getElementById('cardMunicipality').innerText = user.municipality || '-';
-    document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
+            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            document.getElementById('cardPhoto').src = photo;
 
-    const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-    document.getElementById('cardPhoto').src = photo;
+            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
+            document.getElementById('cardQrCode').src = qrApiUrl;
 
-    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
-    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-    document.getElementById('cardQrCode').src = qrApiUrl;
-
-    const modal = document.getElementById('idCardModal');
-    modal.style.display = 'flex';
-}
+            const modal = document.getElementById('idCardModal');
+            modal.style.display = 'flex';
+        }
 
         function closeIdCardModal() {
             const modal = document.getElementById('idCardModal');
@@ -1651,297 +1636,251 @@ function viewNoticeFile(encodedItem) {
             }
         }
 
-       // ग्लोबल डाटा क्याш
-window.monthlyLevyCache = [];
+        window.monthlyLevyCache = [];
 
-async function loadMonthlyLevyIncomeData() {
-    const { data, error } = await supabaseClient
-        .from('monthly_levy')
-        .select('*')
-        .order('id', { ascending: true });
-
-    const tbody = document.getElementById('monthlyLevyIncomeTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-
-    if (error) {
-        console.error('Error loading monthly levy:', error);
-        return;
-    }
-
-    if (data && data.length > 0) {
-        window.monthlyLevyCache = data; // डाटा सुरक्षित राख्ने
-        data.forEach((item, index) => {
-            const row = document.createElement('tr');
-            
-            // भौचर बटन
-            const voucherBtn = `<button onclick="viewMonthlyLevyVoucherByIndex(${index})" style="background:#4f46e5; color:white; padding:3px 8px; border-radius:4px; border:none; cursor:pointer; margin-right:5px;">भौचर</button>`;
-
-            row.innerHTML = `
-                <td>${toNepaliNumber(index + 1)}</td>
-                <td>${toNepaliNumber(item.voucher_no || '-')}</td>
-                <td>${toNepaliNumber(item.date || '-')}</td>
-                <td>${item.member_name || '-'}</td>
-                <td>${item.committee_type || '-'}</td>
-                <td>${item.months_paid || '-'}</td>
-                <td>रु. ${toNepaliNumber(item.amount || 0)}</td>
-                <td>
-                    ${voucherBtn}
-                    <button onclick="deleteMonthlyLevyRecord(${item.id})" class="btn-delete" style="background:#dc2626; color:white; padding:3px 8px; border-radius:4px; border:none; cursor:pointer;">रिमुभ</button>
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    } else {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center;">कुनै रेकर्ड फेला परेन।</td></tr>`;
-    }
-}
-
-// नयाँ आधिकारिक रसिद मोडल खोल्ने फंक्सन
-function viewMonthlyLevyVoucherByIndex(index) {
-    const item = window.monthlyLevyCache[index];
-    if (!item) return;
-
-    document.getElementById('officialVoucherNo').innerText = item.voucher_no || '-';
-    document.getElementById('officialVoucherDate').innerText = toNepaliNumber(item.date || '-');
-    document.getElementById('officialMemberName').innerText = item.member_name || '-';
-    document.getElementById('officialCommitteeType').innerText = item.committee_type || '-';
-    document.getElementById('officialMonthsPaid').innerText = toNepaliNumber(item.months_paid || '-');
-    document.getElementById('officialAmount').innerText = 'रु. ' + toNepaliNumber(item.amount || 0);
-
-    document.getElementById('officialLevyReceiptModal').style.display = 'block';
-}
-
-function closeOfficialLevyModal() {
-    document.getElementById('officialLevyReceiptModal').style.display = 'none';
-}
-
-function printOfficialLevyReceipt() {
-    const printContents = document.getElementById('printableOfficialLevy').innerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload();
-}
-function closeLevyVoucherModal() {
-    document.getElementById('levyVoucherModal').style.display = 'none';
-}
-
-function printLevyVoucher() {
-    const printContents = document.getElementById('printableLevyVoucher').innerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload();
-}  
-        
-async function deleteMonthlyLevyRecord(id) {
-    if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
-        // यहाँ पनि सही टेबल नाम 'monthly_levy' राखिएको छ
-        const { error } = await supabaseClient.from('monthly_levy').delete().eq('id', id);
-        if(!error) {
-            alert('लेवी आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
-            loadMonthlyLevyIncomeData();
-        } else {
-            alert('त्रुटि: ' + error.message);
-        }
-    }
-}
-async function loadPendingLevyPayments() {
-    try {
-        const { data, error } = await supabaseClient
-            .from('levy_payments')
-            .select('*')
-            .eq('status', 'Pending');
-
-        let tbody = document.getElementById('pendingLevyTableBody');
-        if (!tbody) return;
-
-        tbody.innerHTML = '';
-
-        if (error || !data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
-            return;
-        }
-
-        for (let item of data) {
-            let memberName = item.member_name;
-            let memberNo = item.member_no || '-';
-            let memberPosition = item.position || '-';
-            
-            let rawDate = item.date || item.created_at;
-            let paymentDate = '-';
-            
-            if (rawDate) {
-                let engDateStr = rawDate.includes('T') ? rawDate.split('T')[0] : rawDate.split(' ')[0];
-                
-                // कन्भर्जन चेक गर्ने (यदि adToBs वा BS कन्भर्टर उपलब्ध छ भने)
-                try {
-                    if (typeof NepaliFunctions !== 'undefined' && NepaliFunctions.AD2BS) {
-                        let parts = engDateStr.split('-');
-                        let bsDate = NepaliFunctions.AD2BS({ year: parseInt(parts[0]), month: parseInt(parts[1]), day: parseInt(parts[2]) });
-                        paymentDate = `${bsDate.year}-${String(bsDate.month).padStart(2, '0')}-${String(bsDate.day).padStart(2, '0')}`;
-                    } else if (typeof adToBs === 'function') {
-                        paymentDate = adToBs(engDateStr);
-                    } else {
-                        // यदि कतै कन्भर्टर छैन भने, यदि डेटाबेसमा '2083-05-22' जस्तो नेपाली मिति str छ भने सिधै लिने
-                        paymentDate = engDateStr; 
-                    }
-                } catch (e) {
-                    paymentDate = engDateStr;
-                }
-            }
-
-            // भौचर मोडल खोल्ने र डाटा भर्ने फंक्सन
-function viewMonthlyLevyVoucher(voucherNo, date, memberName, committeeType, monthsPaid, amount) {
-    document.getElementById('modalVoucherNo').innerText = voucherNo || '-';
-    document.getElementById('modalVoucherDate').innerText = toNepaliNumber(date || '-');
-    document.getElementById('modalMemberName').innerText = memberName || '-';
-    document.getElementById('modalCommitteeType').innerText = committeeType || '-';
-    document.getElementById('modalMonthsPaid').innerText = toNepaliNumber(monthsPaid || '-');
-    document.getElementById('modalAmount').innerText = 'रु. ' + toNepaliNumber(amount || 0);
-
-    document.getElementById('levyVoucherModal').style.display = 'block';
-}
-
-// मोडल बन्द गर्ने
-function closeLevyVoucherModal() {
-    document.getElementById('levyVoucherModal').style.display = 'none';
-}
-
-// भौचर प्रिन्ट गर्ने
-function printLevyVoucher() {
-    const printContents = document.getElementById('printableLevyVoucher').innerHTML;
-    const originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload(); // पेज रिफ्रेस गरेर पूर्ववत अवस्थामा ल्याउने
-}
-
-            // यदि लेवी रेकर्डमा नाम, सदस्य नं वा पद छैन भने users टेबलबाट तानेर म्याच गर्ने
-            if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/) || memberNo === '-') {
-                const { data: userData } = await supabaseClient
-                    .from('users')
-                    .select('full_name, name, member_no, position')
-                    .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
-                    .single();
-                
-                if (userData) {
-                    memberName = userData.full_name || userData.name || memberName;
-                    memberNo = userData.member_no || memberNo;
-                    memberPosition = userData.position || memberPosition;
-                }
-            }
-
-            const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
-            const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
-            const totalAmount = item.total_amount || 0;
-            const slipUrl = item.payment_slip || item.voucher_url || '#';
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${toNepaliNumber(paymentDate)}</td>
-                <td><strong>${toNepaliNumber(memberNo)}</strong></td>
-                <td><strong>${memberName}</strong></td>
-                <td>${memberPosition}</td>
-                <td>${committeeLevel}</td>
-                <td>${months}</td>
-                <td>रु. ${toNepaliNumber(totalAmount)}</td>
-                <td><button class="btn-action btn-voucher" onclick="openDirectImageModal('${slipUrl}')" style="background:#805ad5; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
-                <td>
-                    <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
-                    <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
-                </td>
-            `;
-            tbody.appendChild(row);
-        }
-    } catch (err) {
-        console.error('Error loading pending payments:', err);
-    }
-}
-        async function approveLevyPayment(id) {
-    if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
-        try {
-            const { data: paymentData, error: fetchError } = await supabaseClient
-                .from('levy_payments')
+        async function loadMonthlyLevyIncomeData() {
+            const { data, error } = await supabaseClient
+                .from('monthly_levy')
                 .select('*')
-                .eq('id', id)
-                .single();
+                .order('id', { ascending: true });
 
-            if (fetchError || !paymentData) {
-                alert('विवरण फेला परेन!');
-                return;
-            }
-
-            const liveNepaliDate = "२०८३-०५-२१";
-            const prefix = 'VCH';
-
-            const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
-            const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
-            const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
-            const { count: c4 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
+            const tbody = document.getElementById('monthlyLevyIncomeTableBody');
+            if (!tbody) return;
             
-            const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
-            const voucherNo = `${prefix}-${toNepaliNumber(String(totalCount + 1).padStart(3, '0'))}`;
+            tbody.innerHTML = '';
 
-            const { error: updateError } = await supabaseClient
-                .from('levy_payments')
-                .update({ status: 'Approved', date: liveNepaliDate })
-                .eq('id', id);
-
-            if (updateError) {
-                alert('त्रुटि: ' + updateError.message);
+            if (error) {
+                console.error('Error loading monthly levy:', error);
                 return;
             }
 
-            const memberName = paymentData.member_name || paymentData.name || `सदस्य (ID: ${paymentData.user_id})`;
-            const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
-            const totalAmount = paymentData.total_amount || 0;
-            const committeeType = paymentData.committee_level || paymentData.committee_type || 'साधारण सदस्य';
+            if (data && data.length > 0) {
+                window.monthlyLevyCache = data;
+                data.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    const voucherBtn = `<button onclick="viewMonthlyLevyVoucherByIndex(${index})" style="background:#4f46e5; color:white; padding:3px 8px; border-radius:4px; border:none; cursor:pointer; margin-right:5px;">भौचर</button>`;
 
-            // ==========================================
-            // यो कोडलाई ठ्याक्कै यहाँ राख्नुहोला
-            // ==========================================
-            const { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
-                voucher_no: voucherNo,
-                date: liveNepaliDate,
-                member_name: memberName,
-                committee_type: committeeType,
-                months_paid: monthsList,
-                amount: totalAmount,
-                voucher_url: paymentData.voucher_url || paymentData.payment_slip || '',
-                payment_slip: paymentData.voucher_url || paymentData.payment_slip || ''
-            }]);
-
-            if (insertError) {
-                alert('लेवी टेबलमा सेभ गर्न त्रुटि: ' + insertError.message);
-                return;
+                    row.innerHTML = `
+                        <td>${toNepaliNumber(index + 1)}</td>
+                        <td>${toNepaliNumber(item.voucher_no || '-')}</td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td>${item.member_name || '-'}</td>
+                        <td>${item.committee_type || '-'}</td>
+                        <td>${item.months_paid || '-'}</td>
+                        <td>रु. ${toNepaliNumber(item.amount || 0)}</td>
+                        <td>
+                            ${voucherBtn}
+                            <button onclick="deleteMonthlyLevyRecord(${item.id})" class="btn-delete" style="background:#dc2626; color:white; padding:3px 8px; border-radius:4px; border:none; cursor:pointer;">रिमुभ</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align: center;">कुनै रेकर्ड फेला परेन।</td></tr>`;
             }
+        }
 
-            alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो र "मासिक लेवीबाट प्राप्त आम्दानी" मा थपियो!');
-            loadPendingLevyPayments();
-            loadMonthlyLevyIncomeData();
-        } catch (err) {
-            console.error('Approval Error:', err);
-            alert('कारवाही असफल भयो!');
+        function viewMonthlyLevyVoucherByIndex(index) {
+            const item = window.monthlyLevyCache[index];
+            if (!item) return;
+
+            document.getElementById('officialVoucherNo').innerText = item.voucher_no || '-';
+            document.getElementById('officialVoucherDate').innerText = toNepaliNumber(item.date || '-');
+            document.getElementById('officialMemberName').innerText = item.member_name || '-';
+            document.getElementById('officialCommitteeType').innerText = item.committee_type || '-';
+            document.getElementById('officialMonthsPaid').innerText = toNepaliNumber(item.months_paid || '-');
+            document.getElementById('officialAmount').innerText = 'रु. ' + toNepaliNumber(item.amount || 0);
+
+            document.getElementById('officialLevyReceiptModal').style.display = 'block';
         }
-    }
-}
-async function rejectLevyPayment(id) {
-    if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकार (Reject) गर्न चाहनुहुन्छ?')) {
-        const { error } = await supabaseClient.from('levy_payments').update({ status: 'Rejected' }).eq('id', id);
-        if (!error) {
-            alert('भुक्तानी अनुरोध अस्वीकार गरियो!');
-            loadPendingLevyPayments();
-        } else {
-            alert('त्रुटि: ' + error.message);
+
+        function closeOfficialLevyModal() {
+            document.getElementById('officialLevyReceiptModal').style.display = 'none';
         }
-    }
-}
+
+        function printOfficialLevyReceipt() {
+            const printContents = document.getElementById('printableOfficialLevy').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        }
+
+        function closeLevyVoucherModal() {
+            document.getElementById('levyVoucherModal').style.display = 'none';
+        }
+
+        async function deleteMonthlyLevyRecord(id) {
+            if(confirm('के तपाईं यो लेवी आम्दानीको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('monthly_levy').delete().eq('id', id);
+                if(!error) {
+                    alert('लेवी आम्दानीको रेकर्ड सफलतापूर्वक हटाइयो!');
+                    loadMonthlyLevyIncomeData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
+        async function loadPendingLevyPayments() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('levy_payments')
+                    .select('*')
+                    .eq('status', 'Pending');
+
+                let tbody = document.getElementById('pendingLevyTableBody');
+                if (!tbody) return;
+
+                tbody.innerHTML = '';
+
+                if (error || !data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">कुनै नयाँ भुक्तानी अनुरोध उपलब्ध छैन</td></tr>';
+                    return;
+                }
+
+                for (let item of data) {
+                    let memberName = item.member_name;
+                    let memberNo = item.member_no || '-';
+                    let memberPosition = item.position || '-';
+                    let rawDate = item.date || item.created_at;
+                    let paymentDate = '-';
+                    
+                    if (rawDate) {
+                        let engDateStr = rawDate.includes('T') ? rawDate.split('T')[0] : rawDate.split(' ')[0];
+                        try {
+                            if (typeof NepaliFunctions !== 'undefined' && NepaliFunctions.AD2BS) {
+                                let parts = engDateStr.split('-');
+                                let bsDate = NepaliFunctions.AD2BS({ year: parseInt(parts[0]), month: parseInt(parts[1]), day: parseInt(parts[2]) });
+                                paymentDate = `${bsDate.year}-${String(bsDate.month).padStart(2, '0')}-${String(bsDate.day).padStart(2, '0')}`;
+                            } else {
+                                paymentDate = engDateStr; 
+                            }
+                        } catch (e) {
+                            paymentDate = engDateStr;
+                        }
+                    }
+
+                    if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/) || memberNo === '-') {
+                        const { data: userData } = await supabaseClient
+                            .from('users')
+                            .select('full_name, name, member_no, position')
+                            .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
+                            .single();
+                        
+                        if (userData) {
+                            memberName = userData.full_name || userData.name || memberName;
+                            memberNo = userData.member_no || memberNo;
+                            memberPosition = userData.position || memberPosition;
+                        }
+                    }
+
+                    const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
+                    const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
+                    const totalAmount = item.total_amount || 0;
+                    const slipUrl = item.payment_slip || item.voucher_url || '#';
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${toNepaliNumber(paymentDate)}</td>
+                        <td><strong>${toNepaliNumber(memberNo)}</strong></td>
+                        <td><strong>${memberName}</strong></td>
+                        <td>${memberPosition}</td>
+                        <td>${committeeLevel}</td>
+                        <td>${months}</td>
+                        <td>रु. ${toNepaliNumber(totalAmount)}</td>
+                        <td><button class="btn-action btn-voucher" onclick="openDirectImageModal('${slipUrl}')" style="background:#805ad5; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">हेर्नुहोस्</button></td>
+                        <td>
+                            <button class="btn-action btn-success" onclick="approveLevyPayment('${item.id}')" style="background:#38a169; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
+                            <button class="btn-action btn-danger" onclick="rejectLevyPayment('${item.id}')" style="background:#e53e3e; color:#fff; padding:4px 8px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                }
+            } catch (err) {
+                console.error('Error loading pending payments:', err);
+            }
+        }
+
+        async function approveLevyPayment(id) {
+            if (confirm('के तपाईं यो भुक्तानी अनुरोध स्वीकृत (Approve) गर्न चाहनुहुन्छ?')) {
+                try {
+                    const { data: paymentData, error: fetchError } = await supabaseClient
+                        .from('levy_payments')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
+
+                    if (fetchError || !paymentData) {
+                        alert('विवरण फेला परेन!');
+                        return;
+                    }
+
+                    const liveNepaliDate = getCurrentNepaliDate();
+                    const prefix = 'VCH';
+
+                    const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+                    const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+                    const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+                    const { count: c4 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
+                    
+                    const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
+                    const voucherNo = `${prefix}-${toNepaliNumber(String(totalCount + 1).padStart(3, '0'))}`;
+
+                    const { error: updateError } = await supabaseClient
+                        .from('levy_payments')
+                        .update({ status: 'Approved', date: liveNepaliDate })
+                        .eq('id', id);
+
+                    if (updateError) {
+                        alert('त्रुटि: ' + updateError.message);
+                        return;
+                    }
+
+                    const memberName = paymentData.member_name || paymentData.name || `सदस्य (ID: ${paymentData.user_id})`;
+                    const monthsList = Array.isArray(paymentData.months) ? paymentData.months.join(', ') : (paymentData.months || 'तपशील अनुसार');
+                    const totalAmount = paymentData.total_amount || 0;
+                    const committeeType = paymentData.committee_level || paymentData.committee_type || 'साधारण सदस्य';
+
+                    const { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
+                        voucher_no: voucherNo,
+                        date: liveNepaliDate,
+                        member_name: memberName,
+                        committee_type: committeeType,
+                        months_paid: monthsList,
+                        amount: totalAmount,
+                        voucher_url: paymentData.voucher_url || paymentData.payment_slip || '',
+                        payment_slip: paymentData.voucher_url || paymentData.payment_slip || ''
+                    }]);
+
+                    if (insertError) {
+                        alert('लेवी टेबलमा सेभ गर्न त्रुटि: ' + insertError.message);
+                        return;
+                    }
+
+                    alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो र "मासिक लेवीबाट प्राप्त आम्दानी" मा थपियो!');
+                    loadPendingLevyPayments();
+                    loadMonthlyLevyIncomeData();
+                } catch (err) {
+                    console.error('Approval Error:', err);
+                    alert('कारवाही असफल भयो!');
+                }
+            }
+        }
+
+        async function rejectLevyPayment(id) {
+            if (confirm('के तपाईं यो भुक्तानी अनुरोध अस्वीकार (Reject) गर्न चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('levy_payments').update({ status: 'Rejected' }).eq('id', id);
+                if (!error) {
+                    alert('भुक्तानी अनुरोध अस्वीकार गरियो!');
+                    loadPendingLevyPayments();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
         async function saveGrantIncome(e) {
             e.preventDefault();
             const voucherNo = await getNextVoucherNo();
@@ -1969,69 +1908,39 @@ async function rejectLevyPayment(id) {
         window.grantRecords = [];
 
         async function loadGrantIncomeData() {
-    const { data, error } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
-    if (error) {
-        console.error('Error loading grant data:', error);
-        return;
-    }
-    
-    const tbody = document.getElementById('grantIncomeTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
-        return;
-    }
-    
-    data.forEach((item, index) => {
-        let encoded = encodeURIComponent(JSON.stringify(item));
-        tbody.innerHTML += `
-            <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td><strong>${item.voucher_no || '-'}</strong></td>
-                <td>${toNepaliNumber(item.date || '-')}</td>
-                <td><strong>${item.donor_name || '-'}</strong></td>
-                <td>${item.title || '-'}</td>
-                <td>${item.medium || '-'}</td>
-                <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                <td class="no-print">
-                    <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
-                    <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
-                </td>
-            </tr>
-        `;
-    });
-}
-        function openGrantVoucherModal(index) {
-            const item = window.grantRecords[index];
-            if (!item) {
-                alert('डेटा फेला परेन!');
+            const { data, error } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
+            if (error) {
+                console.error('Error loading grant data:', error);
                 return;
             }
             
-            // नयाँ छुट्टै मोडलका आइडीहरूमा डेटा भरेको
-            document.getElementById('grantModalVoucherNo').innerText = item.voucher_no || 'VOU-01';
-            document.getElementById('grantModalVoucherDate').innerText = toNepaliNumber ? toNepaliNumber(item.date || '२०८३-०५-२०') : (item.date || '२०८३-०५-२०');
-            document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
-            document.getElementById('grantModalTitle').innerText = item.title || '-';
-            document.getElementById('grantModalAmount').innerText = 'रु. ' + (toNepaliNumber ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
-
-            // अनुदान तथा सहयोगको छुट्टै मोडल देखाउने
-            document.getElementById('grantVoucherModal').style.display = 'block';
-        }
-
-        function closeGrantVoucherModal() {
-            document.getElementById('grantVoucherModal').style.display = 'none';
-        }
-
-        function printGrantVoucher() {
-            const printContents = document.getElementById('printableGrantVoucher').innerHTML;
-            const originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-            location.reload();
+            const tbody = document.getElementById('grantIncomeTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">कुनै अनुदान तथा सहयोग रेकर्ड छैन</td></tr>';
+                return;
+            }
+            
+            data.forEach((item, index) => {
+                let encoded = encodeURIComponent(JSON.stringify(item));
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><strong>${item.voucher_no || '-'}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td><strong>${item.donor_name || '-'}</strong></td>
+                        <td>${item.title || '-'}</td>
+                        <td>${item.medium || '-'}</td>
+                        <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                        <td class="no-print">
+                            <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
+                            <button type="button" class="btn-action btn-danger" onclick="deleteGrantRecord('${item.id}')" style="background: #e53e3e; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
         async function deleteGrantRecord(id) {
@@ -2075,56 +1984,46 @@ async function rejectLevyPayment(id) {
         }
 
         async function saveFundIncome(e, tableName, categoryName) {
-    e.preventDefault();
-    const prefix = 'VCH';
-    
-    // सबै ३ वटै कोषहरूको जम्मा रेकर्ड संख्या एकैसाथ जोडेर सही साझा सिरियल निकाल्ने
-    const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
-    const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
-    const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
-    
-    const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0);
-    const nextNum = totalCount + 1;
-    
-    const formattedNum = String(nextNum).padStart(3, '0');
-    const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
+            e.preventDefault();
+            const prefix = 'VCH';
+            
+            const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
+            const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
+            const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
+            
+            const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0);
+            const nextNum = totalCount + 1;
+            const formattedNum = String(nextNum).padStart(3, '0');
+            const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
 
-    const donorId = tableName === 'human_fund' ? 'human_donor' : (tableName === 'emergency_fund' ? 'emergency_donor' : 'relief_donor');
-    const titleId = tableName === 'human_fund' ? 'human_title' : (tableName === 'emergency_fund' ? 'emergency_title' : 'relief_title');
-    const mediumId = tableName === 'human_fund' ? 'human_medium' : (tableName === 'emergency_fund' ? 'emergency_medium' : 'relief_medium');
-    const amountId = tableName === 'human_fund' ? 'human_amount' : (tableName === 'emergency_fund' ? 'emergency_amount' : 'relief_amount');
+            const donorId = tableName === 'human_fund' ? 'human_donor' : (tableName === 'emergency_fund' ? 'emergency_donor' : 'relief_donor');
+            const titleId = tableName === 'human_fund' ? 'human_title' : (tableName === 'emergency_fund' ? 'emergency_title' : 'relief_title');
+            const mediumId = tableName === 'human_fund' ? 'human_medium' : (tableName === 'emergency_fund' ? 'emergency_medium' : 'relief_medium');
+            const amountId = tableName === 'human_fund' ? 'human_amount' : (tableName === 'emergency_fund' ? 'emergency_amount' : 'relief_amount');
 
-    // हेडरमा देखिएको आजको सही नेपाली मिति स्वतः तान्ने (यदि उपलब्ध छैन भने system date बाट लिने)
-    let liveNepaliDate = "२०८३-०५-२२";
-    const liveDateElement = document.getElementById('nepali-live-date');
-    if (liveDateElement) {
-        let text = liveDateElement.innerText;
-        // जस्तै "वि.सं. २०८३ भदौ २२, सोमवार | 6:25:02 अपराह्ह्न" बाट मिति मात्र वा स्ट्रिङ तान्ने वा तपाईंको getCurrentNepaliDate() प्रयोग गर्ने
-    }
-    
-    // सुरक्षित रूपमा आजको सही मिति लिन getCurrentNepaliDate() प्रयोग गर्ने जसले आजकै मिति फर्काउँछ
-    liveNepaliDate = getCurrentNepaliDate();
+            const liveNepaliDate = getCurrentNepaliDate();
 
-    const data = {
-        voucher_no: voucherNo,
-        date: liveNepaliDate, // यहाँ अब आजकै सही नेपाली मिति बस्छ
-        donor_name: document.getElementById(donorId).value.trim(),
-        title: document.getElementById(titleId).value.trim(),
-        medium: document.getElementById(mediumId).value,
-        amount: parseFloat(document.getElementById(amountId).value) || 0,
-        fund_category: categoryName
-    };
+            const data = {
+                voucher_no: voucherNo,
+                date: liveNepaliDate,
+                donor_name: document.getElementById(donorId).value.trim(),
+                title: document.getElementById(titleId).value.trim(),
+                medium: document.getElementById(mediumId).value,
+                amount: parseFloat(document.getElementById(amountId).value) || 0,
+                fund_category: categoryName
+            };
 
-    const { error } = await supabaseClient.from(tableName).insert([data]);
-    if (!error) {
-        alert(`${categoryName}मा सफलतासाथ रकम थपियो!`);
-        e.target.reset();
-        const tbodyId = tableName === 'human_fund' ? 'humanFundTableBody' : (tableName === 'emergency_fund' ? 'emergencyFundTableBody' : 'reliefFundTableBody');
-        loadFundData(tableName, tbodyId);
-    } else {
-        alert('त्रुटि: ' + error.message);
-    }
-}
+            const { error } = await supabaseClient.from(tableName).insert([data]);
+            if (!error) {
+                alert(`${categoryName}मा सफलतासाथ रकम थपियो!`);
+                e.target.reset();
+                const tbodyId = tableName === 'human_fund' ? 'humanFundTableBody' : (tableName === 'emergency_fund' ? 'emergencyFundTableBody' : 'reliefFundTableBody');
+                loadFundData(tableName, tbodyId);
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
         async function deleteFundRecord(tableName, id, tbodyId) {
             if (confirm('के तपाईं यो भौचर/रेकर्ड मेटाउन चाहनुहुन्छ?')) {
                 await supabaseClient.from(tableName).delete().eq('id', id);
@@ -2132,38 +2031,35 @@ async function rejectLevyPayment(id) {
             }
         }
 
-       function openVoucherModal(itemStr) {
-    const item = JSON.parse(decodeURIComponent(itemStr));
-    
-    document.getElementById('vouchNo').innerText = item.voucher_no || '-';
-    
-    // यहाँ लाइभ मितिको सट्टा डेटाबेसमा सेभ भएको भौचरकै सही मिति (item.date) देखाइएको छ
-    document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-'); 
-    
-    document.getElementById('vouchDonor').innerText = item.donor_name || '-';
-    document.getElementById('vouchTitle').innerText = item.title || '-';
-    document.getElementById('vouchMedium').innerText = item.medium || '-';
-    document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
-    document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
-    
-    const imgTag = document.getElementById('popupVoucherImg');
-    if (item.voucher_url) {
-        imgTag.src = item.voucher_url;
-        imgTag.style.display = 'block';
-    } else {
-        imgTag.style.display = 'none';
-    }
+        function openVoucherModal(itemStr) {
+            const item = JSON.parse(decodeURIComponent(itemStr));
+            document.getElementById('vouchNo').innerText = item.voucher_no || '-';
+            document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
+            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
+            document.getElementById('vouchTitle').innerText = item.title || '-';
+            document.getElementById('vouchMedium').innerText = item.medium || '-';
+            document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
+            document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
+            
+            const imgTag = document.getElementById('popupVoucherImg');
+            if (item.voucher_url) {
+                imgTag.src = item.voucher_url;
+                imgTag.style.display = 'block';
+            } else {
+                imgTag.style.display = 'none';
+            }
 
-    const modal = document.getElementById('voucherModal');
-    modal.style.display = 'flex';
-    modal.classList.add('active-voucher');
-}
+            const modal = document.getElementById('voucherModal');
+            modal.style.display = 'flex';
+            modal.classList.add('active-voucher');
+        }
 
-function closeVoucherModal() {
-    const modal = document.getElementById('voucherModal');
-    modal.style.display = 'none';
-    modal.classList.remove('active-voucher');
-}
+        function closeVoucherModal() {
+            const modal = document.getElementById('voucherModal');
+            modal.style.display = 'none';
+            modal.classList.remove('active-voucher');
+        }
+
         function openDirectImageModal(imageUrl) {
             const modal = document.getElementById('levyVoucherModal');
             const modalImg = document.getElementById('levyVoucherImage');
@@ -2173,13 +2069,6 @@ function closeVoucherModal() {
                 modal.style.display = 'flex';
             } else {
                 window.open(imageUrl, '_blank');
-            }
-        }
-
-        function closeLevyVoucherModal() {
-            const modal = document.getElementById('levyVoucherModal');
-            if (modal) {
-                modal.style.display = 'none';
             }
         }
 
@@ -2924,36 +2813,37 @@ function closeVoucherModal() {
             loadNoticesData();
         });
 
-       async function loadNoticesData() {
-    const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
-    const tbody = document.getElementById('noticesTableBody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    
-    if (!data || data.length === 0) { 
-        tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; 
-        return; 
-    }
+        async function loadNoticesData() {
+            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            const tbody = document.getElementById('noticesTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            if (!data || data.length === 0) { 
+                tbody.innerHTML = '<tr><td colspan="6">कुनै सूचना छैन</td></tr>'; 
+                return; 
+            }
 
-    data.forEach((item, index) => {
-        const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
-        const fileType = item.file_type || 'image';
+            data.forEach((item, index) => {
+                const encodedItem = btoa(unescape(encodeURIComponent(JSON.stringify(item))));
+                const fileType = item.file_type || 'image';
 
-        tbody.innerHTML += `
-            <tr>
-                <td><strong>${index + 1}</strong></td>
-                <td>${toNepaliNumber(item.date || '-')}</td>
-                <td style="white-space: normal; text-align: left; max-width: 300px;">${item.title || ''}</td>
-                <td>${fileType === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
-                <td><button type="button" class="btn-action btn-view" onclick="viewNoticeFile('${encodedItem}')" style="background: #d69e2e; color: #fff; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer;">हेर्नुहोस्</button></td>
-                <td class="no-print">
-                    <button type="button" class="btn-action btn-edit" onclick="triggerEditNotice('${encodedItem}')">सम्पादन</button>
-                    <button type="button" class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
-                </td>
-            </tr>
-        `;
-    });
-}
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>${toNepaliNumber(item.date || '-')}</td>
+                        <td style="white-space: normal; text-align: left; max-width: 300px;">${item.title || ''}</td>
+                        <td>${fileType === 'pdf' ? 'PDF फाइल' : 'फोटो'}</td>
+                        <td><button type="button" class="btn-action btn-view" onclick="viewNoticeFile('${encodedItem}')" style="background: #d69e2e; color: #fff; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer;">हेर्नुहोस्</button></td>
+                        <td class="no-print">
+                            <button type="button" class="btn-action btn-edit" onclick="triggerEditNotice('${encodedItem}')">सम्पादन</button>
+                            <button type="button" class="btn-action btn-danger" onclick="deleteNotice('${item.id}')">रिमुभ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
         function triggerEditNotice(encodedItem) {
             const item = JSON.parse(decodeURIComponent(escape(atob(encodedItem))));
             editNotice(item);
@@ -3018,27 +2908,6 @@ function closeVoucherModal() {
             }
         }
 
-        function getCurrentNepaliDateTime() {
-            try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let month = toNepaliNumber(String(currentDate.getMonth() + 1).padStart(2, '0'));
-                let day = toNepaliNumber(String(currentDate.getDate()).padStart(2, '0'));
-                
-                let now = new Date();
-                let hours = now.getHours();
-                let minutes = now.getMinutes();
-                let ampm = hours >= 12 ? 'अपराह्न' : 'पूर्वाङ्ग';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                let timeStr = toNepaliNumber(`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`);
-                
-                return `${year}-${month}-${day} ${timeStr}`;
-            } catch (e) {
-                return "२०८३-०५-१८";
-            }
-        }
-
         async function sendMemberNotice(e) {
             e.preventDefault();
             const noticeData = {
@@ -3056,6 +2925,20 @@ function closeVoucherModal() {
             } else {
                 alert('त्रुटि: ' + error.message);
             }
+        }
+
+        function getCurrentNepaliDateTime() {
+            return `${getCurrentNepaliDate()} ${getCurrentTimeOnly()}`;
+        }
+
+        function getCurrentTimeOnly() {
+            let now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let ampm = hours >= 12 ? 'अपराह्न' : 'बिहान';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            return toNepaliNumber(`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`);
         }
 
         async function loadMemberNoticesData() {
@@ -3097,129 +2980,114 @@ function closeVoucherModal() {
             }
         }
         
+        // 📌 यहाँ नेपाली मिति र समय स्वचालित रूपमा हरेक दिन/सेकेन्ड अपडेट हुने बनाइएको छ
         function updateLiveNepaliCalendar() {
-    // getCurrentNepaliDate() लाई पूर्ण रूपमा छोडेर आजको सही मिति सिधै राख्ने
-    let liveNepaliDateString = "वि.सं. २०८३ भदौ २२, सोमवार"; 
+            try {
+                // NepaliDate लाइब्रेरी प्रयोग गरेर आजको वास्तविक मिति र बार स्वतः तानेर देखाउने
+                let currentDate = new NepaliDate();
+                let year = toNepaliNumber(currentDate.getYear());
+                let monthNames = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+                let dayNames = ["आइतवार", "सोमवार", "मंगलबार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिवार"];
+                
+                let monthStr = monthNames[currentDate.getMonth()];
+                let dayNum = toNepaliNumber(currentDate.getDate());
+                let weekDayStr = dayNames[currentDate.getDay()];
 
-    const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
-    let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
-    
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '०' + minutes : minutes;
-    seconds = seconds < 10 ? '०' + seconds : seconds;
-    
-    let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-    
-    const liveDateElement = document.getElementById('nepali-live-date');
-    if (liveDateElement) {
-        liveDateElement.innerHTML = `<i class="fa-regular fa-calendar-days text-amber-600 mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
-    }
-}
+                let liveNepaliDateString = `वि.सं. ${year} ${monthStr} ${dayNum}, ${weekDayStr}`;
 
-setInterval(updateLiveNepaliCalendar, 1000);
-updateLiveNepaliCalendar();
+                let now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                let seconds = now.getSeconds();
+                let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
+                
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                minutes = minutes < 10 ? '०' + minutes : minutes;
+                seconds = seconds < 10 ? '०' + seconds : seconds;
+                
+                let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+                
+                const liveDateElement = document.getElementById('nepali-live-date');
+                if (liveDateElement) {
+                    liveDateElement.innerHTML = `${liveNepaliDateString} | ${timeString}`;
+                }
+            } catch (err) {
+                // यदि कुनै कारणवश लाइब्रेरी लोड भएन भने पनि आजको सही मिति देखाउने फलब्याक
+                const liveDateElement = document.getElementById('nepali-live-date');
+                if (liveDateElement) {
+                    liveDateElement.innerHTML = `वि.सं. २०८३ भदौ २३, मंगलबार`;
+                }
+            }
+        }
+
+        setInterval(updateLiveNepaliCalendar, 1000);
+        updateLiveNepaliCalendar();
 
         document.addEventListener("DOMContentLoaded", function() {
-    loadMonthlyLevyIncomeData(); // पेज खुल्नेबित्तिकै लेवी आम्दानी लोड गर्ने
-    loadPendingLevyPayments();  // यदि अन्य टेबलहरू पनि छन् भने सँगै राख्न सक्नुहुन्छ
-});
-        function viewGrantVoucherByIndex(index) {
-            // grantRecords वा grantCache जुन भए पनि डेटा समात्ने गरी मिलाइएको
-            const records = window.grantRecords || window.grantCache;
-            const item = records ? records[index] : null;
-            
-            if (!item) {
-                alert('डेटा फेला परेन!');
-                return;
-            }
-
-            document.getElementById('grantModalVoucherNo').innerText = item.voucher_no || '-';
-            document.getElementById('grantModalVoucherDate').innerText = typeof toNepaliNumber === 'function' ? toNepaliNumber(item.date || '-') : (item.date || '-');
-            document.getElementById('grantModalDonorName').innerText = item.donor_name || '-';
-            document.getElementById('grantModalTitle').innerText = item.title || '-';
-            document.getElementById('grantModalAmount').innerText = 'रु. ' + (typeof toNepaliNumber === 'function' ? toNepaliNumber(item.amount || 0) : (item.amount || 0));
-
-            document.getElementById('grantVoucherModal').style.display = 'block';
-        }
-
-        function closeGrantVoucherModal() {
-            document.getElementById('grantVoucherModal').style.display = 'none';
-        }
-
-        function printGrantVoucher() {
-            const printContents = document.getElementById('printableGrantVoucher').innerHTML;
-            const originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-            location.reload();
-        }
+            loadMonthlyLevyIncomeData();
+        });
     </script>
-   <!-- आधिकारिक मासिक लेवी आम्दानी रसिद मोडल -->
-<div id="officialLevyReceiptModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); overflow:auto;">
-    <div class="modal-content" style="background:#fff; margin:5% auto; padding:20px; width:90%; max-width:600px; border-radius:8px; position:relative;">
-        <span onclick="closeOfficialLevyModal()" style="position:absolute; right:15px; top:10px; font-size:24px; cursor:pointer; font-weight:bold;">&times;</span>
-        
-        <div id="printableOfficialLevy" style="padding: 15px; font-family: sans-serif; text-align: center; background: #fff;">
-            <!-- संस्थाको लोगो -->
-            <img src="https://i.postimg.cc/vBRv50Yy/last-l-2ogo-jpg.png" alt="Logo" style="width: 70px; height: 70px; margin-bottom: 5px; object-fit: contain;">
+
+    <!-- आधिकारिक मासिक लेवी आम्दानी रसिद मोडल -->
+    <div id="officialLevyReceiptModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); overflow:auto;">
+        <div class="modal-content" style="background:#fff; margin:5% auto; padding:20px; width:90%; max-width:600px; border-radius:8px; position:relative;">
+            <span onclick="closeOfficialLevyModal()" style="position:absolute; right:15px; top:10px; font-size:24px; cursor:pointer; font-weight:bold;">&times;</span>
             
-            <h2 style="margin: 0; color: #1e3a8a; font-size: 22px;">दशौँदी समाज नेपाल</h2>
-            <p style="margin: 2px 0; font-size: 13px; color: #555;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
-            <p style="margin: 2px 0 10px 0; font-size: 12px; color: #555;">स्थापना - २०८०</p>
-            
-            <div style="display: inline-block; background: #2563eb; color: white; padding: 5px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; margin: 10px 0;">
-                मासिक लेवी आम्दानी रसिद
-            </div>
+            <div id="printableOfficialLevy" style="padding: 15px; font-family: sans-serif; text-align: center; background: #fff;">
+                <img src="https://i.postimg.cc/vBRv50Yy/last-l-2ogo-jpg.png" alt="Logo" style="width: 70px; height: 70px; margin-bottom: 5px; object-fit: contain;">
+                
+                <h2 style="margin: 0; color: #1e3a8a; font-size: 22px;">दशौँदी समाज नेपाल</h2>
+                <p style="margin: 2px 0; font-size: 13px; color: #555;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
+                <p style="margin: 2px 0 10px 0; font-size: 12px; color: #555;">स्थापना - २०८०</p>
+                
+                <div style="display: inline-block; background: #2563eb; color: white; padding: 5px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; margin: 10px 0;">
+                    मासिक लेवी आम्दानी रसिद
+                </div>
 
-            <div style="border-top: 1px dashed #9ca3af; margin: 10px 0 15px 0;"></div>
+                <div style="border-top: 1px dashed #9ca3af; margin: 10px 0 15px 0;"></div>
 
-            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; font-weight: bold;">
-                <span>भौचर नं.: <span id="officialVoucherNo" style="color: #b45309;">-</span></span>
-                <span>मिति: <span id="officialVoucherDate">-</span></span>
-            </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; font-weight: bold;">
+                    <span>भौचर नं.: <span id="officialVoucherNo" style="color: #b45309;">-</span></span>
+                    <span>मिति: <span id="officialVoucherDate">-</span></span>
+                </div>
 
-            <table style="width: 100%; margin-top: 15px; border-collapse: collapse; text-align: left; font-size: 14px;">
-                <tr style="border-bottom: 1px solid #e5e7eb;">
-                    <th style="padding: 10px; width: 38%; color: #374151; background: transparent; text-align: left;">पदाधिकारीको नाम:</th>
-                    <td id="officialMemberName" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e5e7eb;">
-                    <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">कमिटी तह:</th>
-                    <td id="officialCommitteeType" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e5e7eb;">
-                    <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">चुक्ता गरिएका महिनाहरू:</th>
-                    <td id="officialMonthsPaid" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e5e7eb;">
-                    <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">भुक्तानी माध्यम:</th>
-                    <td style="padding: 10px; color: #111827; background: transparent; text-align: left;">बैंक भौचर / अनलाइन भुक्तानी</td>
-                </tr>
-                <tr style="border-bottom: 2px solid #d1d5db;">
-                    <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">जम्मा रकम (अंकमा):</th>
-                    <td id="officialAmount" style="padding: 10px; font-weight: bold; color: #16a34a; background: transparent; text-align: left;">-</td>
-                </tr>
-            </table>
+                <table style="width: 100%; margin-top: 15px; border-collapse: collapse; text-align: left; font-size: 14px;">
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 10px; width: 38%; color: #374151; background: transparent; text-align: left;">पदाधिकारीको नाम:</th>
+                        <td id="officialMemberName" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">कमिटी तह:</th>
+                        <td id="officialCommitteeType" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">चुक्ता गरिएका महिनाहरू:</th>
+                        <td id="officialMonthsPaid" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">भुक्तानी माध्यम:</th>
+                        <td style="padding: 10px; color: #111827; background: transparent; text-align: left;">बैंक भौचर / अनलाइन भुक्तानी</td>
+                    </tr>
+                    <tr style="border-bottom: 2px solid #d1d5db;">
+                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">जम्मा रकम (अंकमा):</th>
+                        <td id="officialAmount" style="padding: 10px; font-weight: bold; color: #16a34a; background: transparent; text-align: left;">-</td>
+                    </tr>
+                </table>
 
-            <!-- सही हस्ताक्षर (नयाँ लिङ्क राखिएको) र ढाँचा -->
-            <div style="display: flex; justify-content: space-between; margin-top: 40px; font-size: 14px; align-items: flex-end;">
-                <div style="border-top: 1px dashed #6b7280; width: 160px; text-align: center; padding-top: 5px;">बुझाउनेको सही</div>
-                <div style="width: 160px; text-align: center;">
-                    <img src="https://i.postimg.cc/44W9gWDg/4-Manoj.png" alt="Signature" style="max-height: 45px; width: auto; margin-bottom: 2px; object-fit: contain;">
-                    <div style="border-top: 1px dashed #6b7280; padding-top: 5px;">कोषाध्यक्ष / सचिव</div>
+                <div style="display: flex; justify-content: space-between; margin-top: 40px; font-size: 14px; align-items: flex-end;">
+                    <div style="border-top: 1px dashed #6b7280; width: 160px; text-align: center; padding-top: 5px;">बुझाउनेको सही</div>
+                    <div style="width: 160px; text-align: center;">
+                        <img src="https://i.postimg.cc/44W9gWDg/4-Manoj.png" alt="Signature" style="max-height: 45px; width: auto; margin-bottom: 2px; object-fit: contain;">
+                        <div style="border-top: 1px dashed #6b7280; padding-top: 5px;">कोषाध्यक्ष / सचिव</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div style="text-align: center; margin-top: 25px;">
-            <button onclick="printOfficialLevyReceipt()" style="background: #16a34a; color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">🖨️ भौचर प्रिन्ट / PDF गर्नुहोस्</button>
+            <div style="text-align: center; margin-top: 25px;">
+                <button onclick="printOfficialLevyReceipt()" style="background: #16a34a; color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">🖨️ भौचर प्रिन्ट / PDF गर्नुहोस्</button>
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>
