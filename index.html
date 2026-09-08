@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>दशाैँदी समाज नेपाल</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" id="faviconTag">
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -27,19 +27,19 @@
 
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
         .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
-        
+
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
         .header-green { background-color: #008000; color: white; width: 100%; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; }
-        
+
         .header-flag-box { position: absolute; right: -30px; top: 28%; transform: translateY(-50%); width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
         .header-flag-box img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
 
         .header-logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 3px solid white; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .header-logo { width: 100%; height: 100%; object-fit: cover; }
-        
+
         .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
         .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
-        
+
         .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; justify-content: center; }
         .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
         .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
@@ -51,7 +51,7 @@
 
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
-        
+
         .card > h2, .page-section .card h2, .about-section h3 {
             display: inline-block;
             color: #1a365d;
@@ -74,7 +74,7 @@
 
         .about-header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .about-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: white; }
-        
+
         .about-title-ne { font-size: 26px; color: #1a365d; font-weight: 950; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3.5px solid #008000; padding-bottom: 6px; display: inline-block; }
         .about-title-en { font-size: 18px; color: #4a5568; font-weight: 800; margin: 0 0 15px 0; }
         .about-meta { font-size: 15px; color: #2d3748; font-weight: 700; margin: 6px 0; }
@@ -118,7 +118,7 @@
         .passport-photo-box { width: 110px; height: 135px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 15px; }
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
         .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
-        
+
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
 
         @media print {
@@ -138,10 +138,10 @@
 
         .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
-        
+
         .levy-flex-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
         .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
-        
+
         .live-dates-box { 
             background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); 
             border: 2px solid #3182ce; 
@@ -165,7 +165,7 @@
         .notif-item p { margin: 2px 0; color: #2d3748; }
 
         .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 6px; }
-        
+
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 5000; padding: 10px; box-sizing: border-box; overflow-y: auto; }
         .modal-content { background: #fff; padding: 15px; border-radius: 12px; width: 100%; max-width: 650px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left; max-height: 90vh; overflow-y: auto; }
         .modal-content h4 { margin: 0 0 12px 0; font-size: 16px; color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
@@ -181,7 +181,7 @@
         .bg-red { background: #fed7d7; color: #742a2a; border-color: #feb2b2; }
         .bg-normal { background: #edf2f7; color: #2d3748; border-color: #cbd5e0; }
         .bg-selected { background: #bee3f8 !important; color: #2b6cb0 !important; border-color: #3182ce !important; }
-        
+
         .summary-box { background: #f7fafc; padding: 6px 10px; border-radius: 5px; border: 1px solid #e2e8f0; margin: 6px 0; font-size: 12px; font-weight: 600; }
         .summary-box p { margin: 2px 0; }
         .fine-text { color: #e53e3e; }
@@ -191,10 +191,9 @@
 </head>
 <body>
 
-    <!-- १. सबैभन्दा माथिको कालो/निलो टप बार (यसभित्र राख्दा ब्याकग्राउन्ड बिग्रँदैन) -->
-<div class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; background-color: #1a365d; color: white;">
+    <div class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; background-color: #1a365d; color: white;">
     <span style="font-size: 15px; font-weight: bold;">दशौँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</span>
-    
+
     <div id="live-calendar-widget" style="background: #1a365d; padding: 6px 16px; border-radius: 20px; border: 1px solid #2b6cb0; font-size: 15px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
         <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
     </div>
@@ -220,7 +219,7 @@
     <div class="nav">
         <a onclick="switchPage('home', this)" class="active">गृहपृष्ठ</a>
         <a onclick="switchPage('about', this)">हाम्रो बारेमा</a>
-        
+
         <div class="dropdown">
             <a href="#">इतिहास र संस्कृति ▾</a>
             <div class="dropdown-content">
@@ -243,7 +242,7 @@
 
         <a onclick="switchPage('noticesSection', this)">सुचना तथा प्रेस विज्ञप्ति</a>
         <a onclick="switchPage('contact', this)">सम्पर्क</a>
-        
+
         <div class="dropdown">
             <a href="#">सदस्यता ▾</a>
             <div class="dropdown-content">
@@ -253,7 +252,7 @@
     </div>
 
     <div class="container">
-        
+
         <div id="home" class="page-section active-page">
             <div class="card">
                 <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
@@ -339,7 +338,7 @@
         <div id="province-committee" class="page-section"><div class="card"><h2>प्रदेश समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
-        
+
         <div id="noticesSection" class="page-section">
             <div class="card">
                 <h2>सूचना तथा प्रेस विज्ञप्ति</h2>
@@ -364,7 +363,7 @@
 
             <div class="card">
                 <h3 style="color: #1a365d; text-align: center; border-bottom: 3.5px solid #008000; padding-bottom: 8px; margin-top: 0; font-weight: 950; font-size: 24px;">सदस्यता तथा नवीकरण प्रणाली</h3>
-                
+
                 <div id="mainChoiceStep" class="sub-section active">
                     <div class="choice-box">
                         <div class="card-box" style="text-align: left; max-width: 550px; margin: 0 auto 20px auto;">
@@ -380,7 +379,7 @@
                 <div id="registerStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">नयाँ खाता दर्ता फारम</h3>
-                    
+
                     <form id="registerForm">
                         <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required></div>
                         <div class="form-row">
@@ -416,7 +415,7 @@
                 <div id="loginStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पुरानो खाता लगइन</h3>
-                    
+
                     <form id="loginForm" onsubmit="handleLogin(event)">
                         <div class="form-group"><label>इमेल ठेगाना:</label><input type="email" id="login_email" placeholder="तपाईको इमेल" required></div>
                         <div class="form-group"><label>पासवर्ड:</label>
@@ -425,7 +424,7 @@
                                 <button type="button" class="toggle-password" onclick="togglePasswordVisibility('login_password', this)">👁</button>
                             </div>
                         </div>
-                        
+
                         <div style="text-align: right; margin-top: 8px;">
                             <a href="javascript:void(0);" onclick="showForgotPasswordStep()" style="color: #2b6cb0; font-size: 13px; font-weight: bold; text-decoration: none;">पासवर्ड बिर्सनुभयो?</a>
                         </div>
@@ -437,7 +436,7 @@
                 <div id="forgotPasswordStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← लगइनमा फर्कनुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पासवर्ड रिसेट गर्नुहोस्</h3>
-                    
+
                     <div class="form-group">
                         <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
                         <input type="email" id="forgot_email" placeholder="example@gmail.com">
@@ -463,7 +462,7 @@
                             <h3 style="color: #234e52; margin: 0; font-size: 18px; font-weight: 900;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
                             <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px; font-weight: 700;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
                         </div>
-                        
+
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <div class="notif-container" id="notificationWrapper" style="display: none;">
                                 <div class="notif-btn" onclick="toggleNotificationDropdown()" title="सूचनाहरू">
@@ -491,10 +490,10 @@
                                 <h3>मेरो लेवी भुक्तानी (My Levy Portal)</h3>
                                 <button onclick="openLevyModal()" class="btn-primary">लेवी तिर्नुहोस् (Pay Levy)</button>
                             </div>
-                            
+
                             <div class="live-dates-box">
-                                <p class="live-nepali-date" id="dashLiveNepaliDate">वि.सं. २०८३ भदौ १८</p>
-                                <p class="live-english-date" id="dashLiveEnglishDate">2026-09-03</p>
+                                <p class="live-nepali-date" id="dashLiveNepaliDate">पात्रो लोड हुँदैछ...</p>
+                                <p class="live-english-date" id="dashLiveEnglishDate">লোড हुँदैछ...</p>
                             </div>
                         </div>
 
@@ -502,14 +501,14 @@
                             <div class="modal-content">
                                 <span onclick="closeLevyModal()" class="close">&times;</span>
                                 <h4>महिना अनुसार लेवी छनोट गर्नुहोस्</h4>
-                                
+
                                 <div class="modal-grid-split">
                                     <div class="modal-left">
                                         <div id="monthsGrid" class="months-grid"></div>
                                     </div>
                                     <div class="modal-right">
                                         <div style="background: #e2e8f0; padding: 5px 8px; border-radius: 4px; text-align: center; margin-bottom: 8px;">
-                                            <span style="font-size: 11px; font-weight: 900; color: #1a365d;" id="modalLiveNepaliDate">मिति: वि.सं. २०८३ भदौ १८</span>
+                                            <span style="font-size: 11px; font-weight: 900; color: #1a365d;" id="modalLiveNepaliDate">मिति: लोड हुँदैछ...</span>
                                         </div>
 
                                         <p style="margin: 0 0 6px 0; font-size: 13px; color: #1a365d; font-weight: 900;">समिति विवरण:</p>
@@ -591,7 +590,7 @@
 
                 <div id="officialFormBox" class="official-form" style="display: none;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
-                    
+
                     <div id="formNoticeBanner" style="padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; text-align: center; display: none; font-size: 13px;"></div>
 
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
@@ -608,7 +607,7 @@
 
                     <p style="margin-top: 0; font-size: 14px; font-weight: 600;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
                     <p style="text-align: center; font-weight: 900; font-size: 16px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
-                    
+
                     <form id="membershipApplicationForm" style="margin-top: 15px;">
                         <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="f_name" required></div>
                         <div class="form-row">
@@ -655,7 +654,7 @@
                 <div id="step3" class="sub-section" style="display: none; margin-top: 15px; text-align: left;">
                     <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
                     <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; font-weight: 900;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
-                    
+
                     <div class="form-group">
                         <label>१. नागरिकता अगाडि:</label>
                         <input type="file" id="citizenshipFront" accept="image/*">
@@ -686,9 +685,9 @@
 
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
         <div style="width: 450px; max-width: 95% !important; background: #fff; border-radius: 16px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2.5px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between;">
-            
+
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 12px 15px 95px 15px; position: relative; border-top-left-radius: 14px; border-top-right-radius: 14px; overflow: hidden; z-index: 1;">
-                
+
                 <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 10px; right: 15px; color: #ffffff; font-size: 26px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
 
                 <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
@@ -707,7 +706,7 @@
             </div>
 
             <div style="background: #008000; color: #ffffff; border: 3px solid #e53e3e; text-align: center; padding: 6px 26px; font-weight: 950; font-size: 18px; letter-spacing: 2px; width: 160px; margin: -70px auto 8px auto; border-radius: 24px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
-            
+
             <div style="padding: 0 15px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div style="display: flex; justify-content: center; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 18px;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
@@ -721,7 +720,7 @@
                     <div style="text-align: center; flex-shrink: 0; z-index: 1;">
                         <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 100px; height: 120px; border-radius: 8px; object-fit: cover; border: 2.5px solid #1a365d; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
                     </div>
-                    
+
                     <div style="flex-grow: 1; font-size: 13px; color: #000000; line-height: 1.45; font-weight: 900; z-index: 1;">
                         <div style="font-size: 19px; font-weight: 950; color: #000000; letter-spacing: 0.3px;" id="cardName">-</div>
                         <div style="color: #006600; font-weight: 950; font-size: 14.5px; margin-top: 1px;" id="cardPosition">-</div>
@@ -792,7 +791,7 @@
     <script>
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
-        
+
         const { createClient } = window.supabase;
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -855,19 +854,40 @@
             const enDay = String(now.getDate()).padStart(2, '0');
             const englishDateStr = `${enYear}-${enMonth}-${enDay}`;
 
+            // Real-time calculated dynamic Nepali Date approximation mapping for general display
+            const nepaliMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+            const nepaliDays = ["आइतवार", "सोमवार", "मङ्गलवार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिवार"];
+            
+            // Standard synchronization offset logic linked to system date for continuous live updates
+            const baseEpoch = new Date('2026-09-08T00:00:00').getTime();
+            const diffDays = Math.floor((now.getTime() - baseEpoch) / (1000 * 60 * 60 * 24));
+            
             let nepaliYear = 2083;
-            let nepaliMonthName = "भदौ";
-            let nepaliDayNum = "१८";
+            let nepaliMonthIndex = 4; // Bhadra (0-indexed: 4)
+            let nepaliDayNum = 18 + diffDays;
+            
+            // Basic rollover logic simulation for months/years
+            while (nepaliDayNum > 30) {
+                nepaliDayNum -= 30;
+                nepaliMonthIndex = (nepaliMonthIndex + 1) % 12;
+                if (nepaliMonthIndex === 0) nepaliYear++;
+            }
+            while (nepaliDayNum < 1) {
+                nepaliDayNum += 30;
+                nepaliMonthIndex = (nepaliMonthIndex - 1 + 12) % 12;
+                if (nepaliMonthIndex === 11) nepaliYear--;
+            }
 
-            const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYear)} ${nepaliMonthName} ${toNepaliNumber(nepaliDayNum)}`;
-            return { nepali: nepaliDateStr, english: englishDateStr };
+            const nepaliMonthName = nepaliMonths[nepaliMonthIndex];
+            const dayOfWeek = nepaliDays[now.getDay() === 0 ? 0 : now.getDay()];
+
+            const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYear)} ${nepaliMonthName} ${toNepaliNumber(nepaliDayNum)}, ${dayOfWeek}`;
+            return { nepali: nepaliDateStr, english: englishDateStr, rawNepali: `${nepaliYear}-${String(nepaliMonthIndex + 1).padStart(2, '0')}-${String(nepaliDayNum).padStart(2, '0')}` };
         }
 
         function updateRealTimeClock() {
             const liveDates = getRealLiveDates();
-            const topBarDateEl = document.getElementById('topBarDate');
-            if(topBarDateEl) topBarDateEl.innerText = `${liveDates.nepali} | नेपाल संवत ११४६`;
-
+            
             const dashNepEl = document.getElementById('dashLiveNepaliDate');
             const dashEngEl = document.getElementById('dashLiveEnglishDate');
             if(dashNepEl) dashNepEl.innerText = liveDates.nepali;
@@ -875,12 +895,28 @@
 
             const modalNepEl = document.getElementById('modalLiveNepaliDate');
             if(modalNepEl) modalNepEl.innerText = `मिति: ${liveDates.nepali}`;
+
+            const topCalendarEl = document.getElementById('nepali-live-date');
+            if(topCalendarEl) {
+                let hours = new Date().getHours();
+                let minutes = new Date().getMinutes();
+                let seconds = new Date().getSeconds();
+                let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
+
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                minutes = minutes < 10 ? '०' + minutes : minutes;
+                seconds = seconds < 10 ? '०' + seconds : seconds;
+                let timeString = `${toNepaliNumber(hours)}:${toNepaliNumber(minutes)}:${toNepaliNumber(seconds)} ${ampm}`;
+
+                topCalendarEl.innerHTML = `${liveDates.nepali} | ${timeString}`;
+            }
         }
 
         setInterval(updateRealTimeClock, 1000);
 
         function getNepaliDate() {
-            return getRealLiveDates().nepali.replace('वि.सं. ', '');
+            return getRealLiveDates().rawNepali;
         }
 
         function getExpiryDate(regDateStr) {
@@ -1029,14 +1065,12 @@
         }
         document.getElementById('registerForm').addEventListener('submit', generateAndSendOtp);
 
-        // सुधार गरिएको verifyOtp फङ्सन जसले अब अनिवार्य रूपमा users टेबलमा रेकर्ड इन्सर्ट गर्छ
         async function verifyOtp() {
             const entered = document.getElementById('otpCode').value.trim();
             if(entered !== currentGeneratedOtp) { alert('गलत OTP कोड!'); return; }
-            
-            // पहिले उही इमेल भएको युजर छ कि छैन जाँच गर्ने
+
             const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).maybeSingle();
-            
+
             if (!existingUser) {
                 const { error: insertError } = await supabaseClient.from('users').insert([currentUserProfile]);
                 if (insertError) {
@@ -1044,7 +1078,6 @@
                     return;
                 }
             } else {
-                // यदि पहिले नै छ भने पासवर्ड र नाम अपडेट गर्ने
                 await supabaseClient.from('users').update({ 
                     password: currentUserProfile.password, 
                     full_name: currentUserProfile.full_name,
@@ -1246,7 +1279,7 @@
             document.getElementById('lbl_phone').innerText = currentUserProfile.phone || '-';
             document.getElementById('lbl_email').innerText = currentUserProfile.email;
             document.getElementById('lbl_dob').innerText = currentUserProfile.dob || '-';
-            
+
             if(currentUserProfile.avatar && currentUserProfile.avatar.trim() !== '') {
                 document.getElementById('lbl_avatar_img').src = currentUserProfile.avatar;
             } else {
@@ -1255,7 +1288,7 @@
 
             const { data } = await supabaseClient.from('membership_applications').select('*').eq('identifier', currentUserProfile.email).order('created_at', { ascending: false }).limit(1);
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-            
+
             const alertBox = document.getElementById('applicationStatusAlert');
             const noticeBanner = document.getElementById('formNoticeBanner');
             const btnOpenForm = document.getElementById('btnOpenForm');
@@ -1393,7 +1426,7 @@
                 document.getElementById('f_mother').value = currentApplication.mother_name || '';
                 document.getElementById('f_grandfather').value = currentApplication.grandfather_name || '';
                 document.getElementById('f_province').value = currentApplication.province || '';
-                
+
                 if(currentApplication.province) {
                     loadDistricts();
                     document.getElementById('f_district').value = currentApplication.district || '';
@@ -1528,7 +1561,7 @@
 
             const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
             const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
-            
+
             const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
             const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
             const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
@@ -1542,7 +1575,7 @@
             document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
             document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
             document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
-            
+
             const photo = currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
 
@@ -1639,7 +1672,7 @@
                 let boxClass = isPaid ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
                 let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
                 let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ' : 'बाँकी'));
-                
+
                 grid.innerHTML += `
                     <div class="month-box ${boxClass}" ${clickAction}>
                         <span>${m.name}</span><br>
@@ -1650,7 +1683,7 @@
             updateLevySummary(rate);
         }
 
-       async function submitLevyPayment() {
+        async function submitLevyPayment() {
             const fileInput = document.getElementById('voucherFile');
             if (selectedMonths.length === 0) { 
                 alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
@@ -1663,8 +1696,7 @@
 
             try {
                 alert('भौचर अपलोड हुँदैछ, कृपया प्रतीक्षा गर्नुहोस्...');
-                
-                // १. Supabase Storage मा फाइल अपलोड गर्ने र त्यसको URL प्राप्त गर्ने
+
                 const paySlipFile = fileInput.files[0];
                 const paySlipUrl = await uploadFileToSupabase(paySlipFile, 'payments');
 
@@ -1674,11 +1706,8 @@
                 }
 
                 const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : '1';
-
-                // २. वास्तविक नेपाली मिति प्राप्त गर्ने (जस्तै: २०८३-०५-१८)
                 const realNepaliDateStr = getNepaliDate(); 
 
-                // ३. डेटाबेसमा सही नेपाली मिति सहित सेभ गर्ने
                 const { error } = await supabaseClient
                     .from('levy_payments')
                     .insert([
@@ -1695,7 +1724,7 @@
                             fine_amount: 0,
                             total_amount: selectedMonths.length * committeeRate,
                             payment_slip: paySlipUrl, 
-                            date: realNepaliDateStr, // यहाँ अब अंग्रेजीको सट्टा '२०८३-०५-१८' जस्तो वास्तविक नेपाली मिति बस्नेछ
+                            date: realNepaliDateStr,
                             status: 'Pending'
                         }
                     ]);
@@ -1713,31 +1742,11 @@
                 alert('डेटा सेभ गर्न असफल भयो!');
             }
         }
+
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
             updateRealTimeClock();
         });
-        function updateLiveNepaliCalendar() {
-        const liveNepaliDateString = "वि.सं. २०८३ भदौ २१, आइतबार";
-        
-        const now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        let seconds = now.getSeconds();
-        let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
-        
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? '०' + minutes : minutes;
-        seconds = seconds < 10 ? '०' + seconds : seconds;
-        
-        let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-        
-        document.getElementById('nepali-live-date').innerHTML = `<i class="fa-regular fa-calendar-days mr-1"></i> ${liveNepaliDateString} | ${timeString}`;
-    }
-    
-    setInterval(updateLiveNepaliCalendar, 1000);
-    updateLiveNepaliCalendar();
     </script>
 </body>
 </html>
