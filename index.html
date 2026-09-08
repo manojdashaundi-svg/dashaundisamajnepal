@@ -191,10 +191,10 @@
 </head>
 <body>
 
-    <div class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; background-color: #1a365d; color: white;">
-    <span style="font-size: 15px; font-weight: bold;">दशौँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</span>
+    <div class="top-bar">
+    <span style="font-size: 14px; font-weight: bold;">दशौँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</span>
 
-    <div id="live-calendar-widget" style="background: #1a365d; padding: 6px 16px; border-radius: 20px; border: 1px solid #2b6cb0; font-size: 15px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+    <div id="live-calendar-widget" style="background: #1a365d; padding: 6px 16px; border-radius: 20px; border: 1px solid #2b6cb0; font-size: 14px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
         <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
     </div>
 </div>
@@ -493,7 +493,7 @@
 
                             <div class="live-dates-box">
                                 <p class="live-nepali-date" id="dashLiveNepaliDate">पात्रो लोड हुँदैछ...</p>
-                                <p class="live-english-date" id="dashLiveEnglishDate">লোড हुँदैछ...</p>
+                                <p class="live-english-date" id="dashLiveEnglishDate">--</p>
                             </div>
                         </div>
 
@@ -847,6 +847,7 @@
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
 
+        // वास्तविक अटो-अपडेट हुने नेपाली मिति र बार गणना गर्ने इन्जिन
         function getRealLiveDates() {
             const now = new Date();
             const enYear = now.getFullYear();
@@ -854,69 +855,47 @@
             const enDay = String(now.getDate()).padStart(2, '0');
             const englishDateStr = `${enYear}-${enMonth}-${enDay}`;
 
-            // Real-time calculated dynamic Nepali Date approximation mapping for general display
+            // विक्रम संवत अनुमानित वा म्यापिङ लजिक (इस्वी संवत ५६.७ वर्ष अगाडि हुन्छ)
+            // उदाहरणका लागि सटीक महिना र गते गणना:
             const nepaliMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
-            const nepaliDays = ["आइतवार", "सोमवार", "मङ्गलवार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिवार"];
+            const nepaliDays = ["आइतबार", "सोमबार", "मङ्गलवार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिबार"];
             
-            // Standard synchronization offset logic linked to system date for continuous live updates
-            const baseEpoch = new Date('2026-09-08T00:00:00').getTime();
-            const diffDays = Math.floor((now.getTime() - baseEpoch) / (1000 * 60 * 60 * 24));
-            
-            let nepaliYear = 2083;
-            let nepaliMonthIndex = 4; // Bhadra (0-indexed: 4)
-            let nepaliDayNum = 18 + diffDays;
-            
-            // Basic rollover logic simulation for months/years
-            while (nepaliDayNum > 30) {
-                nepaliDayNum -= 30;
-                nepaliMonthIndex = (nepaliMonthIndex + 1) % 12;
-                if (nepaliMonthIndex === 0) nepaliYear++;
-            }
-            while (nepaliDayNum < 1) {
-                nepaliDayNum += 30;
-                nepaliMonthIndex = (nepaliMonthIndex - 1 + 12) % 12;
-                if (nepaliMonthIndex === 11) nepaliYear--;
-            }
+            // सरलीकृत तर स्वचालित नेपाली मिति रूपान्तरण (प्रत्येक दिन स्वतः बदलिने)
+            let diffDays = Math.floor((now - new Date(2026, 0, 1)) / (1000 * 60 * 60 * 24));
+            let nepaliDayNum = (17 + diffDays) % 30 + 1;
+            let nepaliMonthIdx = 4 + Math.floor(((17 + diffDays) / 30)); 
+            let nepaliYearNum = 2083;
+            if(nepaliMonthIdx > 11) { nepaliMonthIdx = nepaliMonthIdx % 12; nepaliYearNum++; }
 
-            const nepaliMonthName = nepaliMonths[nepaliMonthIndex];
             const dayOfWeek = nepaliDays[now.getDay() === 0 ? 0 : now.getDay()];
+            const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYearNum)} ${nepaliMonths[nepaliMonthIdx]} ${toNepaliNumber(nepaliDayNum)}, ${dayOfWeek}`;
+            const shortNepaliDate = `${toNepaliNumber(nepaliYearNum)}-${String(nepaliMonthIdx+1).padStart(2,'0')}-${String(nepaliDayNum).padStart(2,'0')}`;
 
-            const nepaliDateStr = `वि.सं. ${toNepaliNumber(nepaliYear)} ${nepaliMonthName} ${toNepaliNumber(nepaliDayNum)}, ${dayOfWeek}`;
-            return { nepali: nepaliDateStr, english: englishDateStr, rawNepali: `${nepaliYear}-${String(nepaliMonthIndex + 1).padStart(2, '0')}-${String(nepaliDayNum).padStart(2, '0')}` };
+            return { nepali: nepaliDateStr, shortNepali: shortNepaliDate, english: englishDateStr };
         }
 
         function updateRealTimeClock() {
             const liveDates = getRealLiveDates();
             
+            // टप बारको पात्रो अपडेट
+            const topBarDateEl = document.getElementById('nepali-live-date');
+            if(topBarDateEl) topBarDateEl.innerHTML = `<i class="fa-regular fa-calendar-days mr-1"></i> ${liveDates.nepali}`;
+
+            // ड्यासबोर्डको लेवी सेक्सन मिति अपडेट
             const dashNepEl = document.getElementById('dashLiveNepaliDate');
             const dashEngEl = document.getElementById('dashLiveEnglishDate');
             if(dashNepEl) dashNepEl.innerText = liveDates.nepali;
             if(dashEngEl) dashEngEl.innerText = liveDates.english;
 
+            // मोडल भित्रको मिति अपडेट
             const modalNepEl = document.getElementById('modalLiveNepaliDate');
             if(modalNepEl) modalNepEl.innerText = `मिति: ${liveDates.nepali}`;
-
-            const topCalendarEl = document.getElementById('nepali-live-date');
-            if(topCalendarEl) {
-                let hours = new Date().getHours();
-                let minutes = new Date().getMinutes();
-                let seconds = new Date().getSeconds();
-                let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
-
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                minutes = minutes < 10 ? '०' + minutes : minutes;
-                seconds = seconds < 10 ? '०' + seconds : seconds;
-                let timeString = `${toNepaliNumber(hours)}:${toNepaliNumber(minutes)}:${toNepaliNumber(seconds)} ${ampm}`;
-
-                topCalendarEl.innerHTML = `${liveDates.nepali} | ${timeString}`;
-            }
         }
 
         setInterval(updateRealTimeClock, 1000);
 
         function getNepaliDate() {
-            return getRealLiveDates().rawNepali;
+            return getRealLiveDates().shortNepali;
         }
 
         function getExpiryDate(regDateStr) {
@@ -1724,7 +1703,7 @@
                             fine_amount: 0,
                             total_amount: selectedMonths.length * committeeRate,
                             payment_slip: paySlipUrl, 
-                            date: realNepaliDateStr,
+                            date: realNepaliDateStr, 
                             status: 'Pending'
                         }
                     ]);
