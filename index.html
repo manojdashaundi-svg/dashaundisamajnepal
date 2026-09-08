@@ -1610,22 +1610,44 @@
 
         let selectedMonths = [];
         async function openLevyModal() {
-            document.getElementById('levyModal').style.display = 'flex';
-            updateRealTimeClock();
+    document.getElementById('levyModal').style.display = 'flex';
+    updateRealTimeClock();
+    selectedMonths = []; // मोडल खोल्दा नयाँ छनोट खाली गर्ने
 
-            const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-            if (userData) {
-                userCommitteeKey = userData.committee_key || 'central';
-                document.getElementById('modalCommitteeName').innerText = userData.committee || 'केन्द्रीय समिति';
-            }
+    const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
+    if (userData) {
+        userCommitteeKey = userData.committee_key || 'central';
+        document.getElementById('modalCommitteeName').innerText = userData.committee || 'केन्द्रीय समिति';
+    }
 
-            const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
-            if (rateData) {
-                committeeRate = parseFloat(rateData.monthly_amount);
-                document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
-            }
-            renderMonths(['01', '02', '03', '04'], committeeRate); 
+    const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
+    if (rateData) {
+        committeeRate = parseFloat(rateData.monthly_amount);
+        document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
+    }
+
+    // प्रयोगकर्ताले भुक्तानी गरिसकेका वा पेन्डिङ भएका महिनाहरूको सूची Supabase बाट तान्ने
+    let paidMonthsHistory = [];
+    const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
+    
+    if (activeUserId) {
+        const { data: levyData, error } = await supabaseClient
+            .from('levy_payments')
+            .select('months, status')
+            .eq('user_id', activeUserId);
+
+        if (levyData && levyData.length > 0) {
+            levyData.forEach(payment => {
+                // यदि महिनाहरूको array अवस्थित छ भने तिनलाई इतिहासमा जोड्ने
+                if (payment.months && Array.isArray(payment.months)) {
+                    paidMonthsHistory = paidMonthsHistory.concat(payment.months);
+                }
+            });
         }
+    }
+
+    renderMonths(paidMonthsHistory, committeeRate); 
+}
 
         function closeLevyModal() { document.getElementById('levyModal').style.display = 'none'; }
         function checkIfLate(monthVal) { return parseInt(monthVal) > 4 && parseInt(monthVal) < 5; }
