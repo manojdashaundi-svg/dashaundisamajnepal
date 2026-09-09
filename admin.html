@@ -372,19 +372,19 @@
                 <div class="approval-section">
                   <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
                   <table id="pendingTable">
-                <thead>
+            <thead>
                   <tr>
                        <th>मिति</th>
                          <th>सदस्य नम्बर</th>
-                        <th>पदाधिकारी नाम</th>
-                        <th>पद</th>
-                        <th>कमीटी तह</th>
-                        <th>मिनाहरू</th>
-                       <th>जम्मा रकम (जरिवानासहित)</th>
-                       <th>भौचर</th>
-                      <th>कार्य</th>
+                         <th>पदाधिकारी नाम</th>
+                         <th>पद</th>
+                         <th>कमीटी तह</th>
+                         <th>मिनाहरू</th>
+                        <th>जम्मा रकम (जरिवानासहित)</th>
+                        <th>भौचर</th>
+                       <th>कार्य</th>
                   </tr>
-                    </thead>
+                </thead>
                      <tbody id="pendingLevyTableBody"></tbody>
                   </table>
                 </div>
@@ -1144,6 +1144,24 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label>जारी मिति (वर्ष, महिना, गते):</label>
+                <div class="nepali-date-picker-group">
+                    <select id="approval_reg_year" required></select>
+                    <select id="approval_reg_month" required></select>
+                    <select id="approval_reg_day" required></select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>म्याद समाप्त मिति (वर्ष, महिना, गते):</label>
+                <div class="nepali-date-picker-group">
+                    <select id="approval_exp_year" required></select>
+                    <select id="approval_exp_month" required></select>
+                    <select id="approval_exp_day" required></select>
+                </div>
+            </div>
+
             <div id="committeeOptionsBox" class="hidden" style="background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #cbd5e0; margin-bottom: 15px;">
                 <div class="form-group">
                     <label>कमिटीको तह छान्नुहोस्:</label>
@@ -1620,6 +1638,8 @@
             populateNepaliDateDropdowns('notice');
             populateNepaliDateDropdowns('m_notice');
             populateNepaliDateDropdowns('reg');
+            populateNepaliDateDropdowns('approval_reg');
+            populateNepaliDateDropdowns('approval_exp');
 
             if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
                 document.getElementById('loginSection').classList.remove('hidden');
@@ -2278,6 +2298,9 @@
             let assignedPosition = 'साधारण सदस्य';
             let committeeLevelVal = '';
 
+            const todayNepaliDate = getSelectedNepaliDate('approval_reg');
+            const expiryNepaliDate = getSelectedNepaliDate('approval_exp');
+
             if (memType === 'समिति') {
                 let commLevel = document.getElementById('selectCommitteeLevel').value;
                 let commPos = document.getElementById('selectCommitteePosition').value;
@@ -2301,7 +2324,6 @@
 
             closePositionModal();
 
-            const todayNepaliDate = '२०८३-०५-२३';
             let formattedMemberNo = '';
             const isRenewal = app.application_type === 'नवीकरण';
 
@@ -2365,7 +2387,7 @@
                 };
                 await supabaseClient.from('income_records').insert([incomeRecord]);
 
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
                 loadIncomeData();
