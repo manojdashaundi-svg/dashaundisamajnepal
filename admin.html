@@ -139,7 +139,6 @@
             box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
         }
 
-        /* नेपाली मिति छान्ने बक्सहरूको स्टाइल */
         .nepali-date-picker-group {
             display: grid;
             grid-template-columns: 1.2fr 1.4fr 1fr;
@@ -346,7 +345,6 @@
     <div class="top-header">
         <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
         
-        <!-- लाइभ मिति र समय विजेट -->
         <div id="live-calendar-widget" style="background: #10b981; padding: 6px 15px; border-radius: 20px; border: 1px solid #059669; font-size: 14px; font-weight: 500; color: #ffffff; display: flex; align-items: center; gap: 8px;">
             <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
         </div>
@@ -354,7 +352,6 @@
         <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
     </div>
 
-            <!-- लेवी व्यवस्थापन एडमिन प्यानल सेक्सन -->
             <div class="section-header">
                 <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
                 <div class="button-group">
@@ -1024,7 +1021,6 @@
                 </div>
             </div>
 
-           <!-- सूचना तथा सन्देश व्यवस्थापन सेक्सन -->
             <div class="section-header">
                 <h3>सदस्य तथा पदाधिकारी सूचना व्यवस्थापन</h3>
                 <div class="button-group">
@@ -1033,7 +1029,6 @@
             </div>
 
             <div id="memberNoticeContent" class="collapsible-content">
-                <!-- १. सदस्यहरूलाई सूचना पठाउने बक्स -->
                 <div class="admin-panel" style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px;">
                     <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यहरूलाई सूचना पठाउनुहोस्</h4>
                     <form id="memberNoticeForm" onsubmit="sendMemberNotice(event)">
@@ -1070,7 +1065,6 @@
                     </form>
                 </div>
 
-                <!-- २. सूचना हेर्नुहोस् र सम्पादन गर्नुहोस् सेक्सन -->
                 <div class="admin-panel" style="padding: 15px; background: #fff; border: 1px solid var(--border-color); border-radius: 6px;">
                     <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">पठाइएका सूचनाहरू हेर्नुहोस् र सम्पादन गर्नुहोस्</h4>
                     <div class="table-responsive">
@@ -1140,7 +1134,6 @@
         <div id="message"></div>
     </div>
 
-    <!-- अन्य मोडलहरू (Position, ID Card, Image, App Edit, User Edit, Voucher, Levy Voucher) कायम राखिएको छ -->
     <div id="positionModal" class="app-edit-modal">
         <div class="app-edit-content" style="width: 450px;">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन स्वीकृत (Approve)</h3>
@@ -1195,7 +1188,6 @@
         </div>
     </div>
     
-    <!-- परिचय पत्र मोडल -->
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
         <div style="width: 420px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between; max-height: 92vh;">
 
@@ -1405,7 +1397,6 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
-        // नेपाली मिति ड्रपडाउन् सेटअप गर्ने फङ्क्सन
         function populateNepaliDateDropdowns(prefix) {
             const yearSelect = document.getElementById(prefix + '_year');
             const monthSelect = document.getElementById(prefix + '_month');
@@ -1413,18 +1404,16 @@
 
             if (!yearSelect || !monthSelect || !daySelect) return;
 
-            // वर्षहरू (२०८० देखि २०९० सम्म)
             yearSelect.innerHTML = '<option value="">वर्ष छान्नुहोस्</option>';
             const years = ['२०८०', '२०८१', '२०८२', '२०८३', '२०८४', '२०८५', '२०८६', '२०८७', '२०८८', '२०८९', '२०९०'];
             years.forEach(y => {
                 let opt = document.createElement('option');
                 opt.value = y;
                 opt.textContent = y;
-                if(y === '२०८३') opt.selected = true; // डिफल्ट हालको वर्ष
+                if(y === '२०८३') opt.selected = true;
                 yearSelect.appendChild(opt);
             });
 
-            // महिनाहरू
             monthSelect.innerHTML = '<option value="">महिना छान्नुहोस्</option>';
             const months = [
                 {val: '०१', name: 'वैशाख'}, {val: '०२', name: 'जेठ'}, {val: '०३', name: 'असार'},
@@ -1436,11 +1425,10 @@
                 let opt = document.createElement('option');
                 opt.value = m.val;
                 opt.textContent = m.name;
-                if(m.val === '०५') opt.selected = true; // डिफल्ट हालको महिना (भदौ)
+                if(m.val === '०५') opt.selected = true;
                 monthSelect.appendChild(opt);
             });
 
-            // गतेहरू (१ देखि ३२ सम्म)
             daySelect.innerHTML = '<option value="">गते छान्नुहोस्</option>';
             for(let i = 1; i <= 32; i++) {
                 let dayStr = i < 10 ? '०' + i : String(i);
@@ -1448,7 +1436,7 @@
                 let opt = document.createElement('option');
                 opt.value = nepaliNum;
                 opt.textContent = nepaliNum + ' गते';
-                if(i === 23) opt.selected = true; // डिफल्ट २३ गते
+                if(i === 23) opt.selected = true;
                 daySelect.appendChild(opt);
             }
         }
@@ -1461,6 +1449,7 @@
             return `${y}-${m}-${d}`;
         }
 
+        // सबै कोषहरू र आम्दानीहरूको टेबलबाट एउटै सिरियल नम्बर निकाल्ने फङ्क्सन
         async function getNextVoucherNo() {
             try {
                 const prefix = 'VCH';
@@ -1629,7 +1618,6 @@
         }
 
         window.onload = function() {
-            // सबै मिति ड्रपडाउनहरूमा विकल्पहरू लोड गर्ने
             populateNepaliDateDropdowns('human');
             populateNepaliDateDropdowns('emergency');
             populateNepaliDateDropdowns('relief');
@@ -1803,33 +1791,6 @@
             }
         }
 
-        function viewMonthlyLevyVoucherByIndex(index) {
-            const item = window.monthlyLevyCache[index];
-            if (!item) return;
-
-            document.getElementById('officialVoucherNo').innerText = item.voucher_no || '-';
-            document.getElementById('officialVoucherDate').innerText = toNepaliNumber(item.date || '-');
-            document.getElementById('officialMemberName').innerText = item.member_name || '-';
-            document.getElementById('officialCommitteeType').innerText = item.committee_type || '-';
-            document.getElementById('officialMonthsPaid').innerText = toNepaliNumber(item.months_paid || '-');
-            document.getElementById('officialAmount').innerText = 'रु. ' + toNepaliNumber(item.amount || 0);
-
-            document.getElementById('officialLevyReceiptModal').style.display = 'block';
-        }
-
-        function closeOfficialLevyModal() {
-            document.getElementById('officialLevyReceiptModal').style.display = 'none';
-        }
-
-        function printOfficialLevyReceipt() {
-            const printContents = document.getElementById('printableOfficialLevy').innerHTML;
-            const originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-            location.reload();
-        }
-
         function closeLevyVoucherModal() {
             document.getElementById('levyVoucherModal').style.display = 'none';
         }
@@ -1925,15 +1886,7 @@
                     }
 
                     const paymentDate = paymentData.date || '२०८३-०५-२३';
-                    const prefix = 'VCH';
-
-                    const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
-                    const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
-                    const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
-                    const { count: c4 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
-                    
-                    const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0);
-                    const voucherNo = `${prefix}-${toNepaliNumber(String(totalCount + 1).padStart(3, '0'))}`;
+                    const voucherNo = await getNextVoucherNo(); // एउटै सिरियलबाट भौचर नं लिने
 
                     const { error: updateError } = await supabaseClient
                         .from('levy_payments')
@@ -1966,7 +1919,7 @@
                         return;
                     }
 
-                    alert('भुक्तानी सफलतापूर्वक स्वीकृत गरियो र "मासिक लेवीबाट प्राप्त आम्दानी" मा थपियो!');
+                    alert(`भुक्तानी सफलतापूर्वक स्वीकृत गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
                     loadPendingLevyPayments();
                     loadMonthlyLevyIncomeData();
                 } catch (err) {
@@ -1990,7 +1943,7 @@
 
         async function saveGrantIncome(e) {
             e.preventDefault();
-            const voucherNo = await getNextVoucherNo();
+            const voucherNo = await getNextVoucherNo(); // एउटै सिरियलबाट भौचर नं लिने
             const selectedDate = getSelectedNepaliDate('grant');
 
             const grantData = {
@@ -2094,16 +2047,7 @@
 
         async function saveFundIncome(e, tableName, categoryName) {
             e.preventDefault();
-            const prefix = 'VCH';
-            
-            const { count: c1 } = await supabaseClient.from('human_fund').select('*', { count: 'exact', head: true });
-            const { count: c2 } = await supabaseClient.from('emergency_fund').select('*', { count: 'exact', head: true });
-            const { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
-            
-            const totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0);
-            const nextNum = totalCount + 1;
-            const formattedNum = String(nextNum).padStart(3, '0');
-            const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
+            const voucherNo = await getNextVoucherNo(); // एउटै सिरियलबाट भौचर नं लिने
 
             const prefixKey = tableName === 'human_fund' ? 'human' : (tableName === 'emergency_fund' ? 'emergency' : 'relief');
             const donorId = prefixKey + '_donor';
@@ -2125,7 +2069,7 @@
 
             const { error } = await supabaseClient.from(tableName).insert([data]);
             if (!error) {
-                alert(`${categoryName}मा सफलतासाथ रकम थपियो!`);
+                alert(`${categoryName}मा सफलतासाथ रकम थपियो र भौचर नं. ${voucherNo} जारी भयो!`);
                 e.target.reset();
                 populateNepaliDateDropdowns(prefixKey);
                 const tbodyId = tableName === 'human_fund' ? 'humanFundTableBody' : (tableName === 'emergency_fund' ? 'emergencyFundTableBody' : 'reliefFundTableBody');
@@ -2197,7 +2141,7 @@
 
             const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
             if (!error) {
-                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान गरियो!');
+                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान भयो!');
                 document.getElementById('dailyExpenseForm').reset();
                 populateNepaliDateDropdowns('exp');
                 loadDailyExpenseData();
@@ -3127,66 +3071,5 @@
             loadMonthlyLevyIncomeData();
         });
     </script>
-
-    <!-- आधिकारिक मासिक लेवी आम्दानी रसिद मोडल -->
-    <div id="officialLevyReceiptModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); overflow:auto;">
-        <div class="modal-content" style="background:#fff; margin:5% auto; padding:20px; width:90%; max-width:600px; border-radius:8px; position:relative;">
-            <span onclick="closeOfficialLevyModal()" style="position:absolute; right:15px; top:10px; font-size:24px; cursor:pointer; font-weight:bold;">&times;</span>
-            
-            <div id="printableOfficialLevy" style="padding: 15px; font-family: sans-serif; text-align: center; background: #fff;">
-                <img src="https://i.postimg.cc/vBRv50Yy/last-l-2ogo-jpg.png" alt="Logo" style="width: 70px; height: 70px; margin-bottom: 5px; object-fit: contain;">
-                
-                <h2 style="margin: 0; color: #1e3a8a; font-size: 22px;">दशौँदी समाज नेपाल</h2>
-                <p style="margin: 2px 0; font-size: 13px; color: #555;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
-                <p style="margin: 2px 0 10px 0; font-size: 12px; color: #555;">स्थापना - २०८०</p>
-                
-                <div style="display: inline-block; background: #2563eb; color: white; padding: 5px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; margin: 10px 0;">
-                    मासिक लेवी आम्दानी रसिद
-                </div>
-
-                <div style="border-top: 1px dashed #9ca3af; margin: 10px 0 15px 0;"></div>
-
-                <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; font-weight: bold;">
-                    <span>भौचर नं.: <span id="officialVoucherNo" style="color: #b45309;">-</span></span>
-                    <span>मिति: <span id="officialVoucherDate">-</span></span>
-                </div>
-
-                <table style="width: 100%; margin-top: 15px; border-collapse: collapse; text-align: left; font-size: 14px;">
-                    <tr style="border-bottom: 1px solid #e5e7eb;">
-                        <th style="padding: 10px; width: 38%; color: #374151; background: transparent; text-align: left;">पदाधिकारीको नाम:</th>
-                        <td id="officialMemberName" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #e5e7eb;">
-                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">कमिटी तह:</th>
-                        <td id="officialCommitteeType" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #e5e7eb;">
-                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">चुक्ता गरिएका महिनाहरू:</th>
-                        <td id="officialMonthsPaid" style="padding: 10px; color: #111827; background: transparent; text-align: left;">-</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #e5e7eb;">
-                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">भुक्तानी माध्यम:</th>
-                        <td style="padding: 10px; color: #111827; background: transparent; text-align: left;">बैंक भौचर / अनलाइन भुक्तानी</td>
-                    </tr>
-                    <tr style="border-bottom: 2px solid #d1d5db;">
-                        <th style="padding: 10px; color: #374151; background: transparent; text-align: left;">जम्मा रकम (अंकमा):</th>
-                        <td id="officialAmount" style="padding: 10px; font-weight: bold; color: #16a34a; background: transparent; text-align: left;">-</td>
-                    </tr>
-                </table>
-
-                <div style="display: flex; justify-content: space-space; margin-top: 40px; font-size: 14px; align-items: flex-end;">
-                    <div style="border-top: 1px dashed #6b7280; width: 160px; text-align: center; padding-top: 5px;">बुझाउनेको सही</div>
-                    <div style="width: 160px; text-align: center;">
-                        <img src="https://i.postimg.cc/44W9gWDg/4-Manoj.png" alt="Signature" style="max-height: 45px; width: auto; margin-bottom: 2px; object-fit: contain;">
-                        <div style="border-top: 1px dashed #6b7280; padding-top: 5px;">कोषाध्यक्ष / सचिव</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 25px;">
-                <button onclick="printOfficialLevyReceipt()" style="background: #16a34a; color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">🖨️ भौचर प्रिन्ट / PDF गर्नुहोस्</button>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
