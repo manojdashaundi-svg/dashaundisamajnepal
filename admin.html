@@ -78,6 +78,8 @@
             border-radius: 0 6px 6px 0;
             margin-top: 35px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .section-header h3 {
@@ -89,6 +91,29 @@
         .button-group {
             display: flex;
             gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .date-filter-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2d3748;
+            background: #fff;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .date-filter-box select {
+            padding: 2px 4px;
+            font-size: 11px;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            background: #fff;
         }
 
         .toggle-btn, .print-btn {
@@ -270,7 +295,7 @@
         .rate-setup-section, .approval-section, .reports-section { margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
         .reports-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .list-box { background: #fff; padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); position: relative; }
-        .list-box-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; }
+        .list-box-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
 
         .print-header {
             display: none;
@@ -402,7 +427,15 @@
                   <div class="list-box" id="paidBoxContainer">
                     <div class="list-box-header">
                       <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
-                      <button class="print-btn" onclick="printSection('paidBoxContainer', 'लेवी तिरेका पदाधिकारीहरूको सूची')">प्रिन्ट / PDF</button>
+                      <div class="button-group">
+                          <div class="date-filter-box">
+                              <span>मिति:</span>
+                              <select id="filter_paid_from"><option value="">यति मिति</option></select>
+                              <span>देखि</span>
+                              <select id="filter_paid_to"><option value="">यति मिति</option></select>
+                          </div>
+                          <button class="print-btn" onclick="printSectionWithDateRange('paidBoxContainer', 'लेवी तिरेका पदाधिकारीहरूको सूची', 'filter_paid_from', 'filter_paid_to')">प्रिन्ट / PDF</button>
+                      </div>
                     </div>
                     <div class="table-responsive">
                         <table id="paidListTable">
@@ -415,7 +448,15 @@
                   <div class="list-box" id="unpaidBoxContainer">
                     <div class="list-box-header">
                       <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
-                      <button class="print-btn" onclick="printSection('unpaidBoxContainer', 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)')">प्रिन्ट / PDF</button>
+                      <div class="button-group">
+                          <div class="date-filter-box">
+                              <span>मिति:</span>
+                              <select id="filter_unpaid_from"><option value="">यति मिति</option></select>
+                              <span>देखि</span>
+                              <select id="filter_unpaid_to"><option value="">यति मिति</option></select>
+                          </div>
+                          <button class="print-btn" onclick="printSectionWithDateRange('unpaidBoxContainer', 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)', 'filter_unpaid_from', 'filter_unpaid_to')">प्रिन्ट / PDF</button>
+                      </div>
                     </div>
                     <div class="table-responsive">
                         <table id="unpaidListTable">
@@ -432,7 +473,13 @@
             <div class="section-header">
                 <h3>मानव बचाउ अभियान कोष</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('humanFundContent', 'मानव बचाउ अभियान कोष विवरण')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_human_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_human_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('humanFundContent', 'मानव बचाउ अभियान कोष विवरण', 'filter_human_from', 'filter_human_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('humanFundContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -471,7 +518,13 @@
             <div class="section-header">
                 <h3>आपत्कालीन कोष</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('emergencyFundContent', 'आपत्कालीन कोष विवरण')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_emergency_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_emergency_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('emergencyFundContent', 'आपत्कालीन कोष विवरण', 'filter_emergency_from', 'filter_emergency_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('emergencyFundContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -510,7 +563,13 @@
             <div class="section-header">
                 <h3>उद्धार तथा राहत कोष</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('reliefFundContent', 'उद्धार तथा राहत कोष विवरण')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_relief_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_relief_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('reliefFundContent', 'उद्धार तथा राहत कोष विवरण', 'filter_relief_from', 'filter_relief_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('reliefFundContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -549,7 +608,13 @@
             <div class="section-header">
                 <h3>मासिक लेवीबाट प्राप्त आम्दानी</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('monthlyLevyIncomeContent', 'मासिक लेवीबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_m_levy_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_m_levy_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('monthlyLevyIncomeContent', 'मासिक लेवीबाट प्राप्त आम्दानी', 'filter_m_levy_from', 'filter_m_levy_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('monthlyLevyIncomeContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -578,7 +643,13 @@
             <div class="section-header">
                 <h3>अनुदान तथा सहयोगबाट प्राप्त आम्दानी</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('grantIncomeContent', 'अनुदान तथा सहयोगबाट प्राप्त आम्दानी')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_grant_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_grant_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('grantIncomeContent', 'अनुदान तथा सहयोगबाट प्राप्त आम्दानी', 'filter_grant_from', 'filter_grant_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('grantIncomeContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -645,7 +716,13 @@
             <div class="section-header">
                 <h3>दैनिक खर्चको विवरण (कोष कटौतीसहित)</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('dailyExpenseContent', 'दैनिक खर्चको विवरण')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_expense_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_expense_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('dailyExpenseContent', 'दैनिक खर्चको विवरण', 'filter_expense_from', 'filter_expense_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('dailyExpenseContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -693,7 +770,13 @@
             <div class="section-header">
                 <h3>नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('incomeContent', 'नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_income_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_income_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('incomeContent', 'नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी', 'filter_income_from', 'filter_income_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('incomeContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -822,7 +905,13 @@
             <div class="section-header">
                 <h3>दर्ता भएका सम्पूर्ण सदस्यहरूको सूची (Users)</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('usersContent', 'दर्ता भएका सम्पूर्ण सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_users_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_users_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('usersContent', 'दर्ता भएका सम्पूर्ण सदस्यहरूको सूची', 'filter_users_from', 'filter_users_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('usersContent', this)">खोल्नुहोस् ▾</button>
                 </div>
             </div>
@@ -914,7 +1003,13 @@
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('tableContent', 'संस्थापक सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_founder_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_founder_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('tableContent', 'संस्थापक सदस्यहरूको सूची', 'filter_founder_from', 'filter_founder_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -960,7 +1055,13 @@
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('centralTableContent', 'केन्द्रीय सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_central_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_central_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('centralTableContent', 'केन्द्रीय सदस्यहरूको सूची', 'filter_central_from', 'filter_central_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -1006,7 +1107,13 @@
             <div class="section-header" style="margin-top: 35px;">
                 <h3 style="color: #1a365d;">केन्द्रीय सल्लाहकार सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSection('advisorTableContent', 'केन्द्रीय सल्लाहकार सदस्यहरूको सूची')">प्रिन्ट / PDF</button>
+                    <div class="date-filter-box">
+                        <span>मिति:</span>
+                        <select id="filter_advisor_from"><option value="">यति मिति</option></select>
+                        <span>देखि</span>
+                        <select id="filter_advisor_to"><option value="">यति मिति</option></select>
+                    </div>
+                    <button class="print-btn" onclick="printSectionWithDateRange('advisorTableContent', 'केन्द्रीय सल्लाहकार सदस्यहरूको सूची', 'filter_advisor_from', 'filter_advisor_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('advisorTableContent', this)">सूची हेर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -1468,6 +1575,28 @@
             }
         }
 
+        function populateDateFilterDropdowns(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            select.innerHTML = '<option value="">सबै मिति</option>';
+            const years = ['२०८०', '२०८१', '२०८२', '२०८३', '२०८४', '२०८५', '२०८६', '२०८७', '२०८८', '२०८९', '२०९०'];
+            const months = ['०१', '०२', '०३', '०४', '०५', '०६', '०७', '०८', '०९', '१०', '११', '१२'];
+            
+            years.forEach(y => {
+                months.forEach(m => {
+                    for(let d = 1; d <= 32; d++) {
+                        let dStr = d < 10 ? '०' + d : String(d);
+                        let nepD = toNepaliNumber(dStr);
+                        let dateVal = `${y}-${m}-${nepD}`;
+                        let opt = document.createElement('option');
+                        opt.value = dateVal;
+                        opt.textContent = dateVal;
+                        select.appendChild(opt);
+                    }
+                });
+            });
+        }
+
         function getSelectedNepaliDate(prefix) {
             const y = document.getElementById(prefix + '_year').value;
             const m = document.getElementById(prefix + '_month').value;
@@ -1598,7 +1727,10 @@
             modal.style.display = 'none';
         }
 
-        async function printSection(sectionId, sectionTitle) {
+        async function printSectionWithDateRange(sectionId, sectionTitle, fromSelectId, toSelectId) {
+            const fromDate = document.getElementById(fromSelectId).value;
+            const toDate = document.getElementById(toSelectId).value;
+            
             const sectionContent = document.getElementById(sectionId);
             const wasOpen = sectionContent.style.display === 'block';
 
@@ -1622,13 +1754,23 @@
             const logo = (data && data.logo_url) ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
 
+            let dateRangeText = '';
+            if (fromDate && toDate) {
+                dateRangeText = `(मिति: ${toNepaliNumber(fromDate)} देखि ${toNepaliNumber(toDate)} सम्म)`;
+            } else if (fromDate) {
+                dateRangeText = `(मिति: ${toNepaliNumber(fromDate)} देखि)`;
+            } else if (toDate) {
+                dateRangeText = `(मिति: ${toNepaliNumber(toDate)} सम्म)`;
+            }
+
             headerDiv.innerHTML = `
-                <div class="print-date">मिति: ${toNepaliNumber('२०८३-०५-२३')}</div>
+                <div class="print-date"> प्रिन्ट मिति: ${toNepaliNumber('२०८३-०५-२३')}</div>
                 <img src="${logo}" class="print-logo" alt="लोगो" crossorigin="anonymous">
                 <div class="print-title-1">दशौँदी समाज नेपाल</div>
                 <div class="print-meta">ठेगाना: ${address}</div>
                 <div class="print-meta" style="font-weight: 800; margin-top: 1px;">स्थापना - २०८०</div>
                 <div class="print-section-title">${sectionTitle}</div>
+                ${dateRangeText ? `<div style="font-size: 12px; font-weight: bold; color: #1a365d; margin-top: 5px;">${dateRangeText}</div>` : ''}
             `;
 
             window.print();
@@ -1655,6 +1797,12 @@
             populateNepaliDateDropdowns('reg');
             populateNepaliDateDropdowns('approval_reg');
             populateNepaliDateDropdowns('approval_exp');
+
+            const filterPrefixes = ['filter_paid', 'filter_unpaid', 'filter_human', 'filter_emergency', 'filter_relief', 'filter_m_levy', 'filter_grant', 'filter_expense', 'filter_income', 'filter_users', 'filter_founder', 'filter_central', 'filter_advisor'];
+            filterPrefixes.forEach(pref => {
+                populateDateFilterDropdowns(pref + '_from');
+                populateDateFilterDropdowns(pref + '_to');
+            });
 
             if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
                 document.getElementById('loginSection').classList.remove('hidden');
