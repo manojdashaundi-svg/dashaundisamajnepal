@@ -317,35 +317,60 @@
         }
 
         @media print {
+    /* १. पहिलेका अत्यावश्यक प्रिन्ट नियमहरू (भौचर र लुकाउने कुराहरू) */
+    body * { visibility: hidden !important; }
+    
+    .voucher-modal.active-voucher, .voucher-modal.active-voucher * { visibility: visible !important; }
+    .voucher-modal.active-voucher {
+        position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100vh !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important; padding: 0 !important;
+    }
 
-            body * { visibility: hidden !important; }
-            
-            .voucher-modal.active-voucher, .voucher-modal.active-voucher * { visibility: visible !important; }
-            .voucher-modal.active-voucher {
-                position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100vh !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important; padding: 0 !important;
-            }
+    .printable-section, .printable-section * { visibility: visible !important; }
+    .printable-section {
+        position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; background: #fff !important; display: block !important;
+    }
+    .printable-section form, 
+    .printable-section .admin-panel, 
+    .printable-section input, 
+    .printable-section select, 
+    .printable-section button, 
+    .printable-section label,
+    .printable-section h4 { 
+        display: none !important; 
+        visibility: hidden !important; 
+    }
 
-            .printable-section, .printable-section * { visibility: visible !important; }
-            .printable-section {
-                position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; background: #fff !important; display: block !important;
-            }
-            .printable-section form, 
-            .printable-section .admin-panel, 
-            .printable-section input, 
-            .printable-section select, 
-            .printable-section button, 
-            .printable-section label,
-            .printable-section h4 { 
-                display: none !important; 
-                visibility: hidden !important; 
-            }
+    .no-print, .top-header, .section-header, .toggle-btn, form, input, select, button { 
+        display: none !important; 
+        visibility: hidden !important; 
+    }
+    .print-header { display: block !important; width: 100% !important; text-align: center !important; }
 
-            .no-print, .top-header, .section-header, .toggle-btn, form, input, select, button { 
-                display: none !important; 
-                visibility: hidden !important; 
-            }
-            .print-header { display: block !important; width: 100% !important; text-align: center !important; }
-        }
+    /* २. नयाँ थपिएका स्क्रोल र टेबलसम्बन्धी नियमहरू */
+    .table-responsive {
+        max-height: none !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+
+    table {
+        width: 100% !important;
+        table-layout: auto !important;
+        page-break-inside: auto !important;
+    }
+
+    tr {
+        page-break-inside: avoid !important;
+        page-break-after: auto !important;
+    }
+
+    td, th {
+        white-space: normal !important;
+        font-size: 11px !important;
+        padding: 4px !important;
+    }
+}
     </style>
 </head>
 <body>
