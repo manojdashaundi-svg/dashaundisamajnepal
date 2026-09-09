@@ -215,7 +215,11 @@
         }
 
         .hidden { display: none !important; }
-        .table-responsive { overflow-x: auto; }
+        .table-responsive { 
+            overflow-x: auto; 
+            max-height: 250px; 
+            overflow-y: auto; 
+        }
 
         table {
             width: 100%;
@@ -237,6 +241,9 @@
             background-color: var(--primary-color);
             color: white;
             font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         tr:nth-child(even) { background-color: #f8fafc; }
@@ -371,22 +378,24 @@
 
                 <div class="approval-section">
                   <h3>आएको भौचर र भुक्तानी अनुरोधहरू</h3>
-                  <table id="pendingTable">
-            <thead>
-                  <tr>
-                       <th>मिति</th>
-                         <th>सदस्य नम्बर</th>
-                         <th>पदाधिकारी नाम</th>
-                         <th>पद</th>
-                         <th>कमीटी तह</th>
-                         <th>मिनाहरू</th>
-                        <th>जम्मा रकम (जरिवानासहित)</th>
-                        <th>भौचर</th>
-                       <th>कार्य</th>
-                  </tr>
-                </thead>
-                     <tbody id="pendingLevyTableBody"></tbody>
-                  </table>
+                  <div class="table-responsive">
+                      <table id="pendingTable">
+                    <thead>
+                          <tr>
+                               <th>मिति</th>
+                               <th>सदस्य नम्बर</th>
+                               <th>पदाधिकारी नाम</th>
+                               <th>पद</th>
+                               <th>कमीटी तह</th>
+                               <th>मिनाहरू</th>
+                              <th>जम्मा रकम (जरिवानासहित)</th>
+                              <th>भौचर</th>
+                              <th>कार्य</th>
+                          </tr>
+                        </thead>
+                         <tbody id="pendingLevyTableBody"></tbody>
+                      </table>
+                  </div>
                 </div>
 
                 <div class="reports-section">
@@ -395,10 +404,12 @@
                       <h3>✅ लेवी तिरेका पदाधिकारीहरूको सूची</h3>
                       <button class="print-btn" onclick="printSection('paidBoxContainer', 'लेवी तिरेका पदाधिकारीहरूको सूची')">प्रिन्ट / PDF</button>
                     </div>
-                    <table id="paidListTable">
-                      <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
-                      <tbody></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="paidListTable">
+                          <thead><tr><th>नाम</th><th>कमिटी</th><th>चुक्ता महिनाहरू</th></tr></thead>
+                          <tbody></tbody>
+                        </table>
+                    </div>
                   </div>
 
                   <div class="list-box" id="unpaidBoxContainer">
@@ -406,10 +417,12 @@
                       <h3>❌ लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)</h3>
                       <button class="print-btn" onclick="printSection('unpaidBoxContainer', 'लेवी नतिरेका पदाधिकारीहरूको सूची (बाँकी)')">प्रिन्ट / PDF</button>
                     </div>
-                    <table id="unpaidListTable">
-                      <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
-                      <tbody></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="unpaidListTable">
+                          <thead><tr><th>नाम</th><th>कमिटी</th><th>बाँकी महिनाहरू</th></tr></thead>
+                          <tbody></tbody>
+                        </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -691,6 +704,7 @@
                         <thead>
                             <tr>
                                 <th>क्र.सं.</th>
+                                <th>भौचर नं.</th>
                                 <th>मिति</th>
                                 <th>सदस्यको नाम</th>
                                 <th>शीर्षक (Category)</th>
@@ -1470,8 +1484,9 @@
                 let { count: c3 } = await supabaseClient.from('relief_fund').select('*', { count: 'exact', head: true });
                 let { count: c4 } = await supabaseClient.from('grant_income').select('*', { count: 'exact', head: true });
                 let { count: c5 } = await supabaseClient.from('monthly_levy').select('*', { count: 'exact', head: true });
+                let { count: c6 } = await supabaseClient.from('income_records').select('*', { count: 'exact', head: true });
 
-                let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0) + (c5 || 0);
+                let totalCount = (c1 || 0) + (c2 || 0) + (c3 || 0) + (c4 || 0) + (c5 || 0) + (c6 || 0);
                 let nextNo = totalCount + 1;
                 let formattedNum = String(nextNo).padStart(3, '0');
                 
@@ -1723,25 +1738,28 @@
         }
 
         async function loadIncomeData() {
-            const { data } = await supabaseClient.from('income_records').select('*').order('created_at', { ascending: false });
+            const { data } = await supabaseClient.from('income_records').select('*').order('created_at', { ascending: true });
             const tbody = document.getElementById('incomeTableBody');
             tbody.innerHTML = '';
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7">कुनै आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8">कुनै आम्दानी रेकर्ड उपलब्ध छैन</td></tr>';
                 return;
             }
 
             data.forEach((item, index) => {
+                const encoded = encodeURIComponent(JSON.stringify(item));
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
+                        <td><strong>${item.voucher_no || '-'}</strong></td>
                         <td>${toNepaliNumber(item.date || '-')}</td>
                         <td><strong>${item.name || '-'}</strong></td>
                         <td>${item.category || '-'}</td>
                         <td>${item.description || '-'}</td>
                         <td><strong style="color: #008000;">रु. ${toNepaliNumber(item.amount || '५००')}</strong></td>
                         <td class="no-print">
+                            <button type="button" class="btn-action btn-voucher" onclick="openVoucherModal('${encoded}')" style="background: #6b46c1; color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-right: 2px;">भौचर</button>
                             <button class="btn-action btn-danger" onclick="deleteIncomeRecord('${item.id}')">रिमुभ</button>
                         </td>
                     </tr>
@@ -1805,6 +1823,22 @@
             }
         }
 
+        function viewMonthlyLevyVoucherByIndex(index) {
+            const item = window.monthlyLevyCache[index];
+            if (!item) return;
+            const mappedItem = {
+                voucher_no: item.voucher_no,
+                date: item.date,
+                donor_name: item.member_name,
+                title: 'मासिक लेवी भुक्तानी: ' + item.months_paid,
+                medium: 'अनलाइन / बैंक',
+                amount: item.amount,
+                fund_category: 'मासिक लेवी आम्दानी',
+                voucher_url: item.voucher_url || item.payment_slip
+            };
+            openVoucherModal(encodeURIComponent(JSON.stringify(mappedItem)));
+        }
+
         function closeLevyVoucherModal() {
             document.getElementById('levyVoucherModal').style.display = 'none';
         }
@@ -1826,7 +1860,8 @@
                 const { data, error } = await supabaseClient
                     .from('levy_payments')
                     .select('*')
-                    .eq('status', 'Pending');
+                    .eq('status', 'Pending')
+                    .order('id', { ascending: true });
 
                 let tbody = document.getElementById('pendingLevyTableBody');
                 if (!tbody) return;
@@ -1984,7 +2019,7 @@
         window.grantRecords = [];
 
         async function loadGrantIncomeData() {
-            const { data, error } = await supabaseClient.from('grant_income').select('*').order('created_at', { ascending: true });
+            const { data, error } = await supabaseClient.from('grant_income').select('*').order('id', { ascending: true });
             if (error) {
                 console.error('Error loading grant data:', error);
                 return;
@@ -2031,7 +2066,7 @@
         }
 
         async function loadFundData(tableName, tbodyId) {
-            const { data } = await supabaseClient.from(tableName).select('*').order('created_at', { ascending: true });
+            const { data } = await supabaseClient.from(tableName).select('*').order('id', { ascending: true });
             const tbody = document.getElementById(tbodyId);
             if(!tbody) return;
             tbody.innerHTML = '';
@@ -2104,15 +2139,15 @@
             const item = JSON.parse(decodeURIComponent(itemStr));
             document.getElementById('vouchNo').innerText = item.voucher_no || '-';
             document.getElementById('vouchDate').innerText = toNepaliNumber(item.date || '-');
-            document.getElementById('vouchDonor').innerText = item.donor_name || '-';
-            document.getElementById('vouchTitle').innerText = item.title || '-';
-            document.getElementById('vouchMedium').innerText = item.medium || '-';
+            document.getElementById('vouchDonor').innerText = item.donor_name || item.name || '-';
+            document.getElementById('vouchTitle').innerText = item.title || item.category || '-';
+            document.getElementById('vouchMedium').innerText = item.medium || 'नगद / अन्य';
             document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
             document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
             
             const imgTag = document.getElementById('popupVoucherImg');
-            if (item.voucher_url) {
-                imgTag.src = item.voucher_url;
+            if (item.voucher_url || item.payment_slip) {
+                imgTag.src = item.voucher_url || item.payment_slip;
                 imgTag.style.display = 'block';
             } else {
                 imgTag.style.display = 'none';
@@ -2165,7 +2200,7 @@
         }
 
         async function loadDailyExpenseData() {
-            const { data } = await supabaseClient.from('daily_expenses').select('*').order('created_at', { ascending: false });
+            const { data } = await supabaseClient.from('daily_expenses').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('dailyExpenseTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) {
@@ -2199,7 +2234,7 @@
         }
 
         async function loadApplicationsData() {
-            const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('created_at', { ascending: true });
+            const { data } = await supabaseClient.from('membership_applications').select('*').eq('status', 'Pending').order('id', { ascending: true });
             const tbody = document.getElementById('applicationsTableBody');
             tbody.innerHTML = '';
 
@@ -2378,16 +2413,20 @@
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
 
             if(!appError) {
+                const voucherNo = await getNextVoucherNo();
                 const incomeRecord = {
+                    voucher_no: voucherNo,
                     date: todayNepaliDate,
                     name: app.full_name,
                     category: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                     description: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-                    amount: '५००'
+                    amount: '५००',
+                    fund_category: 'सदस्यता आम्दानी',
+                    payment_slip: app.payment_slip || app.payment_slip_url || ''
                 };
                 await supabaseClient.from('income_records').insert([incomeRecord]);
 
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
                 loadIncomeData();
@@ -2470,7 +2509,7 @@
         }
 
         async function loadUsersData() {
-            const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('id', { ascending: true });
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
@@ -2639,7 +2678,7 @@
         });
 
         async function loadCommitteeData() {
-            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('founder_committee').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('committeeTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
@@ -2699,7 +2738,7 @@
         });
 
         async function loadCentralCommitteeData() {
-            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('central_committee').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('centralTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
@@ -2759,7 +2798,7 @@
         });
 
         async function loadAdvisorCommitteeData() {
-            const { data } = await supabaseClient.from('advisor_committee').select('*').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('advisor_committee').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('advisorTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="7">कुनै विवरण छैन</td></tr>'; return; }
@@ -2821,7 +2860,7 @@
         });
 
         async function loadAdminData() {
-            const { data } = await supabaseClient.from('admins').select('*');
+            const { data } = await supabaseClient.from('admins').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('adminTableBody');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="5">कुनै एडमिन छैन</td></tr>'; return; }
@@ -2888,7 +2927,7 @@
         });
 
         async function loadNoticesData() {
-            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('noticesTableBody');
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -3014,7 +3053,7 @@
         }
 
         async function loadMemberNoticesData() {
-            const { data } = await supabaseClient.from('member_notices').select('*').order('id', { ascending: false });
+            const { data } = await supabaseClient.from('member_notices').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('memberNoticesTableBody');
             if(!tbody) return;
             tbody.innerHTML = '';
