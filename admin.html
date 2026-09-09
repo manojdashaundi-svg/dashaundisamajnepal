@@ -317,8 +317,21 @@
         }
 
         @media print {
-            body * { visibility: hidden !important; }
-            
+    body * { visibility: hidden !important; }
+
+    .printable-section, .printable-section * { visibility: visible !important; }
+    .printable-section {
+        position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; background: #fff !important;
+    }
+
+    /* यहाँ नयाँ कोड थप्नुहोस् ताकि स्क्रोल र हाइटको समस्या नआओोस */
+    .printable-section .table-responsive, 
+    .printable-section .collapsible-content {
+        max-height: none !important;
+        overflow: visible !important;
+        display: block !important;
+    }
+}  
             .voucher-modal.active-voucher, .voucher-modal.active-voucher * { visibility: visible !important; }
             .voucher-modal.active-voucher {
                 position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100vh !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important; padding: 0 !important;
