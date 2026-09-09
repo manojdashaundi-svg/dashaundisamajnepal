@@ -2034,8 +2034,9 @@
                 title: 'मासिक लेवी भुक्तानी: ' + item.months_paid,
                 medium: 'अनलाइन / बैंक',
                 amount: item.amount,
-                fund_category: 'मासिक लेवी आम्दानी',
-                voucher_url: item.voucher_url || item.payment_slip
+                fund_category: 'मासिक लेवी आम्दानी', // यो राख्नाले लेवी भौचर चिनिन्छ
+                voucher_url: '', // मासिक लेवी भौचरमा सिलिप नदेखिनका लागि खाली वा लुकाउने
+                payment_slip: ''
             };
             openVoucherModal(encodeURIComponent(JSON.stringify(mappedItem)));
         }
