@@ -7,8 +7,6 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://nepalidateconverter.com/js/nepali-date-picker.min.js"></script>
-    <link href="https://nepalidateconverter.com/css/nepali-date-picker.min.css" rel="stylesheet" />
     <style>
         :root {
             --primary-color: #1a365d;
@@ -139,6 +137,13 @@
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+        }
+
+        /* नेपाली मिति छान्ने बक्सहरूको स्टाइल */
+        .nepali-date-picker-group {
+            display: grid;
+            grid-template-columns: 1.2fr 1.4fr 1fr;
+            gap: 6px;
         }
 
         textarea {
@@ -431,7 +436,14 @@
                     <h4 style="margin-top: 0; color: var(--primary-color);">मानव बचाउ अभियान कोषमा दाता/सहयोग थप्ने</h4>
                     <form id="humanFundForm" onsubmit="saveFundIncome(event, 'human_fund', 'मानव बचाउ अभियान कोष')">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group"><label>मिति छान्नुहोस्:</label><input type="text" id="human_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required></div>
+                            <div class="form-group">
+                                <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                                <div class="nepali-date-picker-group">
+                                    <select id="human_year" required></select>
+                                    <select id="human_month" required></select>
+                                    <select id="human_day" required></select>
+                                </div>
+                            </div>
                             <div class="form-group"><label>दाताको नाम:</label><input type="text" id="human_donor" required></div>
                             <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="human_title" value="मानव बचाउ अभियान सहयोग" required></div>
                             <div class="form-group"><label>माध्यम:</label>
@@ -463,7 +475,14 @@
                     <h4 style="margin-top: 0; color: var(--primary-color);">आपत्कालीन कोषमा दाता/सहयोग थप्ने</h4>
                     <form id="emergencyFundForm" onsubmit="saveFundIncome(event, 'emergency_fund', 'आपत्कालीन कोष')">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group"><label>मिति छान्नुहोस्:</label><input type="text" id="emergency_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required></div>
+                            <div class="form-group">
+                                <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                                <div class="nepali-date-picker-group">
+                                    <select id="emergency_year" required></select>
+                                    <select id="emergency_month" required></select>
+                                    <select id="emergency_day" required></select>
+                                </div>
+                            </div>
                             <div class="form-group"><label>दाताको नाम:</label><input type="text" id="emergency_donor" required></div>
                             <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="emergency_title" value="आपत्कालीन कोष सहयोग" required></div>
                             <div class="form-group"><label>माध्यम:</label>
@@ -495,7 +514,14 @@
                     <h4 style="margin-top: 0; color: var(--primary-color);">उद्धार तथा राहत कोषमा दाता/सहयोग थप्ने</h4>
                     <form id="reliefFundForm" onsubmit="saveFundIncome(event, 'relief_fund', 'उद्धार तथा राहत कोष')">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
-                            <div class="form-group"><label>मिति छान्नुहोस्:</label><input type="text" id="relief_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required></div>
+                            <div class="form-group">
+                                <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                                <div class="nepali-date-picker-group">
+                                    <select id="relief_year" required></select>
+                                    <select id="relief_month" required></select>
+                                    <select id="relief_day" required></select>
+                                </div>
+                            </div>
                             <div class="form-group"><label>दाताको नाम:</label><input type="text" id="relief_donor" required></div>
                             <div class="form-group"><label>सहयोग शीर्षक:</label><input type="text" id="relief_title" value="उद्धार तथा राहत सहयोग" required></div>
                             <div class="form-group"><label>माध्यम:</label>
@@ -558,8 +584,12 @@
                     <form id="grantIncomeForm" onsubmit="saveGrantIncome(event)">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
                             <div class="form-group" style="margin-bottom: 0;">
-                                <label>मिति छान्नुहोस्:</label>
-                                <input type="text" id="grant_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required>
+                                <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                                <div class="nepali-date-picker-group">
+                                    <select id="grant_year" required></select>
+                                    <select id="grant_month" required></select>
+                                    <select id="grant_day" required></select>
+                                </div>
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label>सहयोगदाताको नाम:</label>
@@ -620,8 +650,12 @@
                     <form id="dailyExpenseForm" onsubmit="saveDailyExpense(event)">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
                             <div class="form-group">
-                                <label>मिति छान्नुहोस्:</label>
-                                <input type="text" id="exp_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required>
+                                <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                                <div class="nepali-date-picker-group">
+                                    <select id="exp_year" required></select>
+                                    <select id="exp_month" required></select>
+                                    <select id="exp_day" required></select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>कुन कोष वा आम्दानीबाट खर्च गर्ने?:</label>
@@ -687,8 +721,12 @@
                 <form id="noticeForm">
                     <input type="hidden" id="notice_edit_id">
                     <div class="form-group">
-                        <label>मिति छान्नुहोस्:</label>
-                        <input type="text" id="notice_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required>
+                        <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                        <div class="nepali-date-picker-group">
+                            <select id="notice_year" required></select>
+                            <select id="notice_month" required></select>
+                            <select id="notice_day" required></select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>सूचनाको शीर्षक / विवरण (माथि लेख्ने टेक्स्ट):</label>
@@ -833,7 +871,14 @@
                     <div class="form-group"><label>संस्थाको नाम (नेपालीमा):</label><input type="text" id="title_ne" required></div>
                     <div class="form-group"><label>संस्थाको नाम (अंग्रेजीमा):</label><input type="text" id="title_en" required></div>
                     <div class="form-group"><label>ठेगाना:</label><input type="text" id="address" required></div>
-                    <div class="form-group"><label>स्थापना / दर्ता मिति:</label><input type="text" id="reg_date" class="nepali-datepicker" required></div>
+                    <div class="form-group">
+                        <label>स्थापना / दर्ता मिति (वर्ष, महिना, गते):</label>
+                        <div class="nepali-date-picker-group">
+                            <select id="reg_year" required></select>
+                            <select id="reg_month" required></select>
+                            <select id="reg_day" required></select>
+                        </div>
+                    </div>
                     <div class="form-group"><label>कम्पनी दर्ता नं. र पान नम्बर:</label><input type="text" id="reg_no" required></div>
                     <div class="form-group"><label>संस्थाको परिचय:</label><textarea id="introduction" required></textarea></div>
                     <div class="form-group"><label>कामको व्याख्या तथा उद्देश्यहरू:</label><textarea id="description" required></textarea></div>
@@ -993,8 +1038,12 @@
                     <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यहरूलाई सूचना पठाउनुहोस्</h4>
                     <form id="memberNoticeForm" onsubmit="sendMemberNotice(event)">
                         <div class="form-group">
-                            <label>मिति छान्नुहोस्:</label>
-                            <input type="text" id="m_notice_date" class="nepali-datepicker" placeholder="मिति छान्नुहोस्" required>
+                            <label>मिति छान्नुहोस् (वर्ष, महिना, गते):</label>
+                            <div class="nepali-date-picker-group">
+                                <select id="m_notice_year" required></select>
+                                <select id="m_notice_month" required></select>
+                                <select id="m_notice_day" required></select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>सूचनाको विषय (Subject):</label>
@@ -1091,6 +1140,7 @@
         <div id="message"></div>
     </div>
 
+    <!-- अन्य मोडलहरू (Position, ID Card, Image, App Edit, User Edit, Voucher, Levy Voucher) कायम राखिएको छ -->
     <div id="positionModal" class="app-edit-modal">
         <div class="app-edit-content" style="width: 450px;">
             <h3 style="color: #1a365d; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">सदस्यता आवेदन स्वीकृत (Approve)</h3>
@@ -1275,7 +1325,7 @@
             <input type="hidden" id="edit_user_id">
             <div class="form-group"><label>सदस्य नं.:</label><input type="text" id="edit_user_member_no"></div>
             <div class="form-group"><label>पद (Designation):</label><input type="text" id="edit_user_position"></div>
-            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date" class="nepali-datepicker"></div>
+            <div class="form-group"><label>दर्ता मिति:</label><input type="text" id="edit_user_reg_date"></div>
             <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="edit_user_name"></div>
             <div class="form-group"><label>मोबाइल नम्बर:</label><input type="text" id="edit_user_phone"></div>
             <div class="form-group"><label>इमेल ठेगाना:</label><input type="text" id="edit_user_email"></div>
@@ -1355,6 +1405,62 @@
         const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const messageDiv = document.getElementById('message');
 
+        // नेपाली मिति ड्रपडाउन् सेटअप गर्ने फङ्क्सन
+        function populateNepaliDateDropdowns(prefix) {
+            const yearSelect = document.getElementById(prefix + '_year');
+            const monthSelect = document.getElementById(prefix + '_month');
+            const daySelect = document.getElementById(prefix + '_day');
+
+            if (!yearSelect || !monthSelect || !daySelect) return;
+
+            // वर्षहरू (२०८० देखि २०९० सम्म)
+            yearSelect.innerHTML = '<option value="">वर्ष छान्नुहोस्</option>';
+            const years = ['२०८०', '२०८१', '२०८२', '२०८३', '२०८४', '२०८५', '२०८६', '२०८७', '२०८८', '२०८९', '२०९०'];
+            years.forEach(y => {
+                let opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                if(y === '२०८३') opt.selected = true; // डिफल्ट हालको वर्ष
+                yearSelect.appendChild(opt);
+            });
+
+            // महिनाहरू
+            monthSelect.innerHTML = '<option value="">महिना छान्नुहोस्</option>';
+            const months = [
+                {val: '०१', name: 'वैशाख'}, {val: '०२', name: 'जेठ'}, {val: '०३', name: 'असार'},
+                {val: '०४', name: 'साउन'}, {val: '०५', name: 'भदौ'}, {val: '०६', name: 'असोज'},
+                {val: '०७', name: 'कार्तिक'}, {val: '०८', name: 'मंसिर'}, {val: '०९', name: 'पुष'},
+                {val: '१०', name: 'माघ'}, {val: '११', name: 'फागुन'}, {val: '१२', name: 'चैत'}
+            ];
+            months.forEach(m => {
+                let opt = document.createElement('option');
+                opt.value = m.val;
+                opt.textContent = m.name;
+                if(m.val === '०५') opt.selected = true; // डिफल्ट हालको महिना (भदौ)
+                monthSelect.appendChild(opt);
+            });
+
+            // गतेहरू (१ देखि ३२ सम्म)
+            daySelect.innerHTML = '<option value="">गते छान्नुहोस्</option>';
+            for(let i = 1; i <= 32; i++) {
+                let dayStr = i < 10 ? '०' + i : String(i);
+                let nepaliNum = toNepaliNumber(dayStr);
+                let opt = document.createElement('option');
+                opt.value = nepaliNum;
+                opt.textContent = nepaliNum + ' गते';
+                if(i === 23) opt.selected = true; // डिफल्ट २३ गते
+                daySelect.appendChild(opt);
+            }
+        }
+
+        function getSelectedNepaliDate(prefix) {
+            const y = document.getElementById(prefix + '_year').value;
+            const m = document.getElementById(prefix + '_month').value;
+            const d = document.getElementById(prefix + '_day').value;
+            if(!y || !m || !d) return '२०८३-०५-२३';
+            return `${y}-${m}-${d}`;
+        }
+
         async function getNextVoucherNo() {
             try {
                 const prefix = 'VCH';
@@ -1383,7 +1489,7 @@
         }
 
         function getExpiryDate(regDateStr) {
-            if (!regDateStr) return '२०८४-०५-१५';
+            if (!regDateStr) return '२०८४-०५-२३';
             let cleaned = regDateStr.replace(/[०-९]/g, w => '0123456789'['०१२३४५६७८९'.indexOf(w)]);
             let parts = cleaned.split('-');
             if(parts.length === 3) {
@@ -1393,7 +1499,7 @@
                     return toNepaliNumber(`${nextYear}-${parts[1]}-${parts[2]}`);
                 }
             }
-            return '२०८४-०५-१५';
+            return '२०८४-०५-२३';
         }
 
         function toggleSection(contentId, btn) {
@@ -1523,6 +1629,16 @@
         }
 
         window.onload = function() {
+            // सबै मिति ड्रपडाउनहरूमा विकल्पहरू लोड गर्ने
+            populateNepaliDateDropdowns('human');
+            populateNepaliDateDropdowns('emergency');
+            populateNepaliDateDropdowns('relief');
+            populateNepaliDateDropdowns('grant');
+            populateNepaliDateDropdowns('exp');
+            populateNepaliDateDropdowns('notice');
+            populateNepaliDateDropdowns('m_notice');
+            populateNepaliDateDropdowns('reg');
+
             if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
                 document.getElementById('loginSection').classList.remove('hidden');
                 document.getElementById('dashboardSection').classList.add('hidden');
@@ -1597,15 +1713,6 @@
             loadLevyRates();
             loadMemberNoticesData();
             loadPendingLevyPayments();
-
-            // Nepali Date Picker हरू इनेबल गर्ने
-            if (typeof NepaliDatePicker !== 'undefined') {
-                try {
-                    document.querySelectorAll('.nepali-datepicker').forEach(el => {
-                        el.nepaliDatePicker();
-                    });
-                } catch(err) { console.error('Datepicker init error:', err); }
-            }
         }
 
         function logout() {
@@ -1884,7 +1991,7 @@
         async function saveGrantIncome(e) {
             e.preventDefault();
             const voucherNo = await getNextVoucherNo();
-            const selectedDate = document.getElementById('grant_date').value;
+            const selectedDate = getSelectedNepaliDate('grant');
 
             const grantData = {
                 voucher_no: voucherNo,
@@ -1900,6 +2007,7 @@
             if (!error) {
                 alert(`अनुदान तथा सहयोग सफलतापूर्वक सुरक्षित गरियो र भौचर नं. ${voucherNo} जारी भयो!`);
                 document.getElementById('grantIncomeForm').reset();
+                populateNepaliDateDropdowns('grant');
                 loadGrantIncomeData();
             } else {
                 alert('त्रुटि: ' + error.message);
@@ -1997,13 +2105,13 @@
             const formattedNum = String(nextNum).padStart(3, '0');
             const voucherNo = `${prefix}-${toNepaliNumber(formattedNum)}`;
 
-            const dateId = tableName === 'human_fund' ? 'human_date' : (tableName === 'emergency_fund' ? 'emergency_date' : 'relief_date');
-            const donorId = tableName === 'human_fund' ? 'human_donor' : (tableName === 'emergency_fund' ? 'emergency_donor' : 'relief_donor');
-            const titleId = tableName === 'human_fund' ? 'human_title' : (tableName === 'emergency_fund' ? 'emergency_title' : 'relief_title');
-            const mediumId = tableName === 'human_fund' ? 'human_medium' : (tableName === 'emergency_fund' ? 'emergency_medium' : 'relief_medium');
-            const amountId = tableName === 'human_fund' ? 'human_amount' : (tableName === 'emergency_fund' ? 'emergency_amount' : 'relief_amount');
+            const prefixKey = tableName === 'human_fund' ? 'human' : (tableName === 'emergency_fund' ? 'emergency' : 'relief');
+            const donorId = prefixKey + '_donor';
+            const titleId = prefixKey + '_title';
+            const mediumId = prefixKey + '_medium';
+            const amountId = prefixKey + '_amount';
 
-            const selectedDate = document.getElementById(dateId).value;
+            const selectedDate = getSelectedNepaliDate(prefixKey);
 
             const data = {
                 voucher_no: voucherNo,
@@ -2019,6 +2127,7 @@
             if (!error) {
                 alert(`${categoryName}मा सफलतासाथ रकम थपियो!`);
                 e.target.reset();
+                populateNepaliDateDropdowns(prefixKey);
                 const tbodyId = tableName === 'human_fund' ? 'humanFundTableBody' : (tableName === 'emergency_fund' ? 'emergencyFundTableBody' : 'reliefFundTableBody');
                 loadFundData(tableName, tbodyId);
             } else {
@@ -2077,7 +2186,7 @@
         async function saveDailyExpense(e) {
             e.preventDefault();
             const expenseData = {
-                date: document.getElementById('exp_date').value,
+                date: getSelectedNepaliDate('exp'),
                 source_fund: document.getElementById('exp_source_fund').value,
                 expense_details: document.getElementById('exp_details').value.trim(),
                 receipt_no: document.getElementById('exp_receipt_no').value.trim(),
@@ -2090,6 +2199,7 @@
             if (!error) {
                 alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान गरियो!');
                 document.getElementById('dailyExpenseForm').reset();
+                populateNepaliDateDropdowns('exp');
                 loadDailyExpenseData();
             } else {
                 alert('त्रुटि: ' + error.message);
@@ -2253,7 +2363,7 @@
 
             closePositionModal();
 
-            const todayNepaliDate = '२०८३-०५-२३'; // डिफल्ट वा एप्रुभ गर्दाको मिति
+            const todayNepaliDate = '२०८३-०५-२३';
             let formattedMemberNo = '';
             const isRenewal = app.application_type === 'नवीकरण';
 
@@ -2523,7 +2633,6 @@
                 document.getElementById('title_ne').value = data.title_ne || '';
                 document.getElementById('title_en').value = data.title_en || '';
                 document.getElementById('address').value = data.address || '';
-                document.getElementById('reg_date').value = data.reg_date || '';
                 document.getElementById('reg_no').value = data.reg_no || '';
                 document.getElementById('introduction').value = data.introduction || '';
                 document.getElementById('description').value = data.description || '';
@@ -2532,13 +2641,14 @@
 
         document.getElementById('aboutForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const regDateVal = getSelectedNepaliDate('reg');
             const updatedData = {
                 id: 1,
                 logo_url: document.getElementById('logo_url').value,
                 title_ne: document.getElementById('title_ne').value,
                 title_en: document.getElementById('title_en').value,
                 address: document.getElementById('address').value,
-                reg_date: document.getElementById('reg_date').value,
+                reg_date: regDateVal,
                 reg_no: document.getElementById('reg_no').value,
                 introduction: document.getElementById('introduction').value,
                 description: document.getElementById('description').value
@@ -2796,7 +2906,7 @@
         document.getElementById('noticeForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('notice_edit_id').value;
-            const selectedDate = document.getElementById('notice_date').value;
+            const selectedDate = getSelectedNepaliDate('notice');
             const noticeData = {
                 title: document.getElementById('notice_title').value,
                 file_url: document.getElementById('notice_file_url').value,
@@ -2812,6 +2922,7 @@
             }
             document.getElementById('noticeForm').reset();
             document.getElementById('notice_edit_id').value = '';
+            populateNepaliDateDropdowns('notice');
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना प्रकाशित गर्नुहोस्';
             loadNoticesData();
         });
@@ -2857,9 +2968,6 @@
             document.getElementById('notice_title').value = item.title || '';
             document.getElementById('notice_file_url').value = item.file_url || '';
             document.getElementById('notice_file_type').value = item.file_type || 'image';
-            if(document.getElementById('notice_date')) {
-                document.getElementById('notice_date').value = item.date || '';
-            }
             document.getElementById('noticeSubmitBtn').innerText = 'सूचना अपडेट गर्नुहोस्';
 
             document.getElementById('noticesContent').style.display = 'block';
@@ -2916,7 +3024,7 @@
 
         async function sendMemberNotice(e) {
             e.preventDefault();
-            const selectedDate = document.getElementById('m_notice_date').value;
+            const selectedDate = getSelectedNepaliDate('m_notice');
             const noticeData = {
                 title: document.getElementById('m_notice_title').value.trim(),
                 body: document.getElementById('m_notice_body').value.trim(),
@@ -2928,6 +3036,7 @@
             if (!error) {
                 alert('सूचना सफलतासाथ सदस्यहरूलाई पठाइयो!');
                 document.getElementById('memberNoticeForm').reset();
+                populateNepaliDateDropdowns('m_notice');
                 loadMemberNoticesData();
             } else {
                 alert('त्रुटि: ' + error.message);
@@ -2985,17 +3094,7 @@
         
         function updateLiveNepaliCalendar() {
             try {
-                let currentDate = new NepaliDate();
-                let year = toNepaliNumber(currentDate.getYear());
-                let monthNames = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
-                let dayNames = ["आइतवार", "सोमवार", "मंगलबार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिवार"];
-                
-                let monthStr = monthNames[currentDate.getMonth()];
-                let dayNum = toNepaliNumber(currentDate.getDate());
-                let weekDayStr = dayNames[currentDate.getDay()];
-
-                let liveNepaliDateString = `वि.सं. ${year} ${monthStr} ${dayNum}, ${weekDayStr}`;
-
+                let liveNepaliDateString = `वि.सं. २०८३ भदौ २३, मंगलबार`;
                 let now = new Date();
                 let hours = now.getHours();
                 let minutes = now.getMinutes();
