@@ -2347,10 +2347,16 @@
             document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
             document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
             
-            
             const imgTag = document.getElementById('popupVoucherImg');
-            if (item.voucher_url || item.payment_slip) {
-                imgTag.src = item.voucher_url || item.payment_slip;
+
+            // यो कोड यहाँ openVoucherModal भित्र राख्ने हो:
+            let paymentSlipUrl = item.voucher_url || item.payment_slip;
+            let voucherType = item.fund_category || '';
+
+            if ((voucherType.includes('लेवी') || voucherType === 'मासिक लेवी आम्दानी') && paymentSlipUrl) {
+                imgTag.style.display = 'none';
+            } else if (paymentSlipUrl) {
+                imgTag.src = paymentSlipUrl;
                 imgTag.style.display = 'block';
             } else {
                 imgTag.style.display = 'none';
