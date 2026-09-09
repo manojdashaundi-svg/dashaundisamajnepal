@@ -344,11 +344,6 @@
        <div id="dashboardSection" style="display: none;">
     <div class="top-header">
         <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
-        
-        <div id="live-calendar-widget" style="background: #10b981; padding: 6px 15px; border-radius: 20px; border: 1px solid #059669; font-size: 14px; font-weight: 500; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-            <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
-        </div>
-
         <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
     </div>
 
@@ -1449,7 +1444,6 @@
             return `${y}-${m}-${d}`;
         }
 
-        // सबै कोषहरू र आम्दानीहरूको टेबलबाट एउटै सिरियल नम्बर निकाल्ने फङ्क्सन
         async function getNextVoucherNo() {
             try {
                 const prefix = 'VCH';
@@ -1886,7 +1880,7 @@
                     }
 
                     const paymentDate = paymentData.date || '२०८३-०५-२३';
-                    const voucherNo = await getNextVoucherNo(); // एउटै सिरियलबाट भौचर नं लिने
+                    const voucherNo = await getNextVoucherNo();
 
                     const { error: updateError } = await supabaseClient
                         .from('levy_payments')
@@ -1943,7 +1937,7 @@
 
         async function saveGrantIncome(e) {
             e.preventDefault();
-            const voucherNo = await getNextVoucherNo(); // एउटै सिरियलबाट भौचर नं लिने
+            const voucherNo = await getNextVoucherNo();
             const selectedDate = getSelectedNepaliDate('grant');
 
             const grantData = {
@@ -2047,7 +2041,7 @@
 
         async function saveFundIncome(e, tableName, categoryName) {
             e.preventDefault();
-            const voucherNo = await getNextVoucherNo(); // एउटै सिरियलबाट भौचर नं लिने
+            const voucherNo = await getNextVoucherNo();
 
             const prefixKey = tableName === 'human_fund' ? 'human' : (tableName === 'emergency_fund' ? 'emergency' : 'relief');
             const donorId = prefixKey + '_donor';
@@ -3035,37 +3029,6 @@
                 }
             }
         }
-        
-        function updateLiveNepaliCalendar() {
-            try {
-                let liveNepaliDateString = `वि.सं. २०८३ भदौ २३, मंगलबार`;
-                let now = new Date();
-                let hours = now.getHours();
-                let minutes = now.getMinutes();
-                let seconds = now.getSeconds();
-                let ampm = hours >= 12 ? 'अपरा्ह्न' : 'बिहान';
-                
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                minutes = minutes < 10 ? '०' + minutes : minutes;
-                seconds = seconds < 10 ? '०' + seconds : seconds;
-                
-                let timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-                
-                const liveDateElement = document.getElementById('nepali-live-date');
-                if (liveDateElement) {
-                    liveDateElement.innerHTML = `${liveNepaliDateString} | ${timeString}`;
-                }
-            } catch (err) {
-                const liveDateElement = document.getElementById('nepali-live-date');
-                if (liveDateElement) {
-                    liveDateElement.innerHTML = `वि.सं. २०८३ भदौ २३, मंगलबार`;
-                }
-            }
-        }
-
-        setInterval(updateLiveNepaliCalendar, 1000);
-        updateLiveNepaliCalendar();
 
         document.addEventListener("DOMContentLoaded", function() {
             loadMonthlyLevyIncomeData();
