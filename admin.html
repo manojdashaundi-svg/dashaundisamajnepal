@@ -1001,10 +1001,10 @@
                 </form>
             </div>
 
-            <div class="section-header" style="margin-top: 35px;">
+            <div class="section-header" style="margin-top: 35px;" id="founderTableSection">
                 <h3 style="color: #1a365d;">संस्थापक सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSectionWithDateRange('tableContent', 'संस्थापक सदस्यहरूको सूची', 'filter_founder_from', 'filter_founder_to')">प्रिन्ट / PDF</button>
+                    <button class="print-btn" onclick="printSectionWithDateRange('founderTableSection', 'संस्थापक सदस्यहरूको सूची', 'filter_founder_from', 'filter_founder_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('tableContent', this)">सूची हेर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -1049,10 +1049,10 @@
                 </form>
             </div>
 
-            <div class="section-header" style="margin-top: 35px;">
+            <div class="section-header" style="margin-top: 35px;" id="centralTableSection">
                 <h3 style="color: #1a365d;">केन्द्रीय सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSectionWithDateRange('centralTableContent', 'केन्द्रीय सदस्यहरूको सूची', 'filter_central_from', 'filter_central_to')">प्रिन्ट / PDF</button>
+                    <button class="print-btn" onclick="printSectionWithDateRange('centralTableSection', 'केन्द्रीय सदस्यहरूको सूची', 'filter_central_from', 'filter_central_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('centralTableContent', this)">सूची हेर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -1097,10 +1097,10 @@
                 </form>
             </div>
 
-            <div class="section-header" style="margin-top: 35px;">
+            <div class="section-header" style="margin-top: 35px;" id="advisorTableSection">
                 <h3 style="color: #1a365d;">केन्द्रीय सल्लाहकार सदस्यहरूको सूची</h3>
                 <div class="button-group">
-                    <button class="print-btn" onclick="printSectionWithDateRange('advisorTableContent', 'केन्द्रीय सल्लाहकार सदस्यहरूको सूची', 'filter_advisor_from', 'filter_advisor_to')">प्रिन्ट / PDF</button>
+                    <button class="print-btn" onclick="printSectionWithDateRange('advisorTableSection', 'केन्द्रीय सल्लाहकार सदस्यहरूको सूची', 'filter_advisor_from', 'filter_advisor_to')">प्रिन्ट / PDF</button>
                     <button class="toggle-btn" onclick="toggleSection('advisorTableContent', this)">सूची हेर्नुहोस् ▾</button>
                 </div>
             </div>
@@ -1481,7 +1481,7 @@
                 <tr><td style="text-align: left; font-weight: bold;">भुक्तानी माध्यम:</td><td style="text-align: left;" id="vouchMedium">-</td></tr>
                 <tr><td style="text-align: left; font-weight: bold;">जम्मा रकम (अंकमा):</td><td style="text-align: left; color: #008000; font-weight: bold;" id="vouchAmount">रू. -</td></tr>
             </table>
-            <div style="text-align: center; margin-top: 15px;">
+            <div style="text-align: center; margin-top: 15px;" id="popupVoucherImgContainer">
                 <img id="popupVoucherImg" src="" alt="Voucher Slip" style="width: 100%; height: 220px; object-fit: contain; display: block; margin: 0 auto; border: 1px solid #ccc; border-radius: 4px;">
             </div>
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; font-size: 13px; font-weight: bold;">
@@ -1970,7 +1970,7 @@
                 medium: 'अनलाइन / बैंक',
                 amount: item.amount,
                 fund_category: 'मासिक लेवी आम्दानी',
-                voucher_url: item.voucher_url || item.payment_slip
+                voucher_url: ''
             };
             openVoucherModal(encodeURIComponent(JSON.stringify(mappedItem)));
         }
@@ -2095,8 +2095,8 @@
                         committee_type: committeeType,
                         months_paid: monthsList,
                         amount: totalAmount,
-                        voucher_url: paymentData.voucher_url || paymentData.payment_slip || '',
-                        payment_slip: paymentData.voucher_url || paymentData.payment_slip || ''
+                        voucher_url: '',
+                        payment_slip: ''
                     }]);
 
                     if (insertError) {
@@ -2282,11 +2282,14 @@
             document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
             
             const imgTag = document.getElementById('popupVoucherImg');
+            const imgContainer = document.getElementById('popupVoucherImgContainer');
             if (item.voucher_url || item.payment_slip) {
                 imgTag.src = item.voucher_url || item.payment_slip;
                 imgTag.style.display = 'block';
+                if (imgContainer) imgContainer.style.display = 'block';
             } else {
                 imgTag.style.display = 'none';
+                if (imgContainer) imgContainer.style.display = 'none';
             }
 
             const modal = document.getElementById('voucherModal');
