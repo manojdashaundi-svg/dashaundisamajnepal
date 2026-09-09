@@ -2346,6 +2346,7 @@
             document.getElementById('vouchAmount').innerText = 'रू. ' + toNepaliNumber(item.amount || '०');
             document.getElementById('vouchCategoryTitle').innerText = item.fund_category || 'आधिकारिक आम्दानी भौचर';
             
+            
             const imgTag = document.getElementById('popupVoucherImg');
             if (item.voucher_url || item.payment_slip) {
                 imgTag.src = item.voucher_url || item.payment_slip;
