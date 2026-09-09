@@ -317,7 +317,7 @@
         }
 
         @media print {
-    /* पृष्ठको मार्جين र ब्राउजरको स्वतः आउने हेडर/फुटर (मिति, यूआरएल) हटाउन */
+    /* पृष्ठको मार्जिन र ब्राउजरको स्वतः आउने हेडर/फुटर हटाउन */
     @page {
         margin: 10mm;
         size: auto;
@@ -352,13 +352,22 @@
     }
     .print-header { display: block !important; width: 100% !important; text-align: center !important; }
 
-    /* यदि कोडमै छुट्टै मिति देखाउने क्लास छ भने त्यसलाई लुकाउन */
+    /* २. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
+    .voucher-modal img, 
+    .payment-slip, 
+    .payment-proof, 
+    .voucher-slip-image {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* छुट्टै मिति देखाउने क्लासहरू लुकाउन */
     .print-date, .date-display { 
         display: none !important; 
         visibility: hidden !important; 
     }
 
-    /* २. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
+    /* ३. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
     .table-responsive {
         max-height: none !important;
         overflow: visible !important;
