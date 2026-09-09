@@ -346,7 +346,7 @@
     }
     .print-header { display: block !important; width: 100% !important; text-align: center !important; }
 
-    /* २. नयाँ थपिएका स्क्रोल र टेबलसम्बन्धी नियमहरू */
+    /* २. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
     .table-responsive {
         max-height: none !important;
         overflow: visible !important;
@@ -360,6 +360,11 @@
         page-break-inside: auto !important;
     }
 
+    /* हेर्डिङ जहिले पनि माथि नै ठीक ठाउँमा बस्नको लागि */
+    thead {
+        display: table-header-group !important;
+    }
+
     tr {
         page-break-inside: avoid !important;
         page-break-after: auto !important;
@@ -369,6 +374,7 @@
         white-space: normal !important;
         font-size: 11px !important;
         padding: 4px !important;
+        position: static !important; /* sticky पोजिसनलाई प्रिन्टमा पूर्ण रूपमा निष्कृय पार्न */
     }
 }
     </style>
