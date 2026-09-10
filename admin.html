@@ -2566,6 +2566,40 @@
             });
         }
 
+        async function loadFundBalances() {
+    try {
+        // १. आपत्कालीन कोषको कुल आम्दानी निकाल्ने
+        const { data: emergencyIncomeData } = await supabaseClient
+            .from('emergency_fund')
+            .select('amount');
+        
+        let totalEmergencyIncome = 0;
+        if (emergencyIncomeData) {
+            totalEmergencyIncome = emergencyIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
+        }
+
+        // २. दैनिक खर्चबाट आपत्कालीन कोषबाट खर्च भएको कुल रकम निकाल्ने
+        const { data: expenseData } = await supabaseClient
+            .from('daily_expenses')
+            .select('amount, source_fund')
+            .eq('source_fund', 'आपत्कालीन कोष');
+
+        let totalEmergencyExpense = 0;
+        if (expenseData) {
+            totalEmergencyExpense = expenseData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
+        }
+
+        // ३. बाँकी मौज्दात (Net Balance) हिसाब गर्ने
+        let netEmergencyBalance = totalEmergencyIncome - totalEmergencyExpense;
+
+        // ४. यसलाई HTML मा देखाउने (तपाईंको पेजमा भएको ब्यालेन्स देखाउने ID यहाँ राख्नुहोला)
+        document.getElementById('emergencyFundBalance').innerText = 'रु. ' + toNepaliNumber(netEmergencyBalance);
+
+    } catch (err) {
+        console.log('कोष ब्यालेन्स हिसाब गर्दा त्रुटि:', err.message);
+    }
+}
+
         function openPositionModal(appStr) {
             const app = JSON.parse(appStr);
             if(app.status === 'Approved') {
