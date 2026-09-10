@@ -1591,64 +1591,79 @@ async function markAllNotificationsAsRead() {
         }
 
         async function openMyCard() {
-            if(!currentApplication || currentApplication.status !== 'Approved') { 
-                alert('तपाईंको सदस्यता स्वीकृत (Approved) भइसकेपछि मात्र डिजिटल परिचय पत्र (Digital ID Card) हेर्न सकिनेछ।'); 
-                return; 
+    if(!currentApplication || currentApplication.status !== 'Approved') { 
+        alert('तपाईंको सदस्यता स्वीकृत (Approved) भइसकेपछि मात्र डिजिटल परिचय पत्र (Digital ID Card) हेर्न सकिनेछ।'); 
+        return; 
+    }
+
+    const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
+    const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
+
+    const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
+    const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
+    const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
+
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+    document.getElementById('cardIssueDate').innerText = regDate;
+    document.getElementById('cardExpiryDate').innerText = expiryDate;
+    document.getElementById('cardName').innerText = fullName;
+
+    // ==========================================
+    // 💡 यहाँ पद र कमिटी मिलाउने नयाँ कोड राखिएको छ:
+    // ==========================================
+    let userPos = (userData && userData.position) ? userData.position.trim() : '';
+    let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय समिति';
+    
+    let cardPositionText = '';
+    if (!userPos || userPos === '' || userPos === 'साधारण सदस्य' || userPos === 'सदस्य') {
+        cardPositionText = 'सदस्य';
+    } else {
+        cardPositionText = `${userPos} (${userComm})`;
+    }
+    document.getElementById('cardPosition').innerText = cardPositionText;
+    // ==========================================
+
+    document.getElementById('cardProvince').innerText = currentApplication.province || '-';
+    document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
+    document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
+    document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
+
+    const photo = currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+    document.getElementById('cardPhoto').src = photo;
+
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+    document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
+
+    document.getElementById('idCardModal').style.display = 'flex';
+}
+
+function closeMyCard() { document.getElementById('idCardModal').style.display = 'none'; }
+function resetMembershipFlow() { showSubSection('mainChoiceStep'); document.getElementById('officialFormBox').style.display = 'none'; document.getElementById('step3').style.display = 'none'; }
+
+async function loadPublicNotices() {
+    const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
+    const containers = [document.getElementById('publicNoticesContainer'), document.getElementById('homeNoticesContainer')];
+
+    containers.forEach(container => {
+        if(!container) return;
+        if (!data || data.length === 0) { container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>'; return; }
+
+        container.innerHTML = '';
+        data.forEach(item => {
+            let fileContent = '';
+            if (item.file_url) {
+                fileContent = `<div style="margin-top: 15px; text-align: center;"><img src="${item.file_url}" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0;"></div>`;
             }
-
-            const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-            const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
-
-            const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-            const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-            const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
-
-            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-            document.getElementById('cardIssueDate').innerText = regDate;
-            document.getElementById('cardExpiryDate').innerText = expiryDate;
-            document.getElementById('cardName').innerText = fullName;
-            document.getElementById('cardPosition').innerText = (userData && userData.position) ? userData.position : 'साधारण सदस्य';
-            document.getElementById('cardProvince').innerText = currentApplication.province || '-';
-            document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
-            document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
-            document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
-
-            const photo = currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
-            document.getElementById('cardPhoto').src = photo;
-
-            const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
-            document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-
-            document.getElementById('idCardModal').style.display = 'flex';
-        }
-
-        function closeMyCard() { document.getElementById('idCardModal').style.display = 'none'; }
-        function resetMembershipFlow() { showSubSection('mainChoiceStep'); document.getElementById('officialFormBox').style.display = 'none'; document.getElementById('step3').style.display = 'none'; }
-
-        async function loadPublicNotices() {
-            const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
-            const containers = [document.getElementById('publicNoticesContainer'), document.getElementById('homeNoticesContainer')];
-
-            containers.forEach(container => {
-                if(!container) return;
-                if (!data || data.length === 0) { container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>'; return; }
-
-                container.innerHTML = '';
-                data.forEach(item => {
-                    let fileContent = '';
-                    if (item.file_url) {
-                        fileContent = `<div style="margin-top: 15px; text-align: center;"><img src="${item.file_url}" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0;"></div>`;
-                    }
-                    container.innerHTML += `
-                        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
-                            <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                            <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
-                            ${fileContent}
-                        </div>
-                    `;
-                });
-            });
-        }
+            container.innerHTML += `
+                <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
+                    <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
+                    <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
+                    ${fileContent}
+                </div>
+            `;
+        });
+    });
+}
 
         let selectedMonths = [];
     
