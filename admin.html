@@ -2387,25 +2387,62 @@
 
         async function saveDailyExpense(e) {
             e.preventDefault();
+            
+            const sourceFund = document.getElementById('exp_source_fund').value;
+            const expenseDetails = document.getElementById('exp_details').value.trim();
+            const receiptNo = document.getElementById('exp_receipt_no').value.trim();
+            const medium = document.getElementById('exp_medium').value;
+            const amount = parseFloat(document.getElementById('exp_amount').value) || 0;
+            const orgName = document.getElementById('exp_org_name').value.trim();
+            const expenseDate = getSelectedNepaliDate('exp');
+
+            if (!sourceFund || !amount || amount <= 0) {
+                alert('कृपया कोष/स्रोत र सही रकम भर्नुहोला!');
+                return;
+            }
+
+            // १. दैनिक खर्चको टेबलमा (daily_expenses) रेकर्ड सेभ गर्ने
             const expenseData = {
-                date: getSelectedNepaliDate('exp'),
-                source_fund: document.getElementById('exp_source_fund').value,
-                expense_details: document.getElementById('exp_details').value.trim(),
-                receipt_no: document.getElementById('exp_receipt_no').value.trim(),
-                medium: document.getElementById('exp_medium').value,
-                amount: parseFloat(document.getElementById('exp_amount').value) || 0,
-                organization_name: document.getElementById('exp_org_name').value.trim()
+                date: expenseDate,
+                source_fund: sourceFund,
+                expense_details: expenseDetails,
+                receipt_no: receiptNo,
+                medium: medium,
+                amount: amount,
+                organization_name: orgName
             };
 
-            const { error } = await supabaseClient.from('daily_expenses').insert([expenseData]);
-            if (!error) {
-                alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान भयो!');
-                document.getElementById('dailyExpenseForm').reset();
-                populateNepaliDateDropdowns('exp');
-                loadDailyExpenseData();
-            } else {
-                alert('त्रुटि: ' + error.message);
+            const { error: insertError } = await supabaseClient.from('daily_expenses').insert([expenseData]);
+            
+            if (insertError) {
+                alert('त्रुटि: ' + insertError.message);
+                return;
             }
+
+            // २. सम्बन्धित कोषको मौज्दातबाट स्वतः रकम घटाउने (यदि तपाइको डेटाबेसमा कोषको छुट्टै टेबल भएमा)
+            try {
+                const { data: fundData, error: fetchError } = await supabaseClient
+                    .from('fund_balances') // यदि तपाईंको कोष ब्यालेन्स बस्ने टेबलको नाम अर्कै छ भने यहाँ फेर्नुहोला
+                    .select('balance')
+                    .eq('fund_name', sourceFund)
+                    .single();
+
+                if (!fetchError && fundData) {
+                    let newBalance = parseFloat(fundData.balance) - amount;
+
+                    await supabaseClient
+                        .from('fund_balances')
+                        .update({ balance: newBalance })
+                        .eq('fund_name', sourceFund);
+                }
+            } catch (err) {
+                console.log('कोष ब्यालेन्स अपडेट सम्बन्धी जानकारी:', err.message);
+            }
+
+            alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान भयो!');
+            document.getElementById('dailyExpenseForm').reset();
+            populateNepaliDateDropdowns('exp');
+            loadDailyExpenseData();
         }
 
         async function loadDailyExpenseData() {
