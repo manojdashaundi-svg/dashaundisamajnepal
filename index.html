@@ -683,100 +683,99 @@
         </div>
     </div>
 
-    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
-        <div style="width: 440px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; display: flex; flex-direction: column;">
+   <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto;">
+    <div style="width: 440px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; display: flex; flex-direction: column;">
 
-            <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 12px 75px 12px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
+        <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 12px 75px 12px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
 
-                <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 8px; right: 12px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
+            <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 8px; right: 12px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
 
-                <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-                    <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
-                </svg>
+            <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
+            </svg>
 
-                <div style="width: 65px; height: 65px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.25); border: 2.5px solid #ffffff; position: relative; z-index: 10;">
-                    <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover;">
-                </div>
-
-                <div style="position: relative; z-index: 2;">
-                    <h3 style="margin: 0; font-size: 22px; font-weight: 950; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">दशौँदी समाज नेपाल</h3>
-                    <p style="margin: 2px 0 0 0; font-size: 11.5px; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
-                    <p style="margin: 1px 0 0 0; font-size: 10.5px; font-weight: 900; color: #f7fafc; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">स्थापना - २०८०</p>
-                </div>
+            <div style="width: 65px; height: 65px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.25); border: 2.5px solid #ffffff; position: relative; z-index: 10;">
+                <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover;">
             </div>
 
-            <div style="background: #008000; color: #ffffff; border: 2.5px solid #e53e3e; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 16px; letter-spacing: 1.5px; width: 140px; margin: -55px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
-
-            <div style="padding: 0 12px 10px 12px; background: #fff; position: relative; display: flex; flex-direction: column; gap: 6px;">
-                
-                <div style="display: flex; justify-content: center; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 4px 8px; border-radius: 5px; border: 1px solid #cbd5e0;">
-                    <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
-                    <div style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); opacity: 0.1; pointer-events: none; z-index: 0;">
-                        <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 120px; height: 120px; object-fit: contain;">
-                    </div>
-
-                    <div style="text-align: center; flex-shrink: 0; z-index: 1;">
-                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 90px; height: 110px; border-radius: 6px; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-                    </div>
-
-                    <div style="flex-grow: 1; font-size: 12px; color: #000000; line-height: 1.4; font-weight: 900; z-index: 1;">
-                        <div style="font-size: 17px; font-weight: 950; color: #000000;" id="cardName">-</div>
-                        <div style="color: #006600; font-weight: 950; font-size: 13.5px; margin-top: 1px;" id="cardPosition">-</div>
-                        <div style="font-size: 11px; color: #111111; margin-top: 3px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000;">-</span></div>
-                        <div style="font-size: 11px; color: #c53030; margin-top: 1px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate"> -</span></div>
-                    </div>
-                </div>
-
-                <div style="width: 100%; background: #fff; border-radius: 6px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 900; overflow: hidden; display: flex;">
-                    <div style="width: 32px; background: #1a365d; display: flex; flex-direction: column;">
-                        <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-                        <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
-                        <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4M8 6h8M8 10h8M8 14h8"></path></div>
-                        <div style="height: 22px; display: flex; align-items: center; justify-content: center;"><circle cx="9" cy="7" r="4"></circle><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path></div>
-                    </div>
-                    <div style="flex-grow: 1; padding: 2px 5px;">
-                        <table style="width: 100%; background: transparent; margin: 0; border-collapse: collapse;">
-                            <tr><td style="border: none; text-align: left; padding: 3px 2px; width: 30%; color: #000; font-size: 11.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px;"><span id="cardProvince">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
-                            <tr><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1.5px dashed #cbd5e0;">
-                    <div>
-                        <img id="cardQrCode" src="" alt="QR Code" style="width: 58px; height: 58px; border: 1px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff;">
-                    </div>
-                    <div style="text-align: center; font-size: 11px; font-weight: 950; color: #000; display: flex; justify-content: space-between; width: 210px;">
-                        <div style="text-align: center; position: relative; flex: 1;">
-                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिव" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 110px; height: 42px; object-fit: contain;">
-                            <div style="width: 75px; border-top: 1.5px solid #000; margin: 22px auto 2px;"></div>
-                            <span>सचिव</span>
-                        </div>
-                        <div style="text-align: center; position: relative; flex: 1; margin-left: 10px;">
-                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्ष" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 110px; height: 42px; object-fit: contain;">
-                            <div style="width: 75px; border-top: 1.5px solid #000; margin: 22px auto 2px;"></div>
-                            <span>अध्यक्ष</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 9px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
-                    <span>📞 9765240652</span>
-                    <span>✉ dashaundisamajnepal@gmail.com</span>
-                </div>
-                <span>🌐 www.dashaundisamajnepal.com</span>
-                <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 3px; color: #fff; display: inline-block; font-size: 8.5px; font-weight: bold; margin-top: 1px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+            <div style="position: relative; z-index: 2;">
+                <h3 style="margin: 0; font-size: 22px; font-weight: 950; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">दशौँदी समाज नेपाल</h3>
+                <p style="margin: 2px 0 0 0; font-size: 11.5px; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+                <p style="margin: 1px 0 0 0; font-size: 10.5px; font-weight: 900; color: #f7fafc; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">स्थापना - २०८०</p>
             </div>
         </div>
-    </div>
 
+        <div style="background: #008000; color: #ffffff; border: 2.5px solid #e53e3e; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 16px; letter-spacing: 1.5px; width: 140px; margin: -55px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
+
+        <div style="padding: 0 12px 10px 12px; background: #fff; position: relative; display: flex; flex-direction: column; gap: 6px;">
+            
+            <div style="display: flex; justify-content: center; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 4px 8px; border-radius: 5px; border: 1px solid #cbd5e0;">
+                <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
+                <div style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); opacity: 0.1; pointer-events: none; z-index: 0;">
+                    <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 120px; height: 120px; object-fit: contain;">
+                </div>
+
+                <div style="text-align: center; flex-shrink: 0; z-index: 1;">
+                    <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 90px; height: 110px; border-radius: 6px; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                </div>
+
+                <div style="flex-grow: 1; font-size: 12px; color: #000000; line-height: 1.4; font-weight: 900; z-index: 1;">
+                    <div style="font-size: 17px; font-weight: 950; color: #000000;" id="cardName">-</div>
+                    <div style="color: #006600; font-weight: 950; font-size: 13.5px; margin-top: 1px;" id="cardPosition">-</div>
+                    <div style="font-size: 11px; color: #111111; margin-top: 3px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="color: #000000;">-</span></div>
+                    <div style="font-size: 11px; color: #c53030; margin-top: 1px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate">-</span></div>
+                </div>
+            </div>
+
+            <div style="width: 100%; background: #fff; border-radius: 6px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 900; overflow: hidden; display: flex;">
+                <div style="width: 32px; background: #1a365d; display: flex; flex-direction: column;">
+                    <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+                    <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
+                    <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4M8 6h8M8 10h8M8 14h8"></path></div>
+                    <div style="height: 22px; display: flex; align-items: center; justify-content: center;"><circle cx="9" cy="7" r="4"></circle><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path></div>
+                </div>
+                <div style="flex-grow: 1; padding: 2px 5px;">
+                    <table style="width: 100%; background: transparent; margin: 0; border-collapse: collapse;">
+                        <tr><td style="border: none; text-align: left; padding: 3px 2px; width: 30%; color: #000; font-size: 11.5px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px;"><span id="cardProvince">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 3px 2px; color: #000; font-size: 11.5px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1.5px dashed #cbd5e0;">
+                <div>
+                    <img id="cardQrCode" src="" alt="QR Code" style="width: 58px; height: 58px; border: 1px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff;">
+                </div>
+                <div style="text-align: center; font-size: 11px; font-weight: 950; color: #000; display: flex; justify-content: space-between; width: 210px;">
+                    <div style="text-align: center; position: relative; flex: 1;">
+                        <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिव" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 110px; height: 42px; object-fit: contain;">
+                        <div style="width: 75px; border-top: 1.5px solid #000; margin: 22px auto 2px;"></div>
+                        <span>सचिव</span>
+                    </div>
+                    <div style="text-align: center; position: relative; flex: 1; margin-left: 10px;">
+                        <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्ष" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 110px; height: 42px; object-fit: contain;">
+                        <div style="width: 75px; border-top: 1.5px solid #000; margin: 22px auto 2px;"></div>
+                        <span>अध्यक्ष</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 9px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
+                <span>📞 9765240652</span>
+                <span>✉ dashaundisamajnepal@gmail.com</span>
+            </div>
+            <span>🌐 www.dashaundisamajnepal.com</span>
+            <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 3px; color: #fff; display: inline-block; font-size: 8.5px; font-weight: bold; margin-top: 1px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+        </div>
+    </div>
+</div>
    <footer style="background-color: #1a365d; color: white; text-align: center; padding: 20px 0; width: 100%; margin-top: 40px; box-sizing: border-box;">
     <p style="margin: 0; font-size: 14px; font-weight: bold; color: #ffffff;">&copy; २०२६ दशौँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
 </footer>
