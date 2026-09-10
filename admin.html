@@ -428,10 +428,33 @@
        
        <div id="dashboardSection" style="display: none;">
     <div class="top-header">
-        <span class="welcome-text" id="welcomeUser">✔ स्वागत छ, एडमिन!</span>
+        <span class="welcome-text" id="welcomeUser">✓ स्वागत छ, एडमिन!</span>
         <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
     </div>
 
+    <!-- कोषहरूको ब्यालेन्स र समरी कार्डहरू यहाँ राख्ने -->
+    <div class="fund-cards-wrapper" style="display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap;">
+        <div class="fund-card" style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; flex: 1; min-width: 200px;">
+            <h3>आपत्कालीन कोष मौज्दात</h3>
+            <p id="emergencyFundBalance" style="font-size: 18px; font-weight: bold; color: #2c3e50;">रु. ०</p>
+        </div>
+
+        <div class="fund-card" style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; flex: 1; min-width: 200px;">
+            <h3>मानव बचाउ अभियान कोष</h3>
+            <p id="humanFundBalance" style="font-size: 18px; font-weight: bold; color: #2c3e50;">रु. ०</p>
+        </div>
+
+        <div class="fund-card" style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; flex: 1; min-width: 200px;">
+            <h3>उद्धार तथा राहत कोष</h3>
+            <p id="reliefFundBalance" style="font-size: 18px; font-weight: bold; color: #2c3e50;">रु. ०</p>
+        </div>
+    </div>
+
+    <div class="summary-box" style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ffeeba;">
+        <p>कूल आम्दानी: <span id="totalIncomeDisplay" style="font-weight: bold;">रु. ०</span></p>
+        <p>कूल खर्च: <span id="totalExpenseDisplay" style="font-weight: bold;">रु. ०</span></p>
+        <p>खुद मौज्दात (Net Balance): <span id="netBalanceDisplay" style="font-weight: bold; color: #d9534f;">रु. ०</span></p>
+    </div>
             <div class="section-header">
                 <h3>लेवी व्यवस्थापन एडमिन प्यानल</h3>
                 <div class="button-group">
