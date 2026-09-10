@@ -122,8 +122,8 @@
         .idcard-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto; }
 
         @media print {
-            @page { size: 450px auto; margin: 0; }
-            body, html { width: 100%; height: auto; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background: #fff !important; }
+            @page { size: auto; margin: 10mm; }
+            body, html { width: 100%; height: auto; margin: 0 !important; padding: 0 !important; background: #fff !important; }
             body * { visibility: hidden !important; }
             #idCardModal, #idCardModal * { visibility: visible !important; }
             #idCardModal { position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; margin: 0 !important; z-index: 9999 !important; overflow: hidden !important; }
@@ -686,7 +686,6 @@
     <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()">
         <div style="width: 440px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; display: flex; flex-direction: column;">
 
-            <!-- टप हेडर भाग -->
             <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 12px 75px 12px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
 
                 <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 8px; right: 12px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
@@ -706,18 +705,14 @@
                 </div>
             </div>
 
-            <!-- परिचय पत्र ब्याच -->
             <div style="background: #008000; color: #ffffff; border: 2.5px solid #e53e3e; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 16px; letter-spacing: 1.5px; width: 140px; margin: -55px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20; -webkit-print-color-adjust: exact; print-color-adjust: exact;">परिचय पत्र</div>
 
-            <!-- मध्य भाग -->
             <div style="padding: 0 12px 10px 12px; background: #fff; position: relative; display: flex; flex-direction: column; gap: 6px;">
                 
-                <!-- सदस्यता नं -->
                 <div style="display: flex; justify-content: center; font-size: 11px; font-weight: 800; color: #1a365d; background: #f1f5f9; padding: 4px 8px; border-radius: 5px; border: 1px solid #cbd5e0;">
                     <span>सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f;">-</strong></span>
                 </div>
 
-                <!-- फोटो र विवरण बक्स -->
                 <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px solid #e2e8f0; position: relative; overflow: hidden;">
                     <div style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); opacity: 0.1; pointer-events: none; z-index: 0;">
                         <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 120px; height: 120px; object-fit: contain;">
@@ -735,7 +730,6 @@
                     </div>
                 </div>
 
-                <!-- ठेगाना तालिका -->
                 <div style="width: 100%; background: #fff; border-radius: 6px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 900; overflow: hidden; display: flex;">
                     <div style="width: 32px; background: #1a365d; display: flex; flex-direction: column;">
                         <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
@@ -753,7 +747,6 @@
                     </div>
                 </div>
 
-                <!-- QR कोड र सहीछाप -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1.5px dashed #cbd5e0;">
                     <div>
                         <img id="cardQrCode" src="" alt="QR Code" style="width: 58px; height: 58px; border: 1px solid #1a365d; padding: 2px; border-radius: 4px; background: #fff;">
@@ -773,7 +766,6 @@
                 </div>
             </div>
 
-            <!-- फुटर भाग -->
             <div style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 9px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
                 <div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
                     <span>📞 9765240652</span>
@@ -848,7 +840,6 @@
             return num.toString().split('').map(char => numbers[char] || char).join('');
         }
 
-        // वास्तविक अटो-अपडेट हुने नेपाली मिति र बार गणना गर्ने इन्जिन
         function getRealLiveDates() {
     const now = new Date();
     const enYear = now.getFullYear();
@@ -894,17 +885,14 @@
         function updateRealTimeClock() {
             const liveDates = getRealLiveDates();
             
-            // टप बारको पात्रो अपडेट
             const topBarDateEl = document.getElementById('nepali-live-date');
             if(topBarDateEl) topBarDateEl.innerHTML = `<i class="fa-regular fa-calendar-days mr-1"></i> ${liveDates.nepali}`;
 
-            // ड्यासबोर्डको लेवी सेक्सन मिति अपडेट
             const dashNepEl = document.getElementById('dashLiveNepaliDate');
             const dashEngEl = document.getElementById('dashLiveEnglishDate');
             if(dashNepEl) dashNepEl.innerText = liveDates.nepali;
             if(dashEngEl) dashEngEl.innerText = liveDates.english;
 
-            // मोडल भित्रको मिति अपडेट
             const modalNepEl = document.getElementById('modalLiveNepaliDate');
             if(modalNepEl) modalNepEl.innerText = `मिति: ${liveDates.nepali}`;
         }
@@ -1613,7 +1601,7 @@
         async function openLevyModal() {
     document.getElementById('levyModal').style.display = 'flex';
     updateRealTimeClock();
-    selectedMonths = []; // मोडल खोल्दा नयाँ छनोट खाली गर्ने
+    selectedMonths = []; 
 
     const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
     if (userData) {
@@ -1627,7 +1615,6 @@
         document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
     }
 
-    // प्रयोगकर्ताले भुक्तानी गरिसकेका वा पेन्डिङ भएका महिनाहरूको सूची Supabase बाट तान्ने
     let paidMonthsHistory = [];
     const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
     
@@ -1639,7 +1626,6 @@
 
         if (levyData && levyData.length > 0) {
             levyData.forEach(payment => {
-                // यदि महिनाहरूको array अवस्थित छ भने तिनलाई इतिहासमा जोड्ने
                 if (payment.months && Array.isArray(payment.months)) {
                     paidMonthsHistory = paidMonthsHistory.concat(payment.months);
                 }
@@ -1688,10 +1674,8 @@
         let isLate = checkIfLate(m.val);
         let isSelected = selectedMonths.includes(m.val);
         
-        // यदि महिना तिरिसकिएको छ भने हरियो (bg-green), छनोट गरिएको छ भने नीलो, ढिलाइ भए रातो
         let boxClass = isPaid ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
         
-        // यदि तिरिसकिएको छ भने फेरि क्लिक गर्न नमिल्ने बनाउने
         let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
         let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ' : 'बाँकी'));
 
