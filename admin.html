@@ -793,30 +793,34 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>कुन कोष वा आम्दानीबाट खर्च गर्ने?:</label>
-                                <select id="exp_source_fund" required>
-                                    <option value="साधारण आम्दानी / सामान्य कोष">साधारण आम्दानी / सामान्य कोष</option>
-                                    <option value="मानव बचाउ अभियान कोष">मानव बचाउ अभियान कोष</option>
-                                    <option value="आपत्कालीन कोष">आपत्कालीन कोष</option>
-                                    <option value="उद्धार तथा राहत कोष">उद्धार तथा राहत कोष</option>
-                                </select>
-                            </div>
-                            <div class="form-group"><label>खर्चको विवरण:</label><input type="text" id="exp_details" placeholder="शीर्षक वा कारण" required></div>
-                            <div class="form-group"><label>रसिद नं.:</label><input type="text" id="exp_receipt_no" placeholder="बिल नं." required></div>
-                            <div class="form-group"><label>माध्यम:</label>
-                                <select id="exp_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="वालेट / इसेवा">वालेट / इसेवा</option></select>
-                            </div>
-                            <div class="form-group"><label>रकम (रु.):</label><input type="number" id="exp_amount" required></div>
-                            <div class="form-group"><label>संस्था/पसलको नाम:</label><input type="text" id="exp_org_name" required></div>
-                        </div>
-                        <button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">खर्च सुरक्षित गर्नुहोस्</button>
-                    </form>
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <thead><tr><th>क्र.सं.</th><th>मिति</th><th>खर्च गरिएको कोष/स्रोत</th><th>खर्चको विवरण</th><th>रसिद नं.</th><th>माध्यम</th><th>रकम (रु.)</th><th>संस्थाको नाम</th><th class="no-print">कारवाही</th></tr></thead>
-                        <tbody id="dailyExpenseTableBody"></tbody>
-                    </table>
+    <label>कुन कोष वा आम्दानीबाट खर्च गर्ने?:</label>
+    <select id="exp_source_fund" class="form-control" required>
+        <option value="">-- कोष / स्रोत छान्नुहोस् --</option>
+        <option value="साधारण आम्दानी / सामान्य कोष">साधारण आम्दानी / सामान्य कोष</option>
+        <option value="मानव बचाउ अभियान कोष">मानव बचाउ अभियान कोष</option>
+        <option value="आपत्कालीन कोष">आपत्कालीन कोष</option>
+        <option value="उद्धार तथा राहत कोष">उद्धार तथा राहत कोष</option>
+        <option value="मासिक लेवीबाट प्राप्त आम्दानी">मासिक लेवीबाट प्राप्त आम्दानी</option>
+        <option value="अनुदान तथा सहयोगबाट प्राप्त आम्दानी">अनुदान तथा सहयोगबाट प्राप्त आम्दानी</option>
+        <option value="नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी">नयाँ सदस्यता तथा सदस्यता नवीकरण आम्दानी</option>
+    </select>
+</div>
+<div class="form-group"><label>खर्चको विवरण:</label><input type="text" id="exp_details" placeholder="शीर्षक वा कारण" required></div>
+<div class="form-group"><label>रसिद नं.:</label><input type="text" id="exp_receipt_no" placeholder="बिल नं." required></div>
+<div class="form-group"><label>माध्यम:</label>
+    <select id="exp_medium"><option value="नगद (Cash)">नगद (Cash)</option><option value="बैंक ट्रान्सफर">बैंक ट्रान्सफर</option><option value="वालेट / इसेवा">वालेट / इसेवा</option></select>
+</div>
+<div class="form-group"><label>रकम (रु.):</label><input type="number" id="exp_amount" required></div>
+<div class="form-group"><label>संस्था/पसलको नाम:</label><input type="text" id="exp_org_name" required></div>
+</div>
+<button type="submit" style="margin-top: 15px; width: auto; padding: 8px 20px; background-color: var(--accent-color); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">खर्च सुरक्षित गर्नुहोस्</button>
+</form>
+</div>
+<div class="table-responsive">
+<table>
+<thead><tr><th>क्र.सं.</th><th>मिति</th><th>खर्च गरिएको कोष/स्रोत</th><th>खर्चको विवरण</th><th>रसिद नं.</th><th>माध्यम</th><th>रकम (रु.)</th><th>संस्थाको नाम</th><th class="no-print">कारवाही</th></tr></thead>
+<tbody id="dailyExpenseTableBody"></tbody>
+</table>
                 </div>
             </div>
 
