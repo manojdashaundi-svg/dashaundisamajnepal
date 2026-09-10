@@ -187,6 +187,16 @@
         .fine-text { color: #e53e3e; }
 
         footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600; }
+
+        /* आइकनहरूलाई क्लिक गर्न मिल्ने बनाउन र ओभरल्याप समस्या हटाउन */
+    .idcard-close-btn, 
+    span[onclick*="downloadCardAsPng"], 
+    span[onclick*="closeIdCardModal"] {
+        position: absolute !important;
+        z-index: 99999 !important;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+    }
     </style>
 </head>
 <body>
