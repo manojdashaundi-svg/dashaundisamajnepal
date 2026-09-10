@@ -785,6 +785,30 @@
 </footer>
 
     <script>
+        // PNG डाउनलोड बटनको काम सुचारू गर्न
+function downloadCardAsPng() {
+    const cardElement = document.querySelector('#idCardModal > div');
+    if (window.html2canvas) {
+        html2canvas(cardElement, { scale: 2, useCORS: true }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'Dashaundi_Samaj_ID_Card.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    } else {
+        alert('कृपया html2canvas लाइब्रेरी थप्नुहोस् वा प्रिन्ट अप्सन प्रयोग गर्नुहोस्।');
+        window.print();
+    }
+}
+
+// मोडल बन्द गर्ने फंक्सन
+function closeIdCardModal() {
+    const modal = document.getElementById('idCardModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+        
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
 
