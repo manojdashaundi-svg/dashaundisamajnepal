@@ -2499,32 +2499,48 @@
             populateNepaliDateDropdowns('exp');
             loadDailyExpenseData();
         }
+        
         async function loadDailyExpenseData() {
-            const { data } = await supabaseClient.from('daily_expenses').select('*').order('id', { ascending: true });
-            const tbody = document.getElementById('dailyExpenseTableBody');
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9">कुनै दैनिक खर्च रेकर्ड छैन</td></tr>';
-                return;
-            }
-            data.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${index + 1}</strong></td>
-                        <td>${toNepaliNumber(item.date || '-')}</td>
-                        <td><span style="background: #ebf8ff; color: #2b6cb0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${item.source_fund || 'साधारण आम्दानी'}</span></td>
-                        <td><strong>${item.expense_details || '-'}</strong></td>
-                        <td>${item.receipt_no || '-'}</td>
-                        <td>${item.medium || '-'}</td>
-                        <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
-                        <td>${item.organization_name || '-'}</td>
-                        <td class="no-print">
-                            <button class="btn-action btn-danger" onclick="deleteExpense('${item.id}')">रिमुभ</button>
-                        </td>
-                    </tr>
-                `;
-            });
+    try {
+        // नयाँ खर्चहरू पहिले देखाउन (Descending) 'ascending: false' राख्ने
+        // यदि पुरानो पहिले देखाउने भए 'ascending: true' बनाउन सक्नुहुन्छ
+        const { data, error } = await supabaseClient
+            .from('daily_expenses')
+            .select('*')
+            .order('id', { ascending: false }); // वा created_at प्रयोग गर्न सक्नुहुन्छ
+
+        if (error) throw error;
+
+        const tbody = document.getElementById('dailyExpenseTableBody');
+        tbody.innerHTML = '';
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9">कुनै दैनिक खर्च रेकर्ड छैन</td></tr>';
+            return;
         }
+
+        data.forEach((item, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${index + 1}</strong></td>
+                    <td>${toNepaliNumber(item.date || '-')}</td>
+                    <td><span style="background: #ebf8ff; color: #2b6cb0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${item.source_fund || 'साधारण आम्दानी'}</span></td>
+                    <td><strong>${item.expense_details || '-'}</strong></td>
+                    <td>${item.receipt_no || '-'}</td>
+                    <td>${item.medium || '-'}</td>
+                    <td><strong style="color: #e53e3e;">रु. ${toNepaliNumber(item.amount || '०')}</strong></td>
+                    <td>${item.organization_name || '-'}</td>
+                    <td class="no-print">
+                        <button class="btn-action btn-danger" onclick="deleteExpense('${item.id}')">रिमुभ</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    } catch (err) {
+        console.error("खर्च लोड गर्दा त्रुटि:", err.message);
+    }
+}
 
         async function deleteExpense(id) {
             if(confirm('के तपाईं यो खर्च रेकर्ड मेटाउन चाहनुहुन्छ?')) {
