@@ -1604,9 +1604,9 @@ async function openLevyModal() {
     updateRealTimeClock();
     selectedMonths = []; 
 
-    // पुरानो अस्वीकृत सन्देश हटाउने (यदि भएमा)
-    const existingRejectAlert = document.getElementById('levyRejectAlertBox');
-    if (existingRejectAlert) existingRejectAlert.remove();
+    // पुरानो सन्देश हटाउने
+    const existingAlert = document.getElementById('levyStatusAlertBox');
+    if (existingAlert) existingAlert.remove();
 
     const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
     if (userData) {
@@ -1621,34 +1621,44 @@ async function openLevyModal() {
     }
 
     let paidMonthsHistory = []; 
-    let hasRejectedPayment = false; // रिजेक्ट भएको चेक गर्ने भेरिएबल
+    let latestStatus = null; // पछिल्लो भुक्तानीको स्थिति राख्न
     const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
     
     if (activeUserId) {
         const { data: levyData, error } = await supabaseClient
             .from('levy_payments')
-            .select('months, status')
-            .eq('user_id', activeUserId);
+            .select('months, status, created_at')
+            .eq('user_id', activeUserId)
+            .order('created_at', { ascending: false }); // पछिल्लो रेकर्ड पहिले लिन
 
         if (levyData && levyData.length > 0) {
+            latestStatus = levyData[0].status; // सबैभन्दा पछिल्लो अनुरोधको स्टेटस
+
             levyData.forEach(payment => {
                 if (payment.status === 'Approved' && payment.months && Array.isArray(payment.months)) {
                     paidMonthsHistory = paidMonthsHistory.concat(payment.months);
-                }
-                if (payment.status === 'Rejected') {
-                    hasRejectedPayment = true; // यदि कुनै अनुरोध रिजेक्ट भएको छ भने
                 }
             });
         }
     }
 
-    // यदि भुक्तानी अनुरोध रिजेक्ट भएको छ भने मोडलको शीर्षभागमा चेतावनी देखाउने
-    if (hasRejectedPayment) {
-        const modalContentEl = document.querySelector('#levyModal .modal-content');
-        const alertDiv = document.createElement('div');
-        alertDiv.id = 'levyRejectAlertBox';
-        alertDiv.style.cssText = "background: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; font-size: 13px; text-align: center;";
+    // मोडलभित्र स्टेटस अनुसारको सन्देश देखाउने
+    const modalContentEl = document.querySelector('#levyModal .modal-content');
+    const alertDiv = document.createElement('div');
+    alertDiv.id = 'levyStatusAlertBox';
+    alertDiv.style.cssText = "padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; font-size: 13px; text-align: center;";
+
+    if (latestStatus === 'Rejected') {
+        alertDiv.style.background = "#fed7d7";
+        alertDiv.style.color = "#742a2a";
+        alertDiv.style.border = "1px solid #feb2b2";
         alertDiv.innerHTML = "❌ तपाईंको अघिल्लो लेवी भुक्तानी अनुरोध एडमिनबाट अस्वीकृत (Rejected) भएको छ। कृपया सही भौचर राखी फेरि अनुरोध पठाउनुहोला।";
+        modalContentEl.insertBefore(alertDiv, modalContentEl.querySelector('h4').nextSibling);
+    } else if (latestStatus === 'Pending') {
+        alertDiv.style.background = "#feebc8";
+        alertDiv.style.color = "#744210";
+        alertDiv.style.border = "1px solid #fbd38d";
+        alertDiv.innerHTML = "⏳ तपाईंको लेवी भुक्तानी अनुरोध एडमिनबाट स्वीकृति (Approval) को क्रममा (Pending) छ।";
         modalContentEl.insertBefore(alertDiv, modalContentEl.querySelector('h4').nextSibling);
     }
 
