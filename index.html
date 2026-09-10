@@ -686,9 +686,7 @@
    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeMyCard()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 4000; padding: 10px; overflow-y: auto;">
     <div style="width: 440px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; display: flex; flex-direction: column;">
 
-        <div style="background: #ffffff; color: #fff; text-align: center; padding: 10px 12px 75px 12px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
-
-            <span class="idcard-close-btn" onclick="closeMyCard()" style="position: absolute; top: 8px; right: 12px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
+        <div style="background: #ffffff; color: #fff; text-align: center; padding: 14px 12px 75px 12px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
 
             <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                 <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
@@ -766,16 +764,19 @@
             </div>
         </div>
 
-        <div style="background: #1a365d; color: #fff; text-align: center; padding: 5px; font-size: 9px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="background: #1a365d; color: #fff; text-align: center; padding: 6px; font-size: 9px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 3px;">
             <div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
                 <span>📞 9765240652</span>
                 <span>✉ dashaundisamajnepal@gmail.com</span>
             </div>
             <span>🌐 www.dashaundisamajnepal.com</span>
-            <span class="no-print-card" style="cursor: pointer; background: #3182ce; padding: 2px 10px; border-radius: 3px; color: #fff; display: inline-block; font-size: 8.5px; font-weight: bold; margin-top: 1px;" onclick="window.print()">प्रिन्ट / डाउनलोड गर्नुहोस्</span>
+            <div class="no-print-card" style="margin-top: 2px;">
+                <button onclick="window.print()" style="background: #3182ce; color: #fff; border: none; padding: 4px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">प्रिन्ट / डाउनलोड गर्नुहोस्</button>
+            </div>
         </div>
     </div>
 </div>
+    
    <footer style="background-color: #1a365d; color: white; text-align: center; padding: 20px 0; width: 100%; margin-top: 40px; box-sizing: border-box;">
     <p style="margin: 0; font-size: 14px; font-weight: bold; color: #ffffff;">&copy; २०२६ दशौँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
 </footer>
