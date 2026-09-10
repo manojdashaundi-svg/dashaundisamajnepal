@@ -688,13 +688,13 @@
 
         <div style="background: #ffffff; color: #fff; text-align: center; padding: 8px 10px 75px 10px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
             
-            <!-- माथिल्लो बाँया पट्टी PNG Download आइकन -->
-            <span onclick="downloadCardAsPng()" title="PNG डाउनलोड गर्नुहोस्" style="position: absolute; top: 7px; left: 12px; color: #ffffff; font-size: 18px; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">📥</span>
+            <!-- माथिल्लो बाँया पट्टी PNG Download आइकन (z-index उच्च बनाइएको) -->
+            <span onclick="downloadCardAsPng()" title="PNG डाउनलोड गर्नुहोस्" style="position: absolute; top: 8px; left: 14px; color: #ffffff; font-size: 18px; cursor: pointer; z-index: 50; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">📥</span>
 
-            <!-- माथिल्लो दायाँ पट्टी इन्टु (×) बटन -->
-            <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 6px; right: 12px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 30; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">&times;</span>
+            <!-- माथिल्लो दायाँ पट्टी इन्टु (×) बटन (z-index उच्च बनाइएको) -->
+            <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 6px; right: 14px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 50; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">&times;</span>
 
-            <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+            <svg viewBox="0 0 500 320" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;">
                 <path d="M0,0 L500,0 L500,210 Q250,290 0,210 Z" fill="#1a365d"></path>
             </svg>
 
