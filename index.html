@@ -1759,7 +1759,7 @@ async function openLevyModal() {
         updateLevySummary(rate);
     }
         
-       async function submitLevyPayment() {
+      async function submitLevyPayment() {
     const fileInput = document.getElementById('voucherFile');
     if (selectedMonths.length === 0) { 
         alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
@@ -1787,19 +1787,20 @@ async function openLevyModal() {
             return;
         }
 
-        // युजरको वास्तविक पद र कमिटी डेटाबेस वा प्रोफाइलबाट लिने
-        const userPosition = currentUserProfile.position || document.getElementById('lbl_position')?.innerText || 'साधारण सदस्यछा';
+        const userPosition = currentUserProfile.position || document.getElementById('lbl_position')?.innerText || 'साधारण सदस्य';
         const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
+        const currentNepaliDate = getNepaliDate(); // हालको वास्तविक नेपाली मिति प्राप्त गर्ने
 
         const formData = {
             user_id: activeUserId,
             member_name: currentUserProfile.full_name || currentUserProfile.name || 'सदस्य',
             member_no: currentUserProfile.member_no || '',
-            position: userPosition,         // यहाँ वास्तविक पद सेभ हुनेछ (जस्तै: सचिव)
-            committee_level: userCommittee,   // यहाँ वास्तविक कमिटी सेभ हुनेछ (जस्तै: केन्द्रीय समिति)
+            position: userPosition,
+            committee_level: userCommittee,
             months: selectedMonths,
             total_amount: parseFloat(document.getElementById('grandTotal').innerText),
             voucher_url: paySlipUrl,
+            date: currentNepaliDate, // यहाँ मिति थपिएको छ
             status: 'Pending'
         };
 
