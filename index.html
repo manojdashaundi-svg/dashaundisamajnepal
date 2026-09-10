@@ -1743,7 +1743,8 @@
         });
         updateLevySummary(rate);
     }
-        async function submitLevyPayment() {
+        
+       async function submitLevyPayment() {
     const fileInput = document.getElementById('voucherFile');
     if (selectedMonths.length === 0) { 
         alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
@@ -1788,25 +1789,16 @@
             alert('त्रुटि: ' + error.message); 
         } else { 
             alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो! एडमिनबाट स्वीकृत भएपछि यो अपडेट हुनेछ।');
-            closeLevyModal(); // मोडल बन्द गर्ने
-            fileInput.value = ''; // file input खाली गर्ने
-            selectedMonths = []; // छनोट खाली गर्ने
-            loadDashboard(); // ड्यासबोर्ड रिफ्रेस गर्ने (लगआउट नभई)
+            closeLevyModal(); 
+            fileInput.value = ''; 
+            selectedMonths = []; 
+            loadDashboard(); 
         }
     } catch (err) {
         console.error(err);
         alert('केही प्राविधिक समस्या आयो।');
     }
 }
-
-                alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो!');
-                closeLevyModal();
-                location.reload();
-            } catch (err) {
-                console.error(err);
-                alert('डेटा सेभ गर्न असफल भयो!');
-            }
-        }
 
         window.addEventListener('DOMContentLoaded', () => {
             loadPublicNotices();
