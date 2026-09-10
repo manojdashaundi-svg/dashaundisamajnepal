@@ -796,23 +796,36 @@
 </footer>
 
     <script>
-        // PNG डाउनलोड बटनको काम सुचारू गर्न
+       // PNG डाउनलोड बटनको काम सुचारू गर्न (इन्टु र डाउनलोड आइकन लुकाएर)
 function downloadCardAsPng() {
     const cardElement = document.querySelector('#idCardModal > div');
+    
+    // डाउनलोड गर्नु अघि इन्टु र डाउनलोड आइकनहरू लुकाउने
+    const closeBtn = cardElement.querySelector('.idcard-close-btn') || cardElement.querySelector('span[onclick*="closeIdCardModal"]');
+    const downloadBtn = cardElement.querySelector('span[onclick*="downloadCardAsPng"]');
+    
+    if (closeBtn) closeBtn.style.display = 'none';
+    if (downloadBtn) downloadBtn.style.display = 'none';
+
     if (window.html2canvas) {
         html2canvas(cardElement, { scale: 2, useCORS: true }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'Dashaundi_Samaj_ID_Card.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
+            
+            // डाउनलोड भइसकेपछि बटनहरूलाई फेरि देखाउने
+            if (closeBtn) closeBtn.style.display = 'block';
+            if (downloadBtn) downloadBtn.style.display = 'block';
         });
     } else {
-        alert('कृपया html2canvas लाइब्रेरी थप्नुहोस् वा प्रिन्ट अप्सन प्रयोग गर्नुहोस्।');
-        window.print();
+        alert('कृपया html2canvas लाइब्रेरी थप्नुहोस्।');
+        if (closeBtn) closeBtn.style.display = 'block';
+        if (downloadBtn) downloadBtn.style.display = 'block';
     }
 }
 
-// मोडल बन्द गर्ने फंक्सन
+// मोडल बन्द गर्ने फंक्सन (यसलाई जस्ताको तस्तै राख्नुहोला)
 function closeIdCardModal() {
     const modal = document.getElementById('idCardModal');
     if (modal) {
