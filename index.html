@@ -1598,97 +1598,151 @@
         }
 
         let selectedMonths = [];
-        async function openLevyModal() {
-    document.getElementById('levyModal').style.display = 'flex';
-    updateRealTimeClock();
-    selectedMonths = []; 
-
-    const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-    if (userData) {
-        userCommitteeKey = userData.committee_key || 'central';
-        document.getElementById('modalCommitteeName').innerText = userData.committee || 'केन्द्रीय समिति';
-    }
-
-    const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
-    if (rateData) {
-        committeeRate = parseFloat(rateData.monthly_amount);
-        document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
-    }
-
-    let paidMonthsHistory = [];
-    const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
     
-    if (activeUserId) {
-        const { data: levyData, error } = await supabaseClient
-            .from('levy_payments')
-            .select('months, status')
-            .eq('user_id', activeUserId);
+    async function openLevyModal() {
+        document.getElementById('levyModal').style.display = 'flex';
+        updateRealTimeClock();
+        selectedMonths = []; 
 
-        if (levyData && levyData.length > 0) {
-            levyData.forEach(payment => {
-                if (payment.months && Array.isArray(payment.months)) {
-                    paidMonthsHistory = paidMonthsHistory.concat(payment.months);
-                }
-            });
+        const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
+        if (userData) {
+            userCommitteeKey = userData.committee_key || 'central';
+            document.getElementById('modalCommitteeName').innerText = userData.committee || 'केन्द्रीय समिति';
         }
+
+        const { data: rateData } = await supabaseClient.from('levy_rates').select('monthly_amount').eq('committee_level', userCommitteeKey).single();
+        if (rateData) {
+            committeeRate = parseFloat(rateData.monthly_amount);
+            document.getElementById('modalMonthlyRate').innerText = committeeRate.toFixed(2);
+        }
+
+        // वैशाख, जेठ, असार स्वतः तिरी सकिएको (Paid) मानिनेछ
+        let paidMonthsHistory = ['01', '02', '03']; 
+        const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
+        
+        if (activeUserId) {
+            const { data: levyData, error } = await supabaseClient
+                .from('levy_payments')
+                .select('months, status')
+                .eq('user_id', activeUserId)
+                .eq('status', 'Approved'); // एडमिनबाट स्वीकृत भएका मात्र
+
+            if (levyData && levyData.length > 0) {
+                levyData.forEach(payment => {
+                    if (payment.months && Array.isArray(payment.months)) {
+                        paidMonthsHistory = paidMonthsHistory.concat(payment.months);
+                    }
+                });
+            }
+        }
+
+        renderMonths(paidMonthsHistory, committeeRate); 
     }
 
-    renderMonths(paidMonthsHistory, committeeRate); 
-}
+    function closeLevyModal() { document.getElementById('levyModal').style.display = '0'; document.getElementById('levyModal').style.display = 'none'; }
 
-        function closeLevyModal() { document.getElementById('levyModal').style.display = 'none'; }
-        function checkIfLate(monthVal) { return parseInt(monthVal) > 4 && parseInt(monthVal) < 5; }
+    // ४ महिने चक्र र जरिवाना नियम अनुसार ढिलाइ चेक गर्ने फंक्सन
+    // चक्र १: साउन-कार्तिक (कार्तिक मसान्तसम्म बुझाउनुपर्ने)
+    // चक्र २: मंसिर-फागुन (फागुन मसान्तसम्म बुझाउनुपर्ने)
+    // चक्र ३: चैत-असार (असार मसान्तसम्म बुझाउनुपर्ने)
+    function checkLateFineMultiplier(monthVal) {
+        let m = parseInt(monthVal);
+        let liveDates = getRealLiveDates();
+        let currentMonth = parseInt(liveDates.shortNepali.split('-')[1]); // हालको नेपाली महिना
 
-        function toggleMonth(monthVal, rate) {
-            let index = selectedMonths.indexOf(monthVal);
-            if (index > -1) { selectedMonths.splice(index, 1); } else { selectedMonths.push(monthVal); }
-            updateLevySummary(rate);
-            renderMonths(['01', '02', '03', '04'], rate);
+        let deadlineMonth = 4; // वैशाख-असारको डेडलाइन साउन मसान्त? वा नियम अनुसार:
+        // साउन, भदौ, असोज, कार्तिक को डेडलाइन कार्तिक मसान्त (महिना ७) हो। यदि मंसिर (८) लाग्यो भने १०% जरिवाना लाग्छ।
+        if (m >= 4 && m <= 7) {
+            // साउनदेखि कार्तिकसम्मको लेबी कार्तिक मसान्तसम्म तिर्नुपर्छ। यदि वर्तमान महिना ७ (कार्तिक) भन्दा बढी छ भने जरिवाना लाग्छ।
+            if (currentMonth > 7) return 0.10; 
+        } else if (m >= 8 && m <= 11) {
+            // मंसिरदेखि फागुनको फागुन मसान्तसम्म। वर्तमान महिना ११ भन्दा बढी भएमा।
+            if (currentMonth > 11 || currentMonth < 4) return 0.10;
+        } else if (m === 12 || m === 1 || m === 2 || m === 3) {
+            // चैतदेखि असारको असार मसान्तसम्म।
+            if (currentMonth > 3 && currentMonth < 7) return 0.10;
         }
+        return 0;
+    }
 
-        function updateLevySummary(rate) {
-            let count = selectedMonths.length;
-            let baseTotal = count * rate;
-            let fineTotal = 0;
-            selectedMonths.forEach(m => { if (checkIfLate(m)) { fineTotal += (rate * 0.10); } });
-            let grandTotal = baseTotal + fineTotal;
+    function toggleMonth(monthVal, rate) {
+        // वैशाख, जेठ, असार (01, 02, 03) छनोट गर्न मिल्दैन
+        if (['01', '02', '03'].includes(monthVal)) return;
 
-            document.getElementById('selectedCount').innerText = count;
-            document.getElementById('baseTotal').innerText = baseTotal.toFixed(2);
-            document.getElementById('fineTotal').innerText = fineTotal.toFixed(2);
-            document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
+        let index = selectedMonths.indexOf(monthVal);
+        if (index > -1) { 
+            selectedMonths.splice(index, 1); 
+        } else { 
+            selectedMonths.push(monthVal); 
         }
-
-        function renderMonths(userHistory, rate) {
-    const grid = document.getElementById('monthsGrid');
-    grid.innerHTML = '';
-    const monthsList = [
-        {name: 'वैशाख', val: '01'}, {name: 'जेठ', val: '02'}, {name: 'असार', val: '03'},
-        {name: 'साउन', val: '04'}, {name: 'भदौ', val: '05'}, {name: 'असोज', val: '06'},
-        {name: 'कार्तिक', val: '07'}, {name: 'मंसिर', val: '08'}, {name: 'पुष', val: '09'},
-        {name: 'माघ', val: '10'}, {name: 'फागुन', val: '11'}, {name: 'चैत', val: '12'}
-    ];
-
-    monthsList.forEach(m => {
-        let isPaid = userHistory.includes(m.val);
-        let isLate = checkIfLate(m.val);
-        let isSelected = selectedMonths.includes(m.val);
+        updateLevySummary(rate);
         
-        let boxClass = isPaid ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
-        
-        let clickAction = isPaid ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
-        let statusText = isPaid ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'ढिलाइ' : 'बाँकी'));
+        // നിലവിലെ history पुनः तानेर render गर्ने
+        openLevyModalSilent(rate);
+    }
 
-        grid.innerHTML += `
-            <div class="month-box ${boxClass}" ${clickAction} style="${isPaid ? 'cursor: not-allowed; opacity: 0.85;' : ''}">
-                <span>${m.name}</span><br>
-                <small style="font-size:9px;">${statusText}</small>
-            </div>
-        `;
-    });
-    updateLevySummary(rate);
-}
+    async function openLevyModalSilent(rate) {
+        let paidMonthsHistory = ['01', '02', '03'];
+        const activeUserId = currentUserProfile?.id;
+        if (activeUserId) {
+            const { data: levyData } = await supabaseClient.from('levy_payments').select('months, status').eq('user_id', activeUserId).eq('status', 'Approved');
+            if (levyData) {
+                levyData.forEach(p => { if (p.months) paidMonthsHistory = paidMonthsHistory.concat(p.months); });
+            }
+        }
+        renderMonths(paidMonthsHistory, rate);
+    }
 
+    function updateLevySummary(rate) {
+        let count = selectedMonths.length;
+        let baseTotal = count * rate;
+        let fineTotal = 0;
+
+        selectedMonths.forEach(m => {
+            let finePercent = checkLateFineMultiplier(m);
+            if (finePercent > 0) {
+                fineTotal += (rate * finePercent);
+            }
+        });
+
+        let grandTotal = baseTotal + fineTotal;
+
+        document.getElementById('selectedCount').innerText = count;
+        document.getElementById('baseTotal').innerText = baseTotal.toFixed(2);
+        document.getElementById('fineTotal').innerText = fineTotal.toFixed(2);
+        document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
+    }
+
+    function renderMonths(userHistory, rate) {
+        const grid = document.getElementById('monthsGrid');
+        grid.innerHTML = '';
+        const monthsList = [
+            {name: 'वैशाख', val: '01'}, {name: 'जेठ', val: '02'}, {name: 'असार', val: '03'},
+            {name: 'साउन', val: '04'}, {name: 'भदौ', val: '05'}, {name: 'असोज', val: '06'},
+            {name: 'कार्तिक', val: '07'}, {name: 'मंसिर', val: '08'}, {name: 'पुष', val: '09'},
+            {name: 'माघ', val: '10'}, {name: 'फागुन', val: '11'}, {name: 'चैत', val: '12'}
+        ];
+
+        monthsList.forEach(m => {
+            let isPaidOrLocked = userHistory.includes(m.val) || ['01', '02', '03'].includes(m.val);
+            let isSelected = selectedMonths.includes(m.val);
+            let finePercent = checkLateFineMultiplier(m.val);
+            let isLate = finePercent > 0;
+            
+            let boxClass = isPaidOrLocked ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
+            
+            let clickAction = isPaidOrLocked ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
+            let statusText = ['01', '02', '03'].includes(m.val) ? 'अडिट समाप्त (तिरीसकेको)' : (isPaidOrLocked ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'जरिवानासहित' : 'बाँकी')));
+
+            grid.innerHTML += `
+                <div class="month-box ${boxClass}" ${clickAction} style="${isPaidOrLocked ? 'cursor: not-allowed; opacity: 0.85;' : ''}">
+                    <span>${m.name}</span><br>
+                    <small style="font-size:9px;">${statusText}</small>
+                </div>
+            `;
+        });
+        updateLevySummary(rate);
+    }
         async function submitLevyPayment() {
             const fileInput = document.getElementById('voucherFile');
             if (selectedMonths.length === 0) { 
