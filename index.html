@@ -1197,15 +1197,39 @@
             }
         }
 
-        function toggleNotificationDropdown() {
-            const dropdown = document.getElementById('notifDropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            if (dropdown.style.display === 'block') {
-                loadUserNotifications();
+        async function toggleNotificationDropdown() {
+    const dropdown = document.getElementById('notifDropdown');
+    const isVisible = dropdown.style.display === 'block';
+    
+    dropdown.style.display = isVisible ? 'none' : 'block';
+    
+    if (!isVisible) {
+        await loadUserNotifications();
+        
+        if (typeof currentUserProfile !== 'undefined' && currentUserProfile?.email) {
+            const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
+            const { data } = await supabaseClient
+                .from('member_notices')
+                .select('id')
+                .or(`target_group.eq.सबै,target_group.eq.${userCommittee}`);
+
+            if (data && data.length > 0) {
+                let allIds = data.map(item => item.id);
+                localStorage.setItem('read_notices_' + currentUserProfile.email, JSON.stringify(allIds));
+                
+                const notifBadge = document.getElementById('notifBadge');
+                if (notifBadge) notifBadge.style.display = 'none';
+
+                document.querySelectorAll('.notif-item').forEach(el => {
+                    el.classList.remove('unread');
+                    el.style.background = '#fff';
+                });
             }
         }
+    }
+}
 
-        async function loadUserNotifications() {
+async function loadUserNotifications() {
     if (!currentUserProfile.email) return;
 
     const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
@@ -1225,7 +1249,6 @@
         return;
     }
 
-    // ब्राउजरको लोकल स्टोरेज (LocalStorage) बाट पढेको स्टेटस चेक गर्ने
     let readNotices = JSON.parse(localStorage.getItem('read_notices_' + currentUserProfile.email) || '[]');
     let unreadCount = 0;
     notifBody.innerHTML = '';
@@ -1234,7 +1257,6 @@
         let isRead = readNotices.includes(item.id);
         if (!isRead) unreadCount++;
 
-        // अंग्रेजी मितिलाई नेपाली अंकमा रूपान्तरण गर्ने
         let rawDate = item.created_at ? new Date(item.created_at).toLocaleString() : '';
         let nepaliDateStr = toNepaliNumber(rawDate);
 
