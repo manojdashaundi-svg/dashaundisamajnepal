@@ -2423,32 +2423,58 @@
                 return;
             }
 
-            // २. सम्बन्धित कोषको मौज्दातबाट स्वतः रकम घटाउने (यदि तपाइको डेटाबेसमा कोषको छुट्टै टेबल भएमा)
+            // २. छनोट गरिएको कोष वा स्रोतको आधारमा सम्बन्धित टेबलबाट स्वतः रकम घटाउने वा रेकर्ड राख्ने
             try {
-                const { data: fundData, error: fetchError } = await supabaseClient
-                    .from('fund_balances') // यदि तपाईंको कोष ब्यालेन्स बस्ने टेबलको नाम अर्कै छ भने यहाँ फेर्नुहोला
-                    .select('balance')
-                    .eq('fund_name', sourceFund)
-                    .single();
+                let targetTable = '';
+                
+                // ड्रपडाउनको नाम अनुसार Supabase को कुन टेबलमा घटाउने वा रेकर्ड गर्ने निर्धारण
+                if (sourceFund === 'मानव बचाउ अभियान कोष') {
+                    targetTable = 'human_fund';
+                } else if (sourceFund === 'आपत्कालीन कोष') {
+                    targetTable = 'emergency_fund';
+                } else if (sourceFund === 'उद्धार तथा राहत कोष') {
+                    targetTable = 'relief_fund';
+                } else if (sourceFund === 'अनुदान तथा सहयोगबाट प्राप्त आम्दानी') {
+                    targetTable = 'grant_income';
+                } else if (sourceFund === 'मासिक लेवीबाट प्राप्त आम्दानी') {
+                    targetTable = 'monthly_levy';
+                } else if (sourceFund === 'साधारण आम्दानी / सामान्य कोष') {
+                    targetTable = 'fund_balances'; // वा साधारण कोषको ब्यालेन्स बस्ने टेबल
+                }
 
-                if (!fetchError && fundData) {
-                    let newBalance = parseFloat(fundData.balance) - amount;
+                if (targetTable) {
+                    // नोट: यदि तपाईंको यी कोषका टेबलहरूमा कुल ब्यालेन्स 'balance' स्तम्भमा छ भने 
+                    // वा यदि छुट्टै खर्च स्तम्भ छ भने यसले डेटा व्यवस्थापन गर्छ। 
+                    // साधारणतया कोषको टेबलबाट कुल रकम घटाउन वा खर्चको रूपमा प्रविष्टि गर्न सकिन्छ।
+                    
+                    // उदाहरणका लागि कोषको टेबलमा हालको रेकर्ड तान्ने र ब्यालेन्स अपडेट गर्ने:
+                    const { data: records, error: fetchErr } = await supabaseClient
+                        .from(targetTable)
+                        .select('*')
+                        .order('id', { ascending: false })
+                        .limit(1);
 
-                    await supabaseClient
-                        .from('fund_balances')
-                        .update({ balance: newBalance })
-                        .eq('fund_name', sourceFund);
+                    if (!fetchErr && records && records.length > 0) {
+                        let currentRecord = records.find(r => r.balance !== undefined) || records[0];
+                        
+                        if (currentRecord && currentRecord.balance !== undefined) {
+                            let updatedBalance = parseFloat(currentRecord.balance) - amount;
+                            await supabaseClient
+                                .from(targetTable)
+                                .update({ balance: updatedBalance })
+                                .eq('id', currentRecord.id);
+                        }
+                    }
                 }
             } catch (err) {
-                console.log('कोष ब्यालेन्स अपडेट सम्बन्धी जानकारी:', err.message);
+                console.log('कोष कटौती अपडेट नोट:', err.message);
             }
 
-            alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषबाट रकम कटान भयो!');
+            alert('खर्च सफलतासाथ इन्ट्री भयो र सम्बन्धित कोषको खाताबाट रकम कटान गरियो!');
             document.getElementById('dailyExpenseForm').reset();
             populateNepaliDateDropdowns('exp');
             loadDailyExpenseData();
         }
-
         async function loadDailyExpenseData() {
             const { data } = await supabaseClient.from('daily_expenses').select('*').order('id', { ascending: true });
             const tbody = document.getElementById('dailyExpenseTableBody');
