@@ -1206,42 +1206,50 @@
         }
 
         async function loadUserNotifications() {
-            if (!currentUserProfile.email) return;
-            const { data, error } = await supabaseClient
-                .from('notifications')
-                .select('*')
-                .eq('user_email', currentUserProfile.email)
-                .order('created_at', { ascending: false });
+    if (!currentUserProfile.email) return;
 
-            const notifBody = document.getElementById('notifBody');
-            const notifBadge = document.getElementById('notifBadge');
+    // युजरको कमिटी पत्ता लगाउने (जस्तै: 'केन्द्रीय समिति')
+    const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
 
-            if (error || !data || data.length === 0) {
-                notifBody.innerHTML = '<p style="text-align: center; color: #718096; padding: 10px; font-size:12px;">कुनै सूचना उपलब्ध छैन।</p>';
-                notifBadge.style.display = 'none';
-                return;
-            }
+    // notifications को सट्टा सहि टेबल 'member_notices' बाट डाटा तानेको छ
+    const { data, error } = await supabaseClient
+        .from('member_notices')
+        .select('*')
+        .or(`target_group.eq.सबै,target_group.eq.${userCommittee}`)
+        .order('id', { ascending: false });
 
-            let unreadCount = 0;
-            notifBody.innerHTML = '';
-            data.forEach(item => {
-                if (!item.is_read) unreadCount++;
-                notifBody.innerHTML += `
-                    <div class="notif-item ${item.is_read ? '' : 'unread'}">
-                        <strong style="color: #1a365d; font-size: 13px;">${item.title}</strong>
-                        <p>${item.message}</p>
-                        <small style="color: #a0aec0; font-size: 10px;">${new Date(item.created_at).toLocaleString()}</small>
-                    </div>
-                `;
-            });
+    const notifBody = document.getElementById('notifBody');
+    const notifBadge = document.getElementById('notifBadge');
 
-            if (unreadCount > 0) {
-                notifBadge.innerText = unreadCount;
-                notifBadge.style.display = 'flex';
-            } else {
-                notifBadge.style.display = 'none';
-            }
-        }
+    if (error || !data || data.length === 0) {
+        notifBody.innerHTML = '<p style="text-align: center; color: #718096; padding: 10px; font-size:12px;">कुनै सूचना उपलब्ध छैन।</p>';
+        if(notifBadge) notifBadge.style.display = 'none';
+        return;
+    }
+
+    let unreadCount = 0;
+    notifBody.innerHTML = '';
+    data.forEach(item => {
+        // यदि is_read फिल्ड छैन भने वाइल्डकार्ड म्यानेज गर्न
+        let isRead = item.is_read !== undefined ? item.is_read : false;
+        if (!isRead) unreadCount++;
+
+        notifBody.innerHTML = `
+            <div class="notif-item ${isRead ? '' : 'unread'}" style="padding: 8px 10px; border-bottom: 1px solid #edf2f7; font-size: 12px;">
+                <strong style="color: #1a365d; font-size: 13px;">${item.title}</strong>
+                <p style="margin: 2px 0; color: #2d3748;">${item.body || item.message || ''}</p>
+                <small style="color: #a0aec0; font-size: 10px;">${item.created_at ? new Date(item.created_at).toLocaleString() : ''}</small>
+            </div>
+        ` + notifBody.innerHTML;
+    });
+
+    if (unreadCount > 0 && notifBadge) {
+        notifBadge.innerText = unreadCount;
+        notifBadge.style.display = 'flex';
+    } else if(notifBadge) {
+        notifBadge.style.display = 'none';
+    }
+}
 
         async function markAllNotificationsAsRead() {
             if (!currentUserProfile.email) return;
