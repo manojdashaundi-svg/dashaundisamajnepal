@@ -2568,32 +2568,78 @@
 
         async function loadFundBalances() {
     try {
-        // १. आपत्कालीन कोषको कुल आम्दानी निकाल्ने
+        // १. आपत्कालीन कोष (Emergency Fund) को कुल आम्दानी
         const { data: emergencyIncomeData } = await supabaseClient
             .from('emergency_fund')
             .select('amount');
-        
-        let totalEmergencyIncome = 0;
-        if (emergencyIncomeData) {
-            totalEmergencyIncome = emergencyIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
-        }
+        let totalEmergencyIncome = emergencyIncomeData ? emergencyIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0) : 0;
 
-        // २. दैनिक खर्चबाट आपत्कालीन कोषबाट खर्च भएको कुल रकम निकाल्ने
+        // २. मानव बचाउ अभियान कोष (Human Fund) को कुल आम्दानी
+        const { data: humanIncomeData } = await supabaseClient
+            .from('human_fund') // तपाईंको टेबलको नाम यहाँ मिलाउनुहोला (जस्तै human_fund वा उस्तै)
+            .select('amount');
+        let totalHumanIncome = humanIncomeData ? humanIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0) : 0;
+
+        // ३. उद्धार तथा राहत कोष (Relief Fund) को कुल आम्दानी
+        const { data: reliefIncomeData } = await supabaseClient
+            .from('relief_fund') // तपाईंको टेबलको नाम यहाँ मिलाउनुहोला
+            .select('amount');
+        let totalReliefIncome = reliefIncomeData ? reliefIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0) : 0;
+
+        // ४. दैनिक खर्चको डेटा एकैचोटि तानेर सबै कोषको खर्च अलग-अलग छुट्याउने
         const { data: expenseData } = await supabaseClient
             .from('daily_expenses')
-            .select('amount, source_fund')
-            .eq('source_fund', 'आपत्कालीन कोष');
+            .select('amount, source_fund');
 
         let totalEmergencyExpense = 0;
+        let totalHumanExpense = 0;
+        let totalReliefExpense = 0;
+        let grandTotalExpense = 0;
+
         if (expenseData) {
-            totalEmergencyExpense = expenseData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0);
+            expenseData.forEach(item => {
+                let amt = parseFloat(item.amount) || 0;
+                grandTotalExpense += amt; // कुल खर्च
+
+                if (item.source_fund === 'आपत्कालीन कोष') {
+                    totalEmergencyExpense += amt;
+                } else if (item.source_fund === 'मानव बचाउ अभियान कोष') {
+                    totalHumanExpense += amt;
+                } else if (item.source_fund === 'उद्धार तथा राहत कोष') {
+                    totalReliefExpense += amt;
+                }
+            });
         }
 
-        // ३. बाँकी मौज्दात (Net Balance) हिसाब गर्ने
+        // ५. प्रत्येक कोषको खुद मौज्दात (Net Balance) हिसाब गर्ने
         let netEmergencyBalance = totalEmergencyIncome - totalEmergencyExpense;
+        let netHumanBalance = totalHumanIncome - totalHumanExpense;
+        let netReliefBalance = totalReliefIncome - totalReliefExpense;
 
-        // ४. यसलाई HTML मा देखाउने (तपाईंको पेजमा भएको ब्यालेन्स देखाउने ID यहाँ राख्नुहोला)
-        document.getElementById('emergencyFundBalance').innerText = 'रु. ' + toNepaliNumber(netEmergencyBalance);
+        // ६. HTML मा देखाउने (तपाईंको फंक्सन `toNepaliNumber` प्रयोग गरेर)
+        if (document.getElementById('emergencyFundBalance')) {
+            document.getElementById('emergencyFundBalance').innerText = 'रु. ' + toNepaliNumber(netEmergencyBalance);
+        }
+        if (document.getElementById('humanFundBalance')) {
+            document.getElementById('humanFundBalance').innerText = 'रु. ' + toNepaliNumber(netHumanBalance);
+        }
+        if (document.getElementById('reliefFundBalance')) {
+            document.getElementById('reliefFundBalance').innerText = 'रु. ' + toNepaliNumber(netReliefBalance);
+        }
+
+        // यदि कुल आम्दानी र खर्च पनि देखाउन चाहनुहुन्छ भने:
+        let grandTotalIncome = totalEmergencyIncome + totalHumanIncome + totalReliefIncome;
+        let netOverallBalance = grandTotalIncome - grandTotalExpense;
+
+        if (document.getElementById('totalIncomeDisplay')) {
+            document.getElementById('totalIncomeDisplay').innerText = 'रु. ' + toNepaliNumber(grandTotalIncome);
+        }
+        if (document.getElementById('totalExpenseDisplay')) {
+            document.getElementById('totalExpenseDisplay').innerText = 'रु. ' + toNepaliNumber(grandTotalExpense);
+        }
+        if (document.getElementById('netBalanceDisplay')) {
+            document.getElementById('netBalanceDisplay').innerText = 'रु. ' + toNepaliNumber(netOverallBalance);
+        }
 
     } catch (err) {
         console.log('कोष ब्यालेन्स हिसाब गर्दा त्रुटि:', err.message);
