@@ -317,54 +317,64 @@
         }
 
         @media print {
-    /* पृष्ठको मार्जिन र ब्राउजरको स्वतः आउने हेडर/फुटर हटाउन */
+    /* पृष्ठको साइज Landscape (तेस्रो) र मार्जिन मिलाउन */
     @page {
+        size: landscape;
         margin: 10mm;
-        size: auto;
     }
 
-    /* १. पहिलेका अत्यावश्यक प्रिन्ट नियमहरू (भौचर र लुकाउने कुराहरू) */
-    body * { visibility: hidden !important; }
+    /* १. सबै कुरा लुकाउने र प्रिन्ट हुने भाग मात्र देखाउने */
+    body * { 
+        visibility: hidden !important; 
+    }
     
-    .voucher-modal.active-voucher, .voucher-modal.active-voucher * { visibility: visible !important; }
-    .voucher-modal.active-voucher {
-        position: fixed !important; left: 0 !important; top: 0 !important; width: 100% !important; height: 100vh !important; background: #fff !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important; padding: 0 !important;
+    /* तपाईंले प्रिन्ट गर्न दिनुभएको कन्टेनर वा टेबल सेक्सਨ */
+    .printable-section, .printable-section * ,
+    #printableTableSection, #printableTableSection * { 
+        visibility: visible !important; 
     }
 
-    .printable-section, .printable-section * { visibility: visible !important; }
-    .printable-section {
-        position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; background: #fff !important; display: block !important;
+    .printable-section, #printableTableSection {
+        position: absolute !important; 
+        left: 0 !important; 
+        top: 0 !important; 
+        width: 100% !important; 
+        background: #fff !important; 
+        display: block !important;
     }
-    .printable-section form, 
-    .printable-section .admin-panel, 
-    .printable-section input, 
-    .printable-section select, 
-    .printable-section button, 
+
+    /* फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
+    .printable-section form,  
+    .printable-section .admin-panel,  
+    .printable-section input,  
+    .printable-section select,  
+    .printable-section button,  
     .printable-section label,
-    .printable-section h4 { 
-        display: none !important; 
-        visibility: hidden !important; 
+    .printable-section h4,
+    .no-print, .top-header, .section-header, .toggle-btn, form, input, select, button {  
+        display: none !important;  
+        visibility: hidden !important;  
     }
-
-    .no-print, .top-header, .section-header, .toggle-btn, form, input, select, button { 
-        display: none !important; 
-        visibility: hidden !important; 
+    
+    .print-header { 
+        display: block !important; 
+        width: 100% !important; 
+        text-align: center !important; 
     }
-    .print-header { display: block !important; width: 100% !important; text-align: center !important; }
 
     /* २. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
-    .voucher-modal img, 
-    .payment-slip, 
-    .payment-proof, 
+    .voucher-modal img,  
+    .payment-slip,  
+    .payment-proof,  
     .voucher-slip-image {
         display: none !important;
         visibility: hidden !important;
     }
 
     /* छुट्टै मिति देखाउने क्लासहरू लुकाउन */
-    .print-date, .date-display { 
-        display: none !important; 
-        visibility: hidden !important; 
+    .print-date, .date-display {  
+        display: none !important;  
+        visibility: hidden !important;  
     }
 
     /* ३. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
