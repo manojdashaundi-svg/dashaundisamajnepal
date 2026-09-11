@@ -317,11 +317,18 @@
         }
 
         @media print {
-    /* पृष्ठको साइज Landscape (तेस्रो) र मार्जिन मिलाउन */
+    /* पृष्ठको साइज Landscape र मार्जीन मिलाउन */
     @page {
         size: landscape;
         margin: 10mm;
     }
+
+    /* लोगो स्पष्ट रूपमा प्रिन्टमा देखाउन */
+    .print-header img, .print-logo {
+        visibility: visible !important;
+        display: inline-block !important;
+    }
+}
 
     /* १. सबै कुरा लुकाउने र प्रिन्ट हुने भाग मात्र देखाउने */
     body * { 
