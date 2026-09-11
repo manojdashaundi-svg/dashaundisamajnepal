@@ -1638,9 +1638,6 @@ async function markAllNotificationsAsRead() {
     document.getElementById('cardExpiryDate').innerText = expiryDate;
     document.getElementById('cardName').innerText = fullName;
 
-    // ==========================================
-    // 💡 यहाँ पद र कमिटी मिलाउने नयाँ कोड राखिएको छ:
-    // ==========================================
     let userPos = (userData && userData.position) ? userData.position.trim() : '';
     let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय समिति';
     
@@ -1651,7 +1648,6 @@ async function markAllNotificationsAsRead() {
         cardPositionText = `${userPos} (${userComm})`;
     }
     document.getElementById('cardPosition').innerText = cardPositionText;
-    // ==========================================
 
     document.getElementById('cardProvince').innerText = currentApplication.province || '-';
     document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
@@ -1702,7 +1698,6 @@ async function openLevyModal() {
     updateRealTimeClock();
     selectedMonths = []; 
 
-    // पुरानो सन्देश हटाउने
     const existingAlert = document.getElementById('levyStatusAlertBox');
     if (existingAlert) existingAlert.remove();
 
@@ -1719,7 +1714,7 @@ async function openLevyModal() {
     }
 
     let paidMonthsHistory = []; 
-    let latestStatus = null; // पछिल्लो भुक्तानीको स्थिति राख्न
+    let latestStatus = null; 
     const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
     
     if (activeUserId) {
@@ -1727,10 +1722,10 @@ async function openLevyModal() {
             .from('levy_payments')
             .select('months, status, created_at')
             .eq('user_id', activeUserId)
-            .order('created_at', { ascending: false }); // पछिल्लो रेकर्ड पहिले लिन
+            .order('created_at', { ascending: false });
 
         if (levyData && levyData.length > 0) {
-            latestStatus = levyData[0].status; // सबैभन्दा पछिल्लो अनुरोधको स्टेटस
+            latestStatus = levyData[0].status;
 
             levyData.forEach(payment => {
                 if (payment.status === 'Approved' && payment.months && Array.isArray(payment.months)) {
@@ -1740,7 +1735,6 @@ async function openLevyModal() {
         }
     }
 
-    // मोडलभित्र स्टेटस अनुसारको सन्देश देखाउने
     const modalContentEl = document.querySelector('#levyModal .modal-content');
     const alertDiv = document.createElement('div');
     alertDiv.id = 'levyStatusAlertBox';
@@ -1762,34 +1756,27 @@ async function openLevyModal() {
 
     renderMonths(paidMonthsHistory, committeeRate); 
 }
-    function closeLevyModal() { document.getElementById('levyModal').style.display = '0'; document.getElementById('levyModal').style.display = 'none'; }
 
-    // ४ महिने चक्र र जरिवाना नियम अनुसार ढिलाइ चेक गर्ने फंक्सन
-    // चक्र १: साउन-कार्तिक (कार्तिक मसान्तसम्म बुझाउनुपर्ने)
-    // चक्र २: मंसिर-फागुन (फागुन मसान्तसम्म बुझाउनुपर्ने)
-    // चक्र ३: चैत-असार (असार मसान्तसम्म बुझाउनुपर्ने)
+function closeLevyModal() { 
+    document.getElementById('levyModal').style.display = 'none'; 
+}
+
     function checkLateFineMultiplier(monthVal) {
         let m = parseInt(monthVal);
         let liveDates = getRealLiveDates();
-        let currentMonth = parseInt(liveDates.shortNepali.split('-')[1]); // हालको नेपाली महिना
+        let currentMonth = parseInt(liveDates.shortNepali.split('-')[1]);
 
-        let deadlineMonth = 4; // वैशाख-असारको डेडलाइन साउन मसान्त? वा नियम अनुसार:
-        // साउन, भदौ, असोज, कार्तिक को डेडलाइन कार्तिक मसान्त (महिना ७) हो। यदि मंसिर (८) लाग्यो भने १०% जरिवाना लाग्छ।
         if (m >= 4 && m <= 7) {
-            // साउनदेखि कार्तिकसम्मको लेबी कार्तिक मसान्तसम्म तिर्नुपर्छ। यदि वर्तमान महिना ७ (कार्तिक) भन्दा बढी छ भने जरिवाना लाग्छ।
             if (currentMonth > 7) return 0.10; 
         } else if (m >= 8 && m <= 11) {
-            // मंसिरदेखि फागुनको फागुन मसान्तसम्म। वर्तमान महिना ११ भन्दा बढी भएमा।
             if (currentMonth > 11 || currentMonth < 4) return 0.10;
         } else if (m === 12 || m === 1 || m === 2 || m === 3) {
-            // चैतदेखि असारको असार मसान्तसम्म।
             if (currentMonth > 3 && currentMonth < 7) return 0.10;
         }
         return 0;
     }
 
     function toggleMonth(monthVal, rate) {
-        // वैशाख, जेठ, असार (01, 02, 03) छनोट गर्न मिल्दैन
         if (['01', '02', '03'].includes(monthVal)) return;
 
         let index = selectedMonths.indexOf(monthVal);
@@ -1800,7 +1787,6 @@ async function openLevyModal() {
         }
         updateLevySummary(rate);
         
-        // നിലവിലെ history पुनः तानेर render गर्ने
         openLevyModalSilent(rate);
     }
 
@@ -1897,7 +1883,7 @@ async function openLevyModal() {
 
         const userPosition = currentUserProfile.position || document.getElementById('lbl_position')?.innerText || 'साधारण सदस्य';
         const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
-        const currentNepaliDate = getNepaliDate(); // हालको वास्तविक नेपाली मिति प्राप्त गर्ने
+        const currentNepaliDate = getNepaliDate();
 
         const formData = {
             user_id: activeUserId,
@@ -1908,7 +1894,7 @@ async function openLevyModal() {
             months: selectedMonths,
             total_amount: parseFloat(document.getElementById('grandTotal').innerText),
             voucher_url: paySlipUrl,
-            date: currentNepaliDate, // यहाँ मिति थपिएको छ
+            date: currentNepaliDate,
             status: 'Pending'
         };
 
