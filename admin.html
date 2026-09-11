@@ -328,31 +328,34 @@
         visibility: hidden !important; 
     }
 
-    /* २. प्रिन्ट हुने मुख्य कन्टेनर र त्यसभित्रका कुराहरू मात्र देखाउने */
+    /* २. प्रिन्ट हुने मुख्य कन्टेनर, प्रिन्ट हेडर र तिनका भित्रका सबै कुरा देखाउने */
     .printable-section, .printable-section *,  
-    #printableTableSection, #printableTableSection * {  
+    #printableTableSection, #printableTableSection *,
+    .print-header, .print-header * {  
         visibility: visible !important; 
     }
 
-    /* ३. प्रिन्ट हुने भागलाई पेजको सुरुमा र सही तरिकाले सेट गर्ने */
+    /* ३. प्रिन्ट हुने भाग र हेडरलाई पेजको सुरुमा र सही तरिकाले सेट गर्ने */
+    .print-header {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        background: #fff !important;
+        display: block !important;
+        text-align: center !important;
+    }
+
     .printable-section, #printableTableSection {
         position: absolute !important; 
         left: 0 !important; 
-        top: 0 !important; 
+        top: 120px !important; /* हेडरको तल टेबल देखाउन मद्दत गर्छ */
         width: 100% !important; 
         background: #fff !important; 
         display: block !important;
     }
 
-    /* ४. लोगो स्पष्ट रूपमा देखाउने (यहाँ विशेष सुधार गरिएको छ) */
-    .print-header, .print-header * {  
-        display: block !important; 
-        visibility: visible !important;
-        width: 100% !important; 
-        text-align: center !important; 
-        opacity: 1 !important;
-    }
-
+    /* ४. लोगो स्पष्ट रूपमा देखाउने र साइज मिलाउने */
     .print-header img, .print-logo, .print-logo img {
         visibility: visible !important;
         display: block !important;
@@ -360,10 +363,10 @@
         height: auto !important;
         max-width: 100% !important;
         opacity: 1 !important;
-        margin: 0 auto !important;
+        margin: 0 auto 10px auto !important;
     }
 
-    /* ५. फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने (तर प्रिन्ट हेडरलाई बचाउने) */
+    /* ५. फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
     .printable-section form,  
     .printable-section .admin-panel,  
     .printable-section input,  
@@ -371,13 +374,13 @@
     .printable-section button,  
     .printable-section label,
     .printable-section h4,
-    .no-print, .top-header, .section-header, .toggle-btn, form:not(.print-header), input, select, button {  
+    .no-print, .top-header, .section-header, .toggle-btn, form, input, select, button {  
         display: none !important;  
         visibility: hidden !important;  
     }
 
     /* ६. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
-    .voucher-modal img,  
+    .voucher-modal img:not(.print-header img),  
     .payment-slip,  
     .payment-proof,  
     .voucher-slip-image {
