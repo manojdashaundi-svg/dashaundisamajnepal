@@ -885,11 +885,11 @@ function closeIdCardModal() {
         let committeeRate = 200;
         let userCommitteeKey = 'central';
 
-        function toNepaliNumber(num) {
-            if (!num) return '';
-            const numbers = {'0': '०', '1': '१', '2': '२', '3': '३', '4': '४', '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'};
-            return num.toString().split('').map(char => numbers[char] || char).join('');
-        }
+       function toNepaliNumber(num) {
+    if (num === null || num === undefined) return '';
+    const nepaliDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+    return num.toString().replace(/\d/g, (x) => nepaliDigits[x]);
+}
 
         function getRealLiveDates() {
     const now = new Date();
