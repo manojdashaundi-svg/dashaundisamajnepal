@@ -323,42 +323,18 @@
         margin: 10mm;
     }
 
-    /* १. सुरुमा सबै लुकाउने */
-    body * {
-        visibility: hidden !important;
-    }
-
-    /* २. तर प्रिन्ट हुने मुख्य भाग र त्यसभित्रका कुराहरू मात्र देखाउने */
-    .printable-section, .printable-section * {
-        visibility: visible !important;
-    }
-
-    /* ३. प्रिन्ट हुने भागलाई पेजको सुरुमा ल्याउने */
-    .printable-section {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-
-    /* ४. लोगो स्पष्ट रूपमा देखाउन */
-    .print-header img, .print-logo {
-        visibility: visible !important;
-        display: inline-block !important;
-    }
-}
-
-    /* १. सबै कुरा लुकाउने र प्रिन्ट हुने भाग मात्र देखाउने */
+    /* १. सुरुमा सबै कुरा लुकाउने */
     body * { 
         visibility: hidden !important; 
     }
-    
-    /* तपाईंले प्रिन्ट गर्न दिनुभएको कन्टेनर वा टेबल सेक्सਨ */
-    .printable-section, .printable-section * ,
+
+    /* २. प्रिन्ट हुने मुख्य कन्टेनर र त्यसभित्रका कुराहरू मात्र देखाउने */
+    .printable-section, .printable-section *, 
     #printableTableSection, #printableTableSection * { 
         visibility: visible !important; 
     }
 
+    /* ३. प्रिन्ट हुने भागलाई पेजको सुरुमा र सही तरिकाले सेट गर्ने */
     .printable-section, #printableTableSection {
         position: absolute !important; 
         left: 0 !important; 
@@ -368,7 +344,19 @@
         display: block !important;
     }
 
-    /* फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
+    /* ४. लोगो स्पष्ट रूपमा देखाउने */
+    .print-header { 
+        display: block !important; 
+        width: 100% !important; 
+        text-align: center !important; 
+    }
+
+    .print-header img, .print-logo {
+        visibility: visible !important;
+        display: inline-block !important;
+    }
+
+    /* ५. फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
     .printable-section form,  
     .printable-section .admin-panel,  
     .printable-section input,  
@@ -380,14 +368,8 @@
         display: none !important;  
         visibility: hidden !important;  
     }
-    
-    .print-header { 
-        display: block !important; 
-        width: 100% !important; 
-        text-align: center !important; 
-    }
 
-    /* २. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
+    /* ६. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
     .voucher-modal img,  
     .payment-slip,  
     .payment-proof,  
@@ -396,13 +378,13 @@
         visibility: hidden !important;
     }
 
-    /* छुट्टै मिति देखाउने क्लासहरू लुकाउन */
+    /* ७. छुट्टै मिति देखाउने क्लासहरू लुकाउन */
     .print-date, .date-display {  
         display: none !important;  
         visibility: hidden !important;  
     }
 
-    /* ३. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
+    /* ८. स्क्रोल र टेबलसम्बन्धी नियमहरू */
     .table-responsive {
         max-height: none !important;
         overflow: visible !important;
@@ -416,7 +398,6 @@
         page-break-inside: auto !important;
     }
 
-    /* हेर्डिङ जहिले पनि माथि नै ठीक ठाउँमा बस्नको लागि */
     thead {
         display: table-header-group !important;
     }
@@ -430,7 +411,7 @@
         white-space: normal !important;
         font-size: 11px !important;
         padding: 4px !important;
-        position: static !important; /* sticky पोजिसनलाई प्रिन्टमा पूर्ण रूपमा निष्कृय पार्न */
+        position: static !important;
     }
 }
     </style>
