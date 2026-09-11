@@ -1654,7 +1654,7 @@ async function markAllNotificationsAsRead() {
     document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
     document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
 
-    const photo = currentApplication.photo_url || currentUserProfile.avatar || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+    const photo = currentApplication.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
     document.getElementById('cardPhoto').src = photo;
 
     const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
