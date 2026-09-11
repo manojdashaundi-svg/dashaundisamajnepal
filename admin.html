@@ -1841,7 +1841,7 @@
             }
 
             const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
-            const logo = (data && data.logo_url) ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const logo = (data && data.logo_url) ? data.logo_url : 'images/dashaundisamaj-logo-png.png';
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
 
             let dateRangeText = '';
