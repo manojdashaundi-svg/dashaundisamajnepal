@@ -316,14 +316,32 @@
             background: #fff; width: 600px; max-width: 100%; padding: 30px; border-radius: 12px; border: 3px solid #1a365d; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative;
         }
 
-        @media print {
-    /* पृष्ठको साइज Landscape र मार्जीन मिलाउन */
+      @media print {
+    /* पृष्ठको साइज Landscape र मार्जिन मिलाउन */
     @page {
         size: landscape;
         margin: 10mm;
     }
 
-    /* लोगो स्पष्ट रूपमा प्रिन्टमा देखाउन */
+    /* १. सुरुमा सबै लुकाउने */
+    body * {
+        visibility: hidden !important;
+    }
+
+    /* २. तर प्रिन्ट हुने मुख्य भाग र त्यसभित्रका कुराहरू मात्र देखाउने */
+    .printable-section, .printable-section * {
+        visibility: visible !important;
+    }
+
+    /* ३. प्रिन्ट हुने भागलाई पेजको सुरुमा ल्याउने */
+    .printable-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    /* ४. लोगो स्पष्ट रूपमा देखाउन */
     .print-header img, .print-logo {
         visibility: visible !important;
         display: inline-block !important;
