@@ -1801,7 +1801,7 @@
             document.getElementById('cardMunicipality').innerText = user.municipality || '-';
             document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
 
-            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
+            const photo = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
             document.getElementById('cardPhoto').src = photo;
 
             const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
