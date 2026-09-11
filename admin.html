@@ -324,13 +324,13 @@
     }
 
     /* १. सुरुमा सबै कुरा लुकाउने */
-    body * { 
+    body * {  
         visibility: hidden !important; 
     }
 
     /* २. प्रिन्ट हुने मुख्य कन्टेनर र त्यसभित्रका कुराहरू मात्र देखाउने */
     .printable-section, .printable-section *, 
-    #printableTableSection, #printableTableSection * { 
+    #printableTableSection, #printableTableSection * {  
         visibility: visible !important; 
     }
 
@@ -344,16 +344,21 @@
         display: block !important;
     }
 
-    /* ४. लोगो स्पष्ट रूपमा देखाउने */
-    .print-header { 
+    /* ४. लोगो स्पष्ट रूपमा देखाउने र साइज मिलाउने */
+    .print-header {  
         display: block !important; 
         width: 100% !important; 
         text-align: center !important; 
     }
 
-    .print-header img, .print-logo {
+    .print-header img, .print-logo, .print-logo img {
         visibility: visible !important;
-        display: inline-block !important;
+        display: block !important;
+        width: 80px !important; /* आवश्यकता अनुसार लोगोको चौडाइ यहाँबाट घटाउन वा बढाउन सक्नुहुन्छ */
+        height: auto !important;
+        max-width: 100% !important;
+        opacity: 1 !important;
+        margin: 0 auto !important;
     }
 
     /* ५. फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
