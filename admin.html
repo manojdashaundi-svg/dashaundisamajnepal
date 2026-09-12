@@ -2763,167 +2763,157 @@
                 committeeLevelVal = 'साधारण सदस्य';
             }
 
-           closePositionModal();
+            closePositionModal();
 
-    let formattedMemberNo = '';
-    const isRenewal = app.application_type === 'नवीकरण';
-    const userIdentifier = app.identifier || app.email || app.phone || 'no-email@gmail.com';
+            let formattedMemberNo = '';
+            const isRenewal = app.application_type === 'नवीकरण';
 
-    if (isRenewal) {
-        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).maybeSingle();
-        if (existingUser && existingUser.member_no) {
-            formattedMemberNo = existingUser.member_no;
-        } else {
-            const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
-            let nextNo = (!countError && count !== null) ? count + 1 : 1;
-            formattedMemberNo = String(nextNo).padStart(3, '0');
+            if (isRenewal) {
+                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+                if (existingUser) {
+                    formattedMemberNo = existingUser.member_no;
+                } else {
+                    const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                    formattedMemberNo = String((count || 0) + 1).padStart(3, '0');
+                }
+            } else {
+                const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                let nextNo = (count || 0) + 1;
+                formattedMemberNo = String(nextNo).padStart(3, '0');
+            }
+
+            const userData = {
+                member_no: formattedMemberNo,
+                position: assignedPosition,
+                committee_level: committeeLevelVal,
+                reg_date: todayNepaliDate,
+                status: 'Approved',
+                full_name: app.full_name,
+                phone: app.phone || '',
+                email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
+                dob: app.dob || '',
+                citizenship_no: app.citizenship_no || '',
+                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+                payment_slip: app.payment_slip || app.payment_slip_url || '',
+                spouse_name: app.spouse_name || '',
+                father_name: app.father_name || '',
+                mother_name: app.mother_name || '',
+                grandfather_name: app.grandfather_name || '',
+                province: app.province || '',
+                district: app.district || '',
+                municipality: app.municipality || '',
+                ward: app.ward || '',
+                tole: app.tole || '',
+                avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+                password: app.password || '123456'
+            };
+
+            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+
+            if(userError) {
+                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+                return;
+            }
+
+            const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
+
+            if(!appError) {
+                const voucherNo = await getNextVoucherNo();
+                const incomeRecord = {
+                    voucher_no: voucherNo,
+                    date: todayNepaliDate,
+                    name: app.full_name,
+                    category: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
+                    description: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
+                    amount: '५००',
+                    fund_category: 'सदस्यता आम्दानी',
+                    payment_slip: app.payment_slip || app.payment_slip_url || ''
+                };
+                await supabaseClient.from('income_records').insert([incomeRecord]);
+
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
+                loadApplicationsData();
+                loadUsersData();
+                loadIncomeData();
+            } else {
+                alert('त्रुटि: ' + appError.message);
+            }
         }
-    } else {
-        // टेबलमा कुल कति युजर छन् गनेर त्यसैमा १ जोड्ने (खाली भए 1 बाट सुरु हुन्छ)
-        const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
-        let nextNo = 1;
-        if (!countError && count !== null) {
-            nextNo = count + 1;
+
+        function openAppEditModal(id, appDataStr) {
+            const app = JSON.parse(appDataStr);
+            document.getElementById('edit_app_id').value = id;
+            document.getElementById('edit_app_name').value = app.full_name || '';
+            document.getElementById('edit_app_phone').value = app.phone || '';
+            document.getElementById('edit_app_dob').value = app.dob || '';
+            document.getElementById('edit_app_citizenship').value = app.citizenship_no || '';
+            document.getElementById('edit_app_spouse').value = app.spouse_name || '';
+            document.getElementById('edit_app_father').value = app.father_name || '';
+            document.getElementById('edit_app_mother').value = app.mother_name || '';
+            document.getElementById('edit_app_grandfather').value = app.grandfather_name || '';
+            document.getElementById('edit_app_province').value = app.province || '';
+            document.getElementById('edit_app_district').value = app.district || '';
+            document.getElementById('edit_app_municipality').value = app.municipality || '';
+            document.getElementById('edit_app_ward').value = app.ward || '';
+            document.getElementById('edit_app_tole').value = app.tole || '';
+            document.getElementById('appEditModal').style.display = 'flex';
         }
-        formattedMemberNo = String(nextNo).padStart(3, '0');
-    }
 
-    // युजर डेटा तयार पार्ने (यदि पहिले नै छ भने upsert ले इमेलको आधारमा अपडेट गर्छ)
-    const userData = {
-        member_no: formattedMemberNo,
-        position: assignedPosition,
-        committee_level: committeeLevelVal,
-        reg_date: todayNepaliDate,
-        status: 'Approved',
-        full_name: app.full_name,
-        phone: app.phone || '',
-        email: userIdentifier,
-        dob: app.dob || '',
-        citizenship_no: app.citizenship_no || '',
-        citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-        citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-        payment_slip: app.payment_slip || app.payment_slip_url || '',
-        spouse_name: app.spouse_name || '',
-        father_name: app.father_name || '',
-        mother_name: app.mother_name || '',
-        grandfather_name: app.grandfather_name || '',
-        province: app.province || '',
-        district: app.district || '',
-        municipality: app.municipality || '',
-        ward: app.ward || '',
-        tole: app.tole || '',
-        avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-        password: app.password || '123456'
-    };
-
-    // सुपाबेसमा सुरक्षित रूपमा सेभ गर्ने
-    const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
-
-    if(userError) {
-        alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
-        return;
-    }
-
-    // membership_applications मा status र member_no अपडेट गर्ने
-    const { error: appError } = await supabaseClient.from('membership_applications').update({ 
-        status: 'Approved', 
-        member_no: formattedMemberNo 
-    }).eq('id', app.id);
-
-    if(!appError) {
-        const voucherNo = await getNextVoucherNo();
-        const incomeRecord = {
-            voucher_no: voucherNo,
-            date: todayNepaliDate,
-            name: app.full_name,
-            category: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
-            description: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-            amount: '५००',
-            fund_category: 'सदस्यता आम्दानी',
-            payment_slip: app.payment_slip || app.payment_slip_url || ''
-        };
-        await supabaseClient.from('income_records').insert([incomeRecord]);
-
-        alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
-        loadApplicationsData();
-        loadUsersData();
-        loadIncomeData();
-    } else {
-        alert('त्रुटि: ' + appError.message);
-    }
-
-    function openAppEditModal(id, appDataStr) {
-        const app = JSON.parse(appDataStr);
-        document.getElementById('edit_app_id').value = id;
-        document.getElementById('edit_app_name').value = app.full_name || '';
-        document.getElementById('edit_app_phone').value = app.phone || '';
-        document.getElementById('edit_app_dob').value = app.dob || '';
-        document.getElementById('edit_app_citizenship').value = app.citizenship_no || '';
-        document.getElementById('edit_app_spouse').value = app.spouse_name || '';
-        document.getElementById('edit_app_father').value = app.father_name || '';
-        document.getElementById('edit_app_mother').value = app.mother_name || '';
-        document.getElementById('edit_app_grandfather').value = app.grandfather_name || '';
-        document.getElementById('edit_app_province').value = app.province || '';
-        document.getElementById('edit_app_district').value = app.district || '';
-        document.getElementById('edit_app_municipality').value = app.municipality || '';
-        document.getElementById('edit_app_ward').value = app.ward || '';
-        document.getElementById('edit_app_tole').value = app.tole || '';
-        document.getElementById('appEditModal').style.display = 'flex';
-    }
-
-    function closeAppEditModal() {
-        document.getElementById('appEditModal').style.display = 'none';
-    }
-
-    async function saveEditedApplication() {
-        const id = document.getElementById('edit_app_id').value;
-        const updatedData = {
-            full_name: document.getElementById('edit_app_name').value,
-            phone: document.getElementById('edit_app_phone').value,
-            dob: document.getElementById('edit_app_dob').value,
-            citizenship_no: document.getElementById('edit_app_citizenship').value,
-            spouse_name: document.getElementById('edit_app_spouse').value,
-            father_name: document.getElementById('edit_app_father').value,
-            mother_name: document.getElementById('edit_app_mother').value,
-            grandfather_name: document.getElementById('edit_app_grandfather').value,
-            province: document.getElementById('edit_app_province').value,
-            district: document.getElementById('edit_app_district').value,
-            municipality: document.getElementById('edit_app_municipality').value,
-            ward: document.getElementById('edit_app_ward').value,
-            tole: document.getElementById('edit_app_tole').value
-        };
-
-        const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
-        if(!error) {
-            alert('आवेदन सफलतापूर्वक अपडेट भयो!');
-            closeAppEditModal();
-            loadApplicationsData();
-        } else {
-            alert('त्रुटि: ' + error.message);
+        function closeAppEditModal() {
+            document.getElementById('appEditModal').style.display = 'none';
         }
-    }
 
-    async function updateAppStatus(id, status) {
-        const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
-        if(!error) {
-            alert('आवेदन ' + status + ' गरियो!');
-            loadApplicationsData();
-        } else {
-            alert('त्रुटि: ' + error.message);
-        }
-    }
+        async function saveEditedApplication() {
+            const id = document.getElementById('edit_app_id').value;
+            const updatedData = {
+                full_name: document.getElementById('edit_app_name').value,
+                phone: document.getElementById('edit_app_phone').value,
+                dob: document.getElementById('edit_app_dob').value,
+                citizenship_no: document.getElementById('edit_app_citizenship').value,
+                spouse_name: document.getElementById('edit_app_spouse').value,
+                father_name: document.getElementById('edit_app_father').value,
+                mother_name: document.getElementById('edit_app_mother').value,
+                grandfather_name: document.getElementById('edit_app_grandfather').value,
+                province: document.getElementById('edit_app_province').value,
+                district: document.getElementById('edit_app_district').value,
+                municipality: document.getElementById('edit_app_municipality').value,
+                ward: document.getElementById('edit_app_ward').value,
+                tole: document.getElementById('edit_app_tole').value
+            };
 
-    async function deleteApplication(id) {
-        if(confirm('के तपाईं यो आवेदन स्थायी रूपमा मेटाउन (Remove) चाहनुहुन्छ?')) {
-            const { error } = await supabaseClient.from('membership_applications').delete().eq('id', id);
+            const { error } = await supabaseClient.from('membership_applications').update(updatedData).eq('id', id);
             if(!error) {
-                alert('आवेदन सफलतापूर्वक हटाइयो!');
+                alert('आवेदन सफलतापूर्वक अपडेट भयो!');
+                closeAppEditModal();
                 loadApplicationsData();
             } else {
                 alert('त्रुटि: ' + error.message);
             }
         }
-    }
+
+        async function updateAppStatus(id, status) {
+            const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
+            if(!error) {
+                alert('आवेदन ' + status + ' गरियो!');
+                loadApplicationsData();
+            } else {
+                alert('त्रुटि: ' + error.message);
+            }
+        }
+
+        async function deleteApplication(id) {
+            if(confirm('के तपाईं यो आवेदन स्थायी रूपमा मेटाउन (Remove) चाहनुहुन्छ?')) {
+                const { error } = await supabaseClient.from('membership_applications').delete().eq('id', id);
+                if(!error) {
+                    alert('आवेदन सफलतापूर्वक हटाइयो!');
+                    loadApplicationsData();
+                } else {
+                    alert('त्रुटि: ' + error.message);
+                }
+            }
+        }
+
         async function loadUsersData() {
             const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('id', { ascending: true });
             const tbody = document.getElementById('usersTableBody');
