@@ -2970,9 +2970,7 @@ if(userError) {
 
             const currentDate = '२०८३-०५-२७'; 
 
-            // ==========================================
-            // ३. यो नयाँ कोडलाई ठीक यही ठाउँमा राख्ने हो:
-            // ==========================================
+            // ३. income_records मा पठाउने सुरक्षित डेटा संरचना (payment_slip हटाइएको)
             const incomeRecord = {
                 voucher_no: String(voucherNo || 'VCH-001'),
                 date: String(currentDate || '२०८३-०५-२७'),
@@ -2980,8 +2978,7 @@ if(userError) {
                 category: String(isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क'),
                 description: String(isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत'),
                 amount: 500,
-                fund_category: 'सदस्यता आम्दानी',
-                payment_slip: String(appData.payment_slip || appData.payment_slip_url || '')
+                fund_category: 'सदस्यता आम्दानी'
             };
             
             console.log('Sending income record:', incomeRecord);
@@ -2998,7 +2995,6 @@ if(userError) {
                 console.log('Income inserted successfully:', insertedIncome);
                 alert('आवेदन सफलतापूर्वक स्वीकृत गरियो र आम्दानी रेकर्डमा थपियो!');
             }
-            // ==========================================
 
             if (typeof loadApplicationsData === 'function') loadApplicationsData();
             if (typeof loadUsersData === 'function') loadUsersData();
