@@ -2766,103 +2766,98 @@
 
             closePositionModal();
 
-            let formattedMemberNo = '';
-            const isRenewal = app.application_type === 'नवीकरण';
-            const userIdentifier = app.identifier || app.email || app.phone || ('user_' + Date.now() + '@gmail.com');
+           let formattedMemberNo = '';
+const isRenewal = app.application_type === 'नवीकरण';
+const userIdentifier = app.identifier || app.email || app.phone || 'no-email@gmail.com';
 
-            if (isRenewal) {
-                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).maybeSingle();
-                if (existingUser && existingUser.member_no) {
-                    formattedMemberNo = existingUser.member_no;
-                } else {
-                    const { data: usersList } = await supabaseClient.from('users').select('member_no');
-                    let maxNo = 0;
-                    if (usersList && usersList.length > 0) {
-                        usersList.forEach(u => {
-                            let num = parseInt(u.member_no);
-                            if (!isNaN(num) && num > maxNo) maxNo = num;
-                        });
-                    }
-                    let nextNo = maxNo + 1;
-                    formattedMemberNo = String(nextNo).padStart(3, '0');
-                }
-            } else {
-                const { data: usersList } = await supabaseClient.from('users').select('member_no');
-                let maxNo = 0;
-                if (usersList && usersList.length > 0) {
-                    usersList.forEach(u => {
-                        let num = parseInt(u.member_no);
-                        if (!isNaN(num) && num > maxNo) maxNo = num;
-                    });
-                }
-                let nextNo = maxNo + 1;
-                formattedMemberNo = String(nextNo).padStart(3, '0');
-            }
+if (isRenewal) {
+    const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).maybeSingle();
+    if (existingUser && existingUser.member_no) {
+        formattedMemberNo = existingUser.member_no;
+    } else {
+        const { data: usersList } = await supabaseClient.from('users').select('member_no');
+        let maxNo = 0;
+        if (usersList && usersList.length > 0) {
+            usersList.forEach(u => {
+                let num = parseInt(u.member_no);
+                if (!isNaN(num) && num > maxNo) maxNo = num;
+            });
+        }
+        let nextNo = maxNo + 1;
+        formattedMemberNo = String(nextNo).padStart(3, '0');
+    }
+} else {
+    const { data: usersList } = await supabaseClient.from('users').select('member_no');
+    let maxNo = 0;
+    if (usersList && usersList.length > 0) {
+        usersList.forEach(u => {
+            let num = parseInt(u.member_no);
+            if (!isNaN(num) && num > maxNo) maxNo = num;
+        });
+    }
+    let nextNo = maxNo + 1;
+    formattedMemberNo = String(nextNo).padStart(3, '0');
+}
 
-            const userData = {
-                member_no: formattedMemberNo,
-                position: assignedPosition,
-                committee_level: committeeLevelVal,
-                reg_date: todayNepaliDate,
-                status: 'Approved',
-                full_name: app.full_name,
-                phone: app.phone || '',
-                email: userIdentifier,
-                dob: app.dob || '',
-                citizenship_no: app.citizenship_no || '',
-                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-                payment_slip: app.payment_slip || app.payment_slip_url || '',
-                spouse_name: app.spouse_name || '',
-                father_name: app.father_name || '',
-                mother_name: app.mother_name || '',
-                grandfather_name: app.grandfather_name || '',
-                province: app.province || '',
-                district: app.district || '',
-                municipality: app.municipality || '',
-                ward: app.ward || '',
-                tole: app.tole || '',
-                avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-                password: app.password || '123456'
-            };
+const userData = {
+    member_no: formattedMemberNo,
+    position: assignedPosition,
+    committee_level: committeeLevelVal,
+    reg_date: todayNepaliDate,
+    status: 'Approved',
+    full_name: app.full_name,
+    phone: app.phone || '',
+    email: userIdentifier,
+    dob: app.dob || '',
+    citizenship_no: app.citizenship_no || '',
+    citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+    citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+    payment_slip: app.payment_slip || app.payment_slip_url || '',
+    spouse_name: app.spouse_name || '',
+    father_name: app.father_name || '',
+    mother_name: app.mother_name || '',
+    grandfather_name: app.grandfather_name || '',
+    province: app.province || '',
+    district: app.district || '',
+    municipality: app.municipality || '',
+    ward: app.ward || '',
+    tole: app.tole || '',
+    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+    password: app.password || '123456'
+};
 
-            // युजर सेभ गर्दा conflitto नहोस् भन्नको लागि अनफ्लिक्टमा email वा member_no जाँच गर्ने
-            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
-            if(userError) {
-                console.error('User save error:', userError);
-                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
-                return;
-            }
+if(userError) {
+    alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+    return;
+}
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
 
             if(!appError) {
-                const voucherNo = (typeof getNextVoucherNo === 'function') ? await getNextVoucherNo() : ('VCH-' + formattedMemberNo);
-                
+                const voucherNo = await getNextVoucherNo();
                 const incomeRecord = {
                     voucher_no: voucherNo,
                     date: todayNepaliDate,
-                    name: app.full_name || 'सदस्य',
-                    category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
-                    description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-                    amount: '५००'
+                    name: app.full_name,
+                    category: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
+                    description: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
+                    amount: '५००',
+                    fund_category: 'सदस्यता आम्दानी',
+                    payment_slip: app.payment_slip || app.payment_slip_url || ''
                 };
+                await supabaseClient.from('income_records').insert([incomeRecord]);
 
-                const { error: incomeError } = await supabaseClient.from('income_records').insert([incomeRecord]);
-                
-                if (incomeError) {
-                    console.error('Income insert error:', incomeError);
-                }
-
-                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${formattedMemberNo}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
-                
-                if (typeof loadApplicationsData === 'function') loadApplicationsData();
-                if (typeof loadUsersData === 'function') loadUsersData();
-                if (typeof loadIncomeData === 'function') loadIncomeData();
+                alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
+                loadApplicationsData();
+                loadUsersData();
+                loadIncomeData();
             } else {
                 alert('त्रुटि: ' + appError.message);
             }
+        }
+
         function openAppEditModal(id, appDataStr) {
             const app = JSON.parse(appDataStr);
             document.getElementById('edit_app_id').value = id;
@@ -2914,7 +2909,7 @@
             }
         }
 
-   async function updateAppStatus(id, status) {
+    async function updateAppStatus(id, status) {
     if (status === 'Approved') {
         const { data: appData, error: fetchError } = await supabaseClient
             .from('membership_applications')
@@ -2965,25 +2960,23 @@
         }).eq('id', id);
 
         if (!error) {
-            const voucherNo = 'VCH-' + formattedMemberNo;
-            
-            // केवल income_records टेबलमा अनिवार्य भएका र कन्फर्म भएका स्तम्भहरू मात्र पठाउने
+            // भौचर नम्बर जेनेरेट गरी income_records मा सेभ गर्ने
+            const voucherNo = typeof getNextVoucherNo === 'function' ? await getNextVoucherNo() : ('VCH-' + formattedMemberNo);
             const incomeRecord = {
                 voucher_no: voucherNo,
                 date: typeof getNepaliDate === 'function' ? getNepaliDate() : '२०८३-०५-२७',
-                name: appData.full_name || 'सदस्य',
+                name: appData.full_name,
                 category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                 description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-                amount: '500'
+                amount: '५००',
+                fund_category: 'सदस्यता आम्दानी',
+                payment_slip: appData.payment_slip || appData.payment_slip_url || ''
             };
             
             const { error: incomeError } = await supabaseClient.from('income_records').insert([incomeRecord]);
-            
             if (incomeError) {
-                console.error('Supabase Insert Error:', incomeError);
-                alert('आम्दानी सेभ गर्न सकिएन: звеर्त्त - ' + incomeError.message);
-            } else {
-                console.log('Income record saved successfully!');
+                console.error('Income record error:', incomeError.message);
+                alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड सेभ हुन सकेन: ' + incomeError.message);
             }
 
             alert('आवेदन ' + status + ' गरियो, सदस्य नं (' + formattedMemberNo + ') र भौचर नं (' + voucherNo + ') राखियो!');
