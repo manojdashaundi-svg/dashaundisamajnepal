@@ -2909,7 +2909,7 @@ if(userError) {
             }
         }
 
-    async function updateAppStatus(id, status) {
+   async function updateAppStatus(id, status) {
     if (status === 'Approved') {
         const { data: appData, error: fetchError } = await supabaseClient
             .from('membership_applications')
@@ -2960,22 +2960,22 @@ if(userError) {
         }).eq('id', id);
 
         if (!error) {
-            // voucher_no र payment_slip सहित income_records मा सेभ गर्ने
             const voucherNo = 'VCH-' + formattedMemberNo;
             const incomeRecord = {
                 voucher_no: voucherNo,
                 date: typeof getNepaliDate === 'function' ? getNepaliDate() : '२०८३-०५-२७',
-                name: appData.full_name,
+                name: appData.full_name || 'सदस्य',
                 category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                 description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-                amount: '५००',
+                amount: '500',
                 payment_slip: appData.payment_slip || appData.payment_slip_url || ''
             };
             
+            // income_records मा डेटा इन्सर्ट गर्ने
             const { error: incomeError } = await supabaseClient.from('income_records').insert([incomeRecord]);
             if (incomeError) {
-                console.error('Income record error:', incomeError.message);
-                alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड सेभ हुन सकेन: ' + incomeError.message);
+                console.error('Income record error details:', incomeError);
+                alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड सेभ भएन: ' + incomeError.message);
             }
 
             alert('आवेदन ' + status + ' गरियो, सदस्य नं (' + formattedMemberNo + ') र भौचर नं (' + voucherNo + ') राखियो!');
