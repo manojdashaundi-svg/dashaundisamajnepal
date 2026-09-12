@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>प्रशासन प्यानल - दशाैँदी समाज नेपाल</title>
-    <link rel="icon" type="image/png" href="images/dashaundisamaj-logo-png.png">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -316,57 +316,34 @@
             background: #fff; width: 600px; max-width: 100%; padding: 30px; border-radius: 12px; border: 3px solid #1a365d; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative;
         }
 
-      @media print {
-    /* पृष्ठको साइज Landscape र मार्जिन मिलाउन */
+        @media print {
+    /* पृष्ठको साइज Landscape (तेस्रो) र मार्जिन मिलाउन */
     @page {
         size: landscape;
         margin: 10mm;
     }
 
-    /* १. सुरुमा सबै कुरा लुकाउने */
-    body * {  
+    /* १. सबै कुरा लुकाउने र प्रिन्ट हुने भाग मात्र देखाउने */
+    body * { 
         visibility: hidden !important; 
     }
-
-    /* २. प्रिन्ट हुने मुख्य कन्टेनर, प्रिन्ट हेडर र तिनका भित्रका सबै कुरा देखाउने */
-    .printable-section, .printable-section *,  
-    #printableTableSection, #printableTableSection *,
-    .print-header, .print-header * {  
+    
+    /* तपाईंले प्रिन्ट गर्न दिनुभएको कन्टेनर वा टेबल सेक्सਨ */
+    .printable-section, .printable-section * ,
+    #printableTableSection, #printableTableSection * { 
         visibility: visible !important; 
-    }
-
-    /* ३. प्रिन्ट हुने भाग र हेडरलाई पेजको सुरुमा र सही तरिकाले सेट गर्ने */
-    .print-header {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        background: #fff !important;
-        display: block !important;
-        text-align: center !important;
     }
 
     .printable-section, #printableTableSection {
         position: absolute !important; 
         left: 0 !important; 
-        top: 120px !important; /* हेडरको तल टेबल देखाउन मद्दत गर्छ */
+        top: 0 !important; 
         width: 100% !important; 
         background: #fff !important; 
         display: block !important;
     }
 
-    /* ४. लोगो स्पष्ट रूपमा देखाउने र साइज मिलाउने */
-    .print-header img, .print-logo, .print-logo img {
-        visibility: visible !important;
-        display: block !important;
-        width: 80px !important; 
-        height: auto !important;
-        max-width: 100% !important;
-        opacity: 1 !important;
-        margin: 0 auto 10px auto !important;
-    }
-
-    /* ५. फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
+    /* फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
     .printable-section form,  
     .printable-section .admin-panel,  
     .printable-section input,  
@@ -378,9 +355,15 @@
         display: none !important;  
         visibility: hidden !important;  
     }
+    
+    .print-header { 
+        display: block !important; 
+        width: 100% !important; 
+        text-align: center !important; 
+    }
 
-    /* ६. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
-    .voucher-modal img:not(.print-header img),  
+    /* २. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
+    .voucher-modal img,  
     .payment-slip,  
     .payment-proof,  
     .voucher-slip-image {
@@ -388,13 +371,13 @@
         visibility: hidden !important;
     }
 
-    /* ७. छुट्टै मिति देखाउने क्लासहरू लुकाउन */
+    /* छुट्टै मिति देखाउने क्लासहरू लुकाउन */
     .print-date, .date-display {  
         display: none !important;  
         visibility: hidden !important;  
     }
 
-    /* ८. स्क्रोल र टेबलसम्बन्धी नियमहरू */
+    /* ३. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
     .table-responsive {
         max-height: none !important;
         overflow: visible !important;
@@ -408,6 +391,7 @@
         page-break-inside: auto !important;
     }
 
+    /* हेर्डिङ जहिले पनि माथि नै ठीक ठाउँमा बस्नको लागि */
     thead {
         display: table-header-group !important;
     }
@@ -421,7 +405,7 @@
         white-space: normal !important;
         font-size: 11px !important;
         padding: 4px !important;
-        position: static !important;
+        position: static !important; /* sticky पोजिसनलाई प्रिन्टमा पूर्ण रूपमा निष्कृय पार्न */
     }
 }
     </style>
@@ -430,7 +414,7 @@
 
     <div class="admin-container">
         <div class="login-logo-container">
-            <img src="images/dashaundisamaj-logo-png.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
+            <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" class="login-logo" alt="लोगो" crossorigin="anonymous">
         </div>
 
         <div class="main-header-box">
@@ -1439,7 +1423,7 @@
                 </svg>
 
                 <div style="width: 60px; height: 60px; background: #fff; border-radius: 50%; margin: 0 auto 2px auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.25); border: 2.5px solid #ffffff; position: relative; z-index: 10;">
-                    <img id="cardLogo" src="images/dashaundisamaj-logo-png.png" alt="लोगो" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;">
+                    <img id="cardLogo" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="लोगो" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover;">
                 </div>
 
                 <div style="position: relative; z-index: 2;">
@@ -1459,11 +1443,11 @@
 
                 <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px; position: relative; overflow: hidden;">
                     <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); opacity: 0.1; pointer-events: none; z-index: 0;">
-                        <img src="images/dashaundisamaj-logo-png.png" alt="watermark" style="width: 110px; height: 110px; object-fit: contain;">
+                        <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="watermark" style="width: 110px; height: 110px; object-fit: contain;">
                     </div>
 
                     <div style="text-align: center; flex-shrink: 0; z-index: 1;">
-                        <img id="cardPhoto" src="images/dashaundisamaj-logo-png.png" alt="फोटो" style="width: 85px; height: 102px; border-radius: 6px; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                        <img id="cardPhoto" src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" alt="फोटो" style="width: 85px; height: 102px; border-radius: 6px; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
                     </div>
 
                     <div style="flex-grow: 1; font-size: 12px; color: #000000; line-height: 1.35; font-weight: 900; z-index: 1;">
@@ -1497,12 +1481,12 @@
                     </div>
                     <div style="text-align: center; font-size: 11px; font-weight: 950; color: #000000; display: flex; justify-content: space-between; width: 210px;">
                         <div style="text-align: center; position: relative; flex: 1;">
-                            <img src="images/4-Manoj.png" alt="सचिवको हस्ताक्षर" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 100px; height: 38px; object-fit: contain;">
+                            <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" alt="सचिवको हस्ताक्षर" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 100px; height: 38px; object-fit: contain;">
                             <div style="width: 75px; border-top: 1.5px solid #000; margin: 20px auto 2px;"></div>
                             <span style="font-size: 11px; font-weight: 950; color: #000;">सचिव</span>
                         </div>
                         <div style="text-align: center; position: relative; flex: 1; margin-left: 10px;">
-                            <img src="images/Bhakta Bahadur Dashaundi.png" alt="अध्यक्षको हस्ताक्षर" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 100px; height: 38px; object-fit: contain;">
+                            <img src="https://i.postimg.cc/85wZfCfL/1-Bhakta-Bahadur-Dashaundi.png" alt="अध्यक्षको हस्ताक्षर" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 100px; height: 38px; object-fit: contain;">
                             <div style="width: 75px; border-top: 1.5px solid #000; margin: 20px auto 2px;"></div>
                             <span style="font-size: 11px; font-weight: 950; color: #000;">अध्यक्ष</span>
                         </div>
@@ -1583,7 +1567,7 @@
         <div class="voucher-box" id="printableVoucherBox">
             <span style="position: absolute; top: 12px; right: 18px; font-size: 26px; font-weight: bold; cursor: pointer;" onclick="closeVoucherModal()">&times;</span>
             <div style="text-align: center; border-bottom: 2px dashed #cbd5e0; padding-bottom: 12px; margin-bottom: 15px;">
-           <img src="images/dashaundisamaj-logo-png.png" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover;">
+           <img src="https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover;">
            <h3 style="margin: 5px 0 0; color: #1a365d;">दशौँदी समाज नेपाल</h3>
            <p style="margin: 2px 0; font-size: 12px; color: #718096;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत</p>
            <p style="margin: 2px 0; font-size: 11px; font-weight: bold; color: #1a365d;">स्थापना - २०८०</p>
@@ -1608,7 +1592,7 @@
                     <span>बुझाउनेको सही</span>
                 </div>
                 <div style="text-align: center;">
-                    <img src="images/4-Manoj.png" style="width: 90px; height: 35px; object-fit: contain; display: block; margin: 0 auto;">
+                    <img src="https://i.postimg.cc/VNWR2NR3/4-Manoj.png" style="width: 90px; height: 35px; object-fit: contain; display: block; margin: 0 auto;">
                     <div style="width: 120px; border-top: 1px solid #000; margin-bottom: 5px;"></div>
                     <span>कोषाध्यक्ष / सचिव</span>
                 </div>
@@ -1817,7 +1801,7 @@
             document.getElementById('cardMunicipality').innerText = user.municipality || '-';
             document.getElementById('cardWard').innerText = toNepaliNumber(user.ward || '-');
 
-            const photo = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
+            const photo = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             document.getElementById('cardPhoto').src = photo;
 
             const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
@@ -1857,7 +1841,7 @@
             }
 
             const { data } = await supabaseClient.from('about_us').select('*').eq('id', 1).single();
-            const logo = (data && data.logo_url) ? data.logo_url : 'images/dashaundisamaj-logo-png.png';
+            const logo = (data && data.logo_url) ? data.logo_url : 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
             const address = data && data.address ? data.address : 'केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल';
 
             let dateRangeText = '';
@@ -2591,7 +2575,7 @@
                     ? '<span style="color: #b7791f; font-weight: bold;">नवीकरण</span>' 
                     : '<span style="color: #3182ce; font-weight: bold;">नयाँ सदस्यता</span>';
 
-                const photoSrc = app.photo_url || 'images/dashaundisamaj-logo-png.png';
+                const photoSrc = app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const citFront = app.citizenship_front || app.citizenship_front_url || '';
                 const citBack = app.citizenship_back || app.citizenship_back_url || '';
                 const paySlip = app.payment_slip || app.payment_slip_url || '';
@@ -2821,7 +2805,7 @@
                 municipality: app.municipality || '',
                 ward: app.ward || '',
                 tole: app.tole || '',
-                avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+                avatar: app.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png',
                 password: app.password || '123456'
             };
 
@@ -2936,7 +2920,7 @@
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
             data.forEach((user, index) => {
-                const photoSrc = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
+                const photoSrc = user.avatar || user.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png';
                 const citFront = user.citizenship_front || user.citizenship_front_url || '';
                 const citBack = user.citizenship_back || user.citizenship_back_url || '';
                 const paySlip = user.payment_slip || user.payment_slip_url || '';
@@ -3108,7 +3092,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
-                        <td><img src="${person.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="table-avatar"></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
                         <td><strong>${person.full_name}</strong></td>
                         <td>${person.position}</td>
                         <td>${toNepaliNumber(person.member_no || '-')}</td>
@@ -3168,7 +3152,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
-                        <td><img src="${person.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="table-avatar"></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
                         <td><strong>${person.full_name}</strong></td>
                         <td>${person.position}</td>
                         <td>${toNepaliNumber(person.member_no || '-')}</td>
@@ -3228,7 +3212,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
-                        <td><img src="${person.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="table-avatar"></td>
+                        <td><img src="${person.photo_url || 'https://i.postimg.cc/rmSrDP0W/last-l-2ogo-jpg.png'}" class="table-avatar"></td>
                         <td><strong>${person.full_name}</strong></td>
                         <td>${person.position}</td>
                         <td>${toNepaliNumber(person.member_no || '-')}</td>
