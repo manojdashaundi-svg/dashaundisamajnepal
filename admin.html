@@ -2968,29 +2968,34 @@ if(userError) {
                 console.error(err);
             }
 
-            const currentDate = '२०८३-०५-२७'; // वा तपाईंको उपयुक्त मिति
+            const currentDate = '२०८३-०५-२७'; 
 
             // ==========================================
-            // ३. यो ठाउँमा (अपडेट सफल भएपछि) यो कोड राख्ने हो:
+            // ३. यो नयाँ कोडलाई ठीक यही ठाउँमा राख्ने हो:
             // ==========================================
             const incomeRecord = {
-                voucher_no: voucherNo,
-                date: currentDate,
-                name: appData.full_name,
-                category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
-                description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
+                voucher_no: String(voucherNo || 'VCH-001'),
+                date: String(currentDate || '२०८३-०५-२७'),
+                name: String(appData.full_name || 'साधारण सदस्य'),
+                category: String(isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क'),
+                description: String(isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत'),
                 amount: 500,
-                fund_category: 'सदस्यता आम्दानी'
+                fund_category: 'सदस्यता आम्दानी',
+                payment_slip: String(appData.payment_slip || appData.payment_slip_url || '')
             };
             
-            const { error: incomeError } = await supabaseClient
+            console.log('Sending income record:', incomeRecord);
+
+            const { data: insertedIncome, error: incomeError } = await supabaseClient
                 .from('income_records')
-                .insert([incomeRecord]);
+                .insert([incomeRecord])
+                .select();
 
             if (incomeError) {
-                console.error('Income record error details:', incomeError.message);
-                alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड सेभ भएन: ' + incomeError.message);
+                console.error('Income insert failed error object:', incomeError);
+                alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड बस्न सकेन: ' + incomeError.message);
             } else {
+                console.log('Income inserted successfully:', insertedIncome);
                 alert('आवेदन सफलतापूर्वक स्वीकृत गरियो र आम्दानी रेकर्डमा थपियो!');
             }
             // ==========================================
