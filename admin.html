@@ -2192,16 +2192,16 @@
                     const totalAmount = paymentData.total_amount || 0;
                     const committeeType = paymentData.committee_level || paymentData.committee_type || 'साधारण सदस्य';
 
-                    const { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
-                        voucher_no: voucherNo,
-                        date: paymentDate,
-                        member_name: memberName,
-                        committee_type: committeeType,
-                        months_paid: monthsList,
-                        amount: totalAmount,
-                        voucher_url: paymentData.voucher_url || paymentData.payment_slip || '',
-                        payment_slip: paymentData.voucher_url || paymentData.payment_slip || ''
-                    }]);
+                    cconst { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
+                         voucher_no: voucherNo,
+                         date: paymentDate,
+                         member_name: memberName,
+                         committee_type: committeeType,
+                         months_paid: monthsList,
+                         amount: totalAmount,
+                         voucher_url: paymentData.voucher_url || ''
+                        // payment_slip यहाँबाट पूर्ण रूपमा हटाइयो
+                         }]);
 
                     if (insertError) {
                         alert('लेवी टेबलमा सेभ गर्न त्रुटि: ' + insertError.message);
