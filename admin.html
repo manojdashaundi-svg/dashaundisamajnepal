@@ -2953,18 +2953,26 @@ if(userError) {
             formattedMemberNo = String(maxNo + 1).padStart(3, '0');
         }
 
-        // membership_applications मा status र member_no अपडेट गर्ने
+        // १. Membership Application अपडेट गर्ने
         const { error } = await supabaseClient.from('membership_applications').update({ 
             status: status, 
             member_no: formattedMemberNo 
         }).eq('id', id);
 
         if (!error) {
-            // भौचर नम्बर जेनेरेट गरी income_records मा सेभ गर्ने
-            const voucherNo = typeof getNextVoucherNo === 'function' ? await getNextVoucherNo() : ('VCH-' + formattedMemberNo);
+            // २. भौचर नम्बर र मितି सुरक्षित तريकाले ल्याउने
+            let voucherNo = 'VCH-' + formattedMemberNo;
+            try {
+                voucherNo = await getNextVoucherNo();
+            } catch (err) {
+                console.error(err);
+            }
+
+            const currentDate = '२०८३-०५-२७'; // वा date picker बाट आउने मिति
+
             const incomeRecord = {
                 voucher_no: voucherNo,
-                date: typeof getNepaliDate === 'function' ? getNepaliDate() : '२०८३-०५-२७',
+                date: currentDate,
                 name: appData.full_name,
                 category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                 description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
@@ -2973,13 +2981,15 @@ if(userError) {
                 payment_slip: appData.payment_slip || appData.payment_slip_url || ''
             };
             
+            // ३. income_records मा डेटा पठाउने
             const { error: incomeError } = await supabaseClient.from('income_records').insert([incomeRecord]);
             if (incomeError) {
                 console.error('Income record error:', incomeError.message);
                 alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड सेभ हुन सकेन: ' + incomeError.message);
+            } else {
+                alert('आवेदन सफलतापूर्वक स्वीकृत गरियो र ' + incomeRecord.category + ' बापतको आम्दानी रेकर्डमा थपियो!');
             }
 
-            alert('आवेदन ' + status + ' गरियो, सदस्य नं (' + formattedMemberNo + ') र भौचर नं (' + voucherNo + ') राखियो!');
             if (typeof loadApplicationsData === 'function') loadApplicationsData();
             if (typeof loadUsersData === 'function') loadUsersData();
             if (typeof loadIncomeData === 'function') loadIncomeData();
