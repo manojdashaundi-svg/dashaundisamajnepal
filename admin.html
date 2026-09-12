@@ -317,18 +317,15 @@
         }
 
         @media print {
-    /* पृष्ठको साइज Landscape (तेस्रो) र मार्जिन मिलाउन */
     @page {
         size: landscape;
         margin: 10mm;
     }
 
-    /* १. सबै कुरा लुकाउने र प्रिन्ट हुने भाग मात्र देखाउने */
     body * { 
         visibility: hidden !important; 
     }
     
-    /* तपाईंले प्रिन्ट गर्न दिनुभएको कन्टेनर वा टेबल सेक्सਨ */
     .printable-section, .printable-section * ,
     #printableTableSection, #printableTableSection * { 
         visibility: visible !important; 
@@ -343,7 +340,6 @@
         display: block !important;
     }
 
-    /* फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
     .printable-section form,  
     .printable-section .admin-panel,  
     .printable-section input,  
@@ -362,7 +358,6 @@
         text-align: center !important; 
     }
 
-    /* २. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
     .voucher-modal img,  
     .payment-slip,  
     .payment-proof,  
@@ -371,13 +366,11 @@
         visibility: hidden !important;
     }
 
-    /* छुट्टै मिति देखाउने क्लासहरू लुकाउन */
     .print-date, .date-display {  
         display: none !important;  
         visibility: hidden !important;  
     }
 
-    /* ३. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
     .table-responsive {
         max-height: none !important;
         overflow: visible !important;
@@ -391,7 +384,6 @@
         page-break-inside: auto !important;
     }
 
-    /* हेर्डिङ जहिले पनि माथि नै ठीक ठाउँमा बस्नको लागि */
     thead {
         display: table-header-group !important;
     }
@@ -405,7 +397,7 @@
         white-space: normal !important;
         font-size: 11px !important;
         padding: 4px !important;
-        position: static !important; /* sticky पोजिसनलाई प्रिन्टमा पूर्ण रूपमा निष्कृय पार्न */
+        position: static !important;
     }
 }
     </style>
@@ -442,7 +434,6 @@
         <button class="logout-btn" onclick="logout()">लगआउट हुनुहोस्</button>
     </div>
 
-    <!-- कोषहरूको ब्यालेन्स र समरी कार्डहरू यहाँ राख्ने -->
     <div class="fund-cards-wrapper" style="display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap;">
         <div class="fund-card" style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; flex: 1; min-width: 200px;">
             <h3>आपत्कालीन कोष मौज्दात</h3>
@@ -555,7 +546,6 @@
               </div>
             </div>
 
-            <!-- १) मानव बचाउ अभियान कोष सेक्सन -->
             <div class="section-header">
                 <h3>मानव बचाउ अभियान कोष</h3>
                 <div class="button-group">
@@ -600,7 +590,6 @@
                 </div>
             </div>
 
-            <!-- २) आपत्कालीन कोष सेक्सन -->
             <div class="section-header">
                 <h3>आपत्कालीन कोष</h3>
                 <div class="button-group">
@@ -645,7 +634,6 @@
                 </div>
             </div>
 
-            <!-- ३) उद्धार तथा राहत कोष सेक्सन -->
             <div class="section-header">
                 <h3>उद्धार तथा राहत कोष</h3>
                 <div class="button-group">
@@ -690,7 +678,6 @@
                 </div>
             </div>
 
-            <!-- मासिक लेवीबाट प्राप्त आम्दानी सेक्सन -->
             <div class="section-header">
                 <h3>मासिक लेवीबाट प्राप्त आम्दानी</h3>
                 <div class="button-group">
@@ -725,7 +712,6 @@
                 </div>
             </div>
 
-            <!-- अनुदान तथा सहयोगबाट प्राप्त आम्दानी सेक्सन -->
             <div class="section-header">
                 <h3>अनुदान तथा सहयोगबाट प्राप्त आम्दानी</h3>
                 <div class="button-group">
@@ -798,7 +784,6 @@
                 </div>
             </div>
 
-            <!-- दैनिक खर्चको विवरण सेक्सन -->
             <div class="section-header">
                 <h3>दैनिक खर्चको विवरण (कोष कटौतीसहित)</h3>
                 <div class="button-group">
@@ -2124,7 +2109,7 @@
         .from('users')
         .select('full_name, name, member_no, position')
         .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
-        .maybeSingle(); // .single() को सट्टा .maybeSingle() राखिएको
+        .maybeSingle();
 
     if (userData) {
         memberName = userData.full_name || userData.name || memberName;
@@ -2136,7 +2121,7 @@
                     const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
                     const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
                     const totalAmount = item.total_amount || 0;
-                    const slipUrl = item.voucher_url || '#'; // payment_slip हटाइयो
+                    const slipUrl = item.voucher_url || '#';
 
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -2192,7 +2177,7 @@
                     const totalAmount = paymentData.total_amount || 0;
                     const committeeType = paymentData.committee_level || paymentData.committee_type || 'साधारण सदस्य';
 
-                    cconst { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
+                    const { error: insertError } = await supabaseClient.from('monthly_levy').insert([{
                          voucher_no: voucherNo,
                          date: paymentDate,
                          member_name: memberName,
@@ -2200,7 +2185,6 @@
                          months_paid: monthsList,
                          amount: totalAmount,
                          voucher_url: paymentData.voucher_url || ''
-                        // payment_slip यहाँबाट पूर्ण रूपमा हटाइयो
                          }]);
 
                     if (insertError) {
@@ -2387,7 +2371,6 @@
             
             const imgTag = document.getElementById('popupVoucherImg');
 
-            // यो कोड यहाँ openVoucherModal भित्र राख्ने हो:
             let paymentSlipUrl = item.voucher_url || '';
             let voucherType = item.fund_category || '';
 
@@ -2439,7 +2422,6 @@
                 return;
             }
 
-            // १. दैनिक खर्चको टेबलमा (daily_expenses) रेकर्ड सेभ गर्ने
             const expenseData = {
                 date: expenseDate,
                 source_fund: sourceFund,
@@ -2457,11 +2439,9 @@
                 return;
             }
 
-            // २. छनोट गरिएको कोष वा स्रोतको आधारमा सम्बन्धित टेबलबाट स्वतः रकम घटाउने वा रेकर्ड राख्ने
             try {
                 let targetTable = '';
                 
-                // ड्रपडाउनको नाम अनुसार Supabase को कुन टेबलमा घटाउने वा रेकर्ड गर्ने निर्धारण
                 if (sourceFund === 'मानव बचाउ अभियान कोष') {
                     targetTable = 'human_fund';
                 } else if (sourceFund === 'आपत्कालीन कोष') {
@@ -2473,15 +2453,10 @@
                 } else if (sourceFund === 'मासिक लेवीबाट प्राप्त आम्दानी') {
                     targetTable = 'monthly_levy';
                 } else if (sourceFund === 'साधारण आम्दानी / सामान्य कोष') {
-                    targetTable = 'fund_balances'; // वा साधारण कोषको ब्यालेन्स बस्ने टेबल
+                    targetTable = 'fund_balances';
                 }
 
                 if (targetTable) {
-                    // नोट: यदि तपाईंको यी कोषका टेबलहरूमा कुल ब्यालेन्स 'balance' स्तम्भमा छ भने 
-                    // वा यदि छुट्टै खर्च स्तम्भ छ भने यसले डेटा व्यवस्थापन गर्छ। 
-                    // साधारणतया कोषको टेबलबाट कुल रकम घटाउन वा खर्चको रूपमा प्रविष्टि गर्न सकिन्छ।
-                    
-                    // उदाहरणका लागि कोषको टेबलमा हालको रेकर्ड तान्ने र ब्यालेन्स अपडेट गर्ने:
                     const { data: records, error: fetchErr } = await supabaseClient
                         .from(targetTable)
                         .select('*')
@@ -2512,12 +2487,10 @@
         
         async function loadDailyExpenseData() {
     try {
-        // नयाँ खर्चहरू पहिले देखाउन (Descending) 'ascending: false' राख्ने
-        // यदि पुरानो पहिले देखाउने भए 'ascending: true' बनाउन सक्नुहुन्छ
         const { data, error } = await supabaseClient
             .from('daily_expenses')
             .select('*')
-            .order('id', { ascending: false }); // वा created_at प्रयोग गर्न सक्नुहुन्छ
+            .order('id', { ascending: false });
 
         if (error) throw error;
 
@@ -2578,7 +2551,7 @@
                 const photoSrc = app.photo_url || 'images/dashaundisamaj-logo-png.png';
                 const citFront = app.citizenship_front || app.citizenship_front_url || '';
                 const citBack = app.citizenship_back || app.citizenship_back_url || '';
-                const paySlip = app.payment_slip_url || ''; // payment_slip हटाइयो
+                const paySlip = app.payment_slip_url || '';
                 const appJson = encodeURIComponent(JSON.stringify(app));
 
                 tbody.innerHTML += `
@@ -2617,25 +2590,21 @@
 
         async function loadFundBalances() {
     try {
-        // १. आपत्कालीन कोष (Emergency Fund) को कुल आम्दानी
         const { data: emergencyIncomeData } = await supabaseClient
             .from('emergency_fund')
             .select('amount');
         let totalEmergencyIncome = emergencyIncomeData ? emergencyIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0) : 0;
 
-        // २. मानव बचाउ अभियान कोष (Human Fund) को कुल आम्दानी
         const { data: humanIncomeData } = await supabaseClient
-            .from('human_fund') // तपाईंको टेबलको नाम यहाँ मिलाउनुहोला (जस्तै human_fund वा उस्तै)
+            .from('human_fund')
             .select('amount');
         let totalHumanIncome = humanIncomeData ? humanIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0) : 0;
 
-        // ३. उद्धार तथा राहत कोष (Relief Fund) को कुल आम्दानी
         const { data: reliefIncomeData } = await supabaseClient
-            .from('relief_fund') // तपाईंको टेबलको नाम यहाँ मिलाउनुहोला
+            .from('relief_fund')
             .select('amount');
         let totalReliefIncome = reliefIncomeData ? reliefIncomeData.reduce((sum, item) => sum + (parseFloat(item.amount) || 0), 0) : 0;
 
-        // ४. दैनिक खर्चको डेटा एकैचोटि तानेर सबै कोषको खर्च अलग-अलग छुट्याउने
         const { data: expenseData } = await supabaseClient
             .from('daily_expenses')
             .select('amount, source_fund');
@@ -2648,7 +2617,7 @@
         if (expenseData) {
             expenseData.forEach(item => {
                 let amt = parseFloat(item.amount) || 0;
-                grandTotalExpense += amt; // कुल खर्च
+                grandTotalExpense += amt;
 
                 if (item.source_fund === 'आपत्कालीन कोष') {
                     totalEmergencyExpense += amt;
@@ -2660,12 +2629,10 @@
             });
         }
 
-        // ५. प्रत्येक कोषको खुद मौज्दात (Net Balance) हिसाब गर्ने
         let netEmergencyBalance = totalEmergencyIncome - totalEmergencyExpense;
         let netHumanBalance = totalHumanIncome - totalHumanExpense;
         let netReliefBalance = totalReliefIncome - totalReliefExpense;
 
-        // ६. HTML मा देखाउने (तपाईंको फंक्सन `toNepaliNumber` प्रयोग गरेर)
         if (document.getElementById('emergencyFundBalance')) {
             document.getElementById('emergencyFundBalance').innerText = 'रु. ' + toNepaliNumber(netEmergencyBalance);
         }
@@ -2676,7 +2643,6 @@
             document.getElementById('reliefFundBalance').innerText = 'रु. ' + toNepaliNumber(netReliefBalance);
         }
 
-        // यदि कुल आम्दानी र खर्च पनि देखाउन चाहनुहुन्छ भने:
         let grandTotalIncome = totalEmergencyIncome + totalHumanIncome + totalReliefIncome;
         let netOverallBalance = grandTotalIncome - grandTotalExpense;
 
@@ -2798,6 +2764,7 @@ if (isRenewal) {
     formattedMemberNo = String(nextNo).padStart(3, '0');
 }
 
+const userData = {
     member_no: formattedMemberNo,
     position: assignedPosition,
     committee_level: committeeLevelVal,
@@ -2810,7 +2777,7 @@ if (isRenewal) {
     citizenship_no: app.citizenship_no || '',
     citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
     citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-    payment_slip_url: app.payment_slip || app.payment_slip_url || '', // वा यसलाई पूर्ण रूपमा हटाउन सक्नुहुन्छ
+    payment_slip_url: app.payment_slip || app.payment_slip_url || '',
     spouse_name: app.spouse_name || '',
     father_name: app.father_name || '',
     mother_name: app.mother_name || '',
@@ -2822,6 +2789,7 @@ if (isRenewal) {
     tole: app.tole || '',
     avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
     password: app.password || '123456'
+};
 
 const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
@@ -2949,14 +2917,12 @@ if(userError) {
             formattedMemberNo = String(maxNo + 1).padStart(3, '0');
         }
 
-        // १. Membership Application अपडेट गर्ने
         const { error } = await supabaseClient.from('membership_applications').update({ 
             status: status, 
             member_no: formattedMemberNo 
         }).eq('id', id);
 
         if (!error) {
-            // २. भौचर नम्बर र मिति तयार पार्ने
             let voucherNo = 'VCH-' + formattedMemberNo;
             try {
                 voucherNo = await getNextVoucherNo();
@@ -2966,7 +2932,6 @@ if(userError) {
 
             const currentDate = '२०८३-०५-२७'; 
 
-            // ३. income_records मा पठाउने सुरक्षित डेटा संरचना (payment_slip हटाइएको)
             const incomeRecord = {
                 voucher_no: String(voucherNo || 'VCH-001'),
                 date: String(currentDate || '२०८३-०५-२७'),
@@ -3017,7 +2982,7 @@ if(userError) {
         const photoSrc = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
         const citFront = user.citizenship_front || user.citizenship_front_url || '';
         const citBack = user.citizenship_back || user.citizenship_back_url || '';
-        const paySlip = user.payment_slip_url || ''; // यहाँ payment_slip हटाएर सुरक्षित बनाइएको छ
+        const paySlip = user.payment_slip_url || '';
         const userJson = encodeURIComponent(JSON.stringify(user));
                 tbody.innerHTML += `
                     <tr>
