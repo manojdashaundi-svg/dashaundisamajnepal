@@ -2765,56 +2765,61 @@
 
             closePositionModal();
 
-            let formattedMemberNo = '';
-            const isRenewal = app.application_type === 'नवीकरण';
+    let formattedMemberNo = '';
+    const isRenewal = app.application_type === 'नवीकरण';
 
-            if (isRenewal) {
-                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
-                if (existingUser) {
-                    formattedMemberNo = existingUser.member_no;
-                } else {
-                    const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
-                    formattedMemberNo = String((count || 0) + 1).padStart(3, '0');
-                }
-            } else {
-                const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
-                let nextNo = (count || 0) + 1;
-                formattedMemberNo = String(nextNo).padStart(3, '0');
-            }
+    if (isRenewal) {
+        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+        if (existingUser) {
+            formattedMemberNo = existingUser.member_no;
+        } else {
+            const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+            let nextNo = (!countError && count !== null) ? count + 1 : 1;
+            formattedMemberNo = String(nextNo).padStart(3, '0');
+        }
+    } else {
+        // टेबलमा कुल कति युजर छन् गनेर त्यसैमा १ जोड्ने (खाली भए 1 बाट सुरु हुन्छ)
+        const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+        let nextNo = 1;
+        if (!countError && count !== null) {
+            nextNo = count + 1;
+        }
+        formattedMemberNo = String(nextNo).padStart(3, '0');
+    }
 
-            const userData = {
-                member_no: formattedMemberNo,
-                position: assignedPosition,
-                committee_level: committeeLevelVal,
-                reg_date: todayNepaliDate,
-                status: 'Approved',
-                full_name: app.full_name,
-                phone: app.phone || '',
-                email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
-                dob: app.dob || '',
-                citizenship_no: app.citizenship_no || '',
-                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-                payment_slip: app.payment_slip || app.payment_slip_url || '',
-                spouse_name: app.spouse_name || '',
-                father_name: app.father_name || '',
-                mother_name: app.mother_name || '',
-                grandfather_name: app.grandfather_name || '',
-                province: app.province || '',
-                district: app.district || '',
-                municipality: app.municipality || '',
-                ward: app.ward || '',
-                tole: app.tole || '',
-                avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-                password: app.password || '123456'
-            };
+    const userData = {
+        member_no: formattedMemberNo,
+        position: assignedPosition,
+        committee_level: committeeLevelVal,
+        reg_date: todayNepaliDate,
+        status: 'Approved',
+        full_name: app.full_name,
+        phone: app.phone || '',
+        email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
+        dob: app.dob || '',
+        citizenship_no: app.citizenship_no || '',
+        citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+        citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+        payment_slip: app.payment_slip || app.payment_slip_url || '',
+        spouse_name: app.spouse_name || '',
+        father_name: app.father_name || '',
+        mother_name: app.mother_name || '',
+        grandfather_name: app.grandfather_name || '',
+        province: app.province || '',
+        district: app.district || '',
+        municipality: app.municipality || '',
+        ward: app.ward || '',
+        tole: app.tole || '',
+        avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+        password: app.password || '123456'
+    };
 
-            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+    const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
-            if(userError) {
-                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
-                return;
-            }
+    if(userError) {
+        alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+        return;
+    }
 
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
 
