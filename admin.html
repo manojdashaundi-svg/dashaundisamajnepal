@@ -2960,7 +2960,7 @@ if(userError) {
         }).eq('id', id);
 
         if (!error) {
-            // भौचर नम्बर जेनेरेट गरी income_records मा सेभ गर्ने
+            // भौचर नम्बर जेनेरेट गरी income_records मा सेभ गर्ने (voucher_no र payment_slip सहित)
             const voucherNo = typeof getNextVoucherNo === 'function' ? await getNextVoucherNo() : ('VCH-' + formattedMemberNo);
             const incomeRecord = {
                 voucher_no: voucherNo,
@@ -2969,7 +2969,6 @@ if(userError) {
                 category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                 description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
                 amount: '५००',
-                fund_category: 'सदस्यता आम्दानी',
                 payment_slip: appData.payment_slip || appData.payment_slip_url || ''
             };
             
