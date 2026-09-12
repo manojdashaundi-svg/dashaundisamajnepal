@@ -3013,17 +3013,16 @@ if(userError) {
     }
 }
         async function loadUsersData() {
-            const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('id', { ascending: true });
-            const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
-            data.forEach((user, index) => {
-                const photoSrc = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
-                const citFront = user.citizenship_front || user.citizenship_front_url || '';
-                const citBack = user.citizenship_back || user.citizenship_back_url || '';
-                const paySlip = user.payment_slip || user.payment_slip_url || '';
-                const userJson = encodeURIComponent(JSON.stringify(user));
-
+    const { data } = await supabaseClient.from('users').select('*').eq('status', 'Approved').order('id', { ascending: true });
+    const tbody = document.getElementById('usersTableBody');
+    tbody.innerHTML = '';
+    if (!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="23">कुनै प्रयोगकर्ता छैनन्</td></tr>'; return; }
+    data.forEach((user, index) => {
+        const photoSrc = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
+        const citFront = user.citizenship_front || user.citizenship_front_url || '';
+        const citBack = user.citizenship_back || user.citizenship_back_url || '';
+        const paySlip = user.payment_slip_url || ''; // यहाँ payment_slip हटाएर सुरक्षित बनाइएको छ
+        const userJson = encodeURIComponent(JSON.stringify(user));
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${index + 1}</strong></td>
