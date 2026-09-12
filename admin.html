@@ -2136,7 +2136,7 @@
                     const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
                     const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
                     const totalAmount = item.total_amount || 0;
-                    const slipUrl = item.payment_slip || item.voucher_url || '#';
+                    const slipUrl = item.voucher_url || '#'; // payment_slip हटाइयो
 
                     const row = document.createElement('tr');
                     row.innerHTML = `
