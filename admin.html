@@ -2960,7 +2960,7 @@ if(userError) {
         }).eq('id', id);
 
         if (!error) {
-            // २. भौचर नम्बर र मितି सुरक्षित तريकाले ल्याउने
+            // २. भौचर नम्बर र मिति सुरक्षित तरिकाले ल्याउने
             let voucherNo = 'VCH-' + formattedMemberNo;
             try {
                 voucherNo = await getNextVoucherNo();
@@ -2968,7 +2968,7 @@ if(userError) {
                 console.error(err);
             }
 
-            const currentDate = '२०८३-०५-२७'; // वा date picker बाट आउने मिति
+            const currentDate = '२०८३-०५-२७'; 
 
             const incomeRecord = {
                 voucher_no: voucherNo,
@@ -2976,15 +2976,16 @@ if(userError) {
                 name: appData.full_name,
                 category: isRenewal ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                 description: isRenewal ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-                amount: '५००',
+                amount: 500, // यसलाई नम्बरमा राखिएको छ (यदि Supabase मा text छ भने '500' राख्नुहोला)
                 fund_category: 'सदस्यता आम्दानी',
                 payment_slip: appData.payment_slip || appData.payment_slip_url || ''
             };
             
             // ३. income_records मा डेटा पठाउने
             const { error: incomeError } = await supabaseClient.from('income_records').insert([incomeRecord]);
+            
             if (incomeError) {
-                console.error('Income record error:', incomeError.message);
+                console.error('Income record error details:', incomeError);
                 alert('चेतावनी: सदस्यता स्वीकृत भयो तर आम्दानी रेकर्ड सेभ हुन सकेन: ' + incomeError.message);
             } else {
                 alert('आवेदन सफलतापूर्वक स्वीकृत गरियो र ' + incomeRecord.category + ' बापतको आम्दानी रेकर्डमा थपियो!');
