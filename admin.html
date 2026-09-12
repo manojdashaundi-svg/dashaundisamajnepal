@@ -2767,9 +2767,10 @@
 
     let formattedMemberNo = '';
     const isRenewal = app.application_type === 'नवीकरण';
+    const userIdentifier = app.identifier || app.email || app.phone;
 
     if (isRenewal) {
-        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).single();
         if (existingUser) {
             formattedMemberNo = existingUser.member_no;
         } else {
@@ -2787,41 +2788,67 @@
         formattedMemberNo = String(nextNo).padStart(3, '0');
     }
 
-    const userData = {
-        member_no: formattedMemberNo,
-        position: assignedPosition,
-        committee_level: committeeLevelVal,
-        reg_date: todayNepaliDate,
-        status: 'Approved',
-        full_name: app.full_name,
-        phone: app.phone || '',
-        email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
-        dob: app.dob || '',
-        citizenship_no: app.citizenship_no || '',
-        citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-        citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-        payment_slip: app.payment_slip || app.payment_slip_url || '',
-        spouse_name: app.spouse_name || '',
-        father_name: app.father_name || '',
-        mother_name: app.mother_name || '',
-        grandfather_name: app.grandfather_name || '',
-        province: app.province || '',
-        district: app.district || '',
-        municipality: app.municipality || '',
-        ward: app.ward || '',
-        tole: app.tole || '',
-        avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-        password: app.password || '123456'
-    };
+    // १. यो युजर पहिले नै users टेबलमा छ कि छैन चेक गर्ने
+    const { data: existingMember } = await supabaseClient
+        .from('users')
+        .select('*')
+        .or(`email.eq.${userIdentifier},phone.eq.${userIdentifier}`)
+        .maybeSingle();
 
-    const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+    if (existingMember) {
+        // यदि पहिले नै छ भने पासवर्ड नचलाई अरू विवरण मात्र अपडेट गर्ने
+        const { error: updateError } = await supabaseClient
+            .from('users')
+            .update({
+                member_no: formattedMemberNo,
+                position: assignedPosition,
+                committee_level: committeeLevelVal,
+                status: 'Approved'
+            })
+            .eq('id', existingMember.id);
 
-    if(userError) {
-        alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
-        return;
+        if (updateError) {
+            alert('युजर अपडेट गर्दा त्रुटि: ' + updateError.message);
+            return;
+        }
+    } else {
+        // यदि बिल्कुल नयाँ युजर हो भने मात्र नयाँ रेकर्ड इन्सर्ट गर्ने
+        const userData = {
+            member_no: formattedMemberNo,
+            position: assignedPosition,
+            committee_level: committeeLevelVal,
+            reg_date: todayNepaliDate,
+            status: 'Approved',
+            full_name: app.full_name,
+            phone: app.phone || '',
+            email: userIdentifier || 'no-email@gmail.com',
+            dob: app.dob || '',
+            citizenship_no: app.citizenship_no || '',
+            citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+            citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+            payment_slip: app.payment_slip || app.payment_slip_url || '',
+            spouse_name: app.spouse_name || '',
+            father_name: app.father_name || '',
+            mother_name: app.mother_name || '',
+            grandfather_name: app.grandfather_name || '',
+            province: app.province || '',
+            district: app.district || '',
+            municipality: app.municipality || '',
+            ward: app.ward || '',
+            tole: app.tole || '',
+            avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+            password: app.password || '123456'
+        };
+
+        const { error: userError } = await supabaseClient.from('users').insert([userData]);
+
+        if (userError) {
+            alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+            return;
+        }
     }
 
-    // यहाँ status सँगै member_no पनि membership_applications मा अपडेट हुने बनाइएको छ
+    // २. membership_applications मा status र member_no अपडेट गर्ने
     const { error: appError } = await supabaseClient.from('membership_applications').update({ 
         status: 'Approved', 
         member_no: formattedMemberNo 
