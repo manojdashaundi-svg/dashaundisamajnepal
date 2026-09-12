@@ -2892,15 +2892,14 @@
             }
         }
 
-        async function updateAppStatus(id, status) {
-    // यदि status 'Approved' बनाइएको हो भने member_no पनि सँगै जेनेरेट गरेर अपडेट गर्ने
+     async function updateAppStatus(id, status) {
     if (status === 'Approved') {
-        // पहिले यो application को विवरण तानेर renewal वा नयाँ हो छुट्याउने
+        // .single() को सट्टा .maybeSingle() प्रयोग गर्ने जसले 406 वा crash हुनबाट बचाउँछ
         const { data: appData, error: fetchError } = await supabaseClient
             .from('membership_applications')
             .select('*')
             .eq('id', id)
-            .single();
+            .maybeSingle();
 
         if (fetchError || !appData) {
             alert('आवेदनको विवरण फेला पर्‍यन: ' + (fetchError ? fetchError.message : ''));
@@ -2929,10 +2928,10 @@
             formattedMemberNo = String(nextNo).padStart(3, '0');
         }
 
-        // membership_applications मा status र member_no दुवै अपडेट गर्ने
+        // membership_applications मा status र member_no अपडेट गर्ने
         const { error } = await supabaseClient.from('membership_applications').update({ 
             status: status, 
-            member_no: formattedMemberNo 
+            member_no: String(formattedMemberNo) 
         }).eq('id', id);
 
         if (!error) {
@@ -2943,7 +2942,6 @@
             alert('त्रुटि: ' + error.message);
         }
     } else {
-        // यदि Approved बाहेक अन्य status (जस्तै Pending, Rejected) हो भने सामान्य रूपमा स्टेटस मात्र अपडेट गर्ने
         const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
         if (!error) {
             alert('आवेदन ' + status + ' गरियो!');
