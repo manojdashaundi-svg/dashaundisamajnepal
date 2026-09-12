@@ -1918,21 +1918,25 @@
             }
         };
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value.trim();
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // यसलाई async IIFE (Immediately Invoked Function Expression) भित्र राखिएको छ
+    (async () => {
+        const user = document.getElementById('username').value.trim();
+        const pass = document.getElementById('password').value.trim();
 
-            const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
-            if (data) {
-                localStorage.setItem('isAdminLoggedIn', 'true');
-                localStorage.setItem('currentAdmin', user);
-                localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
-                showDashboard();
-            } else {
-                alert('गलत युजरनेम वा पासवर्ड!');
-            }
-        });
+        const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
+        if (data) {
+            localStorage.setItem('isAdminLoggedIn', 'true');
+            localStorage.setItem('currentAdmin', user);
+            localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
+            showDashboard();
+        } else {
+            alert('गलत युजरनेम वा पासवर्ड!');
+        }
+    })();
+});
 
         function showDashboard() {
             const loginSection = document.getElementById('loginSection');
