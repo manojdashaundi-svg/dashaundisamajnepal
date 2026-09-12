@@ -2840,12 +2840,11 @@ if(userError) {
                     name: app.full_name,
                     category: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण शुल्क' : 'नयाँ सदस्यता शुल्क',
                     description: app.application_type === 'नवीकरण' ? 'सदस्यता नवीकरण बापत' : 'नयाँ सदस्यता शुल्क बापत',
-                    amount: '५००',
-                    fund_category: 'सदस्यता आम्दानी',
-                    payment_slip: app.payment_slip || app.payment_slip_url || ''
+                    amount: 500,
+                    fund_category: 'सदस्यता आम्दानी'
                 };
                 await supabaseClient.from('income_records').insert([incomeRecord]);
-
+                
                 alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${toNepaliNumber(formattedMemberNo)}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
                 loadApplicationsData();
                 loadUsersData();
