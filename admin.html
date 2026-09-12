@@ -2893,14 +2893,66 @@
         }
 
         async function updateAppStatus(id, status) {
-            const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
-            if(!error) {
-                alert('आवेदन ' + status + ' गरियो!');
-                loadApplicationsData();
-            } else {
-                alert('त्रुटि: ' + error.message);
-            }
+    // यदि status 'Approved' बनाइएको हो भने member_no पनि सँगै जेनेरेट गरेर अपडेट गर्ने
+    if (status === 'Approved') {
+        // पहिले यो application को विवरण तानेर renewal वा नयाँ हो छुट्याउने
+        const { data: appData, error: fetchError } = await supabaseClient
+            .from('membership_applications')
+            .select('*')
+            .eq('id', id)
+            .single();
+
+        if (fetchError || !appData) {
+            alert('आवेदनको विवरण फेला पर्‍यन: ' + (fetchError ? fetchError.message : ''));
+            return;
         }
+
+        let formattedMemberNo = '';
+        const isRenewal = appData.application_type === 'नवीकरण';
+        const userIdentifier = appData.identifier || appData.email || appData.phone || 'no-email@gmail.com';
+
+        if (isRenewal) {
+            const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).maybeSingle();
+            if (existingUser && existingUser.member_no) {
+                formattedMemberNo = existingUser.member_no;
+            } else {
+                const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                let nextNo = (!countError && count !== null) ? count + 1 : 1;
+                formattedMemberNo = String(nextNo).padStart(3, '0');
+            }
+        } else {
+            const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+            let nextNo = 1;
+            if (!countError && count !== null) {
+                nextNo = count + 1;
+            }
+            formattedMemberNo = String(nextNo).padStart(3, '0');
+        }
+
+        // membership_applications मा status र member_no दुवै अपडेट गर्ने
+        const { error } = await supabaseClient.from('membership_applications').update({ 
+            status: status, 
+            member_no: formattedMemberNo 
+        }).eq('id', id);
+
+        if (!error) {
+            alert('आवेदन ' + status + ' गरियो र सदस्य नं (' + formattedMemberNo + ') राखियो!');
+            loadApplicationsData();
+            loadUsersData();
+        } else {
+            alert('त्रुटि: ' + error.message);
+        }
+    } else {
+        // यदि Approved बाहेक अन्य status (जस्तै Pending, Rejected) हो भने सामान्य रूपमा स्टेटस मात्र अपडेट गर्ने
+        const { error } = await supabaseClient.from('membership_applications').update({ status: status }).eq('id', id);
+        if (!error) {
+            alert('आवेदन ' + status + ' गरियो!');
+            loadApplicationsData();
+        } else {
+            alert('त्रुटि: ' + error.message);
+        }
+    }
+}
 
         async function deleteApplication(id) {
             if(confirm('के तपाईं यो आवेदन स्थायी रूपमा मेटाउन (Remove) चाहनुहुन्छ?')) {
