@@ -316,57 +316,34 @@
             background: #fff; width: 600px; max-width: 100%; padding: 30px; border-radius: 12px; border: 3px solid #1a365d; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative;
         }
 
-      @media print {
-    /* पृष्ठको साइज Landscape र मार्जिन मिलाउन */
+        @media print {
+    /* पृष्ठको साइज Landscape (तेस्रो) र मार्जिन मिलाउन */
     @page {
         size: landscape;
         margin: 10mm;
     }
 
-    /* १. सुरुमा सबै कुरा लुकाउने */
-    body * {  
+    /* १. सबै कुरा लुकाउने र प्रिन्ट हुने भाग मात्र देखाउने */
+    body * { 
         visibility: hidden !important; 
     }
-
-    /* २. प्रिन्ट हुने मुख्य कन्टेनर, प्रिन्ट हेडर र तिनका भित्रका सबै कुरा देखाउने */
-    .printable-section, .printable-section *,  
-    #printableTableSection, #printableTableSection *,
-    .print-header, .print-header * {  
+    
+    /* तपाईंले प्रिन्ट गर्न दिनुभएको कन्टेनर वा टेबल सेक्सਨ */
+    .printable-section, .printable-section * ,
+    #printableTableSection, #printableTableSection * { 
         visibility: visible !important; 
-    }
-
-    /* ३. प्रिन्ट हुने भाग र हेडरलाई पेजको सुरुमा र सही तरिकाले सेट गर्ने */
-    .print-header {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        background: #fff !important;
-        display: block !important;
-        text-align: center !important;
     }
 
     .printable-section, #printableTableSection {
         position: absolute !important; 
         left: 0 !important; 
-        top: 120px !important; /* हेडरको तल टेबल देखाउन मद्दत गर्छ */
+        top: 0 !important; 
         width: 100% !important; 
         background: #fff !important; 
         display: block !important;
     }
 
-    /* ४. लोगो स्पष्ट रूपमा देखाउने र साइज मिलाउने */
-    .print-header img, .print-logo, .print-logo img {
-        visibility: visible !important;
-        display: block !important;
-        width: 80px !important; 
-        height: auto !important;
-        max-width: 100% !important;
-        opacity: 1 !important;
-        margin: 0 auto 10px auto !important;
-    }
-
-    /* ५. फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
+    /* फर्म, बटन र अनावश्यक इन्पुटहरू लुकाउने */
     .printable-section form,  
     .printable-section .admin-panel,  
     .printable-section input,  
@@ -378,9 +355,15 @@
         display: none !important;  
         visibility: hidden !important;  
     }
+    
+    .print-header { 
+        display: block !important; 
+        width: 100% !important; 
+        text-align: center !important; 
+    }
 
-    /* ६. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
-    .voucher-modal img:not(.print-header img),  
+    /* २. मासिक लेवी भौचरको पेमेन्ट सिलिप (फोटो) प्रिन्टमा लुकाउन */
+    .voucher-modal img,  
     .payment-slip,  
     .payment-proof,  
     .voucher-slip-image {
@@ -388,13 +371,13 @@
         visibility: hidden !important;
     }
 
-    /* ७. छुट्टै मिति देखाउने क्लासहरू लुकाउन */
+    /* छुट्टै मिति देखाउने क्लासहरू लुकाउन */
     .print-date, .date-display {  
         display: none !important;  
         visibility: hidden !important;  
     }
 
-    /* ८. स्क्रोल र टेबलसम्बन्धी नियमहरू */
+    /* ३. स्क्रोल र टेबलसम्बन्धी सुधार गरिएको नियमहरू */
     .table-responsive {
         max-height: none !important;
         overflow: visible !important;
@@ -408,6 +391,7 @@
         page-break-inside: auto !important;
     }
 
+    /* हेर्डिङ जहिले पनि माथि नै ठीक ठाउँमा बस्नको लागि */
     thead {
         display: table-header-group !important;
     }
@@ -421,7 +405,7 @@
         white-space: normal !important;
         font-size: 11px !important;
         padding: 4px !important;
-        position: static !important;
+        position: static !important; /* sticky पोजिसनलाई प्रिन्टमा पूर्ण रूपमा निष्कृय पार्न */
     }
 }
     </style>
@@ -1918,22 +1902,22 @@
             }
         };
 
-      document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const user = document.getElementById('username').value.trim();
-    const pass = document.getElementById('password').value.trim();
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
-    const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
-    if (data) {
-        localStorage.setItem('isAdminLoggedIn', 'true');
-        localStorage.setItem('currentAdmin', user);
-        localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
-        showDashboard();
-    } else {
-        alert('गलत युजरनेम वा पासवर्ड!');
-    }
-});
+            const { data } = await supabaseClient.from('admins').select('*').eq('username', user).eq('password', pass).single();
+            if (data) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                localStorage.setItem('currentAdmin', user);
+                localStorage.setItem('currentAdminRole', data.role || 'एडमिन');
+                showDashboard();
+            } else {
+                alert('गलत युजरनेम वा पासवर्ड!');
+            }
+        });
+
         function showDashboard() {
             const loginSection = document.getElementById('loginSection');
             const dashboardSection = document.getElementById('dashboardSection');
@@ -2748,101 +2732,90 @@
         }
 
         async function confirmApproveUser() {
-    const appStr = document.getElementById('pendingAppStr').value;
-    const app = JSON.parse(appStr);
+            const appStr = document.getElementById('pendingAppStr').value;
+            const app = JSON.parse(appStr);
 
-    let memType = document.getElementById('membershipTypeSelect').value;
-    let assignedPosition = 'साधारण सदस्य';
-    let committeeLevelVal = '';
+            let memType = document.getElementById('membershipTypeSelect').value;
+            let assignedPosition = 'साधारण सदस्य';
+            let committeeLevelVal = '';
 
-    const todayNepaliDate = getSelectedNepaliDate('approval_reg');
-    const expiryNepaliDate = getSelectedNepaliDate('approval_exp');
+            const todayNepaliDate = getSelectedNepaliDate('approval_reg');
+            const expiryNepaliDate = getSelectedNepaliDate('approval_exp');
 
-    if (memType === 'समिति') {
-        let commLevel = document.getElementById('selectCommitteeLevel').value;
-        let commPos = document.getElementById('selectCommitteePosition').value;
+            if (memType === 'समिति') {
+                let commLevel = document.getElementById('selectCommitteeLevel').value;
+                let commPos = document.getElementById('selectCommitteePosition').value;
 
-        if (commPos === 'अन्य (Custom)') {
-            let customPos = document.getElementById('customPositionInput').value.trim();
-            if (!customPos) {
-                alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
+                if (commPos === 'अन्य (Custom)') {
+                    let customPos = document.getElementById('customPositionInput').value.trim();
+                    if (!customPos) {
+                        alert('कृपया नयाँ पदको नाम लेख्नुहोस्!');
+                        return;
+                    }
+                    assignedPosition = customPos;
+                    committeeLevelVal = commLevel;
+                } else {
+                    assignedPosition = commPos;
+                    committeeLevelVal = commLevel;
+                }
+            } else {
+                assignedPosition = 'साधारण सदस्य';
+                committeeLevelVal = 'साधारण सदस्य';
+            }
+
+            closePositionModal();
+
+            let formattedMemberNo = '';
+            const isRenewal = app.application_type === 'नवीकरण';
+
+            if (isRenewal) {
+                const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
+                if (existingUser) {
+                    formattedMemberNo = existingUser.member_no;
+                } else {
+                    const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                    formattedMemberNo = String((count || 0) + 1).padStart(3, '0');
+                }
+            } else {
+                const { count } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+                let nextNo = (count || 0) + 1;
+                formattedMemberNo = String(nextNo).padStart(3, '0');
+            }
+
+            const userData = {
+                member_no: formattedMemberNo,
+                position: assignedPosition,
+                committee_level: committeeLevelVal,
+                reg_date: todayNepaliDate,
+                status: 'Approved',
+                full_name: app.full_name,
+                phone: app.phone || '',
+                email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
+                dob: app.dob || '',
+                citizenship_no: app.citizenship_no || '',
+                citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+                citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+                payment_slip: app.payment_slip || app.payment_slip_url || '',
+                spouse_name: app.spouse_name || '',
+                father_name: app.father_name || '',
+                mother_name: app.mother_name || '',
+                grandfather_name: app.grandfather_name || '',
+                province: app.province || '',
+                district: app.district || '',
+                municipality: app.municipality || '',
+                ward: app.ward || '',
+                tole: app.tole || '',
+                avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+                password: app.password || '123456'
+            };
+
+            const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
+
+            if(userError) {
+                alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
                 return;
             }
-            assignedPosition = customPos;
-            committeeLevelVal = commLevel;
-        } else {
-            assignedPosition = commPos;
-            committeeLevelVal = commLevel;
-        }
-    } else {
-        assignedPosition = 'साधारण सदस्य';
-        committeeLevelVal = 'साधारण सदस्य';
-    }
 
-    closePositionModal();
-
-    let formattedMemberNo = '';
-    const isRenewal = app.application_type === 'नवीकरण';
-
-    if (isRenewal) {
-        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', app.identifier).single();
-        if (existingUser) {
-            formattedMemberNo = existingUser.member_no;
-        } else {
-            // यदि नवीकरण हो तर युजर फेला परेन भने नयाँ नम्बर सिर्जना गर्ने
-            const { data: latestUsers } = await supabaseClient.from('users').select('member_no').order('member_no', { ascending: false }).limit(1);
-            let nextNo = 1;
-            if (latestUsers && latestUsers.length > 0 && latestUsers[0].member_no) {
-                const parsedNo = parseInt(latestUsers[0].member_no, 10);
-                if (!isNaN(parsedNo)) nextNo = parsedNo + 1;
-            }
-            formattedMemberNo = String(nextNo).padStart(3, '0');
-        }
-    } else {
-        // टेबलमा भएको हालको सबैभन्दा ठूलो सदस्य नम्बर तानेर १ जोड्ने (खाली भए 1 बाट सुरु हुन्छ)
-        const { data: latestUsers } = await supabaseClient.from('users').select('member_no').order('member_no', { ascending: false }).limit(1);
-        let nextNo = 1;
-        if (latestUsers && latestUsers.length > 0 && latestUsers[0].member_no) {
-            const parsedNo = parseInt(latestUsers[0].member_no, 10);
-            if (!isNaN(parsedNo)) nextNo = parsedNo + 1;
-        }
-        formattedMemberNo = String(nextNo).padStart(3, '0');
-    }
-
-    const userData = {
-        member_no: formattedMemberNo,
-        position: assignedPosition,
-        committee_level: committeeLevelVal,
-        reg_date: todayNepaliDate,
-        status: 'Approved',
-        full_name: app.full_name,
-        phone: app.phone || '',
-        email: app.identifier || app.email || app.phone || 'no-email@gmail.com',
-        dob: app.dob || '',
-        citizenship_no: app.citizenship_no || '',
-        citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-        citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-        payment_slip: app.payment_slip || app.payment_slip_url || '',
-        spouse_name: app.spouse_name || '',
-        father_name: app.father_name || '',
-        mother_name: app.mother_name || '',
-        grandfather_name: app.grandfather_name || '',
-        province: app.province || '',
-        district: app.district || '',
-        municipality: app.municipality || '',
-        ward: app.ward || '',
-        tole: app.tole || '',
-        avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-        password: app.password || '123456'
-    };
-
-    const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
-
-    if(userError) {
-        alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
-        return;
-    }
-}
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
 
             if(!appError) {
