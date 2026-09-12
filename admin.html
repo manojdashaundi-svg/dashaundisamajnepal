@@ -2121,18 +2121,18 @@
                     let paymentDate = item.date || '-';
 
                     if (!memberName || memberName.startsWith('सदस्य') || memberName.match(/^\d+$/) || memberNo === '-') {
-                        const { data: userData } = await supabaseClient
-                            .from('users')
-                            .select('full_name, name, member_no, position')
-                            .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
-                            .single();
-                        
-                        if (userData) {
-                            memberName = userData.full_name || userData.name || memberName;
-                            memberNo = userData.member_no || memberNo;
-                            memberPosition = userData.position || memberPosition;
-                        }
-                    }
+    const { data: userData } = await supabaseClient
+        .from('users')
+        .select('full_name, name, member_no, position')
+        .or(`id.eq.${item.user_id},member_no.eq.${item.user_id}`)
+        .maybeSingle(); // .single() को सट्टा .maybeSingle() राखिएको
+
+    if (userData) {
+        memberName = userData.full_name || userData.name || memberName;
+        memberNo = userData.member_no || memberNo;
+        memberPosition = userData.position || memberPosition;
+    }
+}
 
                     const committeeLevel = item.committee_level || 'केन्द्रीय समिति';
                     const months = Array.isArray(item.months) ? item.months.join(', ') : (item.months || '');
