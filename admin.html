@@ -2388,7 +2388,7 @@
             const imgTag = document.getElementById('popupVoucherImg');
 
             // यो कोड यहाँ openVoucherModal भित्र राख्ने हो:
-            let paymentSlipUrl = item.voucher_url || item.payment_slip;
+            let paymentSlipUrl = item.voucher_url || '';
             let voucherType = item.fund_category || '';
 
             if ((voucherType.includes('लेवी') || voucherType === 'मासिक लेवी आम्दानी') && paymentSlipUrl) {
