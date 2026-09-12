@@ -2064,21 +2064,20 @@
         }
 
         function viewMonthlyLevyVoucherByIndex(index) {
-            const item = window.monthlyLevyCache[index];
-            if (!item) return;
-            const mappedItem = {
-                voucher_no: item.voucher_no,
-                date: item.date,
-                donor_name: item.member_name,
-                title: 'मासिक लेवी भुक्तानी: ' + item.months_paid,
-                medium: 'अनलाइन / बैंक',
-                amount: item.amount,
-                fund_category: 'मासिक लेवी आम्दानी', // यो राख्नाले लेवी भौचर चिनिन्छ
-                voucher_url: '', // मासिक लेवी भौचरमा सिलिप नदेखिनका लागि खाली वा लुकाउने
-                payment_slip: ''
-            };
-            openVoucherModal(encodeURIComponent(JSON.stringify(mappedItem)));
-        }
+    const item = window.monthlyLevyCache[index];
+    if (!item) return;
+    const mappedItem = {
+        voucher_no: item.voucher_no,
+        date: item.date,
+        donor_name: item.member_name,
+        title: 'मासिक लेवी भुक्तानी: ' + item.months_paid,
+        medium: 'अनलाइन / बैंक',
+        amount: item.amount,
+        fund_category: 'मासिक लेवी आम्दानी', 
+        voucher_url: '' 
+    };
+    openVoucherModal(encodeURIComponent(JSON.stringify(mappedItem)));
+}
 
         function closeLevyVoucherModal() {
             document.getElementById('levyVoucherModal').style.display = 'none';
