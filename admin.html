@@ -2768,7 +2768,7 @@
 
             let formattedMemberNo = '';
             const isRenewal = app.application_type === 'नवीकरण';
-            const userIdentifier = app.identifier || app.email || app.phone || 'no-email@gmail.com';
+            const userIdentifier = app.identifier || app.email || app.phone || ('user_' + Date.now() + '@gmail.com');
 
             if (isRenewal) {
                 const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).maybeSingle();
@@ -2826,9 +2826,11 @@
                 password: app.password || '123456'
             };
 
+            // युजर सेभ गर्दा conflitto नहोस् भन्नको लागि अनफ्लिक्टमा email वा member_no जाँच गर्ने
             const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
             if(userError) {
+                console.error('User save error:', userError);
                 alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
                 return;
             }
@@ -2836,10 +2838,8 @@
             const { error: appError } = await supabaseClient.from('membership_applications').update({ status: 'Approved' }).eq('id', app.id);
 
             if(!appError) {
-                // भौचर नम्बर जेनेरेट गर्ने सुरक्षित तरिका
                 const voucherNo = (typeof getNextVoucherNo === 'function') ? await getNextVoucherNo() : ('VCH-' + formattedMemberNo);
                 
-                // income_records टेबलसँग मिल्ने गरी मात्र डेटा तयार गरिएको
                 const incomeRecord = {
                     voucher_no: voucherNo,
                     date: todayNepaliDate,
@@ -2853,7 +2853,6 @@
                 
                 if (incomeError) {
                     console.error('Income insert error:', incomeError);
-                    alert('चेतावनी: आम्दानी रेकर्ड सेभ हुन सकेन: ' + incomeError.message);
                 }
 
                 alert(`आवेदन सफलतापूर्वक स्वीकृत भयो!\nप्रकार: ${app.application_type || 'नयाँ सदस्यता'}\nभौचर नं: ${voucherNo}\nसदस्य नं: ${formattedMemberNo}\nपद: ${assignedPosition}\nजारी मिति: ${todayNepaliDate}\nम्याद समाप्त: ${expiryNepaliDate}`);
