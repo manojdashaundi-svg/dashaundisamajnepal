@@ -2763,15 +2763,15 @@
                 committeeLevelVal = 'साधारण सदस्य';
             }
 
-            closePositionModal();
+           closePositionModal();
 
     let formattedMemberNo = '';
     const isRenewal = app.application_type === 'नवीकरण';
-    const userIdentifier = app.identifier || app.email || app.phone;
+    const userIdentifier = app.identifier || app.email || app.phone || 'no-email@gmail.com';
 
     if (isRenewal) {
-        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).single();
-        if (existingUser) {
+        const { data: existingUser } = await supabaseClient.from('users').select('*').eq('email', userIdentifier).maybeSingle();
+        if (existingUser && existingUser.member_no) {
             formattedMemberNo = existingUser.member_no;
         } else {
             const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
@@ -2779,7 +2779,7 @@
             formattedMemberNo = String(nextNo).padStart(3, '0');
         }
     } else {
-        // युजर टेबलमा कुल कति युजर छन् गनेर त्यसैमा १ जोड्ने (खाली भए 1 बाट सुरु हुन्छ)
+        // टेबलमा कुल कति युजर छन् गनेर त्यसैमा १ जोड्ने (खाली भए 1 बाट सुरु हुन्छ)
         const { count, error: countError } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
         let nextNo = 1;
         if (!countError && count !== null) {
@@ -2788,67 +2788,43 @@
         formattedMemberNo = String(nextNo).padStart(3, '0');
     }
 
-    // १. यो युजर पहिले नै users टेबलमा छ कि छैन चेक गर्ने
-    const { data: existingMember } = await supabaseClient
-        .from('users')
-        .select('*')
-        .or(`email.eq.${userIdentifier},phone.eq.${userIdentifier}`)
-        .maybeSingle();
+    // युजर डेटा तयार पार्ने (यदि पहिले नै छ भने upsert ले इमेलको आधारमा अपडेट गर्छ)
+    const userData = {
+        member_no: formattedMemberNo,
+        position: assignedPosition,
+        committee_level: committeeLevelVal,
+        reg_date: todayNepaliDate,
+        status: 'Approved',
+        full_name: app.full_name,
+        phone: app.phone || '',
+        email: userIdentifier,
+        dob: app.dob || '',
+        citizenship_no: app.citizenship_no || '',
+        citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+        citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
+        payment_slip: app.payment_slip || app.payment_slip_url || '',
+        spouse_name: app.spouse_name || '',
+        father_name: app.father_name || '',
+        mother_name: app.mother_name || '',
+        grandfather_name: app.grandfather_name || '',
+        province: app.province || '',
+        district: app.district || '',
+        municipality: app.municipality || '',
+        ward: app.ward || '',
+        tole: app.tole || '',
+        avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+        password: app.password || '123456'
+    };
 
-    if (existingMember) {
-        // यदि पहिले नै छ भने पासवर्ड नचलाई अरू विवरण मात्र अपडेट गर्ने
-        const { error: updateError } = await supabaseClient
-            .from('users')
-            .update({
-                member_no: formattedMemberNo,
-                position: assignedPosition,
-                committee_level: committeeLevelVal,
-                status: 'Approved'
-            })
-            .eq('id', existingMember.id);
+    // सुपाबेसमा सुरक्षित रूपमा सेभ गर्ने
+    const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
-        if (updateError) {
-            alert('युजर अपडेट गर्दा त्रुटि: ' + updateError.message);
-            return;
-        }
-    } else {
-        // यदि बिल्कुल नयाँ युजर हो भने मात्र नयाँ रेकर्ड इन्सर्ट गर्ने
-        const userData = {
-            member_no: formattedMemberNo,
-            position: assignedPosition,
-            committee_level: committeeLevelVal,
-            reg_date: todayNepaliDate,
-            status: 'Approved',
-            full_name: app.full_name,
-            phone: app.phone || '',
-            email: userIdentifier || 'no-email@gmail.com',
-            dob: app.dob || '',
-            citizenship_no: app.citizenship_no || '',
-            citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-            citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-            payment_slip: app.payment_slip || app.payment_slip_url || '',
-            spouse_name: app.spouse_name || '',
-            father_name: app.father_name || '',
-            mother_name: app.mother_name || '',
-            grandfather_name: app.grandfather_name || '',
-            province: app.province || '',
-            district: app.district || '',
-            municipality: app.municipality || '',
-            ward: app.ward || '',
-            tole: app.tole || '',
-            avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-            password: app.password || '123456'
-        };
-
-        const { error: userError } = await supabaseClient.from('users').insert([userData]);
-
-        if (userError) {
-            alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
-            return;
-        }
+    if(userError) {
+        alert('युजर सेभ गर्दा त्रुटि: ' + userError.message);
+        return;
     }
 
-    // २. membership_applications मा status र member_no अपडेट गर्ने
+    // membership_applications मा status र member_no अपडेट गर्ने
     const { error: appError } = await supabaseClient.from('membership_applications').update({ 
         status: 'Approved', 
         member_no: formattedMemberNo 
