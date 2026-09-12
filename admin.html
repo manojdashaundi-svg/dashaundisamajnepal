@@ -2554,7 +2554,7 @@
                 const photoSrc = app.photo_url || 'images/dashaundisamaj-logo-png.png';
                 const citFront = app.citizenship_front || app.citizenship_front_url || '';
                 const citBack = app.citizenship_back || app.citizenship_back_url || '';
-                const paySlip = app.payment_slip_url || '';
+                const paySlip = app.payment_slip_url || app.payment_slip || '';
                 const appJson = encodeURIComponent(JSON.stringify(app));
 
                 tbody.innerHTML += `
