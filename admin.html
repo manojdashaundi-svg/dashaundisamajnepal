@@ -2798,7 +2798,6 @@ if (isRenewal) {
     formattedMemberNo = String(nextNo).padStart(3, '0');
 }
 
-const userData = {
     member_no: formattedMemberNo,
     position: assignedPosition,
     committee_level: committeeLevelVal,
@@ -2811,7 +2810,7 @@ const userData = {
     citizenship_no: app.citizenship_no || '',
     citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
     citizenship_back: app.citizenship_back || app.citizenship_back_url || '',
-    payment_slip: app.payment_slip || app.payment_slip_url || '',
+    payment_slip_url: app.payment_slip || app.payment_slip_url || '', // वा यसलाई पूर्ण रूपमा हटाउन सक्नुहुन्छ
     spouse_name: app.spouse_name || '',
     father_name: app.father_name || '',
     mother_name: app.mother_name || '',
@@ -2823,7 +2822,6 @@ const userData = {
     tole: app.tole || '',
     avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
     password: app.password || '123456'
-};
 
 const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
