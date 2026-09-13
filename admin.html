@@ -3589,6 +3589,17 @@ if(userError) {
         alert('❌ अपडेट गर्न असफल भयो: ' + error.message);
     }
 }
+
+    // जब एडमिनले मोडलको सेभ बटन थिच्छन्:
+document.getElementById('saveMemberBtn').addEventListener('click', async () => {
+    const userId = document.getElementById('editUserId').value;
+    const email = document.getElementById('editUserEmail').value;
+    const newPosition = document.getElementById('editPosition').value;
+    const newCommittee = document.getElementById('editCommittee').value;
+
+    // माथिको फंक्सन यहाँ कल गर्ने
+    await saveAdminEditedMember(userId, email, newPosition, newCommittee);
+});
     </script>
 </body>
 </html>
