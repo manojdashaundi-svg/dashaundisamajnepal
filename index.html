@@ -94,10 +94,10 @@
         .about-title-ne { font-size: 28px; color: #0b0f19; font-weight: 950; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3.5px solid #008000; padding-bottom: 6px; display: inline-block; }
         .about-title-en { font-size: 19px; color: #0b0f19; font-weight: 900; margin: 0 0 15px 0; }
         .about-meta { font-size: 16px; color: #0b0f19; font-weight: 900; margin: 6px 0; }
-        
+
         .about-section { margin-top: 25px; line-height: 1.8; color: #0b0f19; font-size: 16px; text-align: justify; }
         .about-section p { color: #0b0f19; font-weight: 900; }
-        
+
         .about-section h3 {
             display: block;
             text-align: center;
@@ -388,9 +388,24 @@
             </div>
         </div>
 
-        <div id="founder-committee" class="page-section"><div class="card"><h2>संस्थापक समिति</h2><div id="founder_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
-        <div id="central-committee" class="page-section"><div class="card"><h2>केन्द्रीय समिति</h2><div id="central_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
-        
+        <div id="founder-committee" class="page-section">
+            <div class="card">
+                <h2>संस्थापक समिति</h2>
+                <div id="founder_container" class="committee-grid-5">
+                    <p style="text-align: center; width: 100%;">लोड हुँदैछ...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="central-committee" class="page-section">
+            <div class="card">
+                <h2>केन्द्रीय समिति</h2>
+                <div id="central_container" class="committee-grid-5">
+                    <p style="text-align: center; width: 100%;">लोड हुँदैछ...</p>
+                </div>
+            </div>
+        </div>
+
         <div id="advisory-committee" class="page-section">
             <div class="card">
                 <h2>केन्द्रीय सल्लाहकार समिति</h2>
@@ -752,7 +767,7 @@
     <div style="width: 420px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #0b0f19; margin: auto; box-sizing: border-box !important; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; max-height: 92vh;">
 
         <div style="background: #ffffff; color: #fff; text-align: center; padding: 8px 10px 75px 10px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
-            
+
             <span onclick="downloadCardAsPng()" title="PNG डाउनलोड गर्नुहोस्" style="position: absolute; top: 8px; left: 14px; color: #ffffff; font-size: 18px; cursor: pointer; z-index: 50; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">📥</span>
 
             <span class="idcard-close-btn" onclick="closeIdCardModal()" style="position: absolute; top: 6px; right: 14px; color: #ffffff; font-size: 24px; font-weight: bold; cursor: pointer; z-index: 50; line-height: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">&times;</span>
@@ -775,7 +790,7 @@
         <div style="background: #008000; color: #ffffff; border: 2.5px solid #0b0f19; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 140px; margin: -52px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20;">परिचय पत्र</div>
 
         <div style="padding: 0 12px 8px 12px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
-            
+
             <div style="text-align: center; font-size: 13px; font-weight: 950; color: #0b0f19; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; border: 2px solid #0b0f19; margin-top: 10px; width: fit-content; margin-left: auto; margin-right: auto;">
                 सदस्यता नं.: <strong id="cardMemberNo" style="color: #0b0f19; font-size: 14px; font-weight: 950;">-</strong>
             </div>
@@ -842,7 +857,7 @@
         </div>
     </div>
 </div>
-    
+
    <footer style="background-color: #1a365d; color: white; text-align: center; padding: 20px 0; width: 100%; margin-top: 40px; box-sizing: border-box;">
     <p style="margin: 0; font-size: 15px; font-weight: 950; color: #ffffff;">&copy; २०२६ दशौँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
 </footer>
@@ -852,7 +867,7 @@ function downloadCardAsPng() {
     const cardElement = document.querySelector('#idCardModal > div');
     const closeBtn = cardElement.querySelector('.idcard-close-btn') || cardElement.querySelector('span[onclick*="closeIdCardModal"]');
     const downloadBtn = cardElement.querySelector('span[onclick*="downloadCardAsPng"]');
-    
+
     if (closeBtn) closeBtn.style.display = 'none';
     if (downloadBtn) downloadBtn.style.display = 'none';
 
@@ -862,7 +877,7 @@ function downloadCardAsPng() {
             link.download = 'Dashaundi_Samaj_ID_Card.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
-            
+
             if (closeBtn) closeBtn.style.display = 'block';
             if (downloadBtn) downloadBtn.style.display = 'block';
         });
@@ -879,7 +894,7 @@ function closeIdCardModal() {
         modal.style.display = 'none';
     }
 }
-        
+
         const SUPABASE_URL = 'https://yjfqlxohfyulzwkakclu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_gxUdlUcuKDt0Wh1SK3XHZw_9C6fjr6a';
 
@@ -947,15 +962,15 @@ function closeIdCardModal() {
 
     const nepaliMonths = ["वैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
     const nepaliDays = ["आइतवार", "सोमवार", "मङ्गलवार", "बुधवार", "बिहीवार", "शुक्रवार", "शनिवार"];
-    
+
     const baseEnglishEpoch = new Date('2026-09-08T00:00:00').getTime();
     const currentEnglishTime = new Date(`${enYear}-${enMonth}-${enDay}T00:00:00`).getTime();
     const diffDays = Math.round((currentEnglishTime - baseEnglishEpoch) / (1000 * 60 * 60 * 24));
-    
+
     let nepaliYear = 2083;
     let nepaliMonthIndex = 4;
     let nepaliDayNum = 23 + diffDays; 
-    
+
     while (nepaliDayNum > 30) {
         nepaliDayNum -= 30;
         nepaliMonthIndex = (nepaliMonthIndex + 1) % 12;
@@ -982,7 +997,7 @@ function closeIdCardModal() {
 }
         function updateRealTimeClock() {
             const liveDates = getRealLiveDates();
-            
+
             const topBarDateEl = document.getElementById('nepali-live-date');
             if(topBarDateEl) topBarDateEl.innerHTML = `<i class="fa-regular fa-calendar-days mr-1"></i> ${liveDates.nepali}`;
 
@@ -1049,10 +1064,10 @@ function closeIdCardModal() {
         fetchAboutData();
 
         async function fetchFounderCommittee() {
-            const { data } = await supabaseClient.from('founder_committee').select('*').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('founder_committee').select('*').order('id', { ascending: true });
             const container = document.getElementById('founder_container');
             if(container) {
-                if(!data || data.length === 0) { container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>'; return; }
+                if(!data || data.length === 0) { container.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>'; return; }
                 container.innerHTML = '';
                 data.forEach(item => {
                     container.innerHTML += `
@@ -1068,12 +1083,12 @@ function closeIdCardModal() {
         }
 
         async function fetchCentralCommittee() {
-            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
+            const { data } = await supabaseClient.from('central_committee').select('*').order('id', { ascending: true });
             const container = document.getElementById('central_container');
             const homeContainer = document.getElementById('home_central_container');
 
             if(!data || data.length === 0) {
-                if(container) container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
+                if(container) container.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
                 if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
                 return;
             }
@@ -1325,12 +1340,12 @@ function closeIdCardModal() {
         async function toggleNotificationDropdown() {
     const dropdown = document.getElementById('notifDropdown');
     const isVisible = dropdown.style.display === 'block';
-    
+
     dropdown.style.display = isVisible ? 'none' : 'block';
-    
+
     if (!isVisible) {
         await loadUserNotifications();
-        
+
         if (typeof currentUserProfile !== 'undefined' && currentUserProfile?.email) {
             const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
             const { data } = await supabaseClient
@@ -1341,7 +1356,7 @@ function closeIdCardModal() {
             if (data && data.length > 0) {
                 let allIds = data.map(item => item.id);
                 localStorage.setItem('read_notices_' + currentUserProfile.email, JSON.stringify(allIds));
-                
+
                 const notifBadge = document.getElementById('notifBadge');
                 if (notifBadge) notifBadge.style.display = 'none';
 
@@ -1523,7 +1538,7 @@ async function markAllNotificationsAsRead() {
                 approvedDetailsDiv.style.display = 'none';
             }
         }
-        
+
         function lockFormFields() {
             const inputs = document.querySelectorAll('#membershipApplicationForm input, #membershipApplicationForm select');
             inputs.forEach(input => input.disabled = true);
@@ -1724,7 +1739,7 @@ async function markAllNotificationsAsRead() {
 
     let userPos = (userData && userData.position) ? userData.position.trim() : '';
     let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय समिति';
-    
+
     let cardPositionText = '';
     if (!userPos || userPos === '' || userPos === 'साधारण सदस्य' || userPos === 'सदस्य') {
         cardPositionText = 'सदस्य';
@@ -1776,7 +1791,7 @@ async function loadPublicNotices() {
 }
 
         let selectedMonths = [];
-    
+
 async function openLevyModal() {
     document.getElementById('levyModal').style.display = 'flex';
     updateRealTimeClock();
@@ -1800,7 +1815,7 @@ async function openLevyModal() {
     let paidMonthsHistory = []; 
     let latestStatus = null; 
     const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
-    
+
     if (activeUserId) {
         const { data: levyData, error } = await supabaseClient
             .from('levy_payments')
@@ -1868,7 +1883,7 @@ function closeLevyModal() {
             selectedMonths.push(monthVal); 
         }
         updateLevySummary(rate);
-        
+
         openLevyModalSilent(rate);
     }
 
@@ -1919,9 +1934,9 @@ function closeLevyModal() {
             let isSelected = selectedMonths.includes(m.val);
             let finePercent = checkLateFineMultiplier(m.val);
             let isLate = finePercent > 0;
-            
+
             let boxClass = isPaidOrLocked ? 'bg-green' : (isSelected ? 'bg-selected' : (isLate ? 'bg-red' : 'bg-normal'));
-            
+
             let clickAction = isPaidOrLocked ? '' : `onclick="toggleMonth('${m.val}', ${rate})"`;
             let statusText = ['01', '02', '03'].includes(m.val) ? 'अडिट समाप्त (तिरीसकेको)' : (isPaidOrLocked ? 'तिरिसकिएको' : (isSelected ? 'छनोट गरिएको ✓' : (isLate ? 'जरिवानासहित' : 'बाँकी')));
 
@@ -1934,7 +1949,7 @@ function closeLevyModal() {
         });
         updateLevySummary(rate);
     }
-        
+
      async function submitLevyPayment() {
     const fileInput = document.getElementById('voucherFile');
     if (selectedMonths.length === 0) { 
@@ -1981,7 +1996,7 @@ function closeLevyModal() {
         };
 
         const { error } = await supabaseClient.from('levy_payments').insert([formData]);
-        
+
         if (error) { 
             alert('त्रुटि: ' + error.message); 
         } else { 
