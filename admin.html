@@ -3610,7 +3610,6 @@ document.getElementById('saveMemberBtn').addEventListener('click', async () => {
     const userId = document.getElementById('editUserId').value;
     const email = document.getElementById('editUserEmail').value;
 
-    // सबै इनपुट फिल्डहरूबाट नयाँ डाटा संकलन गर्ने
     const updatedData = {
         fullName: document.getElementById('editFullName')?.value || '',
         mobile: document.getElementById('editMobile')?.value || '',
@@ -3624,9 +3623,28 @@ document.getElementById('saveMemberBtn').addEventListener('click', async () => {
         ward: document.getElementById('editWard')?.value || ''
     };
 
-    // नयाँ अपडेटेड डाटासहित फंक्सन कल गर्ने
     await saveAdminEditedMember(userId, email, updatedData);
 });
+
+// ⬇️ ठीक यसको तल यो राख्नुहोस्
+function renderDigitalID(userData) {
+    document.getElementById('cardFullName').innerText = userData.full_name || '';
+    document.getElementById('cardMobile').innerText = userData.mobile || '';
+    document.getElementById('cardEmail').innerText = userData.identifier || '';
+    document.getElementById('cardDob').innerText = userData.dob || '';
+    document.getElementById('cardMembershipNo').innerText = userData.membership_no || '';
+    document.getElementById('cardCommittee').innerText = userData.committee || '';
+    document.getElementById('cardPosition').innerText = userData.position || '';
+    
+    document.getElementById('cardProvince').innerText = userData.province || '';
+    document.getElementById('cardDistrict').innerText = userData.district || '';
+    document.getElementById('cardPalika').innerText = userData.palika || '';
+    document.getElementById('cardWard').innerText = userData.ward || '';
+    
+    if(userData.photo_url) {
+        document.getElementById('cardPhoto').src = userData.photo_url;
+    }
+}
     </script>
 </body>
 </html>
