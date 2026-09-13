@@ -1742,15 +1742,10 @@ async function markAllNotificationsAsRead() {
     document.getElementById('cardExpiryDate').innerText = expiryDate;
     document.getElementById('cardName').innerText = fullName;
 
-    let userPos = (userData && userData.position) ? userData.position.trim() : '';
+    let userPos = (userData && userData.position) ? userData.position.trim() : 'सदस्य';
     let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय समिति';
 
-    let cardPositionText = '';
-    if (!userPos || userPos === '' || userPos === 'साधारण सदस्य' || userPos === 'सदस्य') {
-        cardPositionText = 'सदस्य';
-    } else {
-        cardPositionText = `${userPos} (${userComm})`;
-    }
+    let cardPositionText = `${userPos} (${userComm})`;
     document.getElementById('cardPosition').innerText = cardPositionText;
 
     document.getElementById('cardProvince').innerText = currentApplication.province || '-';
