@@ -21,12 +21,28 @@
             --danger-gradient: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
             --bg-color: #f4f6f9;
             --card-bg: #ffffff;
-            --text-color: #2d3748;
-            --border-color: #e2e8f0;
+            --text-color: #0b0f19;
+            --border-color: #cbd5e0;
         }
 
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
-        .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-color); 
+            color: #0b0f19; 
+            line-height: 1.7; 
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        p, span, a, label, h1, h2, h3, h4, h5, h6, input, select, textarea, div {
+            color: #0b0f19;
+            font-weight: 800;
+        }
+
+        .top-bar { background-color: #1a365d; color: white; padding: 8px 15px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
+        .top-bar span { color: #ffffff !important; }
 
         .header-split { display: flex; width: 100%; flex-wrap: wrap; }
         .header-green { background-color: #008000; color: white; width: 100%; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; }
@@ -37,15 +53,15 @@
         .header-logo-box { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; background: white; border: 3px solid white; display: flex; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .header-logo { width: 100%; height: 100%; object-fit: cover; }
 
-        .header-green h1 { margin: 0; font-size: 28px; font-weight: 900; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        .header-green p { margin: 6px 0 0 0; font-size: 16px; font-weight: 700; color: #f7fafc; }
+        .header-green h1 { margin: 0; font-size: 30px; font-weight: 950; color: white; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+        .header-green p { margin: 6px 0 0 0; font-size: 17px; font-weight: 900; color: #ffffff; }
 
         .nav { background-color: #1a365d; display: flex; flex-wrap: wrap; padding: 0 10px; position: relative; z-index: 100; justify-content: center; }
-        .nav > a, .dropdown > a { color: white; padding: 10px 15px; text-decoration: none; display: block; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .nav > a, .dropdown > a { color: white !important; padding: 10px 15px; text-decoration: none; display: block; font-weight: 900; cursor: pointer; font-size: 15px; }
         .nav > a:hover, .nav > a.active, .dropdown:hover > a { background-color: #3b5998; }
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content { display: none; position: absolute; background-color: #1a365d; min-width: 220px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 10; top: 100%; left: 0; }
-        .dropdown-content a { color: white; padding: 10px 14px; text-decoration: none; display: block; font-weight: normal; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; }
+        .dropdown-content a { color: white !important; padding: 10px 14px; text-decoration: none; display: block; font-weight: 800; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 14px; }
         .dropdown-content a:hover { background-color: #3b5998; }
         .dropdown:hover .dropdown-content { display: block; }
 
@@ -54,8 +70,8 @@
 
         .card > h2, .page-section .card h2, .about-section h3 {
             display: inline-block;
-            color: #1a365d;
-            font-size: 26px;
+            color: #0b0f19;
+            font-size: 28px;
             font-weight: 950;
             letter-spacing: 1px;
             border-bottom: 3.5px solid #008000;
@@ -75,47 +91,70 @@
         .about-header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .about-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: white; }
 
-        .about-title-ne { font-size: 26px; color: #1a365d; font-weight: 950; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3.5px solid #008000; padding-bottom: 6px; display: inline-block; }
-        .about-title-en { font-size: 18px; color: #4a5568; font-weight: 800; margin: 0 0 15px 0; }
-        .about-meta { font-size: 15px; color: #2d3748; font-weight: 700; margin: 6px 0; }
-        .about-section { margin-top: 25px; line-height: 1.8; color: #444; font-size: 15px; text-align: justify; }
+        .about-title-ne { font-size: 28px; color: #0b0f19; font-weight: 950; margin: 0 0 5px 0; letter-spacing: 0.5px; border-bottom: 3.5px solid #008000; padding-bottom: 6px; display: inline-block; }
+        .about-title-en { font-size: 19px; color: #0b0f19; font-weight: 900; margin: 0 0 15px 0; }
+        .about-meta { font-size: 16px; color: #0b0f19; font-weight: 900; margin: 6px 0; }
+        
+        .about-section { margin-top: 25px; line-height: 1.8; color: #0b0f19; font-size: 16px; text-align: justify; }
+        .about-section p { color: #0b0f19; font-weight: 900; }
+        
+        /* विशेष आवश्यकता अनुसार: हाम्रो बारेमा भित्रका हेडलाइनहरू बीचमा, बोल्ड, डार्क र ठूला */
+        .about-section h3 {
+            display: block;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 950;
+            color: #0b0f19;
+            border-bottom: 3px solid #008000;
+            padding-bottom: 8px;
+            margin: 30px auto 15px auto;
+            width: fit-content;
+        }
 
         #home .content-section { max-width: 900px; margin: 0 auto 30px auto; text-align: center; }
-        #home .content-section p { text-align: justify; text-align-last: center; }
+        #home .content-section p { text-align: justify; text-align-last: center; color: #0b0f19; font-weight: 900; }
 
         .committee-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; text-align: left; }
         @media (max-width: 992px) { .committee-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .committee-grid { grid-template-columns: 1fr; } }
 
-        .committee-card { background: #fff; border: 1px solid #cbd5e0; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s ease; }
+        /* गृहपृष्ठ वा अन्य स्थानमा एक लाइनमा ५ जना अटाउने ग्रिड */
+        .committee-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 15px; text-align: left; }
+        @media (max-width: 1200px) { .committee-grid-5 { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .committee-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .committee-grid-5 { grid-template-columns: 1fr; } }
+
+        .committee-card { background: #fff; border: 2px solid #0b0f19; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s ease; }
         .committee-card:hover { transform: translateY(-3px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); }
         .committee-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d; margin-bottom: 10px; }
+        .committee-card h4 { color: #0b0f19; font-weight: 950; font-size: 16px; }
+        .committee-card p { color: #0b0f19; font-weight: 900; }
 
         .form-group { margin-bottom: 18px; text-align: left; }
-        label { display: block; font-weight: 700; margin-bottom: 6px; color: #2d3748; font-size: 14px; }
+        label { display: block; font-weight: 950; margin-bottom: 6px; color: #0b0f19; font-size: 15px; }
         input[type="text"], input[type="email"], input[type="date"], input[type="password"], input[type="file"], select, textarea {
-            width: 100%; padding: 10px 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 14px; box-sizing: border-box; background-color: #fcfdfd; transition: all 0.3s;
+            width: 100%; padding: 10px 12px; border: 2px solid #0b0f19; border-radius: 8px; font-size: 15px; box-sizing: border-box; background-color: #fcfdfd; transition: all 0.3s; color: #0b0f19; font-weight: 900;
         }
         input:focus, select:focus { border-color: #3182ce; box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15); outline: none; background-color: #fff; }
         .password-container { position: relative; display: flex; align-items: center; }
         .password-container input { width: 100%; padding-right: 40px; }
-        .toggle-password { position: absolute; right: 12px; background: none; border: none; cursor: pointer; font-size: 16px; color: #718096; padding: 0; width: auto; box-shadow: none; }
+        .toggle-password { position: absolute; right: 12px; background: none; border: none; cursor: pointer; font-size: 16px; color: #0b0f19; padding: 0; width: auto; box-shadow: none; font-weight: 900; }
         .otp-container { position: relative; display: flex; align-items: center; }
-        .otp-container input { width: 100%; padding-right: 40px; text-align: center; font-size: 18px; letter-spacing: 3px; font-weight: bold; }
-        .otp-status-icon { position: absolute; right: 12px; font-size: 18px; font-weight: bold; }
-        button { background: var(--accent-gradient); color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; width: 100%; font-weight: 800; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); transition: all 0.2s; }
+        .otp-container input { width: 100%; padding-right: 40px; text-align: center; font-size: 18px; letter-spacing: 3px; font-weight: 950; }
+        .otp-status-icon { position: absolute; right: 12px; font-size: 18px; font-weight: 950; }
+        button { background: var(--accent-gradient); color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; font-weight: 950; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); transition: all 0.2s; }
         button:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(0, 128, 0, 0.3); }
-        .timer { font-weight: bold; color: #e53e3e; text-align: center; margin-top: 10px; font-size: 14px; }
-        .official-form { border: 2px solid #e2e8f0; padding: 20px; background: #fff; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); position: relative; margin-top: 20px; text-align: left; }
+        .timer { font-weight: 950; color: #e53e3e; text-align: center; margin-top: 10px; font-size: 15px; }
+        .official-form { border: 2px solid #0b0f19; padding: 20px; background: #fff; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); position: relative; margin-top: 20px; text-align: left; }
         .form-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
         .form-col { flex: 1; min-width: 240px; }
-        .qr-box { text-align: center; background: #f7fafc; padding: 20px; border: 2px dashed #cbd5e0; border-radius: 10px; margin-bottom: 15px; }
+        .qr-box { text-align: center; background: #f7fafc; padding: 20px; border: 2px dashed #0b0f19; border-radius: 10px; margin-bottom: 15px; }
         .qr-img { width: 180px; height: 210px; object-fit: contain; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); background: #fff; padding: 5px; }
-        #message { margin-top: 15px; text-align: center; font-weight: bold; font-size: 14px; }
+        #message { margin-top: 15px; text-align: center; font-weight: 950; font-size: 15px; color: #0b0f19; }
         .choice-box { text-align: center; padding: 10px; }
-        .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 13px; color: #2d3748; font-weight: 600; }
+        .card-box { background: linear-gradient(to right, #f7fafc, #edf2f7); border-left: 4px solid #3182ce; padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; font-size: 14px; color: #0b0f19; font-weight: 900; }
         .profile-pic-container { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; text-align: left; }
-        .passport-photo-box { width: 110px; height: 135px; border: 2px dashed #2b6cb0; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 15px; }
+        .passport-photo-box { width: 110px; height: 135px; border: 2px dashed #0b0f19; background: #f7fafc; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: 0.2s; margin-bottom: 15px; }
         .passport-photo-box:hover { background: #edf2f7; border-color: #1a365d; }
         .passport-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
 
@@ -133,14 +172,14 @@
 
         .membership-brand-header { background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .membership-brand-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: white; padding: 4px; border: 3px solid #cbd5e0; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
-        .membership-brand-info p { margin: 3px 0; font-size: 13px; color: #edf2f7; font-weight: 600; }
+        .membership-brand-info h2 { margin: 0 0 6px 0; font-size: 24px; font-weight: 950; letter-spacing: 0.5px; color: #ffffff; }
+        .membership-brand-info p { margin: 3px 0; font-size: 14px; color: #ffffff; font-weight: 900; }
 
-        .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid var(--border-color); margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .levy-dashboard-card h3 { color: #1a365d; font-size: 18px; font-weight: 900; margin-top: 0; }
+        .levy-dashboard-card { background: #fff; padding: 20px; border-radius: 12px; border: 2px solid #0b0f19; margin-top: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .levy-dashboard-card h3 { color: #0b0f19; font-size: 19px; font-weight: 950; margin-top: 0; }
 
         .levy-flex-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
-        .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 14px; }
+        .btn-primary { background: var(--primary-gradient); width: auto; padding: 10px 20px; font-size: 15px; font-weight: 950; }
 
         .live-dates-box { 
             background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); 
@@ -150,43 +189,45 @@
             text-align: center; 
             box-shadow: 0 4px 10px rgba(43, 108, 176, 0.3); 
         }
-        .live-nepali-date { font-size: 17px; font-weight: 950; color: #ffffff; margin: 0; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .live-english-date { font-size: 13px; font-weight: 800; color: #bee3f8; margin: 3px 0 0 0; }
+        .live-nepali-date { font-size: 18px; font-weight: 950; color: #ffffff; margin: 0; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .live-english-date { font-size: 14px; font-weight: 900; color: #ffffff; }
 
         .notif-container { position: relative; display: inline-block; cursor: pointer; }
-        .notif-btn { background: #fff; border: 2px solid #cbd5e0; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; transition: 0.2s; }
+        .notif-btn { background: #fff; border: 2px solid #0b0f19; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; transition: 0.2s; font-weight: 950; }
         .notif-btn:hover { background: #edf2f7; }
-        .notif-badge { position: absolute; top: -2px; right: -2px; background: #e53e3e; color: #fff; font-size: 10px; font-weight: 950; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
-        .notif-dropdown { display: none; position: absolute; right: 0; top: 45px; width: 300px; background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 1px solid #cbd5e0; z-index: 3000; text-align: left; overflow: hidden; }
-        .notif-header { background: #1a365d; color: #fff; padding: 10px 12px; font-size: 13px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
+        .notif-badge { position: absolute; top: -2px; right: -2px; background: #e53e3e; color: #fff; font-size: 11px; font-weight: 950; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
+        .notif-dropdown { display: none; position: absolute; right: 0; top: 45px; width: 300px; background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 2px solid #0b0f19; z-index: 3000; text-align: left; overflow: hidden; }
+        .notif-header { background: #1a365d; color: #fff; padding: 10px 12px; font-size: 14px; font-weight: 950; display: flex; justify-content: space-between; align-items: center; }
+        .notif-header span { color: #ffffff !important; }
         .notif-body { max-height: 250px; overflow-y: auto; padding: 5px; }
-        .notif-item { padding: 8px 10px; border-bottom: 1px solid #edf2f7; font-size: 12px; }
-        .notif-item.unread { background: #ebf8ff; font-weight: bold; }
-        .notif-item p { margin: 2px 0; color: #2d3748; }
+        .notif-item { padding: 8px 10px; border-bottom: 1px solid #edf2f7; font-size: 13px; font-weight: 900; }
+        .notif-item.unread { background: #ebf8ff; font-weight: 950; }
+        .notif-item p { margin: 2px 0; color: #0b0f19; font-weight: 900; }
 
-        .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 6px; }
+        .btn-success { background: var(--accent-gradient); width: 100%; margin-top: 6px; font-weight: 950; }
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 5000; padding: 10px; box-sizing: border-box; overflow-y: auto; }
-        .modal-content { background: #fff; padding: 15px; border-radius: 12px; width: 100%; max-width: 650px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left; max-height: 90vh; overflow-y: auto; }
-        .modal-content h4 { margin: 0 0 12px 0; font-size: 16px; color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
-        .close { position: absolute; top: 12px; right: 15px; font-size: 22px; font-weight: bold; cursor: pointer; color: #718096; }
+        .modal-content { background: #fff; padding: 15px; border-radius: 12px; width: 100%; max-width: 650px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: left; max-height: 90vh; overflow-y: auto; border: 2px solid #0b0f19; }
+        .modal-content h4 { margin: 0 0 12px 0; font-size: 17px; color: #0b0f19; font-weight: 950; border-bottom: 2px solid #0b0f19; padding-bottom: 6px; }
+        .close { position: absolute; top: 12px; right: 15px; font-size: 24px; font-weight: 950; cursor: pointer; color: #0b0f19; }
 
         .modal-grid-split { display: flex; gap: 15px; flex-wrap: wrap; }
         .modal-left { flex: 1.6; min-width: 300px; }
-        .modal-right { flex: 1; min-width: 220px; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
+        .modal-right { flex: 1; min-width: 220px; background: #f8fafc; border: 2px solid #0b0f19; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
 
         .months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 6px 0; }
-        .month-box { padding: 6px 4px; border-radius: 5px; text-align: center; cursor: pointer; font-size: 11px; font-weight: 700; border: 1px solid #cbd5e0; transition: 0.2s; line-height: 1.2; }
-        .bg-green { background: #c6f6d5; color: #22543d; border-color: #9ae6b4; }
-        .bg-red { background: #fed7d7; color: #742a2a; border-color: #feb2b2; }
-        .bg-normal { background: #edf2f7; color: #2d3748; border-color: #cbd5e0; }
-        .bg-selected { background: #bee3f8 !important; color: #2b6cb0 !important; border-color: #3182ce !important; }
+        .month-box { padding: 6px 4px; border-radius: 5px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 950; border: 2px solid #0b0f19; transition: 0.2s; line-height: 1.2; }
+        .bg-green { background: #c6f6d5; color: #0b0f19; border-color: #0b0f19; }
+        .bg-red { background: #fed7d7; color: #0b0f19; border-color: #0b0f19; }
+        .bg-normal { background: #edf2f7; color: #0b0f19; border-color: #0b0f19; }
+        .bg-selected { background: #bee3f8 !important; color: #0b0f19 !important; border-color: #0b0f19 !important; }
 
-        .summary-box { background: #f7fafc; padding: 6px 10px; border-radius: 5px; border: 1px solid #e2e8f0; margin: 6px 0; font-size: 12px; font-weight: 600; }
-        .summary-box p { margin: 2px 0; }
-        .fine-text { color: #e53e3e; }
+        .summary-box { background: #f7fafc; padding: 8px 10px; border-radius: 5px; border: 2px solid #0b0f19; margin: 6px 0; font-size: 13px; font-weight: 900; }
+        .summary-box p { margin: 2px 0; color: #0b0f19; font-weight: 950; }
+        .fine-text { color: #e53e3e; font-weight: 950; }
 
-        footer { text-align: center; padding: 15px; font-size: 13px; color: #4a5568; font-weight: 600; }
+        footer { text-align: center; padding: 15px; font-size: 14px; color: white; font-weight: 950; }
+        footer p { color: white !important; font-weight: 950 !important; }
 
         .idcard-close-btn, 
         span[onclick*="downloadCardAsPng"], 
@@ -202,12 +243,12 @@
 <body>
 
     <div class="top-bar">
-    <span style="font-size: 14px; font-weight: bold;">दशौँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</span>
+        <span style="font-size: 15px; font-weight: 950;">दशौँदी समाज नेपालको आधिकारिक वेबपोर्टलमा स्वागत छ।</span>
 
-    <div id="live-calendar-widget" style="background: #1a365d; padding: 6px 16px; border-radius: 20px; border: 1px solid #2b6cb0; font-size: 14px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-        <span id="nepali-live-date">पात्रो लोड हुँदैछ...</span>
+        <div id="live-calendar-widget" style="background: #1a365d; padding: 6px 16px; border-radius: 20px; border: 2px solid #ffffff; font-size: 15px; font-weight: 950; color: #ffffff; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+            <span id="nepali-live-date" style="color:#ffffff;">पात्रो लोड हुँदैछ...</span>
+        </div>
     </div>
-</div>
 
     <div class="header-split">
         <div class="header-green">
@@ -221,7 +262,7 @@
             <div>
                 <h1 id="top_title">दशाैँदी समाज नेपाल</h1>
                 <p id="top_address">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल।</p>
-                <p id="top_est" style="margin: 4px 0 0 0; font-size: 14px; font-weight: 700; color: #e2e8f0;">स्थापना: २०८०</p>
+                <p id="top_est" style="margin: 4px 0 0 0; font-size: 15px; font-weight: 950; color: #ffffff;">स्थापना: २०८०</p>
             </div>
         </div>
     </div>
@@ -278,6 +319,14 @@
                 </div>
             </div>
 
+            <!-- माग बमोजिम गृहपृष्ठमा केन्द्रीय समितिको तल 'केन्द्रीय सल्लाहकार समिति' केन्द्रीय समितिसकै जस्तै तर एक लाइनमा ५ जना अटाउने गरी राखिएको छ -->
+            <div class="card">
+                <h2>केन्द्रीय सल्लाहकार समिति</h2>
+                <div id="home_advisory_container" class="committee-grid-5">
+                    <p style="text-align: center; width: 100%;">विवरण लोड हुँदैछ...</p>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="content-section">
                     <h2>परिचय</h2>
@@ -302,6 +351,7 @@
                     <div class="about-meta" id="db_reg_no"></div>
                 </div>
 
+                <!-- माग बमोजिम 'हाम्रो बारेमा' भित्र रहेका हेडलाइनहरूलाई बीचमा राखिएको, बोल्ड, डार्क र ठूलो बनाइएको छ -->
                 <div class="about-section">
                     <h3>संस्थाको परिचय</h3>
                     <p id="db_introduction"></p>
@@ -342,9 +392,20 @@
             </div>
         </div>
 
+        <!-- संस्थापक समिति र केन्द्रीय समिति सिरियल बाइ (क्रमबद्ध) मिलाइएको -->
         <div id="founder-committee" class="page-section"><div class="card"><h2>संस्थापक समिति</h2><div id="founder_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
         <div id="central-committee" class="page-section"><div class="card"><h2>केन्द्रीय समिति</h2><div id="central_container" class="committee-grid"><p>लोड हुँदैछ...</p></div></div></div>
-        <div id="advisory-committee" class="page-section"><div class="card"><h2>केन्द्रीय सल्लाहकार समिति</h2><p>विवरण राखिनेछ।</p></div></div>
+        
+        <!-- केन्द्रीय सल्लाहकार समितिको पूर्ण विवरण एक लाइनमा ५ जना अटाउने (committee-grid-5) ग्रिडसहित राखिएको -->
+        <div id="advisory-committee" class="page-section">
+            <div class="card">
+                <h2>केन्द्रीय सल्लाहकार समिति</h2>
+                <div id="advisory_container" class="committee-grid-5">
+                    <p style="text-align: center; width: 100%;">लोड हुँदैछ...</p>
+                </div>
+            </div>
+        </div>
+
         <div id="province-committee" class="page-section"><div class="card"><h2>प्रदेश समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="district-committee" class="page-section"><div class="card"><h2>जिल्ला समिति</h2><p>विवरण राखिनेछ।</p></div></div>
         <div id="local-committee" class="page-section"><div class="card"><h2>स्थानिय समिति</h2><p>विवरण राखिनेछ।</p></div></div>
@@ -372,7 +433,7 @@
             </div>
 
             <div class="card">
-                <h3 style="color: #1a365d; text-align: center; border-bottom: 3.5px solid #008000; padding-bottom: 8px; margin-top: 0; font-weight: 950; font-size: 24px;">सदस्यता तथा नवीकरण प्रणाली</h3>
+                <h3 style="color: #0b0f19; text-align: center; border-bottom: 3.5px solid #008000; padding-bottom: 8px; margin-top: 0; font-weight: 950; font-size: 24px;">सदस्यता तथा नवीकरण प्रणाली</h3>
 
                 <div id="mainChoiceStep" class="sub-section active">
                     <div class="choice-box">
@@ -381,14 +442,14 @@
                         </div>
                         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                             <button type="button" onclick="showSubSection('registerStep')" style="width: auto; background: var(--primary-gradient); padding: 12px 25px;">✨ नयाँ खाता खोल्नुहोस्</button>
-                            <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 12px 25px;">🔐 पुरानो खाता लगइन गर्नुहोस्</button>
+                            <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: var(--warning-gradient); color: #0b0f19; padding: 12px 25px; font-weight: 950;">🔐 पुरानो खाता लगइन गर्नुहोस्</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="registerStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">नयाँ खाता दर्ता फारम</h3>
+                    <h3 style="color: #0b0f19; border-bottom: 2px solid #0b0f19; padding-bottom: 8px; text-align: left; font-weight: 950;">नयाँ खाता दर्ता फारम</h3>
 
                     <form id="registerForm">
                         <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="reg_name" placeholder="तपाईको पूरा नाम" required></div>
@@ -408,14 +469,14 @@
                         <button type="submit" id="sendOtpBtn">🚀 सबमिट गरी OTP पर्खनुहोस्</button>
                     </form>
 
-                    <div id="otpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0; text-align: left;">
+                    <div id="otpSection" style="display: none; margin-top: 20px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 2px solid #0b0f19; text-align: left;">
                         <div class="form-group" style="margin-bottom: 12px;">
-                            <label style="color: #2b6cb0;">इमेलमा प्राप्त ६ अंकको OTP कोड:</label>
+                            <label style="color: #0b0f19;">इमेलमा प्राप्त ६ अंकको OTP कोड:</label>
                             <div class="otp-container">
                                 <input type="text" id="otpCode" placeholder="______" maxlength="6" oninput="checkOtpMatch(this.value, currentGeneratedOtp, 'otpStatusIcon')">
                                 <span id="otpStatusIcon" class="otp-status-icon"></span>
                             </div>
-                            <small id="emailStatusInfo" style="color: #38a169; display: block; margin-top: 4px; font-weight: bold;"></small>
+                            <small id="emailStatusInfo" style="color: #0b0f19; display: block; margin-top: 4px; font-weight: 950;"></small>
                         </div>
                         <div class="timer" id="timerDisplay">समय बाँकी: ६० सेकेन्ड</div>
                         <button type="button" id="verifyBtn" onclick="verifyOtp()" style="margin-top: 8px; background: var(--accent-gradient);">✔ कोड प्रमाणित गर्नुहोस्</button>
@@ -424,7 +485,7 @@
 
                 <div id="loginStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('mainChoiceStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← पछाडि जानुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पुरानो खाता लगइन</h3>
+                    <h3 style="color: #0b0f19; border-bottom: 2px solid #0b0f19; padding-bottom: 8px; text-align: left; font-weight: 950;">पुरानो खाता लगइन</h3>
 
                     <form id="loginForm" onsubmit="handleLogin(event)">
                         <div class="form-group"><label>इमेल ठेगाना:</label><input type="email" id="login_email" placeholder="तपाईको इमेल" required></div>
@@ -436,7 +497,7 @@
                         </div>
 
                         <div style="text-align: right; margin-top: 8px;">
-                            <a href="javascript:void(0);" onclick="showForgotPasswordStep()" style="color: #2b6cb0; font-size: 13px; font-weight: bold; text-decoration: none;">पासवर्ड बिर्सनुभयो?</a>
+                            <a href="javascript:void(0);" onclick="showForgotPasswordStep()" style="color: #0b0f19; font-size: 14px; font-weight: 950; text-decoration: none;">पासवर्ड बिर्सनुभयो?</a>
                         </div>
 
                         <button type="submit" style="background: var(--primary-gradient); margin-top: 10px;">लगइन गर्नुहोस्</button>
@@ -445,17 +506,17 @@
 
                 <div id="forgotPasswordStep" class="sub-section" style="display: none;">
                     <button type="button" onclick="showSubSection('loginStep')" style="width: auto; background: #718096; margin-bottom: 15px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← लगइनमा फर्कनुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-align: left; font-weight: 900;">पासवर्ड रिसेट गर्नुहोस्</h3>
+                    <h3 style="color: #0b0f19; border-bottom: 2px solid #0b0f19; padding-bottom: 8px; text-align: left; font-weight: 950;">पासवर्ड रिसेट गर्नुहोस्</h3>
 
                     <div class="form-group">
                         <label>तपाईंको दर्ता भएको इमेल ठेगाना:</label>
                         <input type="email" id="forgot_email" placeholder="example@gmail.com">
                     </div>
-                    <button type="button" onclick="sendForgotPasswordOtp()" style="background: var(--warning-gradient); color: #1a202c;">✉ रिसेट कोड पठाउनुहोस्</button>
+                    <button type="button" onclick="sendForgotPasswordOtp()" style="background: var(--warning-gradient); color: #0b0f19; font-weight: 950;">✉ रिसेट कोड पठाउनुहोस्</button>
 
-                    <div id="forgotOtpSection" style="display: none; margin-top: 15px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 1px solid #cbd5e0; text-align: left;">
+                    <div id="forgotOtpSection" style="display: none; margin-top: 15px; background: #f7fafc; padding: 15px; border-radius: 10px; border: 2px solid #0b0f19; text-align: left;">
                         <div class="form-group">
-                            <label style="color: #2b6cb0;">इमेलमा आएको ६ अंकको कोड:</label>
+                            <label style="color: #0b0f19;">इमेलमा आएको ६ अंकको कोड:</label>
                             <input type="text" id="forgot_otp_code" placeholder="______" maxlength="6">
                         </div>
                         <div class="form-group">
@@ -467,10 +528,10 @@
                 </div>
 
                 <div id="dashboardStep" class="sub-section" style="display: none;">
-                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 1px solid #319795; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; text-align: left;">
+                    <div style="background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); padding: 15px; border-radius: 10px; border: 2px solid #0b0f19; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; text-align: left;">
                         <div>
-                            <h3 style="color: #234e52; margin: 0; font-size: 18px; font-weight: 900;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
-                            <p style="margin: 4px 0 0; color: #2c7a7b; font-size: 13px; font-weight: 700;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
+                            <h3 style="color: #0b0f19; margin: 0; font-size: 19px; font-weight: 950;">स्वागत छ, <span id="userDashboardName">सदस्य</span> ज्यू!</h3>
+                            <p style="margin: 4px 0 0; color: #0b0f19; font-size: 14px; font-weight: 950;" id="applicationStatusAlert">तपाईंको प्रोफाइल सुरक्षित रूपमा सञ्चालनमा छ।</p>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 12px;">
@@ -482,15 +543,15 @@
                                 <div id="notifDropdown" class="notif-dropdown">
                                     <div class="notif-header">
                                         <span>सूचना बक्स</span>
-                                        <span style="font-size: 11px; cursor: pointer; text-decoration: underline;" onclick="markAllNotificationsAsRead()">सबै पढेको रूपमा चिन्ह लगाउनुहोस्</span>
+                                        <span style="font-size: 12px; cursor: pointer; text-decoration: underline; font-weight: 950;" onclick="markAllNotificationsAsRead()">सबै पढेको रूपमा चिन्ह लगाउनुहोस्</span>
                                     </div>
                                     <div id="notifBody" class="notif-body">
-                                        <p style="text-align: center; color: #718096; padding: 10px;">कुनै नयाँ सूचना छैन।</p>
+                                        <p style="text-align: center; color: #0b0f19; padding: 10px; font-weight: 900;">कुनै नयाँ सूचना छैन।</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 8px 15px; font-size: 13px; box-shadow: none;">लग आउट</button>
+                            <button type="button" onclick="resetMembershipFlow()" style="width: auto; background: var(--danger-gradient); padding: 8px 15px; font-size: 14px; box-shadow: none; font-weight: 950;">लग आउट</button>
                         </div>
                     </div>
 
@@ -517,58 +578,58 @@
                                         <div id="monthsGrid" class="months-grid"></div>
                                     </div>
                                     <div class="modal-right">
-                                        <div style="background: #e2e8f0; padding: 5px 8px; border-radius: 4px; text-align: center; margin-bottom: 8px;">
-                                            <span style="font-size: 11px; font-weight: 900; color: #1a365d;" id="modalLiveNepaliDate">मिति: लोड हुँदैछ...</span>
+                                        <div style="background: #e2e8f0; padding: 5px 8px; border-radius: 4px; text-align: center; margin-bottom: 8px; border: 1px solid #0b0f19;">
+                                            <span style="font-size: 12px; font-weight: 950; color: #0b0f19;" id="modalLiveNepaliDate">मिति: लोड हुँदैछ...</span>
                                         </div>
 
-                                        <p style="margin: 0 0 6px 0; font-size: 13px; color: #1a365d; font-weight: 900;">समिति विवरण:</p>
-                                        <p style="margin: 3px 0; font-size: 12px; font-weight: 700;">समिति: <span id="modalCommitteeName" style="color: #2b6cb0;">केन्द्रीय समिति</span></p>
-                                        <p style="margin: 3px 0; font-size: 12px; font-weight: 700;">मासिक लेवी दर: रू. <span id="modalMonthlyRate" style="color: #006600;">200.00</span></p>
+                                        <p style="margin: 0 0 6px 0; font-size: 14px; color: #0b0f19; font-weight: 950;">समिति विवरण:</p>
+                                        <p style="margin: 3px 0; font-size: 13px; font-weight: 900;">समिति: <span id="modalCommitteeName" style="color: #0b0f19; font-weight: 950;">केन्द्रीय समिति</span></p>
+                                        <p style="margin: 3px 0; font-size: 13px; font-weight: 900;">मासिक लेवी दर: रू. <span id="modalMonthlyRate" style="color: #0b0f19; font-weight: 950;">200.00</span></p>
                                     </div>
                                 </div>
 
                                 <div class="summary-box">
-                                    <p>चयन गरिएका महिनाहरू: <span id="selectedCount">0</span></p>
-                                    <p>मूल लेवी रकम: रू. <span id="baseTotal">0.00</span></p>
-                                    <p class="fine-text">जरिवाना (१०%): रू. <span id="fineTotal">0.00</span></p>
-                                    <hr>
-                                    <p style="font-weight: 900; color: #1a365d;">जम्मा कुल रकम: रू. <span id="grandTotal">0.00</span></p>
+                                    <p>चयन गरिएका महिनाहरू: <span id="selectedCount" style="font-weight: 950;">0</span></p>
+                                    <p>मूल लेवी रकम: रू. <span id="baseTotal" style="font-weight: 950;">0.00</span></p>
+                                    <p class="fine-text">जरिवाना (१०%): रू. <span id="fineTotal" style="font-weight: 950;">0.00</span></p>
+                                    <hr style="border: 1px solid #0b0f19;">
+                                    <p style="font-weight: 950; color: #0b0f19;">जम्मा कुल रकम: रू. <span id="grandTotal" style="font-weight: 950;">0.00</span></p>
                                 </div>
 
-                                <div class="form-group" style="font-size: 12px; margin-bottom: 6px;">
+                                <div class="form-group" style="font-size: 13px; margin-bottom: 6px; font-weight: 950;">
                                     भुक्तानी भौचर वा रसिद अपलोड गर्नुहोस्:
-                                    <input type="file" id="voucherFile" accept="image/*,application/pdf" style="padding: 4px; font-size: 12px; margin-top: 2px;">
+                                    <input type="file" id="voucherFile" accept="image/*,application/pdf" style="padding: 4px; font-size: 13px; margin-top: 2px;">
                                 </div>
 
-                                <button onclick="submitLevyPayment()" class="btn-success" style="padding: 8px; font-size: 13px;">भुक्तानी अनुरोध पठाउनुहोस्</button>
+                                <button onclick="submitLevyPayment()" class="btn-success" style="padding: 8px; font-size: 14px;">भुक्तानी अनुरोध पठाउनुहोस्</button>
                             </div>
                         </div>
                     </div>
 
-                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; margin-top: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
+                    <div style="background: #fff; border: 2px solid #0b0f19; border-radius: 12px; padding: 20px; margin-top: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <h4 style="color: #1a365d; margin: 0; font-size: 16px; font-weight: 900;">👤 मेरो प्रोफाइल विवरण</h4>
-                            <button type="button" onclick="toggleEditProfile()" id="btnEditToggle" style="width: auto; background: var(--warning-gradient); color: #1a202c; padding: 6px 14px; font-size: 12px; box-shadow: none;">✏ प्रोफाइल एडिट गर्नुहोस्</button>
+                            <h4 style="color: #0b0f19; margin: 0; font-size: 17px; font-weight: 950;">👤 मेरो प्रोफाइल विवरण</h4>
+                            <button type="button" onclick="toggleEditProfile()" id="btnEditToggle" style="width: auto; background: var(--warning-gradient); color: #0b0f19; padding: 6px 14px; font-size: 13px; box-shadow: none; font-weight: 950;">✏ प्रोफाइल एडिट गर्नुहोस्</button>
                         </div>
 
                         <div id="profileViewMode" class="profile-pic-container">
-                            <img id="lbl_avatar_img" src="images/dashaundisamaj-logo-png.png" alt="फोटो" class="profile-avatar" style="width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #2b6cb0;">
+                            <img id="lbl_avatar_img" src="images/dashaundisamaj-logo-png.png" alt="फोटो" class="profile-avatar" style="width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #1a365d;">
                             <div>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>पूरा नाम:</strong> <span id="lbl_name">-</span></p>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>मोबाइल:</strong> <span id="lbl_phone">-</span></p>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>इमेल:</strong> <span id="lbl_email">-</span></p>
-                                <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>जन्म मिति:</strong> <span id="lbl_dob">-</span></p>
+                                <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>पूरा नाम:</strong> <span id="lbl_name" style="font-weight: 950;">-</span></p>
+                                <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>मोबाइल:</strong> <span id="lbl_phone" style="font-weight: 950;">-</span></p>
+                                <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>इमेल:</strong> <span id="lbl_email" style="font-weight: 950;">-</span></p>
+                                <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>जन्म मिति:</strong> <span id="lbl_dob" style="font-weight: 950;">-</span></p>
                                 <div id="approvedMemberDetails" style="display: none;">
-                                    <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>सदस्यता नं.:</strong> <span id="lbl_member_no" style="color: #b7791f; font-weight: 900;">-</span></p>
-                                    <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>समिति:</strong> <span id="lbl_committee">केन्द्रीय समिति</span></p>
-                                    <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>पद:</strong> <span id="lbl_position" style="color: #006600; font-weight: 900;">साधारण सदस्य</span></p>
-                                    <p style="margin: 0 0 4px 0; font-size: 14px;"><strong>मेरो कार्ड जारी मिति:</strong> <span id="lbl_issue_date">-</span></p>
-                                    <p style="margin: 0; font-size: 14px;"><strong>मेरो कार्ड म्याद समाप्त मिति:</strong> <span id="lbl_expiry_date" style="color: #e53e3e; font-weight: 900;">-</span></p>
+                                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>सदस्यता नं.:</strong> <span id="lbl_member_no" style="color: #0b0f19; font-weight: 950;">-</span></p>
+                                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>समिति:</strong> <span id="lbl_committee" style="font-weight: 950;">केन्द्रीय समिति</span></p>
+                                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>पद:</strong> <span id="lbl_position" style="color: #0b0f19; font-weight: 950;">साधारण सदस्य</span></p>
+                                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 900;"><strong>मेरो कार्ड जारी मिति:</strong> <span id="lbl_issue_date" style="font-weight: 950;">-</span></p>
+                                    <p style="margin: 0; font-size: 15px; font-weight: 900;"><strong>मेरो कार्ड म्याद समाप्त मिति:</strong> <span id="lbl_expiry_date" style="color: #e53e3e; font-weight: 950;">-</span></p>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="profileEditMode" style="display: none; margin-top: 15px; border-top: 2px dashed #e2e8f0; padding-top: 15px;">
+                        <div id="profileEditMode" style="display: none; margin-top: 15px; border-top: 2px dashed #0b0f19; padding-top: 15px;">
                             <div class="form-group" style="text-align: center;">
                                 <label style="display: block; margin-bottom: 8px;">प्रोफाइल फोटो परिवर्तन गर्नुहोस्:</label>
                                 <div style="width: 85px; height: 85px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px auto; border: 3px solid #2b6cb0; cursor: pointer; position: relative;" onclick="document.getElementById('edit_avatar_file').click()">
@@ -589,34 +650,34 @@
                         </div>
                     </div>
 
-                    <div style="background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
-                        <h4 style="color: #1a365d; margin-top: 0; font-size: 18px; font-weight: 900;">सदस्यता सेवाहरू</h4>
+                    <div style="background: #fff; border: 2px solid #0b0f19; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); text-align: center;">
+                        <h4 style="color: #0b0f19; margin-top: 0; font-size: 19px; font-weight: 950;">सदस्यता सेवाहरू</h4>
                         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 12px;">
-                            <button type="button" id="btnOpenForm" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 10px 20px; font-size: 14px;">📝 नयाँ सदस्यता फारम</button>
-                            <button type="button" onclick="openMyCard()" style="width: auto; background: #805ad5; padding: 10px 20px; font-size: 14px;">🆔 मेरो कार्ड (Digital ID)</button>
+                            <button type="button" id="btnOpenForm" onclick="toggleForm('नयाँ सदस्यता')" style="width: auto; background: var(--primary-gradient); padding: 10px 20px; font-size: 15px;">📝 नयाँ सदस्यता फारम</button>
+                            <button type="button" onclick="openMyCard()" style="width: auto; background: #805ad5; padding: 10px 20px; font-size: 15px; font-weight: 950;">🆔 मेरो कार्ड (Digital ID)</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="officialFormBox" class="official-form" style="display: none;">
-                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
+                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
 
-                    <div id="formNoticeBanner" style="padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; text-align: center; display: none; font-size: 13px;"></div>
+                    <div id="formNoticeBanner" style="padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: 950; text-align: center; display: none; font-size: 14px; border: 1px solid #0b0f19;"></div>
 
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-                        <div><h4 style="margin: 0; color: #718096; font-size: 14px; font-weight: 700;" id="formDateDisplay">आवेदन मिति: -</h4></div>
+                        <div><h4 style="margin: 0; color: #0b0f19; font-size: 15px; font-weight: 950;" id="formDateDisplay">आवेदन मिति: -</h4></div>
                         <div>
-                            <label style="font-size: 12px; text-align: center; margin-bottom: 4px; color: #4a5568; font-weight: 700;">पासपोर्ट फोटो</label>
+                            <label style="font-size: 13px; text-align: center; margin-bottom: 4px; color: #0b0f19; font-weight: 950;">पासपोर्ट फोटो</label>
                             <div class="passport-photo-box" id="passportBoxClick" onclick="triggerPhotoUpload()">
                                 <img id="form_photo_preview" src="images/dashaundisamaj-logo-png.png" alt="पासपोर्ट फोटो">
-                                <div id="photoUploadText" style="z-index: 2; background: rgba(0,0,0,0.6); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 10px; text-align: center; padding: 2px 0;">📸 फोटो राख्नुहोस्</div>
+                                <div id="photoUploadText" style="z-index: 2; background: rgba(0,0,0,0.8); color: #fff; width: 100%; position: absolute; bottom: 0; font-size: 11px; text-align: center; padding: 2px 0; font-weight: 950;">📸 फोटो राख्नुहोस्</div>
                             </div>
                             <input type="file" id="form_passport_photo" accept="image/*" style="display: none;" onchange="previewFormPhoto(event)">
                         </div>
                     </div>
 
-                    <p style="margin-top: 0; font-size: 14px; font-weight: 600;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
-                    <p style="text-align: center; font-weight: 900; font-size: 16px; color: #1a365d;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
+                    <p style="margin-top: 0; font-size: 15px; font-weight: 950; color: #0b0f19;">श्रीमान् अध्यक्षज्यू,<br>दशौँदी समाज नेपाल,<br>केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत।</p>
+                    <p style="text-align: center; font-weight: 950; font-size: 17px; color: #0b0f19;">विषय : <span id="formSubjectType">सदस्यता पाउँ</span> बारे।</p>
 
                     <form id="membershipApplicationForm" style="margin-top: 15px;">
                         <div class="form-group"><label>पूरा नाम थर:</label><input type="text" id="f_name" required></div>
@@ -662,25 +723,25 @@
                 </div>
 
                 <div id="step3" class="sub-section" style="display: none; margin-top: 15px; text-align: left;">
-                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 12px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
-                    <h3 style="color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; font-weight: 900;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
+                    <button type="button" onclick="hideOfficialForm()" style="width: auto; background: #718096; margin-bottom: 12px; padding: 6px 12px; font-size: 13px; box-shadow: none;">← फारम बन्द गर्नुहोस्</button>
+                    <h3 style="color: #0b0f19; border-bottom: 2px solid #0b0f19; padding-bottom: 8px; font-size: 17px; font-weight: 950;">चरण ३: कागजात र दस्तुर भुक्तानी</h3>
 
                     <div class="form-group">
                         <label>१. नागरिकता अगाडि:</label>
                         <input type="file" id="citizenshipFront" accept="image/*">
-                        <small id="citFrontNotice" style="color: #e53e3e; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">* नयाँ सदस्यताको लागि नागरिकता अगाडिको फोटो अनिवार्य छ।</small>
-                        <small id="citFrontNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
+                        <small id="citFrontNotice" style="color: #e53e3e; display: none; font-weight: 950; margin-top: 4px; font-size: 13px;">* नयाँ सदस्यताको लागि नागरिकता अगाडिको फोटो अनिवार्य छ।</small>
+                        <small id="citFrontNoticeRenew" style="color: #276749; display: none; font-weight: 950; margin-top: 4px; font-size: 13px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
                     </div>
 
                     <div class="form-group">
                         <label>२. नागरिकता पछाडि:</label>
                         <input type="file" id="citizenshipBack" accept="image/*">
-                        <small id="citBackNotice" style="color: #e53e3e; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">* नयाँ सदस्यताको लागि नागरिकता पछाडिको फोटो अनिवार्य छ।</small>
-                        <small id="citBackNoticeRenew" style="color: #38a169; display: none; font-weight: bold; margin-top: 4px; font-size: 12px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
+                        <small id="citBackNotice" style="color: #e53e3e; display: none; font-weight: 950; margin-top: 4px; font-size: 13px;">* नयाँ सदस्यताको लागि नागरिकता पछाडिको फोटो अनिवार्य छ।</small>
+                        <small id="citBackNoticeRenew" style="color: #276749; display: none; font-weight: 950; margin-top: 4px; font-size: 13px;">✔ पहिले नै नागरिकता अपलोड छ। परिवर्तन गर्न नचाहिएमा खाली छाड्न सक्नुहुन्छ।</small>
                     </div>
 
                     <div class="qr-box">
-                        <h4 style="margin-top: 0; color: #2b6cb0; font-size: 15px; font-weight: 900;">सदस्यता शुल्क: रु. ५००/-</h4>
+                        <h4 style="margin-top: 0; color: #0b0f19; font-size: 16px; font-weight: 950;">सदस्यता शुल्क: रु. ५००/-</h4>
                         <img src="images/क्युअार.jpg" class="qr-img" alt="QR">
                     </div>
 
@@ -694,7 +755,7 @@
     </div>
 
    <div id="idCardModal" class="idcard-modal" onclick="if(event.target === this) closeIdCardModal()">
-    <div style="width: 420px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #cbd5e0; margin: auto; box-sizing: border-box !important; font-weight: 600; display: flex; flex-direction: column; justify-content: space-between; max-height: 92vh;">
+    <div style="width: 420px; max-width: 95% !important; background: #fff; border-radius: 14px; overflow: hidden !important; box-shadow: 0 20px 45px rgba(0,0,0,0.35); position: relative; border: 2px solid #0b0f19; margin: auto; box-sizing: border-box !important; font-weight: 900; display: flex; flex-direction: column; justify-content: space-between; max-height: 92vh;">
 
         <div style="background: #ffffff; color: #fff; text-align: center; padding: 8px 10px 75px 10px; position: relative; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; z-index: 1;">
             
@@ -711,21 +772,21 @@
             </div>
 
             <div style="position: relative; z-index: 2;">
-                <h3 style="margin: 0; font-size: 21px; font-weight: 950; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">दशौँदी समाज नेपाल</h3>
-                <p style="margin: 2px 0 0 0; font-size: 11px; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
-                <p style="margin: 1px 0 0 0; font-size: 10px; font-weight: 900; color: #f7fafc; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">स्थापना - २०८०</p>
+                <h3 style="margin: 0; font-size: 21px; font-weight: 950; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); color: #ffffff;">दशौँदी समाज नेपाल</h3>
+                <p style="margin: 2px 0 0 0; font-size: 12px; font-weight: 950; text-shadow: 0 1px 2px rgba(0,0,0,0.3); color: #ffffff;">केन्द्रीय कार्यालय, कर्णाली प्रदेश, सुर्खेत, नेपाल</p>
+                <p style="margin: 1px 0 0 0; font-size: 11px; font-weight: 950; color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">स्थापना - २०८०</p>
             </div>
         </div>
 
-        <div style="background: #008000; color: #ffffff; border: 2.5px solid #e53e3e; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 140px; margin: -52px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20;">परिचय पत्र</div>
+        <div style="background: #008000; color: #ffffff; border: 2.5px solid #0b0f19; text-align: center; padding: 4px 20px; font-weight: 950; font-size: 15px; letter-spacing: 1.5px; width: 140px; margin: -52px auto 6px auto; border-radius: 20px; text-transform: uppercase; position: relative; z-index: 20;">परिचय पत्र</div>
 
         <div style="padding: 0 12px 8px 12px; background: #fff; position: relative; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
             
-            <div style="text-align: center; font-size: 12px; font-weight: 900; color: #1a365d; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 10px; width: fit-content; margin-left: auto; margin-right: auto;">
-                सदस्यता नं.: <strong id="cardMemberNo" style="color: #b7791f; font-size: 13px;">-</strong>
+            <div style="text-align: center; font-size: 13px; font-weight: 950; color: #0b0f19; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; border: 2px solid #0b0f19; margin-top: 10px; width: fit-content; margin-left: auto; margin-right: auto;">
+                सदस्यता नं.: <strong id="cardMemberNo" style="color: #0b0f19; font-size: 14px; font-weight: 950;">-</strong>
             </div>
 
-            <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px; position: relative; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 6px 8px; border-radius: 8px; border: 2px solid #0b0f19; margin-top: 6px; position: relative; overflow: hidden;">
                 <div style="position: absolute; right: 25px; top: 50%; transform: translateY(-50%); opacity: 0.1; pointer-events: none; z-index: 0;">
                     <img src="images/dashaundisamaj-logo-png.png" alt="watermark" style="width: 110px; height: 110px; object-fit: contain;">
                 </div>
@@ -734,15 +795,15 @@
                     <img id="cardPhoto" src="images/dashaundisamaj-logo-png.png" alt="फोटो" style="width: 85px; height: 102px; border-radius: 6px; object-fit: cover; border: 2px solid #1a365d; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
                 </div>
 
-                <div style="flex-grow: 1; font-size: 12px; color: #000000; line-height: 1.35; font-weight: 900; z-index: 1;">
-                    <div style="font-size: 16px; font-weight: 950; color: #000000;" id="cardName">-</div>
-                    <div style="color: #006600; font-weight: 950; font-size: 13px; margin-top: 2px;" id="cardPosition">-</div>
-                    <div style="font-size: 11px; color: #111; margin-top: 3px; font-weight: 900;">जारी मिति: <span id="cardIssueDate" style="font-weight: 900;">-</span></div>
-                    <div style="font-size: 11px; color: #c53030; margin-top: 1px; font-weight: 900;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 900;">-</span></div>
+                <div style="flex-grow: 1; font-size: 13px; color: #0b0f19; line-height: 1.35; font-weight: 950; z-index: 1;">
+                    <div style="font-size: 16px; font-weight: 950; color: #0b0f19;" id="cardName">-</div>
+                    <div style="color: #0b0f19; font-weight: 950; font-size: 13px; margin-top: 2px;" id="cardPosition">-</div>
+                    <div style="font-size: 12px; color: #0b0f19; margin-top: 3px; font-weight: 950;">जारी मिति: <span id="cardIssueDate" style="font-weight: 950;">-</span></div>
+                    <div style="font-size: 12px; color: #c53030; margin-top: 1px; font-weight: 950;">म्याद समाप्त: <span id="cardExpiryDate" style="font-weight: 950;">-</span></div>
                 </div>
             </div>
 
-            <div style="width: 100%; background: #fff; border-radius: 6px; border: 1px solid #cbd5e0; font-size: 12px; font-weight: 900; margin-top: 6px; overflow: hidden; display: flex;">
+            <div style="width: 100%; background: #fff; border-radius: 6px; border: 2px solid #0b0f19; font-size: 12px; font-weight: 950; margin-top: 6px; overflow: hidden; display: flex;">
                 <div style="width: 32px; background: #1a365d; display: flex; flex-direction: column;">
                     <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
                     <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
@@ -751,47 +812,45 @@
                 </div>
                 <div style="flex-grow: 1; padding: 2px 6px;">
                     <table style="width: 100%; background: transparent; margin: 0;">
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #000; font-weight: 950; font-size: 11px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 2px; color: #000; font-weight: 900; font-size: 11px;"><span id="cardProvince">-</span></td></tr>
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #000; font-weight: 950; font-size: 11px; border-top: 1px solid #edf2f7;">जिल्ला:</td><td style="border: none; text-align: left; padding: 2px; color: #000; font-weight: 900; font-size: 11px; border-top: 1px solid #edf2f7;"><span id="cardDistrict">-</span></td></tr>
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #000; font-weight: 950; font-size: 11px; border-top: 1px solid #edf2f7;">पालिका:</td><td style="border: none; text-align: left; padding: 2px; color: #000; font-weight: 900; font-size: 11px; border-top: 1px solid #edf2f7;"><span id="cardMunicipality">-</span></td></tr>
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #000; font-weight: 950; font-size: 11px; border-top: 1px solid #edf2f7;">वडा:</td><td style="border: none; text-align: left; padding: 2px; color: #000; font-weight: 900; font-size: 11px; border-top: 1px solid #edf2f7;"><span id="cardWard">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px;"><span id="cardProvince">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;">जिल्ला:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;"><span id="cardDistrict">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;">पालिका:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;"><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;">वडा:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;"><span id="cardWard">-</span></td></tr>
                     </table>
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #cbd5e0; margin-top: 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed #0b0f19; margin-top: 4px;">
     <div>
-        <img id="cardQrCode" src="" alt="QR Code" style="width: 54px; height: 54px; border: 1px solid #1a365d; padding: 1px; border-radius: 4px; background: #fff;">
+        <img id="cardQrCode" src="" alt="QR Code" style="width: 54px; height: 54px; border: 2px solid #0b0f19; padding: 1px; border-radius: 4px; background: #fff;">
     </div>
-    <div style="text-align: center; font-size: 11px; font-weight: 950; color: #000000; display: flex; justify-content: space-between; width: 210px;">
+    <div style="text-align: center; font-size: 12px; font-weight: 950; color: #0b0f19; display: flex; justify-content: space-between; width: 210px;">
         <div style="text-align: center; position: relative; flex: 1;">
-            <!-- सचिवको सही -->
             <img src="images/सचिव-हस्ताक्षर.png" alt="सचिव हस्ताक्षर" style="width: 70px; height: 28px; object-fit: contain; display: block; margin: 0 auto -4px auto; position: relative; z-index: 5;">
-            <div style="width: 75px; border-top: 1.5px solid #000; margin: 2px auto 2px;"></div>
-            <span style="font-size: 11px; font-weight: 950; color: #000;">सचिव</span>
+            <div style="width: 75px; border-top: 2px solid #0b0f19; margin: 2px auto 2px;"></div>
+            <span style="font-size: 12px; font-weight: 950; color: #0b0f19;">सचिव</span>
         </div>
         <div style="text-align: center; position: relative; flex: 1; margin-left: 10px;">
-            <!-- अध्यक्षको सही -->
             <img src="images/अध्यक्ष-हस्ताक्षर.png" alt="अध्यक्ष हस्ताक्षर" style="width: 70px; height: 28px; object-fit: contain; display: block; margin: 0 auto -4px auto; position: relative; z-index: 5;">
-            <div style="width: 75px; border-top: 1.5px solid #000; margin: 2px auto 2px;"></div>
-            <span style="font-size: 11px; font-weight: 950; color: #000;">अध्यक्ष</span>
+            <div style="width: 75px; border-top: 2px solid #0b0f19; margin: 2px auto 2px;"></div>
+            <span style="font-size: 12px; font-weight: 950; color: #0b0f19;">अध्यक्ष</span>
         </div>
     </div>
 </div>
 </div>
 
-        <div style="background: #1a365d; color: #fff; text-align: center; padding: 4px; font-size: 8.5px; font-weight: 700; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="background: #1a365d; color: #fff; text-align: center; padding: 4px; font-size: 9.5px; font-weight: 950; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: flex; flex-direction: column; gap: 2px;">
             <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                <span>🌐 www.dashaundisamajnepal.com</span>
-                <span>📞 9765240652</span>
+                <span style="color: #fff;">🌐 www.dashaundisamajnepal.com</span>
+                <span style="color: #fff;">📞 9765240652</span>
             </div>
-            <div>✉️ dashaundisamajnepal@gmail.com</div>
+            <div style="color: #fff;">✉️ dashaundisamajnepal@gmail.com</div>
         </div>
     </div>
 </div>
     
    <footer style="background-color: #1a365d; color: white; text-align: center; padding: 20px 0; width: 100%; margin-top: 40px; box-sizing: border-box;">
-    <p style="margin: 0; font-size: 14px; font-weight: bold; color: #ffffff;">&copy; २०२६ दशौँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
+    <p style="margin: 0; font-size: 15px; font-weight: 950; color: #ffffff;">&copy; २०२६ दशौँदी समाज नेपाल | सर्वाधिकार सुरक्षित</p>
 </footer>
 
     <script>
@@ -1005,9 +1064,9 @@ function closeIdCardModal() {
                     container.innerHTML += `
                         <div class="committee-card">
                             <img src="${item.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="committee-avatar">
-                            <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
-                            <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                            <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                            <h4 style="margin:0 0 5px 0; color:#0b0f19; font-size: 16px; font-weight: 950;">${item.full_name}</h4>
+                            <p style="margin:2px 0; font-size:14px; color:#0b0f19; font-weight: 950;">पद: ${item.position}</p>
+                            <p style="margin:2px 0; font-size:13px; color:#0b0f19; font-weight: 950;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
                         </div>
                     `;
                 });
@@ -1030,9 +1089,36 @@ function closeIdCardModal() {
                 htmlContent += `
                     <div class="committee-card">
                         <img src="${item.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="committee-avatar">
-                        <h4 style="margin:0 0 5px 0; color:#1a365d; font-size: 15px; font-weight: 900;">${item.full_name}</h4>
-                        <p style="margin:2px 0; font-size:13px; color:#4a5568; font-weight: bold;">पद: ${item.position}</p>
-                        <p style="margin:2px 0; font-size:12px; color:#718096; font-weight: 600;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                        <h4 style="margin:0 0 5px 0; color:#0b0f19; font-size: 16px; font-weight: 950;">${item.full_name}</h4>
+                        <p style="margin:2px 0; font-size:14px; color:#0b0f19; font-weight: 950;">पद: ${item.position}</p>
+                        <p style="margin:2px 0; font-size:13px; color:#0b0f19; font-weight: 950;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+                    </div>
+                `;
+            });
+
+            if(container) container.innerHTML = htmlContent;
+            if(homeContainer) homeContainer.innerHTML = htmlContent;
+        }
+
+        async function fetchAdvisoryCommittee() {
+            const { data } = await supabaseClient.from('advisory_committee').select('*').order('member_no', { ascending: true });
+            const container = document.getElementById('advisory_container');
+            const homeContainer = document.getElementById('home_advisory_container');
+
+            if(!data || data.length === 0) {
+                if(container) container.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
+                if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
+                return;
+            }
+
+            let htmlContent = '';
+            data.forEach(item => {
+                htmlContent += `
+                    <div class="committee-card">
+                        <img src="${item.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="committee-avatar">
+                        <h4 style="margin:0 0 5px 0; color:#0b0f19; font-size: 16px; font-weight: 950;">${item.full_name}</h4>
+                        <p style="margin:2px 0; font-size:14px; color:#0b0f19; font-weight: 950;">पद: ${item.position}</p>
+                        <p style="margin:2px 0; font-size:13px; color:#0b0f19; font-weight: 950;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
                     </div>
                 `;
             });
@@ -1043,6 +1129,7 @@ function closeIdCardModal() {
 
         fetchFounderCommittee();
         fetchCentralCommittee();
+        fetchAdvisoryCommittee();
 
         function switchPage(pageId, element) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
@@ -1289,7 +1376,7 @@ async function loadUserNotifications() {
     const notifBadge = document.getElementById('notifBadge');
 
     if (error || !data || data.length === 0) {
-        notifBody.innerHTML = '<p style="text-align: center; color: #718096; padding: 10px; font-size:12px;">कुनै सूचना उपलब्ध छैन।</p>';
+        notifBody.innerHTML = '<p style="text-align: center; color: #0b0f19; padding: 10px; font-size:13px; font-weight:900;">कुनै सूचना उपलब्ध छैन।</p>';
         if(notifBadge) notifBadge.style.display = 'none';
         return;
     }
@@ -1306,10 +1393,10 @@ async function loadUserNotifications() {
         let nepaliDateStr = toNepaliNumber(rawDate);
 
         notifBody.innerHTML += `
-            <div class="notif-item ${isRead ? '' : 'unread'}" style="padding: 8px 10px; border-bottom: 1px solid #edf2f7; font-size: 12px; background: ${isRead ? '#fff' : '#ebf8ff'};">
-                <strong style="color: #1a365d; font-size: 13px;">${item.title}</strong>
-                <p style="margin: 2px 0; color: #2d3748;">${item.body || item.message || ''}</p>
-                <small style="color: #a0aec0; font-size: 10px;">📅 मिति: ${nepaliDateStr}</small>
+            <div class="notif-item ${isRead ? '' : 'unread'}" style="padding: 8px 10px; border-bottom: 1px solid #edf2f7; font-size: 13px; background: ${isRead ? '#fff' : '#ebf8ff'};">
+                <strong style="color: #0b0f19; font-size: 14px; font-weight: 950;">${item.title}</strong>
+                <p style="margin: 2px 0; color: #0b0f19; font-weight: 900;">${item.body || item.message || ''}</p>
+                <small style="color: #0b0f19; font-size: 11px; font-weight: 900;">📅 मिति: ${nepaliDateStr}</small>
             </div>
         `;
     });
@@ -1376,7 +1463,7 @@ async function markAllNotificationsAsRead() {
 
                 if (isApprovedActive) {
                     alertBox.innerHTML = "✅ तपाईंको सदस्यता स्वीकृत (Approved) छ र हाल चालु अवस्थामा छ।";
-                    alertBox.style.color = "#276749";
+                    alertBox.style.color = "#0b0f19";
                     btnOpenForm.innerHTML = "📝 सदस्यता विवरण हेर्नुहोस् (चालु)";
                     btnOpenForm.style.background = "#718096";
                     btnOpenForm.setAttribute("onclick", "toggleForm('विवरण मात्र')");
@@ -1418,10 +1505,10 @@ async function markAllNotificationsAsRead() {
                 } 
                 else {
                     alertBox.innerHTML = "⏳ तपाईंको आवेदन समीक्षाको क्रममा (Pending) रहेको छ।";
-                    alertBox.style.color = "#d69e2e";
+                    alertBox.style.color = "#0b0f19";
                     noticeBanner.style.display = 'block';
                     noticeBanner.style.backgroundColor = '#feebc8';
-                    noticeBanner.style.color = '#744210';
+                    noticeBanner.style.color = '#0b0f19';
                     noticeBanner.innerText = "⏳ तपाईंको आवेदन पेन्डिङ छ। यो हेर्न मिल्छ तर परिवर्तन गर्न मिल्दैन।";
                     btnOpenForm.innerHTML = "📝 आवेदन विवरण हेर्नुहोस्";
                     btnOpenForm.style.background = "#718096";
@@ -1626,7 +1713,7 @@ async function markAllNotificationsAsRead() {
 
         async function openMyCard() {
     if(!currentApplication || currentApplication.status !== 'Approved') { 
-        alert('तपाईंको सदस्यता स्वीकृत (Approved) भइसकेपछि मात्र डिजिटल परिचय पत्र (Digital ID Card) हेर्न सकिनेछ।'); 
+        alert('तपाईंको सदस्यता स्वीकृत (Approved) भइसकेपछि मात्र डिजिटल परिचय पत्र (Digital ID Card) हेर्न सकिनेछ। मैदान वा अन्य विवरण जाँच गर्नुहोस्।'); 
         return; 
     }
 
@@ -1676,18 +1763,18 @@ async function loadPublicNotices() {
 
     containers.forEach(container => {
         if(!container) return;
-        if (!data || data.length === 0) { container.innerHTML = '<p style="color: #666; font-size: 15px; text-align: center;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>'; return; }
+        if (!data || data.length === 0) { container.innerHTML = '<p style="color: #0b0f19; font-size: 15px; text-align: center; font-weight: 950;">हाल कुनै सूचनाहरू उपलब्ध छैनन्।</p>'; return; }
 
         container.innerHTML = '';
         data.forEach(item => {
             let fileContent = '';
             if (item.file_url) {
-                fileContent = `<div style="margin-top: 15px; text-align: center;"><img src="${item.file_url}" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 1px solid #cbd5e0;"></div>`;
+                fileContent = `<div style="margin-top: 15px; text-align: center;"><img src="${item.file_url}" style="max-width: 100%; max-height: 500px; border-radius: 8px; border: 2px solid #0b0f19;"></div>`;
             }
             container.innerHTML += `
-                <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; text-align: left;">
-                    <div style="font-size: 12px; color: #718096; font-weight: bold; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
-                    <p style="font-size: 16px; font-weight: 600; color: #2d3748; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
+                <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 5px solid #1a365d; border: 2px solid #0b0f19; text-align: left;">
+                    <div style="font-size: 13px; color: #0b0f19; font-weight: 950; margin-bottom: 5px;">📅 मिति: ${toNepaliNumber(item.date || '')}</div>
+                    <p style="font-size: 16px; font-weight: 950; color: #0b0f19; line-height: 1.6; white-space: pre-wrap; margin-top: 0;">${item.title}</p>
                     ${fileContent}
                 </div>
             `;
@@ -1742,18 +1829,16 @@ async function openLevyModal() {
     const modalContentEl = document.querySelector('#levyModal .modal-content');
     const alertDiv = document.createElement('div');
     alertDiv.id = 'levyStatusAlertBox';
-    alertDiv.style.cssText = "padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: bold; font-size: 13px; text-align: center;";
+    alertDiv.style.cssText = "padding: 10px; border-radius: 6px; margin-bottom: 12px; font-weight: 950; font-size: 13px; text-align: center; border: 1px solid #0b0f19;";
 
     if (latestStatus === 'Rejected') {
         alertDiv.style.background = "#fed7d7";
-        alertDiv.style.color = "#742a2a";
-        alertDiv.style.border = "1px solid #feb2b2";
+        alertDiv.style.color = "#0b0f19";
         alertDiv.innerHTML = "❌ तपाईंको अघिल्लो लेवी भुक्तानी अनुरोध एडमिनबाट अस्वीकृत (Rejected) भएको छ। कृपया सही भौचर राखी फेरि अनुरोध पठाउनुहोला।";
         modalContentEl.insertBefore(alertDiv, modalContentEl.querySelector('h4').nextSibling);
     } else if (latestStatus === 'Pending') {
         alertDiv.style.background = "#feebc8";
-        alertDiv.style.color = "#744210";
-        alertDiv.style.border = "1px solid #fbd38d";
+        alertDiv.style.color = "#0b0f19";
         alertDiv.innerHTML = "⏳ तपाईंको लेवी भुक्तानी अनुरोध एडमिनबाट स्वीकृति (Approval) को क्रममा (Pending) छ।";
         modalContentEl.insertBefore(alertDiv, modalContentEl.querySelector('h4').nextSibling);
     }
@@ -1850,14 +1935,14 @@ function closeLevyModal() {
             grid.innerHTML += `
                 <div class="month-box ${boxClass}" ${clickAction} style="${isPaidOrLocked ? 'cursor: not-allowed; opacity: 0.85;' : ''}">
                     <span>${m.name}</span><br>
-                    <small style="font-size:9px;">${statusText}</small>
+                    <small style="font-size:10px; font-weight: 950;">${statusText}</small>
                 </div>
             `;
         });
         updateLevySummary(rate);
     }
         
-      async function submitLevyPayment() {
+     async function submitLevyPayment() {
     const fileInput = document.getElementById('voucherFile');
     if (selectedMonths.length === 0) { 
         alert('कृपया कम्तिमा एउटा महिना छनोट गर्नुहोस्!'); 
