@@ -2019,6 +2019,44 @@ function closeLevyModal() {
             loadPublicNotices();
             updateRealTimeClock();
         });
+
+    // १. कार्डमा डेटा भर्ने फंक्सन
+function renderDigitalID(userData) {
+    document.getElementById('cardFullName').innerText = userData.full_name || '';
+    document.getElementById('cardMobile').innerText = userData.mobile || '';
+    document.getElementById('cardEmail').innerText = userData.identifier || '';
+    document.getElementById('cardDob').innerText = userData.dob || '';
+    document.getElementById('cardMembershipNo').innerText = userData.membership_no || '';
+    document.getElementById('cardCommittee').innerText = userData.committee || '';
+    document.getElementById('cardPosition').innerText = userData.position || '';
+    
+    document.getElementById('cardProvince').innerText = userData.province || '';
+    document.getElementById('cardDistrict').innerText = userData.district || '';
+    document.getElementById('cardPalika').innerText = userData.palika || '';
+    document.getElementById('cardWard').innerText = userData.ward || '';
+    
+    if(userData.photo_url) {
+        document.getElementById('cardPhoto').src = userData.photo_url;
+    }
+}
+
+// २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
+async function loadMyDigitalID() {
+    // वर्तमान लगइन भएका युजरको डेटा वा आइडी पत्ता लगाउने (तपाईंको सिस्टम अनुसार)
+    const currentUser = supabaseClient.auth.getUser(); 
+    // अथवा लोकल स्टोरेज वा युजर टेबलबाट युजरको आइडी/इमेल लिने
+
+    // उदाहरणको लागि इमेल वा आइडीको आधारमा डेटा तान्ने:
+    const { data, error } = await supabaseClient
+        .from('users')
+        .select('*')
+        .eq('id', currentUserId) // यहाँ लगइन युजरको आईडी हुनुपर्छ
+        .single();
+
+    if (data) {
+        renderDigitalID(data); // परिचय पत्रमा डेटा देखाउने
+    }
+}
     </script>
 </body>
 </html>
