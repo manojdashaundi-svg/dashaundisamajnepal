@@ -3561,28 +3561,43 @@ if(userError) {
             loadMonthlyLevyIncomeData();
         });
 
-        async function saveAdminEditedMember(userId, email, newPosition, newCommittee) {
+        async function saveAdminEditedMember(userId, email, updatedData) {
     try {
-        // १. users टेबल अपडेट गर्ने
+        // १. users टेबल अपडेट गर्ने (सबै विवरणसहित)
         const { error: userError } = await supabaseClient.from('users').update({ 
-            position: newPosition, 
-            committee: newCommittee 
+            full_name: updatedData.fullName,
+            mobile: updatedData.mobile,
+            dob: updatedData.dob,
+            membership_no: updatedData.membershipNo,
+            committee: updatedData.committee,
+            position: updatedData.position,
+            province: updatedData.province,
+            district: updatedData.district,
+            palika: updatedData.palika,
+            ward: updatedData.ward
         }).eq('id', userId);
 
         if (userError) throw userError;
 
         // २. membership_applications टेबल अपडेट गर्ने
         const { error: appError } = await supabaseClient.from('membership_applications').update({ 
-            position: newPosition, 
-            committee: newCommittee 
+            full_name: updatedData.fullName,
+            mobile: updatedData.mobile,
+            dob: updatedData.dob,
+            committee: updatedData.committee,
+            position: updatedData.position,
+            province: updatedData.province,
+            district: updatedData.district,
+            palika: updatedData.palika,
+            ward: updatedData.ward
         }).eq('identifier', email);
 
         if (appError) throw appError;
 
-        alert('✔ सफलतापूर्वक दुवैतिर अपडेट भयो!');
+        alert('✔ परिचय पत्रका सम्पूर्ण विवरणहरू सफलतापूर्वक अपडेट भयो!');
         
-        // यहाँ सदस्यको सूची रिफ्रेस गर्ने वा मोडल बन्द하는 फंक्सन राख्न सक्नुहुन्छ
-        // जस्तै: fetchMembers(); closeEditModal();
+        // एडमिन प्यानलको सूची र डिजिटल कार्ड रिफ्रेस गर्ने
+        if (typeof fetchMembers === 'function') fetchMembers();
         
     } catch (error) {
         console.error('अपडेट गर्दा त्रुटि:', error.message);
@@ -3594,11 +3609,23 @@ if(userError) {
 document.getElementById('saveMemberBtn').addEventListener('click', async () => {
     const userId = document.getElementById('editUserId').value;
     const email = document.getElementById('editUserEmail').value;
-    const newPosition = document.getElementById('editPosition').value;
-    const newCommittee = document.getElementById('editCommittee').value;
 
-    // माथिको फंक्सन यहाँ कल गर्ने
-    await saveAdminEditedMember(userId, email, newPosition, newCommittee);
+    // सबै इनपुट फिल्डहरूबाट नयाँ डाटा संकलन गर्ने
+    const updatedData = {
+        fullName: document.getElementById('editFullName')?.value || '',
+        mobile: document.getElementById('editMobile')?.value || '',
+        dob: document.getElementById('editDob')?.value || '',
+        membershipNo: document.getElementById('editMembershipNo')?.value || '',
+        committee: document.getElementById('editCommittee')?.value || '',
+        position: document.getElementById('editPosition')?.value || '',
+        province: document.getElementById('editProvince')?.value || '',
+        district: document.getElementById('editDistrict')?.value || '',
+        palika: document.getElementById('editPalika')?.value || '',
+        ward: document.getElementById('editWard')?.value || ''
+    };
+
+    // नयाँ अपडेटेड डाटासहित फंक्सन कल गर्ने
+    await saveAdminEditedMember(userId, email, updatedData);
 });
     </script>
 </body>
