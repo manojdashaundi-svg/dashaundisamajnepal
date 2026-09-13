@@ -3560,6 +3560,35 @@ if(userError) {
         document.addEventListener("DOMContentLoaded", function() {
             loadMonthlyLevyIncomeData();
         });
+
+        async function saveAdminEditedMember(userId, email, newPosition, newCommittee) {
+    try {
+        // १. users टेबल अपडेट गर्ने
+        const { error: userError } = await supabaseClient.from('users').update({ 
+            position: newPosition, 
+            committee: newCommittee 
+        }).eq('id', userId);
+
+        if (userError) throw userError;
+
+        // २. membership_applications टेबल अपडेट गर्ने
+        const { error: appError } = await supabaseClient.from('membership_applications').update({ 
+            position: newPosition, 
+            committee: newCommittee 
+        }).eq('identifier', email);
+
+        if (appError) throw appError;
+
+        alert('✔ सफलतापूर्वक दुवैतिर अपडेट भयो!');
+        
+        // यहाँ सदस्यको सूची रिफ्रेस गर्ने वा मोडल बन्द하는 फंक्सन राख्न सक्नुहुन्छ
+        // जस्तै: fetchMembers(); closeEditModal();
+        
+    } catch (error) {
+        console.error('अपडेट गर्दा त्रुटि:', error.message);
+        alert('❌ अपडेट गर्न असफल भयो: ' + error.message);
+    }
+}
     </script>
 </body>
 </html>
