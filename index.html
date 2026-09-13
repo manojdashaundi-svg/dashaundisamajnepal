@@ -1068,53 +1068,34 @@ function closeIdCardModal() {
         }
 
         async function fetchCentralCommittee() {
-            const { data } = await supabaseClient.from('central_committee').select('*').order('member_no', { ascending: true });
-            const container = document.getElementById('central_container');
-            const homeContainer = document.getElementById('home_central_container');
-
-            if(!data || data.length === 0) {
-                if(container) container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
-                if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
-                return;
-            }
-
-            let htmlContent = '';
-            data.forEach(item => {
-                htmlContent += `
-                    <div class="committee-card">
-                        <img src="${item.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="committee-avatar">
-                        <h4 style="margin:0 0 5px 0; color:#0b0f19; font-size: 16px; font-weight: 950;">${item.full_name}</h4>
-                        <p style="margin:2px 0; font-size:14px; color:#0b0f19; font-weight: 950;">पद: ${item.position}</p>
-                        <p style="margin:2px 0; font-size:13px; color:#0b0f19; font-weight: 950;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
-                    </div>
-                `;
-            });
-
-            if(container) container.innerHTML = htmlContent;
-            if(homeContainer) homeContainer.innerHTML = htmlContent;
-        }
-
-        async function fetchFounderCommittee() {
     const { data } = await supabaseClient
-        .from('founder_committee')
+        .from('central_committee')
         .select('*')
-        .order('member_no', { ascending: true }); // ID वा member_no को क्रम अनुसार
-    
-    const container = document.getElementById('founder_container');
-    if(container) {
-        if(!data || data.length === 0) { container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>'; return; }
-        container.innerHTML = '';
-        data.forEach(item => {
-            container.innerHTML += `
-                <div class="committee-card">
-                    <img src="${item.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="committee-avatar">
-                    <h4 style="margin:0 0 5px 0; color:#0b0f19; font-size: 16px; font-weight: 950;">${item.full_name}</h4>
-                    <p style="margin:2px 0; font-size:14px; color:#0b0f19; font-weight: 950;">पद: ${item.position}</p>
-                    <p style="margin:2px 0; font-size:13px; color:#0b0f19; font-weight: 950;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
-                </div>
-            `;
-        });
+        .order('member_no', { ascending: true }); // क्रम मिलाइएको
+        
+    const container = document.getElementById('central_container');
+    const homeContainer = document.getElementById('home_central_container');
+
+    if(!data || data.length === 0) {
+        if(container) container.innerHTML = '<p>कुनै विवरण फेला परेन।</p>';
+        if(homeContainer) homeContainer.innerHTML = '<p style="text-align: center; width: 100%;">कुनै विवरण फेला परेन।</p>';
+        return;
     }
+
+    let htmlContent = '';
+    data.forEach(item => {
+        htmlContent += `
+            <div class="committee-card">
+                <img src="${item.photo_url || 'images/dashaundisamaj-logo-png.png'}" class="committee-avatar">
+                <h4 style="margin:0 0 5px 0; color:#0b0f19; font-size: 16px; font-weight: 950;">${item.full_name}</h4>
+                <p style="margin:2px 0; font-size:14px; color:#0b0f19; font-weight: 950;">पद: ${item.position}</p>
+                <p style="margin:2px 0; font-size:13px; color:#0b0f19; font-weight: 950;">सम्पर्क: ${toNepaliNumber(item.phone) || '-'}</p>
+            </div>
+        `;
+    });
+
+    if(container) container.innerHTML = htmlContent;
+    if(homeContainer) homeContainer.innerHTML = htmlContent;
 }
     if(container) container.innerHTML = htmlContent;
     if(homeContainer) homeContainer.innerHTML = htmlContent;
