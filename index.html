@@ -117,10 +117,9 @@
         @media (max-width: 992px) { .committee-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .committee-grid { grid-template-columns: 1fr; } }
 
-        .committee-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 15px; text-align: left; }
-        @media (max-width: 1200px) { .committee-grid-5 { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .committee-grid-5 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .committee-grid-5 { grid-template-columns: 1fr; } }
+        .committee-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 15px; text-align: left; }
+        @media (max-width: 992px) { .committee-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .committee-grid-3 { grid-template-columns: 1fr; } }
 
         .committee-card { background: #fff; border: 2px solid #0b0f19; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; transition: transform 0.2s ease; }
         .committee-card:hover { transform: translateY(-3px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); }
@@ -312,14 +311,14 @@
 
             <div class="card">
                 <h2>केन्द्रीय समिति</h2>
-                <div id="home_central_container" class="committee-grid">
+                <div id="home_central_container" class="committee-grid-3">
                     <p style="text-align: center; width: 100%;">विवरण लोड हुँदैछ...</p>
                 </div>
             </div>
 
             <div class="card">
                 <h2>केन्द्रीय सल्लाहकार समिति</h2>
-                <div id="home_advisory_container" class="committee-grid-5">
+                <div id="home_advisory_container" class="committee-grid-3">
                     <p style="text-align: center; width: 100%;">विवरण लोड हुँदैछ...</p>
                 </div>
             </div>
@@ -391,7 +390,7 @@
         <div id="founder-committee" class="page-section">
             <div class="card">
                 <h2>संस्थापक समिति</h2>
-                <div id="founder_container" class="committee-grid">
+                <div id="founder_container" class="committee-grid-3">
                     <p style="text-align: center; width: 100%;">लोड हुँदैछ...</p>
                 </div>
             </div>
@@ -400,7 +399,7 @@
         <div id="central-committee" class="page-section">
             <div class="card">
                 <h2>केन्द्रीय समिति</h2>
-                <div id="central_container" class="committee-grid">
+                <div id="central_container" class="committee-grid-3">
                     <p style="text-align: center; width: 100%;">लोड हुँदैछ...</p>
                 </div>
             </div>
@@ -409,7 +408,7 @@
         <div id="advisory-committee" class="page-section">
             <div class="card">
                 <h2>केन्द्रीय सल्लाहकार समिति</h2>
-                <div id="advisory_container" class="committee-grid-5">
+                <div id="advisory_container" class="committee-grid-3">
                     <p style="text-align: center; width: 100%;">लोड हुँदैछ...</p>
                 </div>
             </div>
@@ -814,17 +813,17 @@
 
             <div style="width: 100%; background: #fff; border-radius: 6px; border: 2px solid #0b0f19; font-size: 12px; font-weight: 950; margin-top: 6px; overflow: hidden; display: flex;">
                 <div style="width: 32px; background: #1a365d; display: flex; flex-direction: column;">
-                    <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-                    <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
-                    <div style="height: 22px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4M8 6h8M8 10h8M8 14h8"></path></svg></div>
-                    <div style="height: 22px; display: flex; align-items: center; justify-content: center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                    <div style="height: 25px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+                    <div style="height: 25px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M3 21h18M3 7v14M21 7v14M6 11h2M10 11h2M14 11h2M6 15h2M10 15h2M14 15h2M7 3h10v4H7z"></path></svg></div>
+                    <div style="height: 25px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #cbd5e0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4M8 6h8M8 10h8M8 14h8"></path></svg></div>
+                    <div style="height: 25px; display: flex; align-items: center; justify-content: center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
                 </div>
-                <div style="flex-grow: 1; padding: 2px 6px;">
-                    <table style="width: 100%; background: transparent; margin: 0;">
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px;">प्रदेश:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px;"><span id="cardProvince">-</span></td></tr>
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;">जिल्ला:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;"><span id="cardDistrict">-</span></td></tr>
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;">पालिका:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;"><span id="cardMunicipality">-</span></td></tr>
-                        <tr><td style="border: none; text-align: left; padding: 2px; width: 30%; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;">वडा:</td><td style="border: none; text-align: left; padding: 2px; color: #0b0f19; font-weight: 950; font-size: 12px; border-top: 1px solid #0b0f19;"><span id="cardWard">-</span></td></tr>
+                <div style="flex-grow: 1; padding: 0 6px;">
+                    <table style="width: 100%; background: transparent; margin: 0; border-collapse: collapse;">
+                        <tr><td style="border: none; text-align: left; padding: 5px 2px; width: 28%; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1;">प्रदेश:</td><td style="border: none; text-align: left; padding: 5px 2px; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1;"><span id="cardProvince">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 5px 2px; width: 28%; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1; border-top: 1px solid #cbd5e0;">जिल्ला:</td><td style="border: none; text-align: left; padding: 5px 2px; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1; border-top: 1px solid #cbd5e0;"><span id="cardDistrict">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 5px 2px; width: 28%; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1; border-top: 1px solid #cbd5e0;">पालिका:</td><td style="border: none; text-align: left; padding: 5px 2px; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1; border-top: 1px solid #cbd5e0;"><span id="cardMunicipality">-</span></td></tr>
+                        <tr><td style="border: none; text-align: left; padding: 5px 2px; width: 28%; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1; border-top: 1px solid #cbd5e0;">वडा:</td><td style="border: none; text-align: left; padding: 5px 2px; color: #0b0f19; font-weight: 950; font-size: 12px; line-height: 1; border-top: 1px solid #cbd5e0;"><span id="cardWard">-</span></td></tr>
                     </table>
                 </div>
             </div>
@@ -1972,7 +1971,7 @@ function closeLevyModal() {
             return;
         }
 
-        const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id : null;
+        const activeUserId = (typeof currentUserProfile !== 'undefined' && currentUserProfile?.id) ? currentUserProfile.id :.id : null;
         if (!activeUserId) {
             alert('युजर आईडी फेला परेन। कृपया फेरि लगइन गर्नुहोस्।');
             return;
@@ -1982,7 +1981,7 @@ function closeLevyModal() {
         const userCommittee = currentUserProfile.committee || document.getElementById('lbl_committee')?.innerText || 'केन्द्रीय समिति';
         const currentNepaliDate = getNepaliDate();
 
-        const formData = {
+        const `formData` = {
             user_id: activeUserId,
             member_name: currentUserProfile.full_name || currentUserProfile.name || 'सदस्य',
             member_no: currentUserProfile.member_no || '',
@@ -2000,6 +1999,7 @@ function closeLevyModal() {
         if (error) { 
             alert('त्रुटि: ' + error.message); 
         } else { 
+            4000
             alert('भुक्तानी अनुरोध सफलतापूर्वक पठाइयो! एडमिनबाट स्वीकृत भएपछि यो अपडेट हुनेछ।');
             closeLevyModal(); 
             fileInput.value = ''; 
