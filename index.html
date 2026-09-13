@@ -1743,9 +1743,15 @@ async function markAllNotificationsAsRead() {
     document.getElementById('cardName').innerText = fullName;
 
     let userPos = (userData && userData.position) ? userData.position.trim() : 'सदस्य';
-    let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय समिति';
+    let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय कमिटी';
 
-    let cardPositionText = `${userPos} (${userComm})`;
+    let cardPositionText = '';
+    // यदि पद 'सदस्य' मात्र वा खाली छ भने पनि कमिटी अनुसार मिलाएर देखाउने
+    if (!userPos || userPos === '' || userPos === 'सदस्य' || userPos === 'साधारण सदस्य') {
+        cardPositionText = `सदस्य (${userComm})`;
+    } else {
+        cardPositionText = `${userPos} (${userComm})`;
+    }
     document.getElementById('cardPosition').innerText = cardPositionText;
 
     document.getElementById('cardProvince').innerText = currentApplication.province || '-';
