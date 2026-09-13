@@ -3645,6 +3645,25 @@ function renderDigitalID(userData) {
         document.getElementById('cardPhoto').src = userData.photo_url;
     }
 }
+
+// डेटाबेस्बाट युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
+async function loadUserDataForID(userId) {
+    const { data, error } = await supabaseClient
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+    if (error) {
+        console.error('डाटा तान्न सकिएन:', error.message);
+        return;
+    }
+
+    if (data) {
+        // परिचय पत्रमा डेटा भरेर देखाउने
+        renderDigitalID(data); 
+    }
+}
     </script>
 </body>
 </html>
