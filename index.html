@@ -2027,49 +2027,34 @@ function openIdCardModal() {
 
 // १. कार्डमा डेटा भर्ने फंक्सन
 function renderDigitalID(userData) {
-    document.getElementById('cardFullName').innerText = userData.full_name || '';
-    document.getElementById('cardMobile').innerText = userData.mobile || '';
-    document.getElementById('cardEmail').innerText = userData.identifier || '';
-    document.getElementById('cardDob').innerText = userData.dob || '';
-    document.getElementById('cardMembershipNo').innerText = userData.membership_no || '';
-    document.getElementById('cardCommittee').innerText = userData.committee || '';
-    document.getElementById('cardPosition').innerText = userData.position || '';
-    
-    document.getElementById('cardProvince').innerText = userData.province || '';
-    document.getElementById('cardDistrict').innerText = userData.district || '';
-    
-    // ⬇️ यहाँ cardPalika को सट्टा cardMunicipality राख्नुहोस्
-    document.getElementById('cardMunicipality').innerText = userData.palika || '';
-    
-    document.getElementById('cardWard').innerText = userData.ward || '';
-    
-    if(userData.photo_url) {
-        document.getElementById('cardPhoto').src = userData.photo_url;
-    }
-}// १. कार्डमा डेटा भर्ने फंक्सन
-function renderDigitalID(userData) {
-    document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '००१');
+    // १. पुराना सही आइडीहरू प्रयोग गरेर सबै विवरणहरू भर्ने
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '३');
     document.getElementById('cardName').innerText = userData.full_name || '';
     document.getElementById('cardPosition').innerText = userData.position || 'सदस्य';
     
     document.getElementById('cardProvince').innerText = userData.province || '';
     document.getElementById('cardDistrict').innerText = userData.district || '';
+    
+    // ⬇️ पालिकाको सहि नाम देखाउने ठाउँ
     document.getElementById('cardMunicipality').innerText = userData.palika || '';
+    
     document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || '');
     
+    // २. फोटो बिग्रेको हटाएर सही फोटो लोड गर्ने
     if(userData.photo_url) {
         document.getElementById('cardPhoto').src = userData.photo_url;
+    } else if(currentUserProfile.avatar) {
+        document.getElementById('cardPhoto').src = currentUserProfile.avatar;
     }
 }
 
-// २. डेटाबेसबाट लगइन गरेको युजरको ताजा डेटा तानेर परिचय पत्र खोल्ने मुख्य फंक्सन
 async function openMyCard() {
     if (!currentUserProfile || !currentUserProfile.email) {
         alert('कृपया पहिले लगइन गर्नुहोस्।');
         return;
     }
 
-    // डेटाबेसबाट युजरको एकदम ताजा विवरण (जस्तै परिवर्तन भएको पालिका) तान्ने
+    // डेटाबेसबाट युजरको ताजा विवरण तान्ने
     const { data: userData, error } = await supabaseClient
         .from('users')
         .select('*')
@@ -2081,16 +2066,16 @@ async function openMyCard() {
         return;
     }
 
-    // परिचय पत्रमा ताजा डेटा भरेर देखाउने
+    // परिचय पत्रमा डेटा भरेर देखाउने
     renderDigitalID(userData);
 
     // मिति र क्युआर कोड सेट गर्ने
-    const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : getNepaliDate());
-    const expiryDate = getExpiryDate(userData.reg_date ? userData.reg_date : getNepaliDate());
+    const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
+    const expiryDate = getExpiryDate(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
     document.getElementById('cardIssueDate').innerText = regDate;
     document.getElementById('cardExpiryDate').innerText = expiryDate;
 
-    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '001'}&name=${encodeURIComponent(userData.full_name)}`;
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '3'}&name=${encodeURIComponent(userData.full_name)}`;
     document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
 
     // मोडल खोल्ने
