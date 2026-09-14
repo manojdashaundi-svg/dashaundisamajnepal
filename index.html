@@ -2016,11 +2016,12 @@ function closeLevyModal() {
 }
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadPublicNotices();
-            updateRealTimeClock();
-        });
+    loadPublicNotices();
+    updateRealTimeClock();
+    loadMyDigitalID(); // 👈 यहाँ पेज खुल्नेबित्तिकै आइडी कार्ड लोड गर्ने फंक्सन कल गर्ने
+});
 
-    // १. कार्डमा डेटा भर्ने फंक्सन
+// १. कार्डमा डेटा भर्ने फंक्सन
 function renderDigitalID(userData) {
     document.getElementById('cardFullName').innerText = userData.full_name || '';
     document.getElementById('cardMobile').innerText = userData.mobile || '';
@@ -2042,19 +2043,34 @@ function renderDigitalID(userData) {
 
 // २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
 async function loadMyDigitalID() {
-    // वर्तमान लगइन भएका युजरको डेटा वा आइडी पत्ता लगाउने (तपाईंको सिस्टम अनुसार)
-    const currentUser = supabaseClient.auth.getUser(); 
-    // अथवा लोकल स्टोरेज वा युजर टेबलबाट युजरको आइडी/इमेल लिने
+    try {
+        // लगइन भएको युजरको सत्र (Session) वा विवरण लिने
+        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+        
+        if (sessionError || !sessionData.session) {
+            console.error('लगइन सत्र फेला परेन');
+            return;
+        }
 
-    // उदाहरणको लागि इमेल वा आइडीको आधारमा डेटा तान्ने:
-    const { data, error } = await supabaseClient
-        .from('users')
-        .select('*')
-        .eq('id', currentUserId) // यहाँ लगइन युजरको आईडी हुनुपर्छ
-        .single();
+        const userEmail = sessionData.session.user.email; // लगइन युजरको इमेल
 
-    if (data) {
-        renderDigitalID(data); // परिचय पत्रमा डेटा देखाउने
+        // इमेलको आधारमा 'users' टेबलबाट ताजा डेटा तान्ने
+        const { data, error } = await supabaseClient
+            .from('users')
+            .select('*')
+            .eq('identifier', userEmail) // युजरको इमेलबाट म्याッチ गर्ने
+            .single();
+
+        if (error) {
+            console.error('डाटा तान्न सकिएन:', error.message);
+            return;
+        }
+
+        if (data) {
+            renderDigitalID(data); // परिचय पत्रमा डेटा भरेर देखाउने
+        }
+    } catch (err) {
+        console.error('त्रुटि:', err.message);
     }
 }
     </script>
