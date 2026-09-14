@@ -1724,28 +1724,29 @@ async function markAllNotificationsAsRead() {
             }
         }
 
-// १. कार्डमा डेटा भर्ने सहि फंक्सन (एडमिन प्यानल र युजर कार्डमा अब पूर्ण रूपमा मिल्ने गरी)
+// १. कार्डमा डेटा भर्ने सहि फंक्सन
 function renderDigitalID(userData, appData) {
-    // सदस्यता नम्बर
-    document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '३');
+    // सदस्यता नम्बर (दुवै टेबलबाट चेक गरेर सहि निकाल्ने)
+    let memberNo = userData.membership_no || appData.membership_no || '३';
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
     
     // पूरा नाम
-    const fullName = userData.full_name || appData.full_name || '';
+    const fullName = userData.full_name || userData.name || appData.full_name || '';
     document.getElementById('cardName').innerText = fullName;
     
-    // पद र कमिटी (एडमिन जस्तै मिलाइएको)
-    let userPos = (userData.position) ? userData.position.trim() : 'सदस्य';
-    let userComm = (userData.committee) ? userData.committee.trim() : 'केन्द्रीय कमिटी';
+    // पद र कमिटी
+    let userPos = (userData.position || appData.position) ? (userData.position || appData.position).trim() : 'सदस्य';
+    let userComm = (userData.committee || appData.committee) ? (userData.committee || appData.committee).trim() : 'केन्द्रीय कमिटी';
     document.getElementById('cardPosition').innerText = `${userPos} (${userComm})`;
     
-    // ठेगानाहरू (पालिका cardMunicipality मा जाने गरी)
+    // ठेगानाहरू (users र membership_applications दुवैबाट म्याच गराइएको)
     document.getElementById('cardProvince').innerText = userData.province || appData.province || '';
     document.getElementById('cardDistrict').innerText = userData.district || appData.district || '';
-    document.getElementById('cardMunicipality').innerText = userData.palika || appData.municipality || '';
+    document.getElementById('cardMunicipality').innerText = userData.municipality || userData.palika || appData.municipality || appData.palika || '';
     document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || appData.ward || '');
     
     // फोटो
-    const photo = userData.photo_url || appData.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
+    const photo = userData.photo_url || userData.avatar || appData.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
     document.getElementById('cardPhoto').src = photo;
 }
 
@@ -1756,13 +1757,14 @@ async function openMyCard() {
         return;
     }
 
-    // users टेबल र membership_applications दुवैबाट ताजा डेटा तान्ने
+    // users टेबलबाट डेटा तान्ने
     const { data: userData } = await supabaseClient
         .from('users')
         .select('*')
         .eq('email', currentUserProfile.email)
-        .single();
+        .maybeSingle();
 
+    // membership_applications टेबलबाट पनि आधिकारिक स्वीकृत डेटा तान्ने
     const { data: appDataList } = await supabaseClient
         .from('membership_applications')
         .select('*')
@@ -1771,23 +1773,26 @@ async function openMyCard() {
         .limit(1);
 
     const appData = (appDataList && appDataList.length > 0) ? appDataList[0] : {};
+    const finalUserData = userData || {};
 
-    if (!userData) {
-        alert('युजरको डेटा फेला परेन!');
+    if (!finalUserData.email && !appData.identifier) {
+        alert('प्रयोगकर्ताको डेटा फेला परेन!');
         return;
     }
 
     // परिचय पत्रमा डेटा भरेर देखाउने
-    renderDigitalID(userData, appData);
+    renderDigitalID(finalUserData, appData);
 
     // मिति र क्युआर कोड सेट गर्ने
-    const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
-    const expiryDate = getExpiryDate(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
+    const regDate = toNepaliNumber(finalUserData.reg_date || appData.reg_date || '२०८३-०५-२७');
+    const expiryDate = getExpiryDate(finalUserData.reg_date || appData.reg_date || '२०८३-०५-२७');
     document.getElementById('cardIssueDate').innerText = regDate;
     document.getElementById('cardExpiryDate').innerText = expiryDate;
 
-    const fullName = userData.full_name || appData.full_name || 'सदस्य';
-    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '3'}&name=${encodeURIComponent(fullName)}`;
+    const memberNoFinal = finalUserData.membership_no || appData.membership_no || '3';
+    const fullNameFinal = finalUserData.full_name || finalUserData.name || appData.full_name || 'सदस्य';
+    
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNoFinal}&name=${encodeURIComponent(fullNameFinal)}`;
     document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
 
     // मोडल खोल्ने
