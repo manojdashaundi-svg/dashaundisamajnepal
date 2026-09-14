@@ -2983,7 +2983,7 @@ if(userError) {
     data.forEach((user, index) => {
         const photoSrc = user.avatar || user.photo_url || 'images/dashaundisamaj-logo-png.png';
         const citFront = user.citizenship_front || user.citizenship_front_url || '';
-        const citBack = user.citizenship_back || user.citizenship_back_url || '';
+        const citBack = user.citizenship_back || user.citizenship_back_url || user.citizensoid_back || '';
         const paySlip = user.payment_slip_url || '';
         const userJson = encodeURIComponent(JSON.stringify(user));
                 tbody.innerHTML += `
