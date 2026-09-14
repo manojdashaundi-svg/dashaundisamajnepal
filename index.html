@@ -2025,49 +2025,58 @@ function openIdCardModal() {
     document.getElementById('idCardModal').style.display = 'flex'; // मोडल देखाउने
 }
 
-// १. कार्डमा डेटा भर्ने फंक्सन
-function renderDigitalID(userData) {
-    // १. पुराना सही आइडीहरू प्रयोग गरेर सबै विवरणहरू भर्ने
+// १. कार्डमा डेटा भर्ने सही फंक्सन
+function renderDigitalID(userData, appData) {
+    // सदस्यता नम्बर र नाम
     document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '३');
-    document.getElementById('cardName').innerText = userData.full_name || '';
-    document.getElementById('cardPosition').innerText = userData.position || 'सदस्य';
+    document.getElementById('cardName').innerText = userData.full_name || appData.full_name || '';
     
-    document.getElementById('cardProvince').innerText = userData.province || '';
-    document.getElementById('cardDistrict').innerText = userData.district || '';
+    // पद र कमिटी (एडमिन जस्तै मिलाइएको)
+    let userPos = (userData.position) ? userData.position.trim() : 'सदस्य';
+    let userComm = (userData.committee) ? userData.committee.trim() : 'केन्द्रीय कमिटी';
+    document.getElementById('cardPosition').innerText = `${userPos} (${userComm})`;
     
-    // ⬇️ पालिकाको सहि नाम देखाउने ठाउँ
-    document.getElementById('cardMunicipality').innerText = userData.palika || '';
+    // ठेगानाहरू (पालिका cardMunicipality मा जाने गरी)
+    document.getElementById('cardProvince').innerText = userData.province || appData.province || '';
+    document.getElementById('cardDistrict').innerText = userData.district || appData.district || '';
+    document.getElementById('cardMunicipality').innerText = userData.palika || appData.municipality || '';
+    document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || appData.ward || '');
     
-    document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || '');
-    
-    // २. फोटो बिग्रेको हटाएर सही फोटो लोड गर्ने
-    if(userData.photo_url) {
-        document.getElementById('cardPhoto').src = userData.photo_url;
-    } else if(currentUserProfile.avatar) {
-        document.getElementById('cardPhoto').src = currentUserProfile.avatar;
-    }
+    // फोटो
+    const photo = userData.photo_url || appData.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
+    document.getElementById('cardPhoto').src = photo;
 }
 
+// २. युजरको कार्ड खोल्ने मुख्य फंक्सन
 async function openMyCard() {
     if (!currentUserProfile || !currentUserProfile.email) {
         alert('कृपया पहिले लगइन गर्नुहोस्।');
         return;
     }
 
-    // डेटाबेसबाट युजरको ताजा विवरण तान्ने
-    const { data: userData, error } = await supabaseClient
+    // users टेबल र membership_applications दुवैबाट ताजा डेटा तान्ने
+    const { data: userData } = await supabaseClient
         .from('users')
         .select('*')
         .eq('email', currentUserProfile.email)
         .single();
 
-    if (error || !userData) {
-        alert('प्रयोगकर्ताको डेटा फेला परेन!');
+    const { data: appDataList } = await supabaseClient
+        .from('membership_applications')
+        .select('*')
+        .eq('identifier', currentUserProfile.email)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+    const appData = (appDataList && appDataList.length > 0) ? appDataList[0] : {};
+
+    if (!userData) {
+        alert('युजरको डेटा फेला परेन!');
         return;
     }
 
     // परिचय पत्रमा डेटा भरेर देखाउने
-    renderDigitalID(userData);
+    renderDigitalID(userData, appData);
 
     // मिति र क्युआर कोड सेट गर्ने
     const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
@@ -2075,7 +2084,8 @@ async function openMyCard() {
     document.getElementById('cardIssueDate').innerText = regDate;
     document.getElementById('cardExpiryDate').innerText = expiryDate;
 
-    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '3'}&name=${encodeURIComponent(userData.full_name)}`;
+    const fullName = userData.full_name || appData.full_name || 'सदस्य';
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '3'}&name=${encodeURIComponent(fullName)}`;
     document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
 
     // मोडल खोल्ने
