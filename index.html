@@ -1193,6 +1193,7 @@ function closeIdCardModal() {
             document.getElementById('otpSection').style.display = 'block';
             document.getElementById('sendOtpBtn').innerText = 'इमेल पठाइयो ✓';
         }
+        
         const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', generateAndSendOtp);
