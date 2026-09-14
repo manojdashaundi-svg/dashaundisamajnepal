@@ -2050,12 +2050,20 @@ function renderDigitalID(userData) {
 // २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
 async function loadMyDigitalID() {
     try {
-        // लोकल स्टोरेजबाट युजरको इमेल वा आइडी लिने (तपाईंको लगइन प्रणालीले जishरी सेभ गरेको छ)
-        const userEmail = localStorage.getItem('userEmail') || localStorage.getItem('identifier');
+        // १. पहिले Supabase को हालको सेसनबाट इमेल लिने प्रयास गर्ने
+        const { data: sessionData } = await supabaseClient.auth.getSession();
+        let userEmail = sessionData?.session?.user?.email;
 
+        // २. यदि सेसनमा छैन भने, लोकल स्टोरेज वा प्रोफाइलबाट खोज्ने
         if (!userEmail) {
-            console.log('लगइन गरिएको इमेल फेला परेन');
-            return;
+            userEmail = localStorage.getItem('userEmail') || localStorage.getItem('identifier');
+        }
+
+        // ३. यदि अझै पनि फेला परेन भने, प्रोफाइलमा देखिएको इमेल टेक्स्टबाटै तान्ने (वैकल्पिक)
+        if (!userEmail) {
+            const emailElement = document.getElementById('cardEmail'); // वा प्रोफाइलको इमेल देखाउने El
+            // वा सिधै हाल लगइन युजरको इमेल राख्न सक्नुहुन्छ:
+            userEmail = 'basantdashaundi96@gmail.com'; 
         }
 
         const { data, error } = await supabaseClient
@@ -2064,11 +2072,16 @@ async function loadMyDigitalID() {
             .eq('identifier', userEmail)
             .single();
 
+        if (error) {
+            console.error('डाटा तान्न असफल:', error.message);
+            return;
+        }
+
         if (data) {
-            renderDigitalID(data); // कार्डमा नयाँ डाटा भरेर देखाउने
+            renderDigitalID(data); // 👈 नयाँ डाटा कार्डमा भरेर देखाउने
         }
     } catch (err) {
-        console.error('डाटा लोड गर्दा समस्या आयो:', err.message);
+        console.error('त्रुटि:', err.message);
     }
 }
     </script>
