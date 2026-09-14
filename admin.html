@@ -3638,7 +3638,10 @@ function renderDigitalID(userData) {
     
     document.getElementById('cardProvince').innerText = userData.province || '';
     document.getElementById('cardDistrict').innerText = userData.district || '';
-    document.getElementById('cardPalika').innerText = userData.palika || '';
+    
+    // ⬇️ यहाँ cardPalika को सट्टा cardMunicipality राख्नुपर्छ
+    document.getElementById('cardMunicipality').innerText = userData.palika || '';
+    
     document.getElementById('cardWard').innerText = userData.ward || '';
     
     if(userData.photo_url) {
