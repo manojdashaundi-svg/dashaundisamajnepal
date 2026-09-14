@@ -2044,33 +2044,25 @@ function renderDigitalID(userData) {
 // २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
 async function loadMyDigitalID() {
     try {
-        // लगइन भएको युजरको सत्र (Session) वा विवरण लिने
-        const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
-        
-        if (sessionError || !sessionData.session) {
-            console.error('लगइन सत्र फेला परेन');
+        // लोकल स्टोरेजबाट युजरको इमेल वा आइडी लिने (तपाईंको लगइन प्रणालीले जishरी सेभ गरेको छ)
+        const userEmail = localStorage.getItem('userEmail') || localStorage.getItem('identifier');
+
+        if (!userEmail) {
+            console.log('लगइन गरिएको इमेल फेला परेन');
             return;
         }
 
-        const userEmail = sessionData.session.user.email; // लगइन युजरको इमेल
-
-        // इमेलको आधारमा 'users' टेबलबाट ताजा डेटा तान्ने
         const { data, error } = await supabaseClient
             .from('users')
             .select('*')
-            .eq('identifier', userEmail) // युजरको इमेलबाट म्याッチ गर्ने
+            .eq('identifier', userEmail)
             .single();
 
-        if (error) {
-            console.error('डाटा तान्न सकिएन:', error.message);
-            return;
-        }
-
         if (data) {
-            renderDigitalID(data); // परिचय पत्रमा डेटा भरेर देखाउने
+            renderDigitalID(data); // कार्डमा नयाँ डाटा भरेर देखाउने
         }
     } catch (err) {
-        console.error('त्रुटि:', err.message);
+        console.error('डाटा लोड गर्दा समस्या आयो:', err.message);
     }
 }
     </script>
