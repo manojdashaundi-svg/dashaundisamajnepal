@@ -2046,7 +2046,61 @@ function renderDigitalID(userData) {
     if(userData.photo_url) {
         document.getElementById('cardPhoto').src = userData.photo_url;
     }
+}// १. कार्डमा डेटा भर्ने फंक्सन
+function renderDigitalID(userData) {
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '००१');
+    document.getElementById('cardName').innerText = userData.full_name || '';
+    document.getElementById('cardPosition').innerText = userData.position || 'सदस्य';
+    
+    document.getElementById('cardProvince').innerText = userData.province || '';
+    document.getElementById('cardDistrict').innerText = userData.district || '';
+    document.getElementById('cardMunicipality').innerText = userData.palika || '';
+    document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || '');
+    
+    if(userData.photo_url) {
+        document.getElementById('cardPhoto').src = userData.photo_url;
+    }
 }
+
+// २. डेटाबेसबाट लगइन गरेको युजरको ताजा डेटा तानेर परिचय पत्र खोल्ने मुख्य फंक्सन
+async function openMyCard() {
+    if (!currentUserProfile || !currentUserProfile.email) {
+        alert('कृपया पहिले लगइन गर्नुहोस्।');
+        return;
+    }
+
+    // डेटाबेसबाट युजरको एकदम ताजा विवरण (जस्तै परिवर्तन भएको पालिका) तान्ने
+    const { data: userData, error } = await supabaseClient
+        .from('users')
+        .select('*')
+        .eq('email', currentUserProfile.email)
+        .single();
+
+    if (error || !userData) {
+        alert('प्रयोगकर्ताको डेटा फेला परेन!');
+        return;
+    }
+
+    // परिचय पत्रमा ताजा डेटा भरेर देखाउने
+    renderDigitalID(userData);
+
+    // मिति र क्युआर कोड सेट गर्ने
+    const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : getNepaliDate());
+    const expiryDate = getExpiryDate(userData.reg_date ? userData.reg_date : getNepaliDate());
+    document.getElementById('cardIssueDate').innerText = regDate;
+    document.getElementById('cardExpiryDate').innerText = expiryDate;
+
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '001'}&name=${encodeURIComponent(userData.full_name)}`;
+    document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
+
+    // मोडल खोल्ने
+    document.getElementById('idCardModal').style.display = 'flex';
+}
+
+function closeMyCard() { 
+    document.getElementById('idCardModal').style.display = 'none'; 
+}
+        
 // २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
 async function loadMyDigitalID() {
     try {
