@@ -2018,8 +2018,12 @@ function closeLevyModal() {
         window.addEventListener('DOMContentLoaded', () => {
     loadPublicNotices();
     updateRealTimeClock();
-    loadMyDigitalID(); // 👈 यहाँ पेज खुल्नेबित्तिकै आइडी कार्ड लोड गर्ने फंक्सन कल गर्ने
 });
+
+function openIdCardModal() {
+    loadMyDigitalID(); // 👈 मोडल खुल्नेबित्तिकै ताजा डाटा तानेर कार्ड अपडेट गर्ने
+    document.getElementById('idCardModal').style.display = 'flex'; // मोडल देखाउने
+}
 
 // १. कार्डमा डेटा भर्ने फंक्सन
 function renderDigitalID(userData) {
