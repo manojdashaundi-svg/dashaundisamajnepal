@@ -2033,14 +2033,16 @@ function renderDigitalID(userData) {
     
     document.getElementById('cardProvince').innerText = userData.province || '';
     document.getElementById('cardDistrict').innerText = userData.district || '';
-    document.getElementById('cardPalika').innerText = userData.palika || '';
+    
+    // ⬇️ यहाँ cardPalika को सट्टा cardMunicipality राख्नुहोस्
+    document.getElementById('cardMunicipality').innerText = userData.palika || '';
+    
     document.getElementById('cardWard').innerText = userData.ward || '';
     
     if(userData.photo_url) {
         document.getElementById('cardPhoto').src = userData.photo_url;
     }
 }
-
 // २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
 async function loadMyDigitalID() {
     try {
