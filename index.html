@@ -2044,6 +2044,14 @@ function closeIdCardModal() {
             loadPublicNotices();
             updateRealTimeClock();
         });
+
+        function resetMembershipFlow() {
+    // लग आउट वा फेरि सुरु गर्ने फंक्सन
+    currentUserProfile = { name: '', phone: '', email: '', dob: '', password: '', avatar: '' };
+    currentApplication = null;
+    showSubSection('mainChoiceStep');
+    alert('तपाईं सफलतापूर्वक लग आउट हुनुभयो।');
+}
     </script>
 </body>
 </html>
