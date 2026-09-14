@@ -1486,7 +1486,7 @@ async function markAllNotificationsAsRead() {
                     approvedDetailsDiv.style.display = 'block';
                     loadUserNotifications();
 
-                    const memberNo = (userData && userData.member_no) ? userData.member_no : '००१';
+                    const memberNo = (userData && userData.membership_no) ? userData.membership_no : '३';
                     const committee = (userData && userData.committee) ? userData.committee : 'केन्द्रीय समिति';
                     const position = (userData && userData.position) ? userData.position : 'साधारण सदस्य';
                     const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
@@ -1711,7 +1711,7 @@ async function markAllNotificationsAsRead() {
                 tole: document.getElementById('f_tole').value.trim(),
                 photo_url: currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png',
                 citizenship_front: citFrontUrl,
-                citizenship_back: citBackUrl,
+                citizensoid_back: citBackUrl,
                 payment_slip: paySlipUrl,
                 status: 'Pending'
             };
@@ -1724,49 +1724,83 @@ async function markAllNotificationsAsRead() {
             }
         }
 
-        async function openMyCard() {
-    if(!currentApplication || currentApplication.status !== 'Approved') { 
-        alert('तपाईंको सदस्यता स्वीकृत (Approved) भइसकेपछि मात्र डिजिटल परिचय पत्र (Digital ID Card) हेर्न सकिनेछ। मैदान वा अन्य विवरण जाँच गर्नुहोस्।'); 
-        return; 
+// १. कार्डमा डेटा भर्ने सहि फंक्सन (एडमिन प्यानल र युजर कार्डमा अब पूर्ण रूपमा मिल्ने गरी)
+function renderDigitalID(userData, appData) {
+    // सदस्यता नम्बर
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '३');
+    
+    // पूरा नाम
+    const fullName = userData.full_name || appData.full_name || '';
+    document.getElementById('cardName').innerText = fullName;
+    
+    // पद र कमिटी (एडमिन जस्तै मिलाइएको)
+    let userPos = (userData.position) ? userData.position.trim() : 'सदस्य';
+    let userComm = (userData.committee) ? userData.committee.trim() : 'केन्द्रीय कमिटी';
+    document.getElementById('cardPosition').innerText = `${userPos} (${userComm})`;
+    
+    // ठेगानाहरू (पालिका cardMunicipality मा जाने गरी)
+    document.getElementById('cardProvince').innerText = userData.province || appData.province || '';
+    document.getElementById('cardDistrict').innerText = userData.district || appData.district || '';
+    document.getElementById('cardMunicipality').innerText = userData.palika || appData.municipality || '';
+    document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || appData.ward || '');
+    
+    // फोटो
+    const photo = userData.photo_url || appData.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
+    document.getElementById('cardPhoto').src = photo;
+}
+
+// २. युजरको कार्ड खोल्ने मुख्य फंक्सन
+async function openMyCard() {
+    if (!currentUserProfile || !currentUserProfile.email) {
+        alert('कृपया पहिले लगइन गर्नुहोस्।');
+        return;
     }
 
-    const { data: userData } = await supabaseClient.from('users').select('*').eq('email', currentUserProfile.email).single();
-    const memberNo = (userData && userData.member_no) ? userData.member_no : '001';
+    // users टेबल र membership_applications दुवैबाट ताजा डेटा तान्ने
+    const { data: userData } = await supabaseClient
+        .from('users')
+        .select('*')
+        .eq('email', currentUserProfile.email)
+        .single();
 
-    const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-    const expiryDate = getExpiryDate(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
-    const fullName = currentApplication.full_name || currentUserProfile.full_name || '-';
+    const { data: appDataList } = await supabaseClient
+        .from('membership_applications')
+        .select('*')
+        .eq('identifier', currentUserProfile.email)
+        .order('created_at', { ascending: false })
+        .limit(1);
 
-    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+    const appData = (appDataList && appDataList.length > 0) ? appDataList[0] : {};
+
+    if (!userData) {
+        alert('युजरको डेटा फेला परेन!');
+        return;
+    }
+
+    // परिचय पत्रमा डेटा भरेर देखाउने
+    renderDigitalID(userData, appData);
+
+    // मिति र क्युआर कोड सेट गर्ने
+    const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
+    const expiryDate = getExpiryDate(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
     document.getElementById('cardIssueDate').innerText = regDate;
     document.getElementById('cardExpiryDate').innerText = expiryDate;
-    document.getElementById('cardName').innerText = fullName;
 
-    let userPos = (userData && userData.position) ? userData.position.trim() : 'सदस्य';
-let userComm = (userData && (userData.committee_level || userData.committee)) ? (userData.committee_level || userData.committee) : 'केन्द्रीय कमिटी';
-
-let cardPositionText = (!userPos || userPos === '' || userPos === 'सदस्य' || userPos === 'साधारण सदस्य') 
-    ? `सदस्य (${userComm})` 
-    : `${userPos} (${userComm})`;
-
-document.getElementById('cardPosition').innerText = cardPositionText;
-
-    document.getElementById('cardProvince').innerText = currentApplication.province || '-';
-    document.getElementById('cardDistrict').innerText = currentApplication.district || '-';
-    document.getElementById('cardMunicipality').innerText = currentApplication.municipality || '-';
-    document.getElementById('cardWard').innerText = toNepaliNumber(currentApplication.ward || '-');
-
-    const photo = currentApplication.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
-    document.getElementById('cardPhoto').src = photo;
-
-    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${memberNo}&name=${encodeURIComponent(fullName)}`;
+    const fullName = userData.full_name || appData.full_name || 'सदस्य';
+    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '3'}&name=${encodeURIComponent(fullName)}`;
     document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
 
+    // मोडल खोल्ने
     document.getElementById('idCardModal').style.display = 'flex';
 }
 
-function closeMyCard() { document.getElementById('idCardModal').style.display = 'none'; }
-function resetMembershipFlow() { showSubSection('mainChoiceStep'); document.getElementById('officialFormBox').style.display = 'none'; document.getElementById('step3').style.display = 'none'; }
+function closeMyCard() { 
+    document.getElementById('idCardModal').style.display = 'none'; 
+}
+
+function closeIdCardModal() { 
+    document.getElementById('idCardModal').style.display = 'none'; 
+}
 
 async function loadPublicNotices() {
     const { data } = await supabaseClient.from('notices').select('*').order('id', { ascending: false });
@@ -2019,120 +2053,6 @@ function closeLevyModal() {
     loadPublicNotices();
     updateRealTimeClock();
 });
-
-function openIdCardModal() {
-    loadMyDigitalID(); // 👈 मोडल खुल्नेबित्तिकै ताजा डाटा तानेर कार्ड अपडेट गर्ने
-    document.getElementById('idCardModal').style.display = 'flex'; // मोडल देखाउने
-}
-
-// १. कार्डमा डेटा भर्ने सही फंक्सन
-function renderDigitalID(userData, appData) {
-    // सदस्यता नम्बर र नाम
-    document.getElementById('cardMemberNo').innerText = toNepaliNumber(userData.membership_no || '३');
-    document.getElementById('cardName').innerText = userData.full_name || appData.full_name || '';
-    
-    // पद र कमिटी (एडमिन जस्तै मिलाइएको)
-    let userPos = (userData.position) ? userData.position.trim() : 'सदस्य';
-    let userComm = (userData.committee) ? userData.committee.trim() : 'केन्द्रीय कमिटी';
-    document.getElementById('cardPosition').innerText = `${userPos} (${userComm})`;
-    
-    // ठेगानाहरू (पालिका cardMunicipality मा जाने गरी)
-    document.getElementById('cardProvince').innerText = userData.province || appData.province || '';
-    document.getElementById('cardDistrict').innerText = userData.district || appData.district || '';
-    document.getElementById('cardMunicipality').innerText = userData.palika || appData.municipality || '';
-    document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || appData.ward || '');
-    
-    // फोटो
-    const photo = userData.photo_url || appData.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
-    document.getElementById('cardPhoto').src = photo;
-}
-
-// २. युजरको कार्ड खोल्ने मुख्य फंक्सन
-async function openMyCard() {
-    if (!currentUserProfile || !currentUserProfile.email) {
-        alert('कृपया पहिले लगइन गर्नुहोस्।');
-        return;
-    }
-
-    // users टेबल र membership_applications दुवैबाट ताजा डेटा तान्ने
-    const { data: userData } = await supabaseClient
-        .from('users')
-        .select('*')
-        .eq('email', currentUserProfile.email)
-        .single();
-
-    const { data: appDataList } = await supabaseClient
-        .from('membership_applications')
-        .select('*')
-        .eq('identifier', currentUserProfile.email)
-        .order('created_at', { ascending: false })
-        .limit(1);
-
-    const appData = (appDataList && appDataList.length > 0) ? appDataList[0] : {};
-
-    if (!userData) {
-        alert('युजरको डेटा फेला परेन!');
-        return;
-    }
-
-    // परिचय पत्रमा डेटा भरेर देखाउने
-    renderDigitalID(userData, appData);
-
-    // मिति र क्युआर कोड सेट गर्ने
-    const regDate = toNepaliNumber(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
-    const expiryDate = getExpiryDate(userData.reg_date ? userData.reg_date : '२०८३-०५-२७');
-    document.getElementById('cardIssueDate').innerText = regDate;
-    document.getElementById('cardExpiryDate').innerText = expiryDate;
-
-    const fullName = userData.full_name || appData.full_name || 'सदस्य';
-    const verifyUrl = `https://www.dashaundisamajnepal.com/verify.html?member_no=${userData.membership_no || '3'}&name=${encodeURIComponent(fullName)}`;
-    document.getElementById('cardQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verifyUrl)}`;
-
-    // मोडल खोल्ने
-    document.getElementById('idCardModal').style.display = 'flex';
-}
-
-function closeMyCard() { 
-    document.getElementById('idCardModal').style.display = 'none'; 
-}
-        
-// २. डेटाबेसबाट लगइन गरेको युजरको डेटा तानेर परिचय पत्रमा लोड गर्ने फंक्सन
-async function loadMyDigitalID() {
-    try {
-        // १. पहिले Supabase को हालको सेसनबाट इमेल लिने प्रयास गर्ने
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-        let userEmail = sessionData?.session?.user?.email;
-
-        // २. यदि सेसनमा छैन भने, लोकल स्टोरेज वा प्रोफाइलबाट खोज्ने
-        if (!userEmail) {
-            userEmail = localStorage.getItem('userEmail') || localStorage.getItem('identifier');
-        }
-
-        // ३. यदि अझै पनि फेला परेन भने, प्रोफाइलमा देखिएको इमेल टेक्स्टबाटै तान्ने (वैकल्पिक)
-        if (!userEmail) {
-            const emailElement = document.getElementById('cardEmail'); // वा प्रोफाइलको इमेल देखाउने El
-            // वा सिधै हाल लगइन युजरको इमेल राख्न सक्नुहुन्छ:
-            userEmail = 'basantdashaundi96@gmail.com'; 
-        }
-
-        const { data, error } = await supabaseClient
-            .from('users')
-            .select('*')
-            .eq('identifier', userEmail)
-            .single();
-
-        if (error) {
-            console.error('डाटा तान्न असफल:', error.message);
-            return;
-        }
-
-        if (data) {
-            renderDigitalID(data); // 👈 नयाँ डाटा कार्डमा भरेर देखाउने
-        }
-    } catch (err) {
-        console.error('त्रुटि:', err.message);
-    }
-}
     </script>
 </body>
 </html>
