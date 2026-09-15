@@ -2790,7 +2790,7 @@ const userData = {
     ward: app.ward || '',
     tole: app.tole || '',
     avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png'
-    // पासवर्डको लाइन यहाँबाट हटाए, युजरको पासवर्ड सुरक्षित रहन्छ
+    password: app.password || user.password || '123456'
 };
 
 const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
