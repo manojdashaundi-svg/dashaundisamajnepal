@@ -2789,10 +2789,10 @@ const userData = {
     municipality: app.municipality || '',
     ward: app.ward || '',
     tole: app.tole || '',
-    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png'
+    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
     password: app.password || user.password || '123456'
 };
-
+            
 const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
 if(userError) {
