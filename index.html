@@ -1730,24 +1730,25 @@ if (registerForm) {
         }
 
         function renderDigitalID(userData, appData) {
-            let memberNo = userData.membership_no || appData.membership_no || '३';
-            document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
-            
-            const fullName = userData.full_name || userData.name || appData.full_name || '';
-            document.getElementById('cardName').innerText = fullName;
-            
-            let userPos = (userData.position || appData.position) ? (userData.position || appData.position).trim() : 'सदस्य';
-            let userComm = (userData.committee || appData.committee) ? (userData.committee || appData.committee).trim() : 'केन्द्रीय कमिटी';
-            document.getElementById('cardPosition').innerText = `${userPos} (${userComm})`;
-            
-            document.getElementById('cardProvince').innerText = userData.province || appData.province || '';
-            document.getElementById('cardDistrict').innerText = userData.district || appData.district || '';
-            document.getElementById('cardMunicipality').innerText = userData.municipality || userData.palika || appData.municipality || appData.palika || '';
-            document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || appData.ward || '');
-            
-            const photo = userData.photo_url || userData.avatar || appData.photo_url || currentUserProfile.avatar || 'images/dashaundisamaj-logo-png.png';
-            document.getElementById('cardPhoto').src = photo;
-        }
+    // यहाँ 'membership_no' को सट्टा 'member_no' राख्नुपर्छ
+    let memberNo = userData.member_no || appData.member_no || userData.membership_no || appData.membership_no || '-';
+    document.getElementById('cardMemberNo').innerText = toNepaliNumber(memberNo);
+    
+    const fullName = userData.full_name || userData.name || appData.full_name || '';
+    document.getElementById('cardName').innerText = fullName;
+    
+    let userPos = (userData.position || appData.position) ? (userData.position || appData.position).trim() : 'सदस्य';
+    let userComm = (userData.committee || appData.committee) ? (userData.committee || appData.committee).trim() : 'केन्द्रीय कमिटी';
+    document.getElementById('cardPosition').innerText = `${userPos} (${userComm})`;
+    
+    document.getElementById('cardProvince').innerText = userData.province || appData.province || '';
+    document.getElementById('cardDistrict').innerText = userData.district || appData.district || '';
+    document.getElementById('cardMunicipality').innerText = userData.municipality || userData.palika || appData.municipality || appData.palika || '';
+    document.getElementById('cardWard').innerText = toNepaliNumber(userData.ward || appData.ward || '');
+    
+    const photo = userData.photo_url || userData.avatar || appData.photo_url || (typeof currentUserProfile !== 'undefined' && currentUserProfile.avatar) || 'images/dashaundisamaj-logo-png.png';
+    document.getElementById('cardPhoto').src = photo;
+}
 
         async function openMyCard() {
     if (!currentUserProfile || !currentUserProfile.email) {
