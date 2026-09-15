@@ -1491,7 +1491,7 @@ if (registerForm) {
                     approvedDetailsDiv.style.display = 'block';
                     loadUserNotifications();
 
-                    const memberNo = (userData && userData.membership_no) ? userData.membership_no : '३';
+                    const memberNo = toNepaliNumber(userData && (userData.member_no || userData.membership_no) ? (userData.member_no || userData.membership_no) : '-');
                     const committee = (userData && userData.committee) ? userData.committee : 'केन्द्रीय समिति';
                     const position = (userData && userData.position) ? userData.position : 'साधारण सदस्य';
                     const regDate = toNepaliNumber(userData && userData.reg_date ? userData.reg_date : getNepaliDate());
