@@ -2766,33 +2766,38 @@ if (isRenewal) {
     formattedMemberNo = String(nextNo).padStart(3, '0');
 }
 
-const userData = {
-    member_no: formattedMemberNo,
-    position: assignedPosition,
-    committee_level: committeeLevelVal,
-    reg_date: todayNepaliDate,
-    status: 'Approved',
-    full_name: app.full_name,
-    phone: app.phone || '',
-    email: userIdentifier,
-    dob: app.dob || '',
-    citizenship_no: app.citizenship_no || '',
-    citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
-    citizenship_back: app.citizenship_back || app.citizenship_back_url || app.citizensoid_back || '',
-    payment_slip_url: app.payment_slip || app.payment_slip_url || '',
-    spouse_name: app.spouse_name || '',
-    father_name: app.father_name || '',
-    mother_name: app.mother_name || '',
-    grandfather_name: app.grandfather_name || '',
-    province: app.province || '',
-    district: app.district || '',
-    municipality: app.municipality || '',
-    ward: app.ward || '',
-    tole: app.tole || '',
-    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-    password: app.password || '123456'
-};
+// यदि तपाईंले अप्रुभ गर्दा पहिले नै युजरको पुरानो डेटा तान्नुभएको छ भने:
+const oldPassword = typeof existingUser !== 'undefined' && existingUser ? existingUser.password : '';
 
+const userData = {
+    member_no: formattedMemberNo,
+    position: assignedPosition,
+    committee_level: committeeLevelVal,
+    reg_date: todayNepaliDate,
+    status: 'Approved',
+    full_name: app.full_name,
+    phone: app.phone || '',
+    email: userIdentifier,
+    dob: app.dob || '',
+    citizenship_no: app.citizenship_no || '',
+    citizenship_front: app.citizenship_front || app.citizenship_front_url || '',
+    citizenship_back: app.citizenship_back || app.citizenship_back_url || app.citizensoid_back || '',
+    payment_slip_url: app.payment_slip || app.payment_slip_url || '',
+    spouse_name: app.spouse_name || '',
+    father_name: app.father_name || '',
+    mother_name: app.mother_name || '',
+    grandfather_name: app.grandfather_name || '',
+    province: app.province || '',
+    district: app.district || '',
+    municipality: app.municipality || '',
+    ward: app.ward || '',
+    tole: app.tole || '',
+    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
+    
+    // यहाँ हामीले फारमको पासवर्ड, पुरानੋ युजरको पासवर्ड, र अन्त्यमा मात्र '123456' राखेका छौं
+    password: app.password || oldPassword || '123456'
+};
+            
 const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
 
 if(userError) {
