@@ -2789,8 +2789,8 @@ const userData = {
     municipality: app.municipality || '',
     ward: app.ward || '',
     tole: app.tole || '',
-    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png',
-    password: app.password || '123456'
+    avatar: app.photo_url || 'images/dashaundisamaj-logo-png.png'
+    // पासवर्डको लाइन यहाँबाट हटाए, युजरको पासवर्ड सुरक्षित रहन्छ
 };
 
 const { error: userError } = await supabaseClient.from('users').upsert([userData], { onConflict: 'email' });
